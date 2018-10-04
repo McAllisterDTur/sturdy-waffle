@@ -112,6 +112,7 @@
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="base-class" type="classType" />
+		<xsd:attribute name="bootstrap-mode" type="bootstrap-mode" />
 	</xsd:attributeGroup>
 
 	<xsd:attributeGroup name="transactional-repository-attributes">
@@ -235,6 +236,37 @@
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="bootstrap-mode">
+		<xsd:annotation>
+			<xsd:documentation><![CDATA[
+			Defines the bootstrap strategy for repositories.
+			]]></xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="default">
+				<xsd:annotation>
+					<xsd:documentation><![CDATA[
+					Repository proxies are instantiated eagerly, just like any other Spring bean, except explicitly marked as lazy. Thus, injection into repository clients will trigger initialization.
+					]]></xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="deferred">
+				<xsd:annotation>
+					<xsd:documentation><![CDATA[
+					Repository bean definitions are considered lazy and clients will get repository proxies injected that will initialize on first access. Repository initialization is triggered on application context bootstrap completion.
+					]]></xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="lazy">
+				<xsd:annotation>
+					<xsd:documentation><![CDATA[
+					Repository bean definitions are considered lazy, lazily inject and only initialized on first use, i.e. the application might have fully started without the repositories initialized.
+					]]></xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
 	</xsd:simpleType>
 
 </xsd:schema>

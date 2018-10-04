@@ -16,12 +16,4 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<display:table pagesize="5"  name="shouts" id="row" requestURI="customer/action-1.do" >
-	
-	<display:column property="username" titleKey="customer.username" />
-	<display:column titleKey="customer.shout">
-		<strong><a href="${row.link}"><jstl:out value="${row.link}" /></a></strong> <br/>
-		<jstl:out value="${row.text}" />
-	</display:column>
-	
-</display:table>
+<p><spring:message code="customer.action.1" /></p>

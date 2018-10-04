@@ -17,22 +17,3 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <p><spring:message code="administrator.action.1" /></p>
-
-<table style="width: 25%">
-	<tr>
-		<th><spring:message code="administrator.indicator" /></th>
-		<th><spring:message code="administrator.value" /></th>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.count.all.shouts" /></td>
-		<td><jstl:out value="${statistics.get('count.all.shouts')}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.count.short.shouts" /></td>
-		<td><jstl:out value="${statistics.get('count.short.shouts')}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.count.long.shouts" /></td>
-		<td><jstl:out value="${statistics.get('count.long.shouts')}" /></td>
-	</tr>
-</table>

@@ -17,9 +17,3 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <p><spring:message code="profile.action.1" /></p>
-
-<ol>
-	<jstl:forEach var="quote" items="${quotes}">
-		<li> <jstl:out value="${quote}"></jstl:out> </li>
-	</jstl:forEach>
-</ol>
