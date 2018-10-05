@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="55" version="2.0">
+<workbench progressCount="82" version="2.0">
 <workbenchAdvisor/>
 <window height="715" maximized="true" width="951" x="320" y="75">
 <fastViewData fastViewLocation="1024"/>
@@ -10,7 +10,7 @@
 <coolItem id="group.file" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="121" y="22"/>
 <coolItem id="additions" itemType="typeGroupMarker"/>
-<coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="124" y="22"/>
+<coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="131" y="22"/>
 <coolItem id="org.eclipse.jst.j2ee.J2eeMainActionSet" itemType="typeToolBarContribution" x="88" y="22"/>
 <coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="98" y="22"/>
 <coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="131" y="22"/>
@@ -23,16 +23,16 @@
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.wst.css.core.csssource.source" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
-<coolItem id="org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.wst.server.ui.editor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.jst.jsp.core.jspsource.source" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jst.jsp.core.jspsource.source" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jdt.ui.PropertiesFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.datatools.sqltools.data.internal.ui.editor.tableDataEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.jpt.jpa.ui.internal.editors.PersistenceEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jpt.jpa.ui.internal.editors.PersistenceEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.ui.DefaultTextEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
-<coolItem id="org.eclipse.m2e.editor.MavenPomEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
-<coolItem id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.m2e.editor.MavenPomEditor" itemType="typePlaceholder" x="-1" y="-1"/>
+<coolItem id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
@@ -43,54 +43,13 @@
 <folder appearance="1" expanded="2">
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
-<part id="1"/>
-<part id="2"/>
-<part id="3"/>
-<part id="4"/>
-<part id="5"/>
-<part id="6"/>
-<part id="7"/>
-<part id="8"/>
-<part id="9"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.m2e.editor.MavenPomEditor" name="pom.xml" partName="Acme-Shout/pom.xml" path="E:/Sample/L01-workspace/Acme-Shout/pom.xml" title="Acme-Shout/pom.xml" tooltip="Acme-Shout/pom.xml" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme-Shout/pom.xml"/>
-</editor>
-<editor id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" name="web.xml" partName="web.xml" path="E:/Sample/L01-workspace/Acme-Shout/src/main/webapp/WEB-INF/web.xml" title="web.xml" tooltip="Acme-Shout/src/main/webapp/WEB-INF/web.xml" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme-Shout/src/main/webapp/WEB-INF/web.xml"/>
-</editor>
-<editor id="org.eclipse.jpt.jpa.ui.internal.editors.PersistenceEditor" name="persistence.xml" partName="persistence.xml" path="E:/Sample/L01-workspace/Acme-Shout/src/main/resources/META-INF/persistence.xml" title="persistence.xml" tooltip="Acme-Shout/src/main/resources/META-INF/persistence.xml" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme-Shout/src/main/resources/META-INF/persistence.xml"/>
-</editor>
-<editor id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" name="data.xml" partName="data.xml" path="E:/Sample/L01-workspace/Acme-Shout/src/main/resources/spring/config/data.xml" title="data.xml" tooltip="Acme-Shout/src/main/resources/spring/config/data.xml" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme-Shout/src/main/resources/spring/config/data.xml"/>
-</editor>
-<editor id="org.eclipse.jst.jsp.core.jspsource.source" name="header.jsp" partName="header.jsp" path="E:/Sample/L01-workspace/Acme-Shout/src/main/webapp/views/master-page/header.jsp" title="header.jsp" tooltip="Acme-Shout/src/main/webapp/views/master-page/header.jsp" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme-Shout/src/main/webapp/views/master-page/header.jsp"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="578" selectionTopPixel="154"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HashPassword.java" partName="HashPassword.java" path="E:/Sample/L01-workspace/Acme-Shout/src/main/java/utilities/HashPassword.java" title="HashPassword.java" tooltip="Acme-Shout/src/main/java/utilities/HashPassword.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme-Shout/src/main/java/utilities/HashPassword.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4" selectionTopPixel="132"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PopulateDatabase.java" partName="PopulateDatabase.java" path="E:/Sample/L01-workspace/Acme-Shout/src/main/java/utilities/PopulateDatabase.java" title="PopulateDatabase.java" tooltip="Acme-Shout/src/main/java/utilities/PopulateDatabase.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme-Shout/src/main/java/utilities/PopulateDatabase.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4" selectionTopPixel="2176"/>
-</editor>
-<editor id="org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor" name="hash-password.sql" partName="hash-password.sql" path="E:/Sample/L01-workspace/Scrapbook/hash-password.sql" title="hash-password.sql" tooltip="Scrapbook/hash-password.sql" workbook="DefaultEditorWorkbook">
-<input connInfoName="Undefined:::" editorInputType="SQLScrapbookEditorInput" factoryID="org.eclipse.datatools.sqltools.internal.sqlscrapbook.editor.SQLScrapbookEditorInputFactory" path="/Scrapbook/hash-password.sql"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
-</editor>
-<editor id="org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor" name="create-users.sql" partName="create-users.sql" path="E:/Sample/L01-workspace/Scrapbook/create-users.sql" title="create-users.sql" tooltip="Scrapbook/create-users.sql" workbook="DefaultEditorWorkbook">
-<input connInfoName="Undefined:::" editorInputType="SQLScrapbookEditorInput" factoryID="org.eclipse.datatools.sqltools.internal.sqlscrapbook.editor.SQLScrapbookEditorInputFactory" path="/Scrapbook/create-users.sql"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="200" selectionTopPixel="0"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor" name="grant-privileges.sql" partName="grant-privileges.sql" path="E:/Sample/L01-workspace/Scrapbook/grant-privileges.sql" title="grant-privileges.sql" tooltip="Scrapbook/grant-privileges.sql" workbook="DefaultEditorWorkbook">
-<input connInfoName="Undefined:::" editorInputType="SQLScrapbookEditorInput" factoryID="org.eclipse.datatools.sqltools.internal.sqlscrapbook.editor.SQLScrapbookEditorInputFactory" path="/Scrapbook/grant-privileges.sql"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ProfileController.java" partName="ProfileController.java" path="E:/Sample/L01-workspace/Acme-Shout/src/main/java/controllers/ProfileController.java" title="ProfileController.java" tooltip="Acme-Shout/src/main/java/controllers/ProfileController.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Acme-Shout/src/main/java/controllers/ProfileController.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4" selectionTopPixel="597"/>
 </editor>
 </editors>
 <views>
@@ -141,6 +100,9 @@
 </view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
+<expanded>
+<category IMemento.internal.id="Errors"/>
+</expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="219" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
@@ -156,8 +118,8 @@
 <viewState CommonNavigator.LINKING_ENABLED="0"/>
 </view>
 </views>
-<perspectives activePart="org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor" activePerspective="org.eclipse.jst.j2ee.J2EEPerspective">
-<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
+<perspectives activePart="org.eclipse.wst.server.ui.ServersView" activePerspective="org.eclipse.jst.j2ee.J2EEPerspective">
+<perspective editorAreaTrimState="1" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jst.j2ee.internal.perspective.J2EEPerspective" id="org.eclipse.jst.j2ee.J2EEPerspective" label="Java EE"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.doc.actionSet"/>
@@ -214,21 +176,30 @@
 <perspective_action id="org.eclipse.wst.web.ui.webDevPerspective"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
+<view id="org.eclipse.ui.navigator.ProjectExplorer"/>
+<view id="org.eclipse.jdt.ui.TypeHierarchy"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
 <view id="org.eclipse.search.ui.views.SearchView"/>
 <view id="org.eclipse.jdt.junit.ResultView"/>
 <view id="org.eclipse.ui.views.ProgressView"/>
-<view id="org.eclipse.ui.navigator.ProjectExplorer"/>
-<view id="org.eclipse.jdt.ui.TypeHierarchy"/>
-<view id="org.eclipse.ui.views.ProblemView"/>
-<view id="org.eclipse.debug.ui.BreakpointView"/>
-<view id="org.eclipse.debug.ui.ExpressionView"/>
-<view id="org.eclipse.debug.ui.VariableView"/>
-<view id="org.eclipse.ui.views.TaskList"/>
 <view id="org.eclipse.wst.server.ui.ServersView"/>
-<view id="org.eclipse.debug.ui.DebugView"/>
-<view id="org.eclipse.jdt.callhierarchy.view"/>
-<fastViewBars/>
+<fastViewBars>
+<fastViewBar fastViewLocation="16384" id="org.eclipse.ui.internal.ViewStack@4c02bc48" orientation="512" selectedTabId="org.eclipse.ui.views.TaskList" style="1">
+<fastViews>
+<view id="org.eclipse.ui.views.ProblemView" ratio="0.3"/>
+<view id="org.eclipse.debug.ui.BreakpointView" ratio="0.3"/>
+<view id="org.eclipse.debug.ui.ExpressionView" ratio="0.3"/>
+<view id="org.eclipse.debug.ui.VariableView" ratio="0.3"/>
+<view id="org.eclipse.ui.views.TaskList" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+<fastViewBar fastViewLocation="131072" id="org.eclipse.ui.internal.ViewStack@42137ac0" orientation="512" selectedTabId="org.eclipse.debug.ui.DebugView" style="1">
+<fastViews>
+<view id="org.eclipse.debug.ui.DebugView" ratio="0.3"/>
+<view id="org.eclipse.jdt.callhierarchy.view" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+</fastViewBars>
 <layout>
 <mainWindow>
 <info folder="true" part="topLeft">
@@ -257,20 +228,14 @@
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@4c02bc48" ratio="0.6521197" ratioLeft="523" ratioRight="279" relationship="4" relative="org.eclipse.ui.internal.ViewStack@5c6ae889">
-<folder activePageID="org.eclipse.ui.views.TaskList" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
-<page content="org.eclipse.debug.ui.BreakpointView" label="Breakpoints"/>
-<page content="org.eclipse.debug.ui.ExpressionView" label="Expressions"/>
-<page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
-<page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.ui.views.ProblemView" label="LabelNotFound"/>
+<page content="org.eclipse.debug.ui.BreakpointView" label="LabelNotFound"/>
+<page content="org.eclipse.debug.ui.ExpressionView" label="LabelNotFound"/>
+<page content="org.eclipse.debug.ui.VariableView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.views.TaskList" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.AllMarkersView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-<part id="2"/>
-<part id="3"/>
-<part id="4"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="bottomRight" ratio="0.5536249" ratioLeft="924" ratioRight="745" relationship="2" relative="org.eclipse.ui.internal.ViewStack@4c02bc48">
@@ -291,18 +256,18 @@
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@631ebf05" ratio="0.40922707" ratioLeft="683" ratioRight="986" relationship="2" relative="org.eclipse.ui.internal.ViewStack@4c02bc48">
 <folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<page content="org.eclipse.ui.views.ProgressView" label="Progress"/>
 <page content="org.eclipse.search.ui.views.SearchView" label="Search"/>
 <page content="org.eclipse.jdt.junit.ResultView" label="JUnit"/>
-<page content="org.eclipse.ui.views.ProgressView" label="Progress"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
-<part id="3"/>
 <part id="1"/>
 <part id="2"/>
+<part id="3"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="topRight" ratio="0.7564378" ratioLeft="705" ratioRight="227" relationship="2" relative="org.eclipse.ui.internal.ViewStack@5c6ae889">
+<info folder="true" part="topRight" ratio="0.7815498" ratioLeft="1059" ratioRight="296" relationship="2" relative="org.eclipse.ui.internal.ViewStack@5c6ae889">
 <folder appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
 <page content="org.eclipse.mylyn.tasks.ui.views.tasks" label="LabelNotFound"/>
@@ -317,17 +282,14 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@42137ac0" ratio="0.1923077" ratioLeft="100" ratioRight="420" relationship="4" relative="org.eclipse.ui.internal.ViewStack@3edd044d">
-<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">
-<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
-<page content="org.eclipse.jdt.callhierarchy.view" label="Call Hierarchy"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-</presentation>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@42137ac0" ratio="0.40727273" ratioLeft="112" ratioRight="163" relationship="4" relative="org.eclipse.ui.internal.ViewStack@3edd044d">
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.debug.ui.DebugView" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.callhierarchy.view" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.25086865" ratioLeft="361" ratioRight="1078" relationship="2" relative="org.eclipse.ui.internal.ViewStack@5c6ae889"/>
+<info part="org.eclipse.ui.editorss" ratio="0.25482315" ratioLeft="317" ratioRight="927" relationship="2" relative="org.eclipse.ui.internal.ViewStack@5c6ae889"/>
 </mainWindow>
 </layout>
 </perspective>
@@ -335,151 +297,163 @@
 <workingSets/>
 <navigationHistory>
 <editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jst.jsp.core.jspsource.source" path="/Acme-Shout/src/main/webapp/views/profile/action-1.jsp"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme-Shout/src/main/java/controllers/ProfileController.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme-Certifications/src/main/java/security/LoginController.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme-Shout/src/main/java/controllers/CustomerController.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme-Shout/src/main/java/security/LoginController.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Sample-Project/src/main/java/security/LoginController.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jst.jsp.core.jspsource.source" path="/Sample-Project/src/main/webapp/views/profile/action-2.jsp"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.PropertiesFileEditor" path="/Acme-Shout/src/main/webapp/views/profile/messages_es.properties"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme-Shout/src/main/java/forms/Calculator.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme-Shout/src/main/java/controllers/ProfileController.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jst.jsp.core.jspsource.source" path="/Acme-Shout/src/main/webapp/views/profile/action-2.jsp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Sample-Project/src/main/java/utilities/HashPassword.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jst.jsp.core.jspsource.source" path="/Acme-Shout/src/main/webapp/views/customer/action-1.jsp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jst.jsp.core.jspsource.source" path="/Acme-Shout/src/main/webapp/views/customer/action-2.jsp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme-Certifications/src/main/java/controllers/administrator/AnnouncementAdministratorController.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme-Certifications/src/main/java/controllers/administrator/ActorAdministratorController.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme-Shout/src/main/java/controllers/AdministratorController.java"/>
-<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=Acme-Certifications/C:\/Program Files\/Java\/jdk1.7.0_13\/jre\/lib\/rt.jar&lt;java.util.concurrent(ThreadPoolExecutor.class"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jst.jsp.core.jspsource.source" path="/Acme-Shout/src/main/webapp/views/administrator/action-2.jsp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Sample-Project/src/main/java/utilities/HashPassword.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.m2e.editor.MavenPomEditor" path="/Acme-Shout/pom.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" path="/Acme-Shout/src/main/webapp/WEB-INF/web.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jpt.jpa.ui.internal.editors.PersistenceEditor" path="/Acme-Shout/src/main/resources/META-INF/persistence.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme-Shout/src/main/java/utilities/DatabaseConfig.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jst.jsp.core.jspsource.source" path="/Acme-Shout/src/main/webapp/views/master-page/footer.jsp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jst.jsp.core.jspsource.source" path="/Acme-Shout/src/main/webapp/views/master-page/header.jsp"/>
-<editor connInfoName="Undefined:::" editorInputType="SQLScrapbookEditorInput" factoryID="org.eclipse.datatools.sqltools.internal.sqlscrapbook.editor.SQLScrapbookEditorInputFactory" id="org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor" path="/Scrapbook/hash-password.sql"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme-Shout/src/main/java/utilities/HashPassword.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Acme-Shout/src/main/java/utilities/PopulateDatabase.java"/>
-<editor connInfoName="Undefined:::" editorInputType="SQLScrapbookEditorInput" factoryID="org.eclipse.datatools.sqltools.internal.sqlscrapbook.editor.SQLScrapbookEditorInputFactory" id="org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor" path="/Scrapbook/create-users.sql"/>
-<editor connInfoName="Undefined:::" editorInputType="SQLScrapbookEditorInput" factoryID="org.eclipse.datatools.sqltools.internal.sqlscrapbook.editor.SQLScrapbookEditorInputFactory" id="org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor" path="/Scrapbook/grant-privileges.sql"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.PropertiesFileEditor" path="/Acme-Shout/src/main/webapp/views/profile/messages.properties"/>
 </editors>
-<item historyLabel="ProfileController.java" index="0">
-<position info="not_deleted" x="2487" y="0"/>
+<item historyLabel="ProfileController.java" index="1">
+<position info="not_deleted" x="927" y="4"/>
 </item>
-<item historyLabel="LoginController.java" index="1">
-<position info="not_deleted" x="1314" y="15"/>
-</item>
-<item historyLabel="CustomerController.java" index="2">
-<position info="not_deleted" x="1250" y="15"/>
-</item>
-<item historyLabel="CustomerController.java" index="2">
-<position info="not_deleted" x="2026" y="0"/>
-</item>
-<item historyLabel="LoginController.java" index="3">
-<position info="not_deleted" x="1250" y="0"/>
-</item>
-<item historyLabel="LoginController.java" index="4">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="LoginController.java" index="4">
-<position info="not_deleted" x="1106" y="0"/>
-</item>
-<item historyLabel="action-2.jsp" index="5">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="LoginController.java" index="4">
-<position info="not_deleted" x="1106" y="0"/>
-</item>
-<item historyLabel="action-2.jsp" index="6">
-<position info="not_deleted" x="1255" y="0"/>
-</item>
-<item historyLabel="LoginController.java" index="4">
-<position info="not_deleted" x="1106" y="0"/>
-</item>
-<item historyLabel="HashPassword.java" index="7">
-<position info="not_deleted" x="798" y="0"/>
-</item>
-<item historyLabel="action-1.jsp" index="8">
-<position info="not_deleted" x="749" y="0"/>
-</item>
-<item historyLabel="action-2.jsp" index="9">
-<position info="not_deleted" x="25" y="0"/>
-</item>
-<item historyLabel="action-1.jsp" index="8">
-<position info="not_deleted" x="70" y="0"/>
-</item>
-<item historyLabel="AnnouncementAdministratorController.java" index="10">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="ActorAdministratorController.java" index="11">
-<position info="not_deleted" x="1044" y="0"/>
-</item>
-<item historyLabel="AnnouncementAdministratorController.java" index="10">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="ActorAdministratorController.java" index="11">
-<position info="not_deleted" x="1044" y="0"/>
-</item>
-<item historyLabel="AdministratorController.java" index="12">
-<position info="not_deleted" x="1902" y="0"/>
-</item>
-<item historyLabel="ThreadPoolExecutor.class" index="13">
-<position info="not_deleted" x="44969" y="0"/>
-</item>
-<item historyLabel="action-2.jsp" index="9">
-<position info="not_deleted" x="25" y="0"/>
-</item>
-<item historyLabel="action-2.jsp" index="14">
+<item historyLabel="ProfileController.java" index="1">
 <position/>
 </item>
-<item historyLabel="HashPassword.java" index="15"/>
-<item historyLabel="Acme-Shout/pom.xml" index="16"/>
-<item historyLabel="web.xml" index="17">
-<position info="not_deleted" x="1261" y="0"/>
+<item historyLabel="ProfileController.java" index="1">
+<position info="not_deleted" x="984" y="0"/>
 </item>
-<item historyLabel="persistence.xml" index="18"/>
-<item historyLabel="DatabaseConfig.java" index="19">
-<position info="not_deleted" x="378" y="0"/>
+<item historyLabel="ProfileController.java" index="1">
+<position info="not_deleted" x="1049" y="0"/>
 </item>
-<item historyLabel="persistence.xml" index="18"/>
-<item historyLabel="footer.jsp" index="20">
-<position info="not_deleted" x="9" y="10"/>
+<item historyLabel="ProfileController.java" index="1">
+<position/>
 </item>
-<item historyLabel="header.jsp" index="21">
-<position info="not_deleted" x="578" y="0"/>
+<item historyLabel="ProfileController.java" index="1">
+<position info="not_deleted" x="1178" y="0"/>
 </item>
-<item historyLabel="hash-password.sql" index="22">
+<item historyLabel="ProfileController.java" index="1">
+<position/>
+</item>
+<item historyLabel="ProfileController.java" index="1">
+<position info="not_deleted" x="1231" y="0"/>
+</item>
+<item historyLabel="ProfileController.java" index="1">
+<position info="not_deleted" x="1263" y="0"/>
+</item>
+<item historyLabel="ProfileController.java" index="1">
+<position info="not_deleted" x="1294" y="0"/>
+</item>
+<item historyLabel="ProfileController.java" index="1">
+<position info="not_deleted" x="1297" y="0"/>
+</item>
+<item historyLabel="ProfileController.java" index="1">
+<position info="not_deleted" x="896" y="0"/>
+</item>
+<item historyLabel="action-1.jsp" index="0">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="header.jsp" index="21">
-<position info="not_deleted" x="578" y="0"/>
+<item historyLabel="action-1.jsp" index="0">
+<position info="not_deleted" x="863" y="0"/>
 </item>
-<item historyLabel="HashPassword.java" index="23">
+<item historyLabel="action-1.jsp" index="0">
+<position info="not_deleted" x="867" y="0"/>
+</item>
+<item historyLabel="messages_es.properties" index="2">
+<position/>
+</item>
+<item historyLabel="action-1.jsp" index="0">
+<position info="not_deleted" x="867" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="2" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="213" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="1083" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="320" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="1083" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="474" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="1083" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="621" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="697" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="754" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="786" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="1079" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="833" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="847" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="1074" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="904" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="918" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="975" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="989" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="1074" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="1046" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="1060" y="0"/>
+</item>
+<item historyLabel="Calculator.java" index="3">
+<position info="not_deleted" x="821" y="0"/>
+</item>
+<item historyLabel="ProfileController.java" index="4">
 <position info="not_deleted" x="4" y="0"/>
 </item>
-<item historyLabel="PopulateDatabase.java" index="24">
+<item historyLabel="ProfileController.java" index="4">
+<position info="not_deleted" x="1799" y="0"/>
+</item>
+<item historyLabel="ProfileController.java" index="4">
+<position info="not_deleted" x="1898" y="0"/>
+</item>
+<item historyLabel="ProfileController.java" index="4">
+<position info="not_deleted" x="2147" y="0"/>
+</item>
+<item historyLabel="action-2.jsp" index="5">
+<position info="not_deleted" x="1094" y="0"/>
+</item>
+<item historyLabel="messages.properties" index="6">
+<position info="not_deleted" x="381" y="0"/>
+</item>
+<item historyLabel="messages_es.properties" index="2">
+<position info="not_deleted" x="68" y="0"/>
+</item>
+<item historyLabel="messages.properties" index="6">
+<position info="not_deleted" x="381" y="0"/>
+</item>
+<item historyLabel="action-2.jsp" index="5">
+<position info="not_deleted" x="1019" y="0"/>
+</item>
+<item active="true" historyLabel="ProfileController.java" index="4">
 <position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="HashPassword.java" index="23">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="hash-password.sql" index="22">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="create-users.sql" index="25">
-<position info="not_deleted" x="0" y="199"/>
-</item>
-<item historyLabel="PopulateDatabase.java" index="24">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="hash-password.sql" index="22">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="create-users.sql" index="25">
-<position info="not_deleted" x="200" y="0"/>
-</item>
-<item active="true" historyLabel="grant-privileges.sql" index="26">
-<position info="not_deleted" x="0" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -487,6 +461,15 @@
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
+<trimArea IMemento.internal.id="16384">
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@4c02bc48"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@5c6ae889"/>
+</trimArea>
+<trimArea IMemento.internal.id="131072">
+<trimItem IMemento.internal.id="org.eclipse.ui.editorss"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@3edd044d"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@42137ac0"/>
+</trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
 <trimItem IMemento.internal.id="org.eclipse.mylyn.tasks.ui.trim.container"/>
@@ -495,30 +478,31 @@
 <trimItem IMemento.internal.id="org.eclise.ui.internal.FastViewBar"/>
 <trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@631ebf05"/>
 </trimArea>
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor" name="grant-privileges.sql" tooltip="Scrapbook/grant-privileges.sql">
-<persistable path="/Scrapbook/grant-privileges.sql"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ProfileController.java" tooltip="Acme-Shout/src/main/java/controllers/ProfileController.java">
+<persistable path="/Acme-Shout/src/main/java/controllers/ProfileController.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.PropertiesFileEditor" name="messages_es.properties" tooltip="Acme-Shout/src/main/webapp/views/profile/messages_es.properties">
+<persistable path="/Acme-Shout/src/main/webapp/views/profile/messages_es.properties"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.PropertiesFileEditor" name="messages.properties" tooltip="Acme-Shout/src/main/webapp/views/profile/messages.properties">
+<persistable path="/Acme-Shout/src/main/webapp/views/profile/messages.properties"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jst.jsp.core.jspsource.source" name="action-2.jsp" tooltip="Acme-Shout/src/main/webapp/views/profile/action-2.jsp">
+<persistable path="/Acme-Shout/src/main/webapp/views/profile/action-2.jsp"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Calculator.java" tooltip="Acme-Shout/src/main/java/forms/Calculator.java">
+<persistable path="/Acme-Shout/src/main/java/forms/Calculator.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jst.jsp.core.jspsource.source" name="action-1.jsp" tooltip="Acme-Shout/src/main/webapp/views/profile/action-1.jsp">
+<persistable path="/Acme-Shout/src/main/webapp/views/profile/action-1.jsp"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor" name="create-users.sql" tooltip="Scrapbook/create-users.sql">
 <persistable path="/Scrapbook/create-users.sql"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor" name="hash-password.sql" tooltip="Scrapbook/hash-password.sql">
-<persistable path="/Scrapbook/hash-password.sql"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PopulateDatabase.java" tooltip="Acme-Shout/src/main/java/utilities/PopulateDatabase.java">
-<persistable path="/Acme-Shout/src/main/java/utilities/PopulateDatabase.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HashPassword.java" tooltip="Acme-Shout/src/main/java/utilities/HashPassword.java">
-<persistable path="/Acme-Shout/src/main/java/utilities/HashPassword.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="logo.png" tooltip="Acme-Shout/src/main/webapp/images/logo.png">
-<persistable path="/Acme-Shout/src/main/webapp/images/logo.png"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jst.jsp.core.jspsource.source" name="footer.jsp" tooltip="Acme-Shout/src/main/webapp/views/master-page/footer.jsp">
-<persistable path="/Acme-Shout/src/main/webapp/views/master-page/footer.jsp"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" name="data.xml" tooltip="Acme-Shout/src/main/resources/spring/config/data.xml">
 <persistable path="/Acme-Shout/src/main/resources/spring/config/data.xml"/>
@@ -535,14 +519,14 @@
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.m2e.editor.MavenPomEditor" name="pom.xml" tooltip="Acme-Shout/pom.xml">
 <persistable path="/Acme-Shout/pom.xml"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jst.jsp.core.jspsource.source" name="action-2.jsp" tooltip="Acme-Shout/src/main/webapp/views/administrator/action-2.jsp">
-<persistable path="/Acme-Shout/src/main/webapp/views/administrator/action-2.jsp"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor" name="grant-privileges.sql" tooltip="Scrapbook/grant-privileges.sql">
+<persistable path="/Scrapbook/grant-privileges.sql"/>
 </file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="ThreadPoolExecutor.class" tooltip="java.util.concurrent.ThreadPoolExecutor">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=Acme-Certifications/C:\/Program Files\/Java\/jdk1.7.0_13\/jre\/lib\/rt.jar&lt;java.util.concurrent(ThreadPoolExecutor.class"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor" name="hash-password.sql" tooltip="Scrapbook/hash-password.sql">
+<persistable path="/Scrapbook/hash-password.sql"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AdministratorController.java" tooltip="Acme-Shout/src/main/java/controllers/AdministratorController.java">
-<persistable path="/Acme-Shout/src/main/java/controllers/AdministratorController.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PopulateDatabase.java" tooltip="Acme-Shout/src/main/java/utilities/PopulateDatabase.java">
+<persistable path="/Acme-Shout/src/main/java/utilities/PopulateDatabase.java"/>
 </file>
 </mruList>
 </workbench>
