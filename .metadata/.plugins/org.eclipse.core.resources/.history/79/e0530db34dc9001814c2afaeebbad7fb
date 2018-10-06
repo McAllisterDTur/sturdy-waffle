@@ -1,0 +1,6 @@
+package domain;
+
+@Entity
+public class Shout {
+
+}

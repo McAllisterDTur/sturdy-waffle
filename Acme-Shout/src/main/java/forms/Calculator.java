@@ -5,25 +5,25 @@ import javax.validation.constraints.Pattern;
 
 public class Calculator {
 
-	private Double	x;
-	private Double	y;
+	private double	x;
+	private double	y;
 	private String	operator;
-	private Double	result;
+	private double	result;
 
 
-	public Double getX() {
+	public double getX() {
 		return this.x;
 	}
 
-	public void setX(final Double x) {
+	public void setX(final double x) {
 		this.x = x;
 	}
 
-	public Double getY() {
+	public double getY() {
 		return this.y;
 	}
 
-	public void setY(final Double y) {
+	public void setY(final double y) {
 		this.y = y;
 	}
 
@@ -36,7 +36,7 @@ public class Calculator {
 		this.operator = operator;
 	}
 
-	public Double getResult() {
+	public double getResult() {
 		return this.result;
 	}
 

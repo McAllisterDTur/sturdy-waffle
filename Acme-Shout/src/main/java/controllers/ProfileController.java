@@ -52,7 +52,7 @@ public class ProfileController extends AbstractController {
 	// Action-2 ---------------------------------------------------------------		
 
 	@RequestMapping(value = "/action-2", method = RequestMethod.GET)
-	public ModelAndView action2() {
+	public ModelAndView action2Get() {
 		ModelAndView result;
 		Calculator calculator;
 

@@ -17,3 +17,34 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <p><spring:message code="customer.action.2" /></p>
+
+<form:form modelAttribute="shout">
+	<form:hidden path="id" />
+	<form:hidden path="version" />
+	
+	<form:label path="username">
+		<spring:message code="customer.username" /> : 
+	</form:label>
+	<form:input path="username"/>
+	<form:errors path="username"/>
+	<br />
+	
+	<form:label path="link">
+		<spring:message code="customer.link" /> : 
+	</form:label>
+	<form:input path="link"/>
+	<form:errors path="link"/>
+	<br />
+	
+	<form:label path="text">
+		<spring:message code="customer.text" /> : 
+	</form:label>
+	<form:textarea path="text"/>
+	<form:errors path="text"/>
+	<br />
+	
+	<input type="submit" name="save" value="<spring:message code='customer.save' />" />
+	
+	<input type="button" name="cancel" value="<spring:message code='customer.cancel' />"
+		onclick="javascript: relativeRedir('customer/action-1.do');" />
+</form:form>

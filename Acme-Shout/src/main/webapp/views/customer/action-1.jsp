@@ -17,3 +17,11 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <p><spring:message code="customer.action.1" /></p>
+
+<display:table pagesize="5" name="shouts" id="row" requestURI="customer/action-1.do">
+	<display:column property="username" titleKey="customer.username"/>
+	<display:column titleKey="customer.shout">
+		<strong><a href="${row.link}"><jstl:out value="${row.link}"/></a></strong><br />
+		<jstl:out value="${row.text}" />
+	</display:column>
+</display:table>
