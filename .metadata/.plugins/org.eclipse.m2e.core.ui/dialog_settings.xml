@@ -52,6 +52,7 @@
 	</section>
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="\\VBOXSVR\GitHub\sturdy-waffle\Acme-Shout"/>
 			<item value="E:\Sample-Workspace-1.18\Acme-Certifications"/>
 			<item value="C:\Users\Administrator\Desktop\Sample-Workspace-1.18\Acme-Share"/>
 			<item value="C:\Users\Administrator\Desktop\Sample-Workspace-1.18\Sample-Project"/>
@@ -66,7 +67,6 @@
 			<item value="E:\Templates\Templates-1.8\Sample-Project-1.8"/>
 			<item value="E:\Templates\Sample-Project-1.8"/>
 			<item value="E:\Sample-Project-1.8"/>
-			<item value="E:\Sample Workspace 1.7\Sample Project 1.7"/>
 		</list>
 		<list key="projectNameTemplate">
 			<item value="Share"/>
