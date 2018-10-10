@@ -14,9 +14,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import forms.Calculator;
 
 @Controller
 @RequestMapping("/profile")
@@ -46,11 +52,26 @@ public class ProfileController extends AbstractController {
 
 	// Action-2 ---------------------------------------------------------------		
 
-	@RequestMapping("/action-2")
-	public ModelAndView action2() {
+	@RequestMapping(value = "/action-2", method = RequestMethod.GET)
+	public ModelAndView action2Get() {
+		ModelAndView result;
+		Calculator calculator;
+
+		calculator = new Calculator();
+		result = new ModelAndView("profile/action-2");
+		result.addObject("calculator", calculator);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/action-2", method = RequestMethod.POST)
+	public ModelAndView action2Post(@Valid final Calculator calculator, final BindingResult binding) {
 		ModelAndView result;
 
+		calculator.compute();
+
 		result = new ModelAndView("profile/action-2");
+		result.addObject("calculator", calculator);
 
 		return result;
 	}
