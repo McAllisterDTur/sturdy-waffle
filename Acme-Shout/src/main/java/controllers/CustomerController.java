@@ -10,13 +10,27 @@
 
 package controllers;
 
+import java.util.Collection;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import services.ShoutService;
+import domain.Shout;
 
 @Controller
 @RequestMapping("/customer")
 public class CustomerController extends AbstractController {
+
+	@Autowired
+	private ShoutService	shoutService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -26,22 +40,45 @@ public class CustomerController extends AbstractController {
 
 	// Action-1 ---------------------------------------------------------------		
 
-	@RequestMapping("/action-1")
+	@RequestMapping(value = "/allShouts", method = RequestMethod.GET)
 	public ModelAndView action1() {
 		ModelAndView result;
+		Collection<Shout> shouts;
 
-		result = new ModelAndView("customer/action-1");
+		shouts = this.shoutService.findAll();
+
+		result = new ModelAndView("customer/allShouts");
+		result.addObject("shouts", shouts);
 
 		return result;
 	}
 
 	// Action-2 ---------------------------------------------------------------		
 
-	@RequestMapping("/action-2")
-	public ModelAndView action2() {
+	@RequestMapping(value = "/newShout", method = RequestMethod.GET)
+	public ModelAndView action2Get() {
+		ModelAndView result;
+		Shout shout;
+
+		shout = this.shoutService.create();
+
+		result = new ModelAndView("customer/newShout");
+		result.addObject("shout", shout);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/newShout", method = RequestMethod.POST)
+	public ModelAndView action2Post(@Valid final Shout shout, final BindingResult binding) {
 		ModelAndView result;
 
-		result = new ModelAndView("customer/action-2");
+		if (!binding.hasErrors()) {
+			this.shoutService.save(shout);
+			result = new ModelAndView("redirect:allShouts.do");
+		} else {
+			result = new ModelAndView("customer/newShout");
+			result.addObject("shout", shout);
+		}
 
 		return result;
 	}

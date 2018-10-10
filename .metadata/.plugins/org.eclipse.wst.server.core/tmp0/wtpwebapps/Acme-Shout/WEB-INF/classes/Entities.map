@@ -1,12 +1,9 @@
 #./src/main/resources/Entities.map
-#Sat Sep 22 15:00:47 CEST 2018
-shout5=18
-shout4=17
-shout3=16
-shout2=15
-shout1=14
-userAccount3=13
-userAccount2=12
-userAccount1=11
-shout7=20
-shout6=19
+#Sat Oct 06 15:26:27 CEST 2018
+shout3=13
+shout2=12
+shout1=11
+userAccount3=10
+userAccount2=9
+userAccount1=8
+shout4=14
