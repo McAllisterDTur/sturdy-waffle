@@ -1,0 +1,10 @@
+
+package services;
+
+@Service
+@Transactional
+public class ShoutService {
+
+	@Autowired
+	private ShoutRepository	shoutRepository;
+}

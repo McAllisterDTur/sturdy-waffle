@@ -1,0 +1,7 @@
+package repositories;
+
+@Repository
+@Transactional
+public class ShoutRepository extends JpaRepository<Shout, Integer>{
+
+}

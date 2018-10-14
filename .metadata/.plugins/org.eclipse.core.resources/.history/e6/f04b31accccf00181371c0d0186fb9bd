@@ -1,0 +1,12 @@
+
+package repositories;
+
+import org.springframework.stereotype.Repository;
+
+import domain.Shout;
+
+@Repository
+@Transactional
+public class ShoutRepository extends JpaRepository<Shout, Integer> {
+
+}

@@ -19,8 +19,8 @@
 <p><spring:message code="profile.action.2" /></p>
 
 <form:form modelAttribute="calculator">
-	<form:input path="x" /> <form:errors path="x" /> <br />
-	<form:input path="y" /> <form:errors path="y" /> <br />
+	<form:input path="x"/><form:errors path="x" /> <br />
+	<form:input path="y"/><form:errors path="y" /> <br />
 	<form:select path="operator">
 		<form:option value="+" />
 		<form:option value="-" />
@@ -29,7 +29,8 @@
 	</form:select>
 	<form:errors path="operator" /> <br />
 	<hr />
-	<jstl:out value="${calculator.result}" />
+	<jstl:out value="${calculator.result}"></jstl:out>
 	<br />
-	<input type="submit" value="<spring:message code='profile.compute'/>" />
+	<input type="submit" 
+		value="<spring:message code='profile.compute'/>" />
 </form:form>

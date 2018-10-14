@@ -15,8 +15,16 @@ public class Calculator {
 		return this.x;
 	}
 
+	public void setX(final double x) {
+		this.x = x;
+	}
+
 	public double getY() {
 		return this.y;
+	}
+
+	public void setY(final double y) {
+		this.y = y;
 	}
 
 	@Pattern(regexp = "^[\\+\\-\\*\\/]$")

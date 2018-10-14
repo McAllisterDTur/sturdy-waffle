@@ -58,5 +58,27 @@
 	</bean>
 	
 	<!-- Other domain beans come here -->	
+	<bean id="shout1" class="domain.Shout">
+		<property name="username" value="John Doe" />
+		<property name="link" value="http://www.us.es" />
+		<property name="text" value="My alma mater" />
+	</bean>
 	
+	<bean id="shout2" class="domain.Shout">
+		<property name="username" value="Hedy ZD" />
+		<property name="link" value="http://academiasonsalseros.com" />
+		<property name="text" value="Learn salsa, bachata, and kizomba!" />
+	</bean>
+	
+	<bean id="shout3" class="domain.Shout">
+		<property name="username" value="María López" />
+		<property name="link" value="http://www.change.org" />
+		<property name="text" value="No al maltrato animal" />
+	</bean>
+
+	<bean id="shout4" class="domain.Shout">
+		<property name="username" value="Jane Doe" />
+		<property name="link" value="http://www.change.org" />
+		<property name="text" value="End tampon tax now!" />
+	</bean>	
 </beans>
