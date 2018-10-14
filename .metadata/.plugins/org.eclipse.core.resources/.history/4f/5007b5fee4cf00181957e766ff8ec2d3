@@ -16,32 +16,27 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<canvas id="myChart"></canvas>
 
-
-<canvas id="myChart" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
 <p><spring:message code="administrator.action.2" /></p>
-<script type="text/javascript">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 var ctx = document.getElementById('myChart').getContext('2d');
-var all = "${statistics.get('count.all.shouts')}";
-var shr = "${statistics.get('count.short.shouts')}";
-var lng = "${statistics.get('count.long.shouts')}";
 var chart = new Chart(ctx, {
     // The type of chart we want to create
-    type: 'bar',
+    type: 'line',
 
     // The data for our dataset
     data: {
-        labels: ["<spring:message code="administrator.count.all.shouts" />", "<spring:message code="administrator.count.short.shouts" />", "<spring:message code="administrator.count.long.shouts" />"],
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
         datasets: [{
-            label: "<spring:message code="administrator.indicator" />",
+            label: "My First dataset",
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            data: [all, shr,lng]
+            data: [0, 10, 5, 2, 20, 30, 45],
         }]
     },
 
     // Configuration options go here
     options: {}
 });
-</script>

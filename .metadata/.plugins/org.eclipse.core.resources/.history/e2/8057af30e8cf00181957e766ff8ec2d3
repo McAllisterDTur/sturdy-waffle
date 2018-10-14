@@ -23,9 +23,9 @@
 <p><spring:message code="administrator.action.2" /></p>
 <script type="text/javascript">
 var ctx = document.getElementById('myChart').getContext('2d');
-var all = "${statistics.get('count.all.shouts')}";
-var shr = "${statistics.get('count.short.shouts')}";
-var lng = "${statistics.get('count.long.shouts')}";
+var all = '${statistics.get("count.all.shouts")}';
+var shr = '${statistics.get("count.short.shouts")}';
+var lng = '${statistics.get("count.long.shouts")}';
 var chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'bar',

@@ -18,14 +18,14 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
+<canvas id="myChart" width="600" height="400"></canvas>
 
-<canvas id="myChart" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
 <p><spring:message code="administrator.action.2" /></p>
 <script type="text/javascript">
 var ctx = document.getElementById('myChart').getContext('2d');
-var all = "${statistics.get('count.all.shouts')}";
-var shr = "${statistics.get('count.short.shouts')}";
-var lng = "${statistics.get('count.long.shouts')}";
+var all = '${statistics.get("count.all.shouts")}';
+var shr = '${statistics.get("count.short.shouts")}';
+var lng = '${statistics.get("count.long.shouts")}';
 var chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'bar',

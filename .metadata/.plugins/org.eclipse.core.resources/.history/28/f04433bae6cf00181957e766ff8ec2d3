@@ -18,14 +18,12 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
+<canvas id="myChart"></canvas>
 
-<canvas id="myChart" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
 <p><spring:message code="administrator.action.2" /></p>
 <script type="text/javascript">
 var ctx = document.getElementById('myChart').getContext('2d');
-var all = "${statistics.get('count.all.shouts')}";
-var shr = "${statistics.get('count.short.shouts')}";
-var lng = "${statistics.get('count.long.shouts')}";
+
 var chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'bar',
@@ -37,7 +35,7 @@ var chart = new Chart(ctx, {
             label: "<spring:message code="administrator.indicator" />",
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            data: [all, shr,lng]
+            data: [, 10, 5, 2, 20, 30, 45],
         }]
     },
 
