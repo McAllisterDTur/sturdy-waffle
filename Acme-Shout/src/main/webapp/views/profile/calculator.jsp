@@ -1,5 +1,5 @@
 <%--
- * action-1.jsp
+ * action-2.jsp
  *
  * Copyright (C) 2018 Universidad de Sevilla
  * 
@@ -16,4 +16,20 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<p><spring:message code="administrator.action.1" /></p>
+<p><spring:message code="profile.action.2" /></p>
+
+<form:form modelAttribute="calculator">
+	<form:input path="x" /> <form:errors path="x" /> <br />
+	<form:input path="y" /> <form:errors path="y" /> <br />
+	<form:select path="operator" >
+		<form:option value="+" />
+		<form:option value="-" />
+		<form:option value="*" />
+		<form:option value="/" />
+	</form:select>
+	<form:errors path="operator" /> <br />
+	<hr />
+	<jstl:out value="${calculator.result}" />
+	<br />
+	<input type="submit" value="<spring:message code='profile.compute'/>" />
+</form:form>

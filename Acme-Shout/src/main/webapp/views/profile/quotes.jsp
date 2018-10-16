@@ -16,4 +16,10 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<p><spring:message code="customer.action.1" /></p>
+<p><spring:message code="profile.action.1" /></p>
+
+<ol>
+	<jstl:forEach var="quote" items="${quotes}">
+		<li><jstl:out value="${quote}"></jstl:out></li>
+	</jstl:forEach>
+</ol>
