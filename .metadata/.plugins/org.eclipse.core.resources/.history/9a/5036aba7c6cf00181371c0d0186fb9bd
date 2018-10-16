@@ -1,9 +1,0 @@
-
-package domain;
-
-import javax.persistence.Access;
-
-@Entity
-public class Shout extends DomainEntity {
-
-}

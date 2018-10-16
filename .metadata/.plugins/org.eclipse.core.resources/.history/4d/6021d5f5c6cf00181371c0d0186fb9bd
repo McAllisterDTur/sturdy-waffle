@@ -1,8 +1,0 @@
-
-package domain;
-
-
-@Entity
-public class Shout extends DomainEntity {
-
-}
