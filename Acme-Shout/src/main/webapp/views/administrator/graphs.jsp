@@ -22,7 +22,7 @@
 <body>
 <p><spring:message code="administrator.action.2" /></p>
 
-<canvas id="bar-chart" width="800" height="450"></canvas>
+<canvas id="bar-chart" width="400" height="225"></canvas>
 <script type="text/javascript">
 
 var all = '${statistics.get("count.all.shouts")}';
