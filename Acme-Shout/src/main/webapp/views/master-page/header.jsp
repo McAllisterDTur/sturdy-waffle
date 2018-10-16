@@ -63,6 +63,8 @@
 </div>
 
 <div>
-	<a href="./?language=en">en</a> | <a href="./?language=es">es</a>
+	<a href="${requestScope['javax.servlet.forward.request_uri']}?language=en">en</a> | <a href="${requestScope['javax.servlet.forward.request_uri']}?language=es">es</a>
+</div>
+
 </div>
 
