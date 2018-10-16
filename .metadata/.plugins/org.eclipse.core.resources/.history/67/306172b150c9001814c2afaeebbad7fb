@@ -1,7 +1,0 @@
-package repositories;
-
-@Repository
-@Transactional
-public interface ShoutRepository {
-
-}
