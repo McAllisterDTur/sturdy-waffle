@@ -41,15 +41,15 @@
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
 
-		<security:intercept-url pattern="/administrator/action-1.do" access="hasRole('ADMIN')" /> 
-		<security:intercept-url pattern="/administrator/action-2.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/stats.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/graphs.do" access="hasRole('ADMIN')" /> 
 
-		<security:intercept-url pattern="/customer/action-1.do" access="hasRole('CUSTOMER')" /> 
-		<security:intercept-url pattern="/customer/action-2.do" access="hasRole('CUSTOMER')" /> 
+		<security:intercept-url pattern="/customer/allShouts.do" access="hasRole('CUSTOMER')" /> 
+		<security:intercept-url pattern="/customer/newShout.do" access="hasRole('CUSTOMER')" /> 
 
-		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
-		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
-		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/profile/quotes.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/profile/calculator.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/profile/panic.do" access="isAuthenticated()" /> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

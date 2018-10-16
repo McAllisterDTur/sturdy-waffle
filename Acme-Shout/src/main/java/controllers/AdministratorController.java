@@ -10,13 +10,23 @@
 
 package controllers;
 
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import services.ShoutService;
 
 @Controller
 @RequestMapping("/administrator")
 public class AdministratorController extends AbstractController {
+
+	@Autowired
+	private ShoutService	shoutService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -26,22 +36,30 @@ public class AdministratorController extends AbstractController {
 
 	// Action-1 ---------------------------------------------------------------		
 
-	@RequestMapping("/action-1")
+	@RequestMapping(value = "/stats", method = RequestMethod.GET)
 	public ModelAndView action1() {
 		ModelAndView result;
+		Map<String, Double> statistics;
 
-		result = new ModelAndView("administrator/action-1");
+		statistics = this.shoutService.computeStatistics();
+
+		result = new ModelAndView("administrator/stats");
+		result.addObject("statistics", statistics);
 
 		return result;
 	}
 
 	// Action-2 ---------------------------------------------------------------
 
-	@RequestMapping("/action-2")
+	@RequestMapping(value = "/graphs", method = RequestMethod.GET)
 	public ModelAndView action2() {
 		ModelAndView result;
+		Map<String, Double> statistics;
 
-		result = new ModelAndView("administrator/action-2");
+		statistics = this.shoutService.computeStatistics();
+
+		result = new ModelAndView("administrator/graphs");
+		result.addObject("statistics", statistics);
 
 		return result;
 	}

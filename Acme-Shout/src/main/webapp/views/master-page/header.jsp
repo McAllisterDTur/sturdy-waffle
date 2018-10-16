@@ -14,7 +14,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <div>
-	<a href="#"><img src="images/logo.png" alt="Sample Co., Inc." /></a>
+	<a href="#"><img src="images/logo.png" alt="ACME Shout Co., Inc." /></a>
 </div>
 
 <div>
@@ -24,8 +24,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/action-1.do"><spring:message code="master.page.administrator.action.1" /></a></li>
-					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>					
+					<li><a href="administrator/stats.do"><spring:message code="master.page.administrator.action.1" /></a></li>
+					<li><a href="administrator/graphs.do"><spring:message code="master.page.administrator.action.2" /></a></li>					
 				</ul>
 			</li>
 		</security:authorize>
@@ -34,8 +34,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.customer" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="customer/action-1.do"><spring:message code="master.page.customer.action.1" /></a></li>
-					<li><a href="customer/action-2.do"><spring:message code="master.page.customer.action.2" /></a></li>					
+					<li><a href="customer/allShouts.do"><spring:message code="master.page.customer.action.1" /></a></li>
+					<li><a href="customer/newShout.do"><spring:message code="master.page.customer.action.2" /></a></li>					
 				</ul>
 			</li>
 		</security:authorize>
@@ -52,9 +52,9 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="profile/action-1.do"><spring:message code="master.page.profile.action.1" /></a></li>
-					<li><a href="profile/action-2.do"><spring:message code="master.page.profile.action.2" /></a></li>
-					<li><a href="profile/action-3.do"><spring:message code="master.page.profile.action.3" /></a></li>					
+					<li><a href="profile/quotes.do"><spring:message code="master.page.profile.action.1" /></a></li>
+					<li><a href="profile/calculator.do"><spring:message code="master.page.profile.action.2" /></a></li>
+					<li><a href="profile/panic.do"><spring:message code="master.page.profile.action.3" /></a></li>					
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>
@@ -63,6 +63,8 @@
 </div>
 
 <div>
-	<a href="?language=en">en</a> | <a href="?language=es">es</a>
+	<a href="${requestScope['javax.servlet.forward.request_uri']}?language=en">en</a> | <a href="${requestScope['javax.servlet.forward.request_uri']}?language=es">es</a>
+</div>
+
 </div>
 
