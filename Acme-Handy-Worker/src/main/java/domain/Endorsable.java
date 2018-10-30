@@ -28,12 +28,18 @@ public class Endorsable extends Actor {
 		final Integer n = 0;
 		Double words = 0.0;
 		for (final String c : this.getComments()) {
-			final String[] split = c.split("\\s+");
+			final String[] split = c.trim().split("\\s+");
+			words += split.length;
 			for (final String s : split) {
 				//Cogemos cada palabra de la lista de badwords y, si contiene una, n++
+				for (final String bw : configuration.getNegativeWords())
+					if (s.toUpperCase().equals(bw.toUpperCase()))
+						n++;
 				//Cogemos cada palabra de la lista de goodwords y, si contiene una, p++
+				for (final String gw : configuration.getPositiveWords())
+					if (s.toUpperCase().equals(gw.toUpperCase()))
+						p++;
 			}
-			words += split.length;
 		}
 		final Double preRes = p - n + 0.0;
 		//Hay que normalizarlo, aka meterlo en el rango [-1.0, 1.0]
