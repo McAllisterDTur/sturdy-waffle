@@ -10,7 +10,7 @@ import javax.validation.constraints.Past;
 import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
-public class Application {
+public class Application extends DomainEntity {
 
 	private DateTime		registerTime;
 	private Money			offeredPrice;
