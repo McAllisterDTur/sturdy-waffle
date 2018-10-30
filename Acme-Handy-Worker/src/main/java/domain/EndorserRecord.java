@@ -9,24 +9,13 @@ import org.hibernate.validator.constraints.URL;
 
 public class EndorserRecord {
 
-	@NotBlank
 	private String			endorserName;
-	@Email
 	private String			email;
 	private List<String>	phoneNumber;
-	@URL
-	@NotBlank
 	private String			linkedInURL;
 
 
-	public EndorserRecord(final String endorserName, final String email, final List<String> phoneNumber, final String linkedInURL) {
-		super();
-		this.endorserName = endorserName;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
-		this.linkedInURL = linkedInURL;
-	}
-
+	@NotBlank
 	public String getEndorserName() {
 		return this.endorserName;
 	}
@@ -35,6 +24,7 @@ public class EndorserRecord {
 		this.endorserName = endorserName;
 	}
 
+	@Email
 	public String getEmail() {
 		return this.email;
 	}
@@ -51,6 +41,8 @@ public class EndorserRecord {
 		this.phoneNumber = phoneNumber;
 	}
 
+	@URL
+	@NotBlank
 	public String getLinkedInURL() {
 		return this.linkedInURL;
 	}

@@ -8,29 +8,15 @@ import org.hibernate.validator.constraints.URL;
 
 public class Sponsorship {
 
-	@NotBlank
-	@URL
 	private String		bannerURL;
-	@NotBlank
-	@URL
 	private String		targetPageLink;
-	@NotNull
 	private CreditCard	creditCard;
-	@NotNull
 	private Sponsor		sponsor;
-	@NotNull
 	private Tutorial	tutorial;
 
 
-	public Sponsorship(final String bannerURL, final String targetPageLink, final CreditCard creditCard, final Sponsor sponsor, final Tutorial tutorial) {
-		super();
-		this.bannerURL = bannerURL;
-		this.targetPageLink = targetPageLink;
-		this.creditCard = creditCard;
-		this.sponsor = sponsor;
-		this.tutorial = tutorial;
-	}
-
+	@NotBlank
+	@URL
 	public String getBannerURL() {
 		return this.bannerURL;
 	}
@@ -39,6 +25,8 @@ public class Sponsorship {
 		this.bannerURL = bannerURL;
 	}
 
+	@NotBlank
+	@URL
 	public String getTargetPageLink() {
 		return this.targetPageLink;
 	}
@@ -47,6 +35,7 @@ public class Sponsorship {
 		this.targetPageLink = targetPageLink;
 	}
 
+	@NotNull
 	public CreditCard getCreditCard() {
 		return this.creditCard;
 	}
@@ -55,6 +44,7 @@ public class Sponsorship {
 		this.creditCard = creditCard;
 	}
 
+	@NotNull
 	public Sponsor getSponsor() {
 		return this.sponsor;
 	}
@@ -63,6 +53,7 @@ public class Sponsorship {
 		this.sponsor = sponsor;
 	}
 
+	@NotNull
 	public Tutorial getTutorial() {
 		return this.tutorial;
 	}

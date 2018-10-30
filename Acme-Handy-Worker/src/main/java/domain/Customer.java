@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -10,23 +11,18 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Customer extends Endorsable {
 
-	// Constructor
-
-	public Customer() {
-		super();
-	}
-
 	// Atributes
 
 	// Relationships
 
-	private Collection<FixUpTask> fixUpTask;
+	private Collection<FixUpTask>	fixUpTask;
+
 
 	@NotNull
 	@Valid
 	@OneToMany(mappedBy = "fixUpTask")
 	public Collection<FixUpTask> getFixUpTask() {
-		return fixUpTask;
+		return this.fixUpTask;
 	}
 
 	public void setFixUpTask(final Collection<FixUpTask> fixUpTask) {

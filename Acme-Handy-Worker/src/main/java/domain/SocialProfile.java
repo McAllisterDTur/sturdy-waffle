@@ -6,22 +6,12 @@ import org.hibernate.validator.constraints.URL;
 
 public class SocialProfile {
 
-	@NotBlank
-	private String			nick;
-	@NotBlank
-	private String			socialNetwork;
-	@NotBlank
-	@URL
-	private final String	profileLink;
+	private String	nick;
+	private String	socialNetwork;
+	private String	profileLink;
 
 
-	public SocialProfile(final String nick, final String socialNetwork, final String profileLink) {
-		super();
-		this.nick = nick;
-		this.socialNetwork = socialNetwork;
-		this.profileLink = profileLink;
-	}
-
+	@NotBlank
 	public String getNick() {
 		return this.nick;
 	}
@@ -30,6 +20,7 @@ public class SocialProfile {
 		this.nick = nick;
 	}
 
+	@NotBlank
 	public String getSocialNetwork() {
 		return this.socialNetwork;
 	}
@@ -38,6 +29,8 @@ public class SocialProfile {
 		this.socialNetwork = socialNetwork;
 	}
 
+	@NotBlank
+	@URL
 	public String getProfileLink() {
 		return this.profileLink;
 	}

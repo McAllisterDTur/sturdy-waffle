@@ -13,12 +13,12 @@ public class Money {
 	private String	currency;
 
 
+	@Min(0)
+	@Digits(fraction = 2, integer = 9)
 	public Double getAmount() {
 		return this.amount;
 	}
 
-	@Min(0)
-	@Digits(fraction = 2, integer = 9)
 	public void setAmount(final Double amount) {
 		this.amount = amount;
 	}

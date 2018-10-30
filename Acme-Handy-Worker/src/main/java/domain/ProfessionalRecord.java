@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Date;
@@ -15,27 +16,23 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class ProfessionalRecord extends DomainEntity {
 
-	// Constructor
-	public ProfessionalRecord() {
-		super();
-	}
-
 	// Atributes
-	private String companyName;
+	private String		companyName;
 
-	private String role;
+	private String		role;
 
-	private Date start;
+	private Date		start;
 
-	private Date end;
+	private Date		end;
 
-	private String[] attachmentURL;
+	private String[]	attachmentURL;
 
-	private String comments;
+	private String		comments;
+
 
 	@NotBlank
 	public String getCompanyName() {
-		return companyName;
+		return this.companyName;
 	}
 
 	public void setCompanyName(final String companyName) {
@@ -44,7 +41,7 @@ public class ProfessionalRecord extends DomainEntity {
 
 	@NotBlank
 	public String getRole() {
-		return role;
+		return this.role;
 	}
 
 	public void setRole(final String role) {
@@ -56,7 +53,7 @@ public class ProfessionalRecord extends DomainEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getStart() {
-		return start;
+		return this.start;
 	}
 
 	public void setStart(final Date start) {
@@ -66,7 +63,7 @@ public class ProfessionalRecord extends DomainEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getEnd() {
-		return end;
+		return this.end;
 	}
 
 	public void setEnd(final Date end) {
@@ -75,7 +72,7 @@ public class ProfessionalRecord extends DomainEntity {
 
 	@URL
 	public String[] getAttachmentURL() {
-		return attachmentURL;
+		return this.attachmentURL;
 	}
 
 	public void setAttachmentURL(final String[] attachmentURL) {
@@ -83,7 +80,7 @@ public class ProfessionalRecord extends DomainEntity {
 	}
 
 	public String getComments() {
-		return comments;
+		return this.comments;
 	}
 
 	public void setComments(final String comments) {

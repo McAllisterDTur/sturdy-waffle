@@ -1,4 +1,6 @@
+
 package domain;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
@@ -7,16 +9,11 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Referee extends Actor {
 
-	//Constructors
-
-	public Referee() {
-		super();
-	}
-	
 	//Atributes
 
 	//Relationships
-	private Complaint complaint;
+	private Complaint	complaint;
+
 
 	@NotNull
 	@Valid
@@ -28,5 +25,5 @@ public class Referee extends Actor {
 	public void setComplaint(final Complaint complaint) {
 		this.complaint = complaint;
 	}
-	
+
 }

@@ -3,6 +3,7 @@ package domain;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -11,19 +12,12 @@ import org.joda.time.DateTime;
 
 public class FixUpTask {
 
-	@NotBlank
 	private String				ticker;
-	@Past
-	@NotNull
 	private DateTime			publishTime;
-	@NotBlank
 	private String				description;
-	@NotBlank
 	private String				address;
 	private Money				maxPrice;
-	@NotNull
 	private DateTime			periodStart;
-	@NotNull
 	private DateTime			periodEnd;
 	private CreditCard			creditCard;
 	private Category			category;
@@ -33,24 +27,8 @@ public class FixUpTask {
 	private List<Application>	application;
 
 
-	public FixUpTask(final String ticker, final DateTime publishTime, final String description, final String address, final Money maxPrice, final DateTime periodStart, final DateTime periodEnd, final CreditCard creditCard, final Category category,
-		final Warranty warranty, final Customer customer, final List<Complaint> complaint, final List<Application> application) {
-		super();
-		this.ticker = ticker;
-		this.publishTime = publishTime;
-		this.description = description;
-		this.address = address;
-		this.maxPrice = maxPrice;
-		this.periodStart = periodStart;
-		this.periodEnd = periodEnd;
-		this.creditCard = creditCard;
-		this.category = category;
-		this.warranty = warranty;
-		this.customer = customer;
-		this.complaint = complaint;
-		this.application = application;
-	}
-
+	@NotBlank
+	@Column(unique = true)
 	public String getTicker() {
 		return this.ticker;
 	}
@@ -59,6 +37,8 @@ public class FixUpTask {
 		this.ticker = ticker;
 	}
 
+	@Past
+	@NotNull
 	public DateTime getPublishTime() {
 		return this.publishTime;
 	}
@@ -67,6 +47,7 @@ public class FixUpTask {
 		this.publishTime = publishTime;
 	}
 
+	@NotBlank
 	public String getDescription() {
 		return this.description;
 	}
@@ -75,6 +56,7 @@ public class FixUpTask {
 		this.description = description;
 	}
 
+	@NotBlank
 	public String getAddress() {
 		return this.address;
 	}
@@ -83,6 +65,7 @@ public class FixUpTask {
 		this.address = address;
 	}
 
+	@NotNull
 	public Money getMaxPrice() {
 		return this.maxPrice;
 	}
@@ -91,6 +74,7 @@ public class FixUpTask {
 		this.maxPrice = maxPrice;
 	}
 
+	@NotNull
 	public DateTime getPeriodStart() {
 		return this.periodStart;
 	}

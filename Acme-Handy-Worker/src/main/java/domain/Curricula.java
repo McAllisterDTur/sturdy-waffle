@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -16,31 +17,27 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 public class Curricula extends DomainEntity {
 
-	// Constructor
-	public Curricula() {
-		super();
-	}
-
 	// Atributes
 
-	private String ticker;
+	private String							ticker;
 
-	// Relantionships
-	private PersonalRecord personalRecord;
+	// Relationships
+	private PersonalRecord					personalRecord;
 
-	private Collection<ProfessionalRecord> professionalRecord;
+	private Collection<ProfessionalRecord>	professionalRecord;
 
-	private Collection<EducationRecord> educationRecord;
+	private Collection<EducationRecord>		educationRecord;
 
-	private Collection<EndorserRecord> endorserRecord;
+	private Collection<EndorserRecord>		endorserRecord;
 
-	private Collection<MiscellaneousRecord> miscellaneousRecord;
+	private Collection<MiscellaneousRecord>	miscellaneousRecord;
+
 
 	@Column(unique = true)
 	@NotBlank
 	@Pattern(regexp = "^(\\d{2})(\\d{2})(\\d{2})\\-([A-Z]{6})$")
 	public String getTicker() {
-		return ticker;
+		return this.ticker;
 	}
 
 	public void setTicker(final String ticker) {
@@ -51,7 +48,7 @@ public class Curricula extends DomainEntity {
 	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
 	public PersonalRecord getPersonalRecord() {
-		return personalRecord;
+		return this.personalRecord;
 	}
 
 	public void setPersonalRecord(final PersonalRecord personalRecord) {
@@ -62,7 +59,7 @@ public class Curricula extends DomainEntity {
 	@Valid
 	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<ProfessionalRecord> getProfessionalRecord() {
-		return professionalRecord;
+		return this.professionalRecord;
 	}
 
 	public void setProfessionalRecord(final Collection<ProfessionalRecord> professionalRecord) {
@@ -73,7 +70,7 @@ public class Curricula extends DomainEntity {
 	@Valid
 	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<EducationRecord> getEducationRecord() {
-		return educationRecord;
+		return this.educationRecord;
 	}
 
 	public void setEducationRecord(final Collection<EducationRecord> educationRecord) {
@@ -84,7 +81,7 @@ public class Curricula extends DomainEntity {
 	@Valid
 	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<EndorserRecord> getEndorserRecord() {
-		return endorserRecord;
+		return this.endorserRecord;
 	}
 
 	public void setEndorserRecord(final Collection<EndorserRecord> endorserRecord) {
@@ -95,7 +92,7 @@ public class Curricula extends DomainEntity {
 	@Valid
 	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<MiscellaneousRecord> getMiscellaneousRecord() {
-		return miscellaneousRecord;
+		return this.miscellaneousRecord;
 	}
 
 	public void setMiscellaneousRecord(final Collection<MiscellaneousRecord> miscellaneousRecord) {

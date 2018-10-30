@@ -14,17 +14,6 @@ public class Finder {
 	private List<FixUpTask>	fixUpTask;
 
 
-	public Finder(final String searchString, final String warranty, final String keyWord, final String category, final String priceRange, final String dateRange, final List<FixUpTask> fixUpTask) {
-		super();
-		this.searchString = searchString;
-		this.warranty = warranty;
-		this.keyWord = keyWord;
-		this.category = category;
-		this.priceRange = priceRange;
-		this.dateRange = dateRange;
-		this.fixUpTask = fixUpTask;
-	}
-
 	public String getSearchString() {
 		return this.searchString;
 	}

@@ -10,18 +10,20 @@ public class MiscellaneousRecord extends Curricula {
 	private String	attachmentURL;
 
 
+	@NotBlank
 	public String getTitle() {
 		return this.title;
 	}
-	@NotBlank
+
 	public void setTitle(final String title) {
 		this.title = title;
 	}
 
+	@URL
 	public String getAttachmentURL() {
 		return this.attachmentURL;
 	}
-	@URL
+
 	public void setAttachmentURL(final String attachmentURL) {
 		this.attachmentURL = attachmentURL;
 	}

@@ -17,34 +17,38 @@ public class Message {
 	private List<String>	tags;
 
 
+	@Past
 	public DateTime getSendTime() {
 		return this.sendTime;
 	}
-	@Past
+
 	public void setSendTime(final DateTime sendTime) {
 		this.sendTime = sendTime;
 	}
 
+	@NotBlank
 	public String getSubject() {
 		return this.subject;
 	}
-	@NotBlank
+
 	public void setSubject(final String subject) {
 		this.subject = subject;
 	}
 
+	@NotBlank
 	public String getBody() {
 		return this.body;
 	}
-	@NotBlank
+
 	public void setBody(final String body) {
 		this.body = body;
 	}
 
+	@NotNull
 	public List<String> getTags() {
 		return this.tags;
 	}
-	@NotNull
+
 	public void setTags(final List<String> tags) {
 		this.tags = tags;
 	}

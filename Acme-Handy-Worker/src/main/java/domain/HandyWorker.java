@@ -8,11 +8,11 @@ public class HandyWorker extends Actor {
 	private String	make;
 
 
+	@NotBlank
 	public String getMake() {
 		return this.make;
 	}
 
-	@NotBlank
 	public void setMake(final String make) {
 		this.make = make;
 	}
