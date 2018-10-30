@@ -29,4 +29,9 @@ public class Customer extends Endorsable {
 		this.fixUpTask = fixUpTask;
 	}
 
+	@Override
+	public String toString() {
+		return "Customer [" + super.toString() + "fixUpTask=" + this.fixUpTask + "]";
+	}
+
 }

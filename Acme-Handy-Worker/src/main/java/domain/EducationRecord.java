@@ -2,6 +2,7 @@
 package domain;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
@@ -18,17 +19,17 @@ public class EducationRecord extends DomainEntity {
 
 	//Atributes
 
-	private String		diplomaTitle;
+	private String			diplomaTitle;
 
-	private String		institution;
+	private String			institution;
 
-	private Date		start;
+	private Date			start;
 
-	private Date		end;
+	private Date			end;
 
-	private String[]	attachmentURL;
+	private List<String>	attachmentURL;
 
-	private String		comment;
+	private String			comment;
 
 
 	public String getComment() {
@@ -81,12 +82,17 @@ public class EducationRecord extends DomainEntity {
 	}
 
 	@URL
-	public String[] getAttachmentURL() {
+	public List<String> getAttachmentURL() {
 		return this.attachmentURL;
 	}
 
-	public void setAttachmentURL(final String[] attachmentURL) {
+	public void setAttachmentURL(final List<String> attachmentURL) {
 		this.attachmentURL = attachmentURL;
+	}
+
+	@Override
+	public String toString() {
+		return "EducationRecord [diplomaTitle=" + this.diplomaTitle + ", institution=" + this.institution + ", start=" + this.start + ", end=" + this.end + ", attachmentURL=" + this.attachmentURL.toString() + ", comment=" + this.comment + "]";
 	}
 
 }

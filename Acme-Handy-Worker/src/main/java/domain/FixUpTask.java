@@ -4,13 +4,15 @@ package domain;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
-public class FixUpTask {
+@Entity
+public class FixUpTask extends DomainEntity {
 
 	private String				ticker;
 	private DateTime			publishTime;
@@ -192,6 +194,12 @@ public class FixUpTask {
 		} else if (!this.ticker.equals(other.ticker))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "FixUpTask [ticker=" + this.ticker + ", publishTime=" + this.publishTime + ", description=" + this.description + ", address=" + this.address + ", maxPrice=" + this.maxPrice + ", periodStart=" + this.periodStart + ", periodEnd="
+			+ this.periodEnd + ", creditCard=" + this.creditCard + ", category=" + this.category + ", warranty=" + this.warranty + ", customer=" + this.customer + ", complaint=" + this.complaint + ", application=" + this.application + "]";
 	}
 
 }

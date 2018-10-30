@@ -4,13 +4,16 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
 public class Box extends DomainEntity {
 
 	private String			name;
 
-	private boolean			deleteable;
+	private Boolean			deleteable;
 
 	private List<Message>	messages;
 
@@ -66,6 +69,11 @@ public class Box extends DomainEntity {
 		} else if (!this.name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Box [name=" + this.name + ", deleteable=" + this.deleteable + ", messages=" + this.messages + "]";
 	}
 
 }

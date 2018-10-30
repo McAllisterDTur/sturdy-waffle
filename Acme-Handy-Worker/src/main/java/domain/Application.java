@@ -4,13 +4,21 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
+@Entity
 public class Application extends DomainEntity {
+
+	@Override
+	public String toString() {
+		return "Application [registerTime=" + this.registerTime + ", offeredPrice=" + this.offeredPrice + ", customerComment=" + this.customerComment + ", handyComments=" + this.handyComments + ", status=" + this.status + "]";
+	}
+
 
 	private DateTime		registerTime;
 	private Money			offeredPrice;
@@ -19,36 +27,36 @@ public class Application extends DomainEntity {
 	private Boolean			status;
 
 
+	@Past
+	@NotBlank
 	public DateTime getRegisterTime() {
 		return this.registerTime;
 	}
 
-	@Past
-	@NotBlank
 	public void setRegisterTime(final DateTime registerTime) {
 		this.registerTime = registerTime;
 	}
-
+	@NotNull
 	public Money getOfferedPrice() {
 		return this.offeredPrice;
 	}
-	@NotNull
+
 	public void setOfferedPrice(final Money offeredPrice) {
 		this.offeredPrice = offeredPrice;
 	}
-
+	@NotNull
 	public List<String> getCustomerComment() {
 		return new ArrayList<String>(this.customerComment);
 	}
-	@NotNull
+
 	public void setCustomerComment(final List<String> customerComment) {
 		this.customerComment = customerComment;
 	}
-
+	@NotNull
 	public List<String> getHandyComments() {
 		return this.handyComments;
 	}
-	@NotNull
+
 	public void setHandyComments(final List<String> handyComments) {
 		this.handyComments = handyComments;
 	}

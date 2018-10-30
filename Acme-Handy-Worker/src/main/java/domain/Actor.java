@@ -1,10 +1,14 @@
 
 package domain;
 
+import javax.persistence.Entity;
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
+@Entity
 public class Actor extends DomainEntity {
 
 	private String	name;
@@ -17,11 +21,11 @@ public class Actor extends DomainEntity {
 	private Boolean	banned;
 
 
+	@NotBlank
 	public String getName() {
 		return this.name;
 	}
 
-	@NotBlank
 	public void setName(final String name) {
 		this.name = name;
 	}
@@ -34,32 +38,35 @@ public class Actor extends DomainEntity {
 		this.middleName = middleName;
 	}
 
+	@NotBlank
 	public String getSurname() {
 		return this.surname;
 	}
-	@NotBlank
+
 	public void setSurname(final String surname) {
 		this.surname = surname;
 	}
 
+	@URL
 	public String getPhotoURL() {
 		return this.photoURL;
 	}
 
-	@URL
 	public void setPhotoURL(final String photoURL) {
 		this.photoURL = photoURL;
 	}
 
+	@NotBlank
+	@Email
 	public String getEmail() {
 		return this.email;
 	}
 
-	@NotBlank
-	@Email
 	public void setEmail(final String email) {
 		this.email = email;
 	}
+
+	@Pattern(regexp = "((([+][1-9]{1}[0-9]{0,2}[\\s]){0,1}([(][1-9]{1}[0-9]{0,2}[)][\\s]){0,1})){0,1}([0-9]{9}){1}")
 	// Regex: ((([+][1-9]{1}[0-9]{0,2}[\s]){0,1}([(][1-9]{1}[0-9]{0,2}[)][\s]){0,1})){0,1}([0-9]{9}){1}
 	public String getPhone() {
 		return this.phone;
@@ -150,6 +157,11 @@ public class Actor extends DomainEntity {
 		} else if (!this.surname.equals(other.surname))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Actor [name=" + this.name + ", middleName=" + this.middleName + ", surname=" + this.surname + ", photoURL=" + this.photoURL + ", email=" + this.email + ", phone=" + this.phone + ", address=" + this.address + ", banned=" + this.banned + "]";
 	}
 
 }

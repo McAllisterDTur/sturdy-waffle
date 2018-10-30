@@ -3,6 +3,7 @@ package domain;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -21,13 +22,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Report extends DomainEntity {
 
 	//Atributes
-	private Date		reportTime;
+	private Date			reportTime;
 
-	private String		description;
+	private String			description;
 
-	private String[]	attachment;
+	private List<String>	attachment;
 
-	private boolean		isFinal;
+	private boolean			isFinal;
 
 
 	@NotNull
@@ -50,11 +51,11 @@ public class Report extends DomainEntity {
 		this.description = description;
 	}
 
-	public String[] getAttachment() {
+	public List<String> getAttachment() {
 		return this.attachment;
 	}
 
-	public void setAttachment(final String[] attachment) {
+	public void setAttachment(final List<String> attachment) {
 		this.attachment = attachment;
 	}
 
@@ -107,6 +108,69 @@ public class Report extends DomainEntity {
 
 	public void setNotes(final Collection<Notes> notes) {
 		this.notes = notes;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((this.attachment == null) ? 0 : this.attachment.hashCode());
+		result = prime * result + ((this.complaint == null) ? 0 : this.complaint.hashCode());
+		result = prime * result + ((this.description == null) ? 0 : this.description.hashCode());
+		result = prime * result + (this.isFinal ? 1231 : 1237);
+		result = prime * result + ((this.notes == null) ? 0 : this.notes.hashCode());
+		result = prime * result + ((this.referee == null) ? 0 : this.referee.hashCode());
+		result = prime * result + ((this.reportTime == null) ? 0 : this.reportTime.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (this.getClass() != obj.getClass())
+			return false;
+		final Report other = (Report) obj;
+		if (this.attachment == null) {
+			if (other.attachment != null)
+				return false;
+		} else if (!this.attachment.equals(other.attachment))
+			return false;
+		if (this.complaint == null) {
+			if (other.complaint != null)
+				return false;
+		} else if (!this.complaint.equals(other.complaint))
+			return false;
+		if (this.description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!this.description.equals(other.description))
+			return false;
+		if (this.isFinal != other.isFinal)
+			return false;
+		if (this.notes == null) {
+			if (other.notes != null)
+				return false;
+		} else if (!this.notes.equals(other.notes))
+			return false;
+		if (this.referee == null) {
+			if (other.referee != null)
+				return false;
+		} else if (!this.referee.equals(other.referee))
+			return false;
+		if (this.reportTime == null) {
+			if (other.reportTime != null)
+				return false;
+		} else if (!this.reportTime.equals(other.reportTime))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Report [reportTime=" + this.reportTime + ", description=" + this.description + ", attachment=" + this.attachment + ", isFinal=" + this.isFinal + ", referee=" + this.referee + ", complaint=" + this.complaint + ", notes=" + this.notes + "]";
 	}
 
 }

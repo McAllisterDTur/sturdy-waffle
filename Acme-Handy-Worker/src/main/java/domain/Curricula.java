@@ -99,4 +99,10 @@ public class Curricula extends DomainEntity {
 		this.miscellaneousRecord = miscellaneousRecord;
 	}
 
+	@Override
+	public String toString() {
+		return "Curricula [ticker=" + this.ticker + ", personalRecord=" + this.personalRecord + ", professionalRecord=" + this.professionalRecord + ", educationRecord=" + this.educationRecord + ", endorserRecord=" + this.endorserRecord
+			+ ", miscellaneousRecord=" + this.miscellaneousRecord + "]";
+	}
+
 }

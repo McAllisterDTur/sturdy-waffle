@@ -1,8 +1,11 @@
 
 package domain;
 
+import javax.persistence.Entity;
+
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
 public class Priority extends DomainEntity {
 
 	public static String	LOW		= "LOW";
@@ -46,6 +49,11 @@ public class Priority extends DomainEntity {
 		} else if (!this.name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Priority [name=" + this.name + "]";
 	}
 
 }

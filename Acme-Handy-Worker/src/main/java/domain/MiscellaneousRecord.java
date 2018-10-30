@@ -28,4 +28,9 @@ public class MiscellaneousRecord extends Curricula {
 		this.attachmentURL = attachmentURL;
 	}
 
+	@Override
+	public String toString() {
+		return "MiscellaneousRecord [title=" + this.title + ", attachmentURL=" + this.attachmentURL + "]";
+	}
+
 }

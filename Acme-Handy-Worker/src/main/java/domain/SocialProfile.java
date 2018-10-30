@@ -1,10 +1,13 @@
 
 package domain;
 
+import javax.persistence.Entity;
+
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
-public class SocialProfile {
+@Entity
+public class SocialProfile extends DomainEntity {
 
 	private String	nick;
 	private String	socialNetwork;

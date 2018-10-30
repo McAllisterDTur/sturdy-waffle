@@ -3,13 +3,15 @@ package domain;
 
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 import org.joda.time.DateTime;
 
-public class Tutorial {
+@Entity
+public class Tutorial extends DomainEntity {
 
 	private String			title;
 	private DateTime		lastTimeUpdated;
@@ -17,34 +19,35 @@ public class Tutorial {
 	private List<String>	photoURL;
 
 
+	@NotBlank
 	public String getTitle() {
 		return this.title;
 	}
-	@NotBlank
+
 	public void setTitle(final String title) {
 		this.title = title;
 	}
-
+	@Past
 	public DateTime getLastTimeUpdated() {
 		return this.lastTimeUpdated;
 	}
-	@Past
+
 	public void setLastTimeUpdated(final DateTime lastTimeUpdated) {
 		this.lastTimeUpdated = lastTimeUpdated;
 	}
-
+	@NotBlank
 	public String getSummary() {
 		return this.summary;
 	}
-	@NotBlank
+
 	public void setSummary(final String summary) {
 		this.summary = summary;
 	}
-
+	@URL
 	public List<String> getPhotoURL() {
 		return this.photoURL;
 	}
-	@URL
+
 	public void setPhotoURL(final List<String> photoURL) {
 		this.photoURL = photoURL;
 	}
@@ -88,6 +91,10 @@ public class Tutorial {
 		} else if (!this.title.equals(other.title))
 			return false;
 		return true;
+	}
+	@Override
+	public String toString() {
+		return "Tutorial [title=" + this.title + ", lastTimeUpdated=" + this.lastTimeUpdated + ", summary=" + this.summary + ", photoURL=" + this.photoURL + "]";
 	}
 
 }

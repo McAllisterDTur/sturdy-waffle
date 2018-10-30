@@ -3,9 +3,11 @@ package domain;
 
 import java.util.List;
 
-public class Finder {
+import javax.persistence.Entity;
 
-	private String			searchString;
+@Entity
+public class Finder extends DomainEntity {
+
 	private String			warranty;
 	private String			keyWord;
 	private String			category;
@@ -13,14 +15,6 @@ public class Finder {
 	private String			dateRange;
 	private List<FixUpTask>	fixUpTask;
 
-
-	public String getSearchString() {
-		return this.searchString;
-	}
-
-	public void setSearchString(final String searchString) {
-		this.searchString = searchString;
-	}
 
 	public String getWarranty() {
 		return this.warranty;
@@ -78,7 +72,6 @@ public class Finder {
 		result = prime * result + ((this.dateRange == null) ? 0 : this.dateRange.hashCode());
 		result = prime * result + ((this.keyWord == null) ? 0 : this.keyWord.hashCode());
 		result = prime * result + ((this.priceRange == null) ? 0 : this.priceRange.hashCode());
-		result = prime * result + ((this.searchString == null) ? 0 : this.searchString.hashCode());
 		result = prime * result + ((this.warranty == null) ? 0 : this.warranty.hashCode());
 		return result;
 	}
@@ -112,17 +105,17 @@ public class Finder {
 				return false;
 		} else if (!this.priceRange.equals(other.priceRange))
 			return false;
-		if (this.searchString == null) {
-			if (other.searchString != null)
-				return false;
-		} else if (!this.searchString.equals(other.searchString))
-			return false;
 		if (this.warranty == null) {
 			if (other.warranty != null)
 				return false;
 		} else if (!this.warranty.equals(other.warranty))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Finder [warranty=" + this.warranty + ", keyWord=" + this.keyWord + ", category=" + this.category + ", priceRange=" + this.priceRange + ", dateRange=" + this.dateRange + ", fixUpTask=" + this.fixUpTask + "]";
 	}
 
 }

@@ -1,12 +1,14 @@
 
 package domain;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
-public class Sponsorship {
+@Entity
+public class Sponsorship extends DomainEntity {
 
 	private String		bannerURL;
 	private String		targetPageLink;
@@ -97,6 +99,11 @@ public class Sponsorship {
 		} else if (!this.targetPageLink.equals(other.targetPageLink))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Sponsorship [bannerURL=" + this.bannerURL + ", targetPageLink=" + this.targetPageLink + ", creditCard=" + this.creditCard + ", sponsor=" + this.sponsor + ", tutorial=" + this.tutorial + "]";
 	}
 
 }

@@ -42,4 +42,9 @@ public class HandyWorker extends Actor {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "HandyWorker [" + super.toString() + "make=" + this.make + "]";
+	}
+
 }

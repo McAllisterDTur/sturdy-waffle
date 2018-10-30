@@ -1,8 +1,11 @@
 
 package domain;
 
+import javax.persistence.Entity;
+
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
 public class Category extends DomainEntity {
 
 	private String		name;
@@ -56,6 +59,11 @@ public class Category extends DomainEntity {
 		} else if (!this.name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [name=" + this.name + ", father=" + this.father + "]";
 	}
 
 }

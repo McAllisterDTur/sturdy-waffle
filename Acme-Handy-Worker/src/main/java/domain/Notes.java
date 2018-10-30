@@ -3,18 +3,20 @@ package domain;
 
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.joda.time.DateTime;
 
-public class Notes {
+@Entity
+public class Notes extends DomainEntity {
 
 	private DateTime		moment;
 	private List<String>	customerComments;
 	private List<String>	refereeComments;
 	private List<String>	handyCommetns;
-	private boolean			isFinal;
+	private Boolean			isFinal;
 
 
 	@Past
@@ -51,11 +53,11 @@ public class Notes {
 		this.handyCommetns = handyCommetns;
 	}
 
-	public boolean isFinal() {
+	public Boolean isFinal() {
 		return this.isFinal;
 	}
 
-	public void setFinal(final boolean isFinal) {
+	public void setFinal(final Boolean isFinal) {
 		this.isFinal = isFinal;
 	}
 
@@ -103,6 +105,11 @@ public class Notes {
 		} else if (!this.refereeComments.equals(other.refereeComments))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Notes [moment=" + this.moment + ", customerComments=" + this.customerComments + ", refereeComments=" + this.refereeComments + ", handyCommetns=" + this.handyCommetns + ", isFinal=" + this.isFinal + "]";
 	}
 
 }

@@ -1,6 +1,8 @@
 
 package domain;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -10,13 +12,13 @@ import org.hibernate.validator.constraints.URL;
 public class Section extends DomainEntity {
 
 	//Atributes
-	private int			number;
+	private int				number;
 
-	private String		title;
+	private String			title;
 
-	private String		text;
+	private String			text;
 
-	private String[]	photoURL;
+	private List<String>	photoURL;
 
 
 	@NotBlank
@@ -47,12 +49,57 @@ public class Section extends DomainEntity {
 	}
 
 	@URL
-	public String[] getPhotoURL() {
+	public List<String> getPhotoURL() {
 		return this.photoURL;
 	}
 
-	public void setPhotoURL(final String[] photoURL) {
+	public void setPhotoURL(final List<String> photoURL) {
 		this.photoURL = photoURL;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + this.number;
+		result = prime * result + ((this.photoURL == null) ? 0 : this.photoURL.hashCode());
+		result = prime * result + ((this.text == null) ? 0 : this.text.hashCode());
+		result = prime * result + ((this.title == null) ? 0 : this.title.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (this.getClass() != obj.getClass())
+			return false;
+		final Section other = (Section) obj;
+		if (this.number != other.number)
+			return false;
+		if (this.photoURL == null) {
+			if (other.photoURL != null)
+				return false;
+		} else if (!this.photoURL.equals(other.photoURL))
+			return false;
+		if (this.text == null) {
+			if (other.text != null)
+				return false;
+		} else if (!this.text.equals(other.text))
+			return false;
+		if (this.title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!this.title.equals(other.title))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Section [number=" + this.number + ", title=" + this.title + ", text=" + this.text + ", photoURL=" + this.photoURL + "]";
 	}
 
 }

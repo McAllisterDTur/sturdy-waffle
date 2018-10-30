@@ -1,11 +1,13 @@
 
 package domain;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
+@Entity
 public class Phase extends DomainEntity {
 
 	private String		title;
@@ -91,6 +93,11 @@ public class Phase extends DomainEntity {
 		} else if (!this.title.equals(other.title))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Phase [title=" + this.title + ", description=" + this.description + ", startTime=" + this.startTime + ", endTime=" + this.endTime + "]";
 	}
 
 }

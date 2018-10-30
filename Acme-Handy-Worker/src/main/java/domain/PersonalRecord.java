@@ -1,10 +1,13 @@
 
 package domain;
 
+import javax.persistence.Entity;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
+@Entity
 public class PersonalRecord extends DomainEntity {
 
 	private String	fullName;
@@ -107,6 +110,11 @@ public class PersonalRecord extends DomainEntity {
 		} else if (!this.photo.equals(other.photo))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "PersonalRecord [fullName=" + this.fullName + ", photo=" + this.photo + ", email=" + this.email + ", phoneNumber=" + this.phoneNumber + ", linkedInURL=" + this.linkedInURL + "]";
 	}
 
 }

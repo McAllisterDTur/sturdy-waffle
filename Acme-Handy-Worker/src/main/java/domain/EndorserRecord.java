@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
-public class EndorserRecord {
+public class EndorserRecord extends DomainEntity {
 
 	private String			endorserName;
 	private String			email;
@@ -92,6 +92,11 @@ public class EndorserRecord {
 		} else if (!this.phoneNumber.equals(other.phoneNumber))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "EndorserRecord [endorserName=" + this.endorserName + ", email=" + this.email + ", phoneNumber=" + this.phoneNumber + ", linkedInURL=" + this.linkedInURL + "]";
 	}
 
 }

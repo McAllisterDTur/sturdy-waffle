@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
 @Embeddable
-public class CreditCard {
+public class CreditCard extends DomainEntity {
 
 	//Atributes
 	private String	holderName;
@@ -75,6 +75,11 @@ public class CreditCard {
 
 	public void setCodeCVV(final Integer codeCVV) {
 		this.codeCVV = codeCVV;
+	}
+
+	@Override
+	public String toString() {
+		return "CreditCard [holderName=" + this.holderName + ", brandName=" + this.brandName + ", number=" + this.number + ", expirationMonth=" + this.expirationMonth + ", expirationYear=" + this.expirationYear + ", codeCVV=" + this.codeCVV + "]";
 	}
 
 }

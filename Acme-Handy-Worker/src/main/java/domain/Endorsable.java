@@ -73,4 +73,9 @@ public class Endorsable extends Actor {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Endorsable [writeTime=" + this.writeTime + ", score=" + this.score + ", comments=" + this.comments + "]";
+	}
+
 }

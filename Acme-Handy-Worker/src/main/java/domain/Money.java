@@ -23,11 +23,11 @@ public class Money {
 		this.amount = amount;
 	}
 
+	@NotBlank
 	public String getCurrency() {
 		return this.currency;
 	}
 
-	@NotBlank
 	public void setCurrency(final String currency) {
 		this.currency = currency;
 	}
@@ -61,6 +61,11 @@ public class Money {
 		} else if (!this.currency.equals(other.currency))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Money [amount=" + this.amount + ", currency=" + this.currency + "]";
 	}
 
 }

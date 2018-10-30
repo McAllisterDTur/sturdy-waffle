@@ -3,11 +3,13 @@ package domain;
 
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
 public class Configuration extends DomainEntity {
 
 	// Getters that returns lists are mutable 
@@ -112,6 +114,12 @@ public class Configuration extends DomainEntity {
 
 	public void setFinderResults(final int finderResults) {
 		this.finderResults = finderResults;
+	}
+
+	@Override
+	public String toString() {
+		return "Configuration [cacheTime=" + this.cacheTime + ", vat=" + this.vat + ", bannerURL=" + this.bannerURL + ", welcomeEN=" + this.welcomeEN + ", welcomeSP=" + this.welcomeSP + ", spamWords=" + this.spamWords + ", countryCode=" + this.countryCode
+			+ ", positiveWords=" + this.positiveWords + ", negativeWords=" + this.negativeWords + ", finderResults=" + this.finderResults + "]";
 	}
 
 }

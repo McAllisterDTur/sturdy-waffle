@@ -4,12 +4,14 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
+@Entity
 public class Complaint extends DomainEntity {
 
 	private String			ticker;
@@ -125,6 +127,12 @@ public class Complaint extends DomainEntity {
 		} else if (!this.ticker.equals(other.ticker))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Complaint [ticker=" + this.ticker + ", complaintTime=" + this.complaintTime + ", description=" + this.description + ", attachments=" + this.attachments + ", isFinal=" + this.isFinal + ", fixUpTask=" + this.fixUpTask + ", reports="
+			+ this.reports + "]";
 	}
 
 }
