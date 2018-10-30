@@ -3,7 +3,7 @@ package domain;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class Authority {
+public class Authority extends DomainEntity {
 
 	public static String	ADMIN		= "ADMIN";
 	public static String	CUSTOMER	= "CUSTOMER";

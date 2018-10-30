@@ -42,7 +42,7 @@ public class PersonalRecord extends DomainEntity {
 	public void setEmail(final String email) {
 		this.email = email;
 	}
-	// @Pattern('((([+][1-9]{1}[0-9]{0,2}[\s]){0,1}([(][1-9]{1}[0-9]{0,2}[)][\s]){0,1})){0,1}([0-9]{9}){1})
+	//@Pattern(regexp = "((([+][1-9]{1}[0-9]{0,2}[\s]){0,1}([(][1-9]{1}[0-9]{0,2}[)][\s]){0,1})){0,1}([0-9]{9}){1}")
 	@NotBlank
 	public String getPhoneNumber() {
 		return this.phoneNumber;
