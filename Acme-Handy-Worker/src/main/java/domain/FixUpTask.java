@@ -12,20 +12,20 @@ import org.joda.time.DateTime;
 public class FixUpTask {
 
 	@NotBlank
-	public String				ticker;
+	private String				ticker;
 	@Past
 	@NotNull
-	public DateTime				publishTime;
+	private DateTime			publishTime;
 	@NotBlank
-	public String				description;
+	private String				description;
 	@NotBlank
-	public String				address;
-	public Money				maxPrice;
+	private String				address;
+	private Money				maxPrice;
 	@NotNull
-	public DateTime				periodStart;
+	private DateTime			periodStart;
 	@NotNull
-	public DateTime				periodEnd;
-	public CreditCard			creditCard;
+	private DateTime			periodEnd;
+	private CreditCard			creditCard;
 	private Category			category;
 	private Warranty			warranty;
 	private Customer			customer;

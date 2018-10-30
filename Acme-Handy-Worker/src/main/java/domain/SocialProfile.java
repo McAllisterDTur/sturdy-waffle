@@ -7,12 +7,12 @@ import org.hibernate.validator.constraints.URL;
 public class SocialProfile {
 
 	@NotBlank
-	public String		nick;
+	private String			nick;
 	@NotBlank
-	public String		socialNetwork;
+	private String			socialNetwork;
 	@NotBlank
 	@URL
-	public final String	profileLink;
+	private final String	profileLink;
 
 
 	public SocialProfile(final String nick, final String socialNetwork, final String profileLink) {

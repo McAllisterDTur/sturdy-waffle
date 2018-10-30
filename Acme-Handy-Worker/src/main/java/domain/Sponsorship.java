@@ -10,12 +10,12 @@ public class Sponsorship {
 
 	@NotBlank
 	@URL
-	public String		bannerURL;
+	private String		bannerURL;
 	@NotBlank
 	@URL
-	public String		targetPageLink;
+	private String		targetPageLink;
 	@NotNull
-	public CreditCard	creditCard;
+	private CreditCard	creditCard;
 	@NotNull
 	private Sponsor		sponsor;
 	@NotNull

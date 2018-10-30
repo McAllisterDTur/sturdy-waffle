@@ -7,9 +7,9 @@ import org.joda.time.DateTime;
 
 public class Endorsable extends Actor {
 
-	public DateTime		writeTime;
-	public Double		score;
-	public List<String>	comments;
+	private DateTime		writeTime;
+	private Double			score;
+	private List<String>	comments;
 
 
 	public DateTime getWriteTime() {
@@ -22,8 +22,17 @@ public class Endorsable extends Actor {
 
 	public Double getScore() {
 		//Puntuacion segun palabras en endorses
-		//????
-		return null;
+		//La idea sería:
+		final Double res = 0.0;
+		final Integer p = 0;
+		final Integer n = 0;
+		for (final String c : this.getComments()) {
+			//Cogemos cada palabra de la lista de badwords y, si contiene una, n++
+			//Cogemos cada palabra de la lista de goodwords y, si contiene una, p++
+		}
+		final Integer preRes = p - n;
+		//Hay que normalizarlo, aka meterlo en el rango [-1.0, 1.0]
+		return res;
 	}
 
 	public void setScore(final Double score) {

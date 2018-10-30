@@ -5,12 +5,12 @@ import java.util.List;
 
 public class Finder {
 
-	public String			searchString;
-	public String			warranty;
-	public String			keyWord;
-	public String			category;
-	public String			priceRange;
-	public String			dateRange;
+	private String			searchString;
+	private String			warranty;
+	private String			keyWord;
+	private String			category;
+	private String			priceRange;
+	private String			dateRange;
 	private List<FixUpTask>	fixUpTask;
 
 

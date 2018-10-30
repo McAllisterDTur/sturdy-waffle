@@ -10,13 +10,13 @@ import org.hibernate.validator.constraints.URL;
 public class EndorserRecord {
 
 	@NotBlank
-	public String		endorserName;
+	private String			endorserName;
 	@Email
-	public String		email;
-	public List<String>	phoneNumber;
+	private String			email;
+	private List<String>	phoneNumber;
 	@URL
 	@NotBlank
-	public String		linkedInURL;
+	private String			linkedInURL;
 
 
 	public EndorserRecord(final String endorserName, final String email, final List<String> phoneNumber, final String linkedInURL) {
