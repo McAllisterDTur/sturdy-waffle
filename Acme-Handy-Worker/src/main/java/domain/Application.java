@@ -14,17 +14,11 @@ import org.joda.time.DateTime;
 @Entity
 public class Application extends DomainEntity {
 
-	@Override
-	public String toString() {
-		return "Application [registerTime=" + this.registerTime + ", offeredPrice=" + this.offeredPrice + ", customerComment=" + this.customerComment + ", handyComments=" + this.handyComments + ", status=" + this.status + "]";
-	}
-
-
 	private DateTime		registerTime;
 	private Money			offeredPrice;
 	private List<String>	customerComment;
 	private List<String>	handyComments;
-	private Boolean			status;
+	private String			status;
 
 
 	@Past
@@ -61,11 +55,11 @@ public class Application extends DomainEntity {
 		this.handyComments = handyComments;
 	}
 
-	public Boolean getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(final Boolean status) {
+	public void setStatus(final String status) {
 		this.status = status;
 	}
 
@@ -116,6 +110,11 @@ public class Application extends DomainEntity {
 		} else if (!this.status.equals(other.status))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Application [registerTime=" + this.registerTime + ", offeredPrice=" + this.offeredPrice + ", customerComment=" + this.customerComment + ", handyComments=" + this.handyComments + ", status=" + this.status + "]";
 	}
 
 }

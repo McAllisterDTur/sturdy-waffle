@@ -28,7 +28,7 @@ public class ProfessionalRecord extends DomainEntity {
 
 	private List<String>	attachmentURL;
 
-	private String			comments;
+	private List<String>	comments;
 
 
 	@NotBlank
@@ -80,11 +80,11 @@ public class ProfessionalRecord extends DomainEntity {
 		this.attachmentURL = attachmentURL;
 	}
 
-	public String getComments() {
+	public List<String> getComments() {
 		return this.comments;
 	}
 
-	public void setComments(final String comments) {
+	public void setComments(final List<String> comments) {
 		this.comments = comments;
 	}
 

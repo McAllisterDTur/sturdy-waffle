@@ -1,6 +1,8 @@
 
 package domain;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.Email;
@@ -10,15 +12,17 @@ import org.hibernate.validator.constraints.URL;
 @Entity
 public class PersonalRecord extends DomainEntity {
 
-	private String	fullName;
+	private String			fullName;
 
-	private String	photo;
+	private String			photo;
 
-	private String	email;
+	private String			email;
 
-	private String	phoneNumber;
+	private String			phoneNumber;
 
-	private String	linkedInURL;
+	private String			linkedInURL;
+
+	private List<String>	comments;
 
 
 	@NotBlank
@@ -63,10 +67,19 @@ public class PersonalRecord extends DomainEntity {
 		this.linkedInURL = linkedInURL;
 	}
 
+	public List<String> getComments() {
+		return this.comments;
+	}
+
+	public void setComments(final List<String> comments) {
+		this.comments = comments;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
+		result = prime * result + ((this.comments == null) ? 0 : this.comments.hashCode());
 		result = prime * result + ((this.email == null) ? 0 : this.email.hashCode());
 		result = prime * result + ((this.fullName == null) ? 0 : this.fullName.hashCode());
 		result = prime * result + ((this.linkedInURL == null) ? 0 : this.linkedInURL.hashCode());
@@ -79,11 +92,16 @@ public class PersonalRecord extends DomainEntity {
 	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (this.getClass() != obj.getClass())
 			return false;
 		final PersonalRecord other = (PersonalRecord) obj;
+		if (this.comments == null) {
+			if (other.comments != null)
+				return false;
+		} else if (!this.comments.equals(other.comments))
+			return false;
 		if (this.email == null) {
 			if (other.email != null)
 				return false;
@@ -114,7 +132,7 @@ public class PersonalRecord extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "PersonalRecord [fullName=" + this.fullName + ", photo=" + this.photo + ", email=" + this.email + ", phoneNumber=" + this.phoneNumber + ", linkedInURL=" + this.linkedInURL + "]";
+		return "PersonalRecord [fullName=" + this.fullName + ", photo=" + this.photo + ", email=" + this.email + ", phoneNumber=" + this.phoneNumber + ", linkedInURL=" + this.linkedInURL + ", comments=" + this.comments + "]";
 	}
 
 }

@@ -19,6 +19,7 @@ public class Message extends DomainEntity {
 	private String			subject;
 	private String			body;
 	private List<String>	tags;
+	private String			priority;
 
 
 	@NotNull
@@ -75,11 +76,21 @@ public class Message extends DomainEntity {
 		this.tags = tags;
 	}
 
+	@NotBlank
+	public String getPriority() {
+		return this.priority;
+	}
+
+	public void setPriority(final String priority) {
+		this.priority = priority;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((this.body == null) ? 0 : this.body.hashCode());
+		result = prime * result + ((this.priority == null) ? 0 : this.priority.hashCode());
 		result = prime * result + ((this.reciever == null) ? 0 : this.reciever.hashCode());
 		result = prime * result + ((this.sendTime == null) ? 0 : this.sendTime.hashCode());
 		result = prime * result + ((this.sender == null) ? 0 : this.sender.hashCode());
@@ -101,6 +112,11 @@ public class Message extends DomainEntity {
 			if (other.body != null)
 				return false;
 		} else if (!this.body.equals(other.body))
+			return false;
+		if (this.priority == null) {
+			if (other.priority != null)
+				return false;
+		} else if (!this.priority.equals(other.priority))
 			return false;
 		if (this.reciever == null) {
 			if (other.reciever != null)
@@ -132,7 +148,7 @@ public class Message extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "Message [sender=" + this.sender + ", reciever=" + this.reciever + ", sendTime=" + this.sendTime + ", subject=" + this.subject + ", body=" + this.body + ", tags=" + this.tags + "]";
+		return "Message [sender=" + this.sender + ", reciever=" + this.reciever + ", sendTime=" + this.sendTime + ", subject=" + this.subject + ", body=" + this.body + ", tags=" + this.tags + ", priority=" + this.priority + "]";
 	}
 
 }

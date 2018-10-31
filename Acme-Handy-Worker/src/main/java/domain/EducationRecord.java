@@ -29,15 +29,15 @@ public class EducationRecord extends DomainEntity {
 
 	private List<String>	attachmentURL;
 
-	private String			comment;
+	private List<String>	comments;
 
 
-	public String getComment() {
-		return this.comment;
+	public List<String> getComments() {
+		return this.comments;
 	}
 
-	public void setComment(final String comment) {
-		this.comment = comment;
+	public void setComments(final List<String> comment) {
+		this.comments = comment;
 	}
 
 	@NotBlank
@@ -91,8 +91,63 @@ public class EducationRecord extends DomainEntity {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((this.attachmentURL == null) ? 0 : this.attachmentURL.hashCode());
+		result = prime * result + ((this.comments == null) ? 0 : this.comments.hashCode());
+		result = prime * result + ((this.diplomaTitle == null) ? 0 : this.diplomaTitle.hashCode());
+		result = prime * result + ((this.end == null) ? 0 : this.end.hashCode());
+		result = prime * result + ((this.institution == null) ? 0 : this.institution.hashCode());
+		result = prime * result + ((this.start == null) ? 0 : this.start.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (this.getClass() != obj.getClass())
+			return false;
+		final EducationRecord other = (EducationRecord) obj;
+		if (this.attachmentURL == null) {
+			if (other.attachmentURL != null)
+				return false;
+		} else if (!this.attachmentURL.equals(other.attachmentURL))
+			return false;
+		if (this.comments == null) {
+			if (other.comments != null)
+				return false;
+		} else if (!this.comments.equals(other.comments))
+			return false;
+		if (this.diplomaTitle == null) {
+			if (other.diplomaTitle != null)
+				return false;
+		} else if (!this.diplomaTitle.equals(other.diplomaTitle))
+			return false;
+		if (this.end == null) {
+			if (other.end != null)
+				return false;
+		} else if (!this.end.equals(other.end))
+			return false;
+		if (this.institution == null) {
+			if (other.institution != null)
+				return false;
+		} else if (!this.institution.equals(other.institution))
+			return false;
+		if (this.start == null) {
+			if (other.start != null)
+				return false;
+		} else if (!this.start.equals(other.start))
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
-		return "EducationRecord [diplomaTitle=" + this.diplomaTitle + ", institution=" + this.institution + ", start=" + this.start + ", end=" + this.end + ", attachmentURL=" + this.attachmentURL.toString() + ", comment=" + this.comment + "]";
+		return "EducationRecord [diplomaTitle=" + this.diplomaTitle + ", institution=" + this.institution + ", start=" + this.start + ", end=" + this.end + ", attachmentURL=" + this.attachmentURL + ", comment=" + this.comments + "]";
 	}
 
 }

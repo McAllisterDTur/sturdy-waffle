@@ -67,7 +67,6 @@ public class Actor extends DomainEntity {
 	}
 
 	@Pattern(regexp = "((([+][1-9]{1}[0-9]{0,2}[\\s]){0,1}([(][1-9]{1}[0-9]{0,2}[)][\\s]){0,1})){0,1}([0-9]{9}){1}")
-	// Regex: ((([+][1-9]{1}[0-9]{0,2}[\s]){0,1}([(][1-9]{1}[0-9]{0,2}[)][\s]){0,1})){0,1}([0-9]{9}){1}
 	public String getPhone() {
 		return this.phone;
 	}
@@ -84,6 +83,7 @@ public class Actor extends DomainEntity {
 		this.address = address;
 	}
 
+	@NotBlank
 	public Boolean getBanned() {
 		return this.banned;
 	}
