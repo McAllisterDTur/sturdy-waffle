@@ -1,0 +1,11 @@
+{
+  "id" : 0,
+  "version" : 0,
+  "name" : "Hija",
+  "father" : {
+    "id" : 0,
+    "version" : 0,
+    "name" : "CATEGORIA",
+    "father" : null
+  }
+}
