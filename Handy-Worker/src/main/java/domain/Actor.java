@@ -4,24 +4,29 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
+import security.UserAccount;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Actor extends DomainEntity {
 
-	private String	name;
-	private String	middleName;
-	private String	surname;
-	private String	photoURL;
-	private String	email;
-	private String	phone;
-	private String	address;
-	private Boolean	banned;
+	private String		name;
+	private String		middleName;
+	private String		surname;
+	private String		photoURL;
+	private String		email;
+	private String		phone;
+	private String		address;
+	private Boolean		banned;
+	//+
+	private UserAccount	account;
 
 
 	@NotBlank
@@ -93,6 +98,15 @@ public class Actor extends DomainEntity {
 
 	public void setBanned(final Boolean banned) {
 		this.banned = banned;
+	}
+
+	@OneToOne(optional = false)
+	public UserAccount getAccount() {
+		return this.account;
+	}
+
+	public void setAccount(final UserAccount account) {
+		this.account = account;
 	}
 
 	@Override

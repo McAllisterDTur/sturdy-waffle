@@ -5,8 +5,11 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -44,6 +47,7 @@ public class Curricula extends DomainEntity {
 	}
 
 	@NotNull
+	@OneToOne(optional = false)
 	public PersonalRecord getPersonalRecord() {
 		return this.personalRecord;
 	}
@@ -53,6 +57,7 @@ public class Curricula extends DomainEntity {
 	}
 
 	@NotNull
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<ProfessionalRecord> getProfessionalRecord() {
 		return this.professionalRecord;
 	}
@@ -62,6 +67,7 @@ public class Curricula extends DomainEntity {
 	}
 
 	@NotNull
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<EducationRecord> getEducationRecord() {
 		return this.educationRecord;
 	}
@@ -71,6 +77,7 @@ public class Curricula extends DomainEntity {
 	}
 
 	@NotNull
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<EndorserRecord> getEndorserRecord() {
 		return this.endorserRecord;
 	}
@@ -80,6 +87,7 @@ public class Curricula extends DomainEntity {
 	}
 
 	@NotNull
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<MiscellaneousRecord> getMiscellaneousRecord() {
 		return this.miscellaneousRecord;
 	}

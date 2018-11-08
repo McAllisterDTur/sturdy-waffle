@@ -1,11 +1,12 @@
 
 package domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -15,11 +16,13 @@ import org.joda.time.DateTime;
 @Access(AccessType.PROPERTY)
 public class Notes extends DomainEntity {
 
-	private DateTime		moment;
-	private List<String>	customerComments;
-	private List<String>	refereeComments;
-	private List<String>	handyCommetns;
-	private Boolean			isFinal;
+	private DateTime			moment;
+	private Collection<String>	customerComments;
+	private Collection<String>	refereeComments;
+	private Collection<String>	handyCommetns;
+	private Boolean				isFinal;
+	//+
+	private Report				report;
 
 
 	@Past
@@ -32,35 +35,44 @@ public class Notes extends DomainEntity {
 		this.moment = moment;
 	}
 
-	public List<String> getCustomerComments() {
+	public Collection<String> getCustomerComments() {
 		return this.customerComments;
 	}
 
-	public void setCustomerComments(final List<String> customerComments) {
+	public void setCustomerComments(final Collection<String> customerComments) {
 		this.customerComments = customerComments;
 	}
 
-	public List<String> getRefereeComments() {
+	public Collection<String> getRefereeComments() {
 		return this.refereeComments;
 	}
 
-	public void setRefereeComments(final List<String> refereeComments) {
+	public void setRefereeComments(final Collection<String> refereeComments) {
 		this.refereeComments = refereeComments;
 	}
 
-	public List<String> getHandyCommetns() {
+	public Collection<String> getHandyCommetns() {
 		return this.handyCommetns;
 	}
 
-	public void setHandyCommetns(final List<String> handyCommetns) {
+	public void setHandyCommetns(final Collection<String> handyCommetns) {
 		this.handyCommetns = handyCommetns;
 	}
 
-	public Boolean isFinal() {
+	public Boolean getIsFinal() {
 		return this.isFinal;
 	}
 
-	public void setFinal(final Boolean isFinal) {
+	@ManyToOne(optional = true)
+	public Report getReport() {
+		return this.report;
+	}
+
+	public void setReport(final Report report) {
+		this.report = report;
+	}
+
+	public void setIsFinal(final Boolean isFinal) {
 		this.isFinal = isFinal;
 	}
 

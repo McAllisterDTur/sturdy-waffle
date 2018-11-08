@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -17,6 +19,9 @@ public class Finder extends DomainEntity {
 	private String			priceRange;
 	private String			dateRange;
 	private List<FixUpTask>	fixUpTask;
+
+	//+
+	private HandyWorker		worker;
 
 
 	public String getWarranty() {
@@ -59,6 +64,7 @@ public class Finder extends DomainEntity {
 		this.dateRange = dateRange;
 	}
 
+	@OneToMany
 	public List<FixUpTask> getFixUpTask() {
 		return this.fixUpTask;
 	}
@@ -66,7 +72,16 @@ public class Finder extends DomainEntity {
 	public void setFixUpTask(final List<FixUpTask> fixUpTask) {
 		this.fixUpTask = fixUpTask;
 	}
-	
+
+	@OneToOne
+	public HandyWorker getWorker() {
+		return this.worker;
+	}
+
+	public void setWorker(final HandyWorker worker) {
+		this.worker = worker;
+	}
+
 	@Override
 	public String toString() {
 		return "Finder [warranty=" + this.warranty + ", keyWord=" + this.keyWord + ", category=" + this.category + ", priceRange=" + this.priceRange + ", dateRange=" + this.dateRange + ", fixUpTask=" + this.fixUpTask + "]";

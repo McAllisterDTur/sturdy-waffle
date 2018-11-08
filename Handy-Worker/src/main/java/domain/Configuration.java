@@ -1,7 +1,7 @@
 
 package domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -16,25 +16,25 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Configuration extends DomainEntity {
 
 	// Getters that returns lists are mutable 
-	private int				cacheTime;
+	private int					cacheTime;
 
-	private double			vat;
+	private double				vat;
 
-	private String			bannerURL;
+	private String				bannerURL;
 
-	private String			welcomeEN;
+	private String				welcomeEN;
 
-	private String			welcomeSP;
+	private String				welcomeSP;
 
-	private List<String>	spamWords;
+	private Collection<String>	spamWords;
 
-	private String			countryCode;
+	private String				countryCode;
 
-	private List<String>	positiveWords;
+	private Collection<String>	positiveWords;
 
-	private List<String>	negativeWords;
+	private Collection<String>	negativeWords;
 
-	private int				finderResults;
+	private int					finderResults;
 
 
 	@Min(1)
@@ -79,11 +79,11 @@ public class Configuration extends DomainEntity {
 		this.welcomeSP = welcomeSP;
 	}
 
-	public List<String> getSpamWords() {
+	public Collection<String> getSpamWords() {
 		return this.spamWords;
 	}
 
-	public void setSpamWords(final List<String> spamWords) {
+	public void setSpamWords(final Collection<String> spamWords) {
 		this.spamWords = spamWords;
 	}
 
@@ -95,19 +95,19 @@ public class Configuration extends DomainEntity {
 		this.countryCode = countryCode;
 	}
 
-	public List<String> getPositiveWords() {
+	public Collection<String> getPositiveWords() {
 		return this.positiveWords;
 	}
 
-	public void setPositiveWords(final List<String> positiveWords) {
+	public void setPositiveWords(final Collection<String> positiveWords) {
 		this.positiveWords = positiveWords;
 	}
 
-	public List<String> getNegativeWords() {
+	public Collection<String> getNegativeWords() {
 		return this.negativeWords;
 	}
 
-	public void setNegativeWords(final List<String> negativeWords) {
+	public void setNegativeWords(final Collection<String> negativeWords) {
 		this.negativeWords = negativeWords;
 	}
 	@Max(100)

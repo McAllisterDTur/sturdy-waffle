@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
@@ -19,10 +20,13 @@ import org.joda.time.DateTime;
 public class Application extends DomainEntity {
 
 	private DateTime		registerTime;
-	private Money			offeredPrice;
+	private Double			offeredPrice;
 	private List<String>	customerComment;
 	private List<String>	handyComments;
 	private String			status;
+	//+
+	private HandyWorker		worker;
+	private FixUpTask		task;
 
 
 	@Past
@@ -35,11 +39,11 @@ public class Application extends DomainEntity {
 		this.registerTime = registerTime;
 	}
 	@NotNull
-	public Money getOfferedPrice() {
+	public Double getOfferedPrice() {
 		return this.offeredPrice;
 	}
 
-	public void setOfferedPrice(final Money offeredPrice) {
+	public void setOfferedPrice(final Double offeredPrice) {
 		this.offeredPrice = offeredPrice;
 	}
 	@NotNull
@@ -58,7 +62,7 @@ public class Application extends DomainEntity {
 	public void setHandyComments(final List<String> handyComments) {
 		this.handyComments = handyComments;
 	}
-	
+
 	@Pattern(regexp = "\b(ACCEPTED|REJECTED|PENDING)\b")
 	public String getStatus() {
 		return this.status;
@@ -66,6 +70,23 @@ public class Application extends DomainEntity {
 
 	public void setStatus(final String status) {
 		this.status = status;
+	}
+
+	@ManyToOne(optional = true)
+	public HandyWorker getWorker() {
+		return this.worker;
+	}
+
+	public void setWorker(final HandyWorker worker) {
+		this.worker = worker;
+	}
+	@ManyToOne(optional = true)
+	public FixUpTask getTask() {
+		return this.task;
+	}
+
+	public void setTask(final FixUpTask task) {
+		this.task = task;
 	}
 
 	@Override

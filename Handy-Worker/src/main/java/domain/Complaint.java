@@ -2,11 +2,12 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -17,19 +18,17 @@ import org.joda.time.DateTime;
 @Access(AccessType.PROPERTY)
 public class Complaint extends DomainEntity {
 
-	private String			ticker;
+	private String				ticker;
 
-	private DateTime		complaintTime;
+	private DateTime			complaintTime;
 
-	private String			description;
+	private String				description;
 
-	private List<String>	attachments;
+	private Collection<String>	attachments;
 
-	private boolean			isFinal;
+	private boolean				isFinal;
 
-	private FixUpTask		fixUpTask;
-
-	private List<Report>	reports;
+	private FixUpTask			fixUpTask;
 
 
 	@NotBlank
@@ -60,11 +59,11 @@ public class Complaint extends DomainEntity {
 		this.description = description;
 	}
 
-	public List<String> getAttachments() {
+	public Collection<String> getAttachments() {
 		return new ArrayList<String>(this.attachments);
 	}
 
-	public void setAttachments(final List<String> attachments) {
+	public void setAttachments(final Collection<String> attachments) {
 		this.attachments = new ArrayList<String>(attachments);
 	}
 
@@ -76,6 +75,7 @@ public class Complaint extends DomainEntity {
 		this.isFinal = isFinal;
 	}
 
+	@ManyToOne
 	public FixUpTask getFixUpTask() {
 		return this.fixUpTask;
 	}
@@ -84,18 +84,9 @@ public class Complaint extends DomainEntity {
 		this.fixUpTask = fixUpTask;
 	}
 
-	public List<Report> getReports() {
-		return new ArrayList<Report>(this.reports);
-	}
-
-	public void setReports(final List<Report> reports) {
-		this.reports = new ArrayList<Report>(reports);
-	}
-
 	@Override
 	public String toString() {
-		return "Complaint [ticker=" + this.ticker + ", complaintTime=" + this.complaintTime + ", description=" + this.description + ", attachments=" + this.attachments + ", isFinal=" + this.isFinal + ", fixUpTask=" + this.fixUpTask + ", reports="
-			+ this.reports + "]";
+		return "Complaint [ticker=" + this.ticker + ", complaintTime=" + this.complaintTime + ", description=" + this.description + ", attachments=" + this.attachments + ", isFinal=" + this.isFinal + ", fixUpTask=" + this.fixUpTask + "]";
 	}
 
 }

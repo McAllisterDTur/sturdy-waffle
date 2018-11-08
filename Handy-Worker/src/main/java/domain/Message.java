@@ -1,11 +1,13 @@
 
 package domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
@@ -17,13 +19,16 @@ import org.joda.time.DateTime;
 @Access(AccessType.PROPERTY)
 public class Message extends DomainEntity {
 
-	private Actor			sender;
-	private Actor			reciever;
-	private DateTime		sendTime;
-	private String			subject;
-	private String			body;
-	private List<String>	tags;
-	private String			priority;
+	private Actor				sender;
+	private Actor				reciever;
+	private DateTime			sendTime;
+	private String				subject;
+	private String				body;
+	private Collection<String>	tags;
+	private String				priority;
+
+	//+
+	private Collection<Box>		boxes;
 
 
 	@NotNull
@@ -72,14 +77,13 @@ public class Message extends DomainEntity {
 	}
 
 	@NotNull
-	public List<String> getTags() {
+	public Collection<String> getTags() {
 		return this.tags;
 	}
 
-	public void setTags(final List<String> tags) {
+	public void setTags(final Collection<String> tags) {
 		this.tags = tags;
 	}
-
 	@NotBlank
 	@Pattern(regexp = "\b(HIGH|NEUTRAL|LOW)\b")
 	public String getPriority() {
@@ -88,6 +92,15 @@ public class Message extends DomainEntity {
 
 	public void setPriority(final String priority) {
 		this.priority = priority;
+	}
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	public Collection<Box> getBoxes() {
+		return this.boxes;
+	}
+
+	public void setBoxes(final Collection<Box> boxes) {
+		this.boxes = boxes;
 	}
 
 	@Override

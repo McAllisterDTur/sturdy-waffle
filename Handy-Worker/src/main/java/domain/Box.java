@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -20,6 +21,11 @@ public class Box extends DomainEntity {
 
 	private List<Message>	messages;
 
+	//+
+	private Actor			owner;
+
+
+	//private Collection<Message> messages;
 
 	@NotBlank
 	public String getName() {
@@ -44,6 +50,25 @@ public class Box extends DomainEntity {
 
 	public void setMessages(final List<Message> messages) {
 		this.messages = new ArrayList<Message>(messages);
+	}
+
+	@NotBlank
+	//{}
+	public Boolean getDeleteable() {
+		return this.deleteable;
+	}
+
+	public void setDeleteable(final Boolean deleteable) {
+		this.deleteable = deleteable;
+	}
+
+	@ManyToOne
+	public Actor getOwner() {
+		return this.owner;
+	}
+
+	public void setOwner(final Actor owner) {
+		this.owner = owner;
 	}
 
 	@Override

@@ -13,6 +13,9 @@ public class HandyWorker extends Actor {
 
 	private String	make;
 
+
+	//+
+
 	@NotBlank
 	public String getMake() {
 		return this.make;
