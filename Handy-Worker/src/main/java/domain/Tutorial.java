@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -20,6 +22,10 @@ public class Tutorial extends DomainEntity {
 	private DateTime		lastTimeUpdated;
 	private String			summary;
 	private List<String>	photoURL;
+
+	//+
+	private HandyWorker		worker;
+	private Sponsorship		sponsorship;
 
 
 	@NotBlank
@@ -54,7 +60,25 @@ public class Tutorial extends DomainEntity {
 	public void setPhotoURL(final List<String> photoURL) {
 		this.photoURL = photoURL;
 	}
-	
+
+	@ManyToOne(optional = true)
+	public HandyWorker getWorker() {
+		return this.worker;
+	}
+
+	public void setWorker(final HandyWorker worker) {
+		this.worker = worker;
+	}
+
+	@OneToOne
+	public Sponsorship getSponsorship() {
+		return this.sponsorship;
+	}
+
+	public void setSponsorship(final Sponsorship sponsorship) {
+		this.sponsorship = sponsorship;
+	}
+
 	@Override
 	public String toString() {
 		return "Tutorial [title=" + this.title + ", lastTimeUpdated=" + this.lastTimeUpdated + ", summary=" + this.summary + ", photoURL=" + this.photoURL + "]";

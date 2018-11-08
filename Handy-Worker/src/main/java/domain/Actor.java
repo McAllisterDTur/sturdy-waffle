@@ -1,12 +1,9 @@
 
 package domain;
 
-import java.util.List;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Pattern;
 
@@ -20,17 +17,16 @@ import security.UserAccount;
 @Access(AccessType.PROPERTY)
 public class Actor extends DomainEntity {
 
-	private String				name;
-	private String				middleName;
-	private String				surname;
-	private String				photoURL;
-	private String				email;
-	private String				phone;
-	private String				address;
-	private Boolean				banned;
+	private String		name;
+	private String		middleName;
+	private String		surname;
+	private String		photoURL;
+	private String		email;
+	private String		phone;
+	private String		address;
+	private Boolean		banned;
 	//+
-	private UserAccount			account;
-	private List<SocialProfile>	profiles;
+	private UserAccount	account;
 
 
 	@NotBlank
@@ -111,15 +107,6 @@ public class Actor extends DomainEntity {
 
 	public void setAccount(final UserAccount account) {
 		this.account = account;
-	}
-
-	@OneToMany
-	public List<SocialProfile> getProfiles() {
-		return this.profiles;
-	}
-
-	public void setProfiles(final List<SocialProfile> profiles) {
-		this.profiles = profiles;
 	}
 
 	@Override

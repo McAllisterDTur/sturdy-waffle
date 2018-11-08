@@ -24,7 +24,7 @@ public class FixUpTask extends DomainEntity {
 	private DateTime				publishTime;
 	private String					description;
 	private String					address;
-	private Money					maxPrice;
+	private Double					maxPrice;
 	private DateTime				periodStart;
 	private DateTime				periodEnd;
 	private CreditCard				creditCard;
@@ -74,11 +74,11 @@ public class FixUpTask extends DomainEntity {
 	}
 
 	@NotNull
-	public Money getMaxPrice() {
+	public Double getMaxPrice() {
 		return this.maxPrice;
 	}
 
-	public void setMaxPrice(final Money maxPrice) {
+	public void setMaxPrice(final Double maxPrice) {
 		this.maxPrice = maxPrice;
 	}
 

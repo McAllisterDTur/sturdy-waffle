@@ -4,6 +4,7 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -20,6 +21,9 @@ public class Phase extends DomainEntity {
 	private DateTime	startTime;
 
 	private DateTime	endTime;
+
+	//+
+	private Application	application;
 
 
 	@NotBlank
@@ -53,6 +57,15 @@ public class Phase extends DomainEntity {
 
 	public void setEndTime(final DateTime endTime) {
 		this.endTime = endTime;
+	}
+
+	@ManyToOne(optional = true)
+	public Application getApplication() {
+		return this.application;
+	}
+
+	public void setApplication(final Application application) {
+		this.application = application;
 	}
 
 	@Override

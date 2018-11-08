@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -62,6 +63,7 @@ public class Notes extends DomainEntity {
 		return this.isFinal;
 	}
 
+	@ManyToOne(optional = true)
 	public Report getReport() {
 		return this.report;
 	}

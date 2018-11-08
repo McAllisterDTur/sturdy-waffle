@@ -25,6 +25,8 @@ public class Box extends DomainEntity {
 	private Actor			owner;
 
 
+	//private Collection<Message> messages;
+
 	@NotBlank
 	public String getName() {
 		return this.name;
