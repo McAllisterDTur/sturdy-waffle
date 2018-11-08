@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -76,6 +78,7 @@ public class Complaint extends DomainEntity {
 		this.isFinal = isFinal;
 	}
 
+	@ManyToOne
 	public FixUpTask getFixUpTask() {
 		return this.fixUpTask;
 	}
@@ -83,7 +86,7 @@ public class Complaint extends DomainEntity {
 	public void setFixUpTask(final FixUpTask fixUpTask) {
 		this.fixUpTask = fixUpTask;
 	}
-
+	@OneToMany
 	public List<Report> getReports() {
 		return new ArrayList<Report>(this.reports);
 	}

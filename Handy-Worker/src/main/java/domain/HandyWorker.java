@@ -1,6 +1,8 @@
 
 package domain;
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -11,7 +13,10 @@ import org.hibernate.validator.constraints.NotBlank;
 @Access(AccessType.PROPERTY)
 public class HandyWorker extends Actor {
 
-	private String	make;
+	private String					make;
+	//+
+	private Collection<Application>	applications;
+
 
 	@NotBlank
 	public String getMake() {

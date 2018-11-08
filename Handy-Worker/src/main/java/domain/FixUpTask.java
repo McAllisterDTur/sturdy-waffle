@@ -1,12 +1,15 @@
 
 package domain;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -17,19 +20,19 @@ import org.joda.time.DateTime;
 @Access(AccessType.PROPERTY)
 public class FixUpTask extends DomainEntity {
 
-	private String				ticker;
-	private DateTime			publishTime;
-	private String				description;
-	private String				address;
-	private Money				maxPrice;
-	private DateTime			periodStart;
-	private DateTime			periodEnd;
-	private CreditCard			creditCard;
-	private Category			category;
-	private Warranty			warranty;
-	private Customer			customer;
-	private List<Complaint>		complaint;
-	private List<Application>	application;
+	private String					ticker;
+	private DateTime				publishTime;
+	private String					description;
+	private String					address;
+	private Money					maxPrice;
+	private DateTime				periodStart;
+	private DateTime				periodEnd;
+	private CreditCard				creditCard;
+	private Category				category;
+	private Warranty				warranty;
+	private Customer				customer;
+	private Collection<Complaint>	complaint;
+	private Collection<Application>	application;
 
 
 	@NotBlank
@@ -104,6 +107,7 @@ public class FixUpTask extends DomainEntity {
 		this.creditCard = creditCard;
 	}
 
+	@ManyToOne
 	public Category getCategory() {
 		return this.category;
 	}
@@ -112,6 +116,7 @@ public class FixUpTask extends DomainEntity {
 		this.category = category;
 	}
 
+	@ManyToOne
 	public Warranty getWarranty() {
 		return this.warranty;
 	}
@@ -128,7 +133,8 @@ public class FixUpTask extends DomainEntity {
 		this.customer = customer;
 	}
 
-	public List<Complaint> getComplaint() {
+	@OneToMany
+	public Collection<Complaint> getComplaint() {
 		return this.complaint;
 	}
 
@@ -136,7 +142,8 @@ public class FixUpTask extends DomainEntity {
 		this.complaint = complaint;
 	}
 
-	public List<Application> getApplication() {
+	@OneToMany
+	public Collection<Application> getApplication() {
 		return this.application;
 	}
 

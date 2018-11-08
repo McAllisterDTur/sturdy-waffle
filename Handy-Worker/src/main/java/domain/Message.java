@@ -1,6 +1,7 @@
 
 package domain;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Access;
@@ -17,13 +18,13 @@ import org.joda.time.DateTime;
 @Access(AccessType.PROPERTY)
 public class Message extends DomainEntity {
 
-	private Actor			sender;
-	private Actor			reciever;
-	private DateTime		sendTime;
-	private String			subject;
-	private String			body;
-	private List<String>	tags;
-	private String			priority;
+	private Actor				sender;
+	private Actor				reciever;
+	private DateTime			sendTime;
+	private String				subject;
+	private String				body;
+	private Collection<String>	tags;
+	private String				priority;
 
 
 	@NotNull
@@ -72,7 +73,7 @@ public class Message extends DomainEntity {
 	}
 
 	@NotNull
-	public List<String> getTags() {
+	public Collection<String> getTags() {
 		return this.tags;
 	}
 

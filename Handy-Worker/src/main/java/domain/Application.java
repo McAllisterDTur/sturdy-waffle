@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
@@ -23,6 +25,9 @@ public class Application extends DomainEntity {
 	private List<String>	customerComment;
 	private List<String>	handyComments;
 	private String			status;
+	//+
+	private FixUpTask		task;
+	private List<Phase>		phases;
 
 
 	@Past
@@ -58,7 +63,7 @@ public class Application extends DomainEntity {
 	public void setHandyComments(final List<String> handyComments) {
 		this.handyComments = handyComments;
 	}
-	
+
 	@Pattern(regexp = "\b(ACCEPTED|REJECTED|PENDING)\b")
 	public String getStatus() {
 		return this.status;
@@ -66,6 +71,34 @@ public class Application extends DomainEntity {
 
 	public void setStatus(final String status) {
 		this.status = status;
+	}
+
+	/*
+	 * @ManyToOne
+	 * public HandyWorker getWorker() {
+	 * return this.worker;
+	 * }
+	 * 
+	 * public void setWorker(final HandyWorker worker) {
+	 * this.worker = worker;
+	 * }
+	 */
+	@ManyToOne
+	public FixUpTask getTask() {
+		return this.task;
+	}
+
+	public void setTask(final FixUpTask task) {
+		this.task = task;
+	}
+
+	@OneToMany
+	public List<Phase> getPhases() {
+		return this.phases;
+	}
+
+	public void setPhases(final List<Phase> phases) {
+		this.phases = phases;
 	}
 
 	@Override
