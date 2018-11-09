@@ -1,11 +1,11 @@
 
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
@@ -19,14 +19,14 @@ import org.joda.time.DateTime;
 @Access(AccessType.PROPERTY)
 public class Application extends DomainEntity {
 
-	private DateTime		registerTime;
-	private Double			offeredPrice;
-	private List<String>	customerComment;
-	private List<String>	handyComments;
-	private String			status;
+	private DateTime			registerTime;
+	private Double				offeredPrice;
+	private Collection<String>	customerComment;
+	private Collection<String>	handyComments;
+	private String				status;
 	//+
-	private HandyWorker		worker;
-	private FixUpTask		task;
+	private HandyWorker			worker;
+	private FixUpTask			task;
 
 
 	@Past
@@ -46,20 +46,23 @@ public class Application extends DomainEntity {
 	public void setOfferedPrice(final Double offeredPrice) {
 		this.offeredPrice = offeredPrice;
 	}
+
+	@ElementCollection
 	@NotNull
-	public List<String> getCustomerComment() {
-		return new ArrayList<String>(this.customerComment);
+	public Collection<String> getCustomerComment() {
+		return this.customerComment;
 	}
 
-	public void setCustomerComment(final List<String> customerComment) {
+	public void setCustomerComment(final Collection<String> customerComment) {
 		this.customerComment = customerComment;
 	}
+	@ElementCollection
 	@NotNull
-	public List<String> getHandyComments() {
+	public Collection<String> getHandyComments() {
 		return this.handyComments;
 	}
 
-	public void setHandyComments(final List<String> handyComments) {
+	public void setHandyComments(final Collection<String> handyComments) {
 		this.handyComments = handyComments;
 	}
 

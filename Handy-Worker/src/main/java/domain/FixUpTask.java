@@ -2,6 +2,7 @@
 package domain;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Access;
@@ -10,23 +11,25 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class FixUpTask extends DomainEntity {
 
 	private String					ticker;
-	private DateTime				publishTime;
+	private Date					publishTime;
 	private String					description;
 	private String					address;
 	private Double					maxPrice;
-	private DateTime				periodStart;
-	private DateTime				periodEnd;
+	private Date					periodStart;
+	private Date					periodEnd;
 	private CreditCard				creditCard;
 	private Category				category;
 	private Warranty				warranty;
@@ -47,11 +50,13 @@ public class FixUpTask extends DomainEntity {
 
 	@Past
 	@NotNull
-	public DateTime getPublishTime() {
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	public Date getPublishTime() {
 		return this.publishTime;
 	}
 
-	public void setPublishTime(final DateTime publishTime) {
+	public void setPublishTime(final Date publishTime) {
 		this.publishTime = publishTime;
 	}
 
@@ -83,19 +88,19 @@ public class FixUpTask extends DomainEntity {
 	}
 
 	@NotNull
-	public DateTime getPeriodStart() {
+	public Date getPeriodStart() {
 		return this.periodStart;
 	}
 
-	public void setPeriodStart(final DateTime periodStart) {
+	public void setPeriodStart(final Date periodStart) {
 		this.periodStart = periodStart;
 	}
 
-	public DateTime getPeriodEnd() {
+	public Date getPeriodEnd() {
 		return this.periodEnd;
 	}
 
-	public void setPeriodEnd(final DateTime periodEnd) {
+	public void setPeriodEnd(final Date periodEnd) {
 		this.periodEnd = periodEnd;
 	}
 
@@ -124,7 +129,7 @@ public class FixUpTask extends DomainEntity {
 	public void setWarranty(final Warranty warranty) {
 		this.warranty = warranty;
 	}
-
+	@ManyToOne
 	public Customer getCustomer() {
 		return this.customer;
 	}

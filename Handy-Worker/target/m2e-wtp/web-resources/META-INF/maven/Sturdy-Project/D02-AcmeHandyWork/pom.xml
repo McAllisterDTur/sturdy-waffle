@@ -12,7 +12,7 @@
 	<!-- Artifact identification and properties -->
 
 	<groupId>Sturdy-Project</groupId>
-	<artifactId>AcmeHandyWork</artifactId>
+	<artifactId>D02-AcmeHandyWork</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
 

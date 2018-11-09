@@ -41,4 +41,8 @@ public class SocialProfile extends DomainEntity {
 		return this.profileLink;
 	}
 
+	public void setProfileLink(final String profileLink) {
+		this.profileLink = profileLink;
+	}
+
 }

@@ -1,10 +1,11 @@
 
 package domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -14,13 +15,13 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Warranty extends DomainEntity {
 
 	//Atributes
-	private String			title;
+	private String				title;
 
-	private String			terms;
+	private String				terms;
 
-	private List<String>	law;
+	private Collection<String>	law;
 
-	private Boolean			draft;
+	private boolean				draft;
 
 
 	@NotBlank
@@ -42,11 +43,12 @@ public class Warranty extends DomainEntity {
 	}
 
 	@NotBlank
-	public List<String> getLaw() {
+	@ElementCollection
+	public Collection<String> getLaw() {
 		return this.law;
 	}
 
-	public void setLaw(final List<String> law) {
+	public void setLaw(final Collection<String> law) {
 		this.law = law;
 	}
 

@@ -389,7 +389,6 @@
 		<property name="phone" value="723198334"/>
 		<property name="address" value="Calle Lore, 42"/>
 		<property name="banned" value="false"/>
-		<property name="socialProfile"><null/></property>
 	</bean>
 	
 	<bean id="Admin2" class="domain.Administrator">
@@ -402,93 +401,123 @@
 		<property name="phone" value="682736182"/>
 		<property name="address" value="Calle Smint, 50"/>
 		<property name="banned" value="false"/>
-		<property name="socialProfile"><null/></property>
 	</bean>
 	
-	<!-- Sponsorships -->
+	<!-- FixUpTask -->
 	
-	<bean id="Sponsorship1" class="domain.Sponsorship">
-		<property name="bannerURL" value="http://www.google.com"/>
-		<property name="targetPageLink" value="http://www.tumblr.com"/>
-		<property name="creditCard" ref="CreditCard1" />
-		<property name="sponsor" ref="Sponsor1" />
-	</bean>
-	
-	<bean id="Sponsorship2" class="domain.Sponsorship">
-		<property name="bannerURL" value="http://www.cocacola.es"/>
-		<property name="targetPageLink" value="http://chasethefeeling.to"/>
-		<property name="creditCard" ref="CreditCard1" />
-		<property name="sponsor" ref="Sponsor1" />
-	</bean>
-	
-	<bean id="Sponsorship3" class="domain.Sponsorship">
-		<property name="bannerURL" value="http://www.bing.com"/>
-		<property name="targetPageLink" value="http://handyacme.com/tutorial/1"/>
+	<bean id="FixUpTask1" class="domain.FixUpTask">
+		<property name="ticker" value="181103-123456" />
+		<property name="publishTime" value="2018-11-03" />
+		<property name="description" value="Grifo roto" />
+		<property name="address" value="Calle Cabezas, 21" />
+		<property name="maxPrice" value="90.0" />
+		<property name="periodStart" value="2018-11-05 12:00" />
+		<property name="periodEnd" value="2018-11-06 12:00" />
 		<property name="creditCard" ref="CreditCard2" />
-		<property name="sponsor" ref="Sponsor2" />
+		<property name="customer" ref="Customer1" />
+		<property name="warranty" ref="Warranty1" />
+		<property name="complaint">
+			<list>
+				<null/>
+			</list>
+		</property>
+		<property name="category" ref="Category1" />
 	</bean>
-	
-	<bean id="Sponsorship4" class="domain.Sponsorship">
-		<property name="bannerURL" value="http://www.pepsi.co.uk"/>
-		<property name="targetPageLink" value="http://bestexperiences.com"/>
+		
+	<bean id="FixUpTask2" class="domain.FixUpTask">
+		<property name="ticker" value="181028-y7ha16" />
+		<property name="publishTime" value="2018-10-28 14:30" />
+		<property name="description" value="Necesito que alguien me cuide al niño" />
+		<property name="address" value="Calle Cabezas, 21" />
+		<property name="maxPrice" value="56.0" />
+		<property name="periodStart" value="2018-10-30 11:00" />
+		<property name="periodEnd" value="2018-10-31 00:00" />
 		<property name="creditCard" ref="CreditCard2" />
-		<property name="sponsor" ref="Sponsor2" />
+		<property name="customer" ref="Customer1" />
+		<property name="warranty" ref="Warranty2" />
+		<property name="complaint">
+			<list>
+				<ref bean="Complaint1"/>
+			</list>
+		</property>
+		<property name="category" ref="Category4" />
 	</bean>
 	
-	<!-- Sponsors -->
-	
-	<bean id="Sponsor1" class="domain.Sponsor">
-		<property name="account" ref="userAccountSponsor1"/>
-		<property name="name" value="Macarena" />
-		<property name="middleName"><null/></property>
-		<property name="surname" value="Díaz"/>
-		<property name="photoURL"><null/></property>
-		<property name="email" value="macdia@cocacola.es"/>
-		<property name="phone" value="629837162"/>
-		<property name="address" value="Polígono San Pablo, 3"/>
-		<property name="banned" value="false"/>
-		<property name="socialProfile"><null/></property>
+		
+	<bean id="FixUpTask3" class="domain.FixUpTask">
+		<property name="ticker" value="181104-828376" />
+		<property name="publishTime" value="2018-11-04 10:12" />
+		<property name="description" value="Necesito una puerta" />
+		<property name="address" value="Avenida Gato, 4" />
+		<property name="maxPrice" value="45.0" />
+		<property name="periodStart" value="2018-11-07 12:00" />
+		<property name="periodEnd" value="2018-11-09 12:00" />
+		<property name="creditCard" ref="CreditCard3" />
+		<property name="customer" ref="Customer2" />
+		<property name="warranty" ref="Warranty1" />
+		<property name="complaint">
+			<list>
+				<ref bean="Complaint2" />
+			</list>
+		</property>
+		<property name="category" ref="Category2" />
 	</bean>
-	
-	<bean id="Sponsor2" class="domain.Sponsor">
-		<property name="account" ref="userAccountSponsor2"/>
-		<property name="name" value="Loles" />
-		<property name="middleName"><null/></property>
-		<property name="surname" value="Hidalgo"/>
-		<property name="photoURL"><null/></property>
-		<property name="email" value="loles@pepsi.co.uk"/>
-		<property name="phone" value="618263548"/>
-		<property name="address" value="Calle Lorca, 2"/>
-		<property name="banned" value="false"/>
-		<property name="socialProfile"><null/></property>
+		
+	<bean id="FixUpTask4" class="domain.FixUpTask">
+		<property name="ticker" value="181104-y6jk89" />
+		<property name="publishTime" value="2018-11-04 13:30" />
+		<property name="description" value="Cosas de agua" />
+		<property name="address" value="Barrio Triana, 43" />
+		<property name="maxPrice" value="30.0" />
+		<property name="periodStart" value="2018-11-05 12:00" />
+		<property name="periodEnd" value="2018-11-06 12:00" />
+		<property name="creditCard" ref="CreditCard4" />
+		<property name="customer" ref="Customer3" />
+		<property name="warranty" ref="Warranty3" />
+		<property name="complaint">
+			<list>
+				<null/>
+			</list>
+		</property>
+		<property name="category" ref="Category1" />
 	</bean>
-	
-	<!-- Referee -->
-	
-	<bean id="Referee1" class="domain.Referee">
-		<property name="account" ref="userAccountReferee1"/>
-		<property name="name" value="Federico" />
-		<property name="middleName"><null/></property>
-		<property name="surname" value="García Lorca"/>
-		<property name="photoURL"><null/></property>
-		<property name="email" value="lorca@gmail.com"/>
-		<property name="phone" value="646271896"/>
-		<property name="address" value="La Casa de Bernarda Alba, Granada"/>
-		<property name="banned" value="false"/>
-		<property name="socialProfile"><null/></property>
+			
+	<bean id="FixUpTask5" class="domain.FixUpTask">
+		<property name="ticker" value="181105-u7jk89" />
+		<property name="publishTime" value="2018-11-05 14:56" />
+		<property name="description" value="Una mesa para toda la familia" />
+		<property name="address" value="Calle Gardenia, 21" />
+		<property name="maxPrice" value="38.0" />
+		<property name="periodStart" value="2018-11-06 18:00" />
+		<property name="periodEnd" value="2018-11-10 23:59" />
+		<property name="creditCard" ref="CreditCard5" />
+		<property name="customer" ref="Customer4" />
+		<property name="warranty" ref="Warranty1" />
+		<property name="complaint">
+			<list>
+				<null/>
+			</list>
+		</property>
+		<property name="category" ref="Category2" />
 	</bean>
-	
-	<bean id="Referee2" class="domain.Referee">
-		<property name="account" ref="userAccountReferee2"/>
-		<property name="name" value="Loles" />
-		<property name="middleName"><null/></property>
-		<property name="surname" value="Hidalgo"/>
-		<property name="photoURL"><null/></property>
-		<property name="email" value="loles@pepsi.co.uk"/>
-		<property name="phone" value="638263723"/>
-		<property name="address" value="Plaza San Carlos, 8"/>
-		<property name="banned" value="false"/>
-		<property name="socialProfile"><null/></property>
+			
+	<bean id="FixUpTask6" class="domain.FixUpTask">
+		<property name="ticker" value="181106-xbn871" />
+		<property name="publishTime" value="2018-11-06 16:20" />
+		<property name="description" value="Un niño al que cuidar" />
+		<property name="address" value="Barrio Triana, 43" />
+		<property name="maxPrice" value="30.0" />
+		<property name="periodStart" value="2018-11-06 20:00" />
+		<property name="periodEnd" value="2018-11-06 23:00" />
+		<property name="creditCard" ref="CreditCard6" />
+		<property name="customer" ref="Customer5" />
+		<property name="warranty" ref="Warranty3" />
+		<property name="complaint">
+			<list>
+				<null/>
+			</list>
+		</property>
+		<property name="category" ref="Category4" />
 	</bean>
 	
 	<!-- Customers -->
@@ -878,7 +907,7 @@
 		<property name="handyWorker" ref="Worker2" />
 	</bean>
 	
-	<bean id="Application6" class="domain.Application">
+	<bean id="Application7" class="domain.Application">
 		<property name="registerTime" value="2018-11-07 21:36" />
 		<property name="offeredPrice" value="12.0" />
 		<property name="handyComments">
@@ -891,7 +920,7 @@
 		<property name="handyWorker" ref="Worker4" />
 	</bean>
 	
-	<bean id="Application7" class="domain.Application">
+	<bean id="Application8" class="domain.Application">
 		<property name="registerTime" value="2018-11-07 22:04" />
 		<property name="offeredPrice" value="10.5" />
 		<property name="handyComments">
@@ -904,7 +933,7 @@
 		<property name="handyWorker" ref="Worker3" />
 	</bean>
 	
-	<bean id="Application7" class="domain.Application">
+	<bean id="Application9" class="domain.Application">
 		<property name="registerTime" value="2018-11-07 22:43" />
 		<property name="offeredPrice" value="8.0" />
 		<property name="handyComments">
@@ -917,7 +946,7 @@
 		<property name="handyWorker" ref="Worker6" />
 	</bean>
 	
-	<bean id="Application8" class="domain.Application">
+	<bean id="Application10" class="domain.Application">
 		<property name="registerTime" value="2018-11-08 11:05" />
 		<property name="offeredPrice" value="81.0" />
 		<property name="handyComments">
@@ -958,122 +987,6 @@
 	</bean>
 	
 	
-	<!-- FixUpTask -->
-	
-	<bean id="FixUpTask1" class="domain.FixUpTask">
-		<property name="ticker" value="181103-123456" />
-		<property name="publishTime" value="2018-11-03 21:34" />
-		<property name="description" value="Me se a roto un grifo y no veas la liada" />
-		<property name="address" value="Calle Cabezas, 21" />
-		<property name="maxPrice" value="90.0" />
-		<property name="periodStart" value="2018-11-05 12:00" />
-		<property name="periodEnd" value="2018-11-06 12:00" />
-		<property name="creditCard" ref="CreditCard2" />
-		<property name="customer" ref="Customer1" />
-		<property name="warranty" ref="Warranty1" />
-		<property name="complaint">
-			<list>
-				<null/>
-			</list>
-		</property>
-		<property name="category" ref="Category1" />
-	</bean>
-		
-	<bean id="FixUpTask2" class="domain.FixUpTask">
-		<property name="ticker" value="181028-y7ha16" />
-		<property name="publishTime" value="2018-10-28 14:30" />
-		<property name="description" value="Necesito que alguien me cuide al niño" />
-		<property name="address" value="Calle Cabezas, 21" />
-		<property name="maxPrice" value="56.0" />
-		<property name="periodStart" value="2018-10-30 11:00" />
-		<property name="periodEnd" value="2018-10-31 00:00" />
-		<property name="creditCard" ref="CreditCard2" />
-		<property name="customer" ref="Customer1" />
-		<property name="warranty" ref="Warranty2" />
-		<property name="complaint">
-			<list>
-				<ref bean="Complaint1"/>
-			</list>
-		</property>
-		<property name="category" ref="Category4" />
-	</bean>
-	
-		
-	<bean id="FixUpTask3" class="domain.FixUpTask">
-		<property name="ticker" value="181104-828376" />
-		<property name="publishTime" value="2018-11-04 10:12" />
-		<property name="description" value="Necesito una puerta" />
-		<property name="address" value="Avenida Gato, 4" />
-		<property name="maxPrice" value="45.0" />
-		<property name="periodStart" value="2018-11-07 12:00" />
-		<property name="periodEnd" value="2018-11-09 12:00" />
-		<property name="creditCard" ref="CreditCard3" />
-		<property name="customer" ref="Customer2" />
-		<property name="warranty" ref="Warranty1" />
-		<property name="complaint">
-			<list>
-				<ref bean="Complaint2" />
-			</list>
-		</property>
-		<property name="category" ref="Category2" />
-	</bean>
-		
-	<bean id="FixUpTask4" class="domain.FixUpTask">
-		<property name="ticker" value="181104-y6jk89" />
-		<property name="publishTime" value="2018-11-04 13:30" />
-		<property name="description" value="Cosas de agua" />
-		<property name="address" value="Barrio Triana, 43" />
-		<property name="maxPrice" value="30.0" />
-		<property name="periodStart" value="2018-11-05 12:00" />
-		<property name="periodEnd" value="2018-11-06 12:00" />
-		<property name="creditCard" ref="CreditCard4" />
-		<property name="customer" ref="Customer3" />
-		<property name="warranty" ref="Warranty3" />
-		<property name="complaint">
-			<list>
-				<null/>
-			</list>
-		</property>
-		<property name="category" ref="Category1" />
-	</bean>
-			
-	<bean id="FixUpTask5" class="domain.FixUpTask">
-		<property name="ticker" value="181105-u7jk89" />
-		<property name="publishTime" value="2018-11-05 14:56" />
-		<property name="description" value="Una mesa para toda la familia" />
-		<property name="address" value="Calle Gardenia, 21" />
-		<property name="maxPrice" value="38.0" />
-		<property name="periodStart" value="2018-11-06 18:00" />
-		<property name="periodEnd" value="2018-11-10 23:59" />
-		<property name="creditCard" ref="CreditCard5" />
-		<property name="customer" ref="Customer4" />
-		<property name="warranty" ref="Warranty1" />
-		<property name="complaint">
-			<list>
-				<null/>
-			</list>
-		</property>
-		<property name="category" ref="Category2" />
-	</bean>
-			
-	<bean id="FixUpTask6" class="domain.FixUpTask">
-		<property name="ticker" value="181106-xbn871" />
-		<property name="publishTime" value="2018-11-06 16:20" />
-		<property name="description" value="Un niño al que cuidar" />
-		<property name="address" value="Barrio Triana, 43" />
-		<property name="maxPrice" value="30.0" />
-		<property name="periodStart" value="2018-11-06 20:00" />
-		<property name="periodEnd" value="2018-11-06 23:00" />
-		<property name="creditCard" ref="CreditCard6" />
-		<property name="customer" ref="Customer5" />
-		<property name="warranty" ref="Warranty3" />
-		<property name="complaint">
-			<list>
-				<null/>
-			</list>
-		</property>
-		<property name="category" ref="Category4" />
-	</bean>
 	
 	<!-- Complaint -->
 	
@@ -1095,49 +1008,10 @@
 		<property name="description" value="La puerta no aguantó la lluvia"/>
 		<property name="attachment">
 			<list>
-				<value>http://www.imgur.com/hyw7173m
+				<value>http://www.imgur.com/hyw7173m </value>
 			</list>
 		</property>
 		<property name="isFinal" value="false" />
-	</bean>
-	
-	<!-- Reports -->
-	
-	<bean id="Report1" class="domain.Report">
-		<property name="reportTime" value="2018-11-01 12:34" />
-		<property name="description" value="No parece haber forma de demostrar esto" />
-		<property name="attachment">
-			<list>
-				<null/>
-			</list>
-		</property>
-		<property name="isFinal" value="true" />
-		<property name="referee" ref="Referee1" />
-		<property name="complaint" ref="Complaint1" />
-	</bean>
-	
-	<!-- Notes -->
-	
-	<bean id="Note1" class="domain.Notes">
-		<property name="moment" value="2018-11-01 12:40" />
-		<property name="mandatoryComment" value="Me parece fatal" />
-		<property name="customerComments">
-			<list>
-				<null/>
-			</list>
-		</property>
-		<property name="refereeComments">
-			<list>
-				<value>Ha sido la deición tomada</value>
-			</list>
-		</property>
-		<property name="handyComments">
-			<list>
-				<value>Le aseguro que solo vimos películas infantiles</value>
-			</list>
-		</property>
-		<property name="isFinal" value="true" />
-		<property name="report" ref="Report1" />
 	</bean>
 	
 	<!-- Warranties -->

@@ -22,7 +22,7 @@ public class Endorsement extends DomainEntity {
 
 
 	@NotNull
-	@OneToOne
+	@OneToOne(optional = true)
 	public Endorsable getSender() {
 		return this.sender;
 	}
@@ -32,7 +32,7 @@ public class Endorsement extends DomainEntity {
 	}
 
 	@NotNull
-	@OneToOne
+	@OneToOne(optional = true)
 	public Endorsable getReciever() {
 		return this.reciever;
 	}
