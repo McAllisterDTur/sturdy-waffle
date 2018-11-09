@@ -1,6 +1,8 @@
 
 package domain;
 
+import java.util.Date;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -9,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.joda.time.DateTime;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -17,7 +18,7 @@ public class Endorsement extends DomainEntity {
 
 	private Endorsable	sender;
 	private Endorsable	reciever;
-	private DateTime	writeTime;
+	private Date		writeTime;
 	private String		comment;
 
 
@@ -42,11 +43,11 @@ public class Endorsement extends DomainEntity {
 	}
 
 	@Past
-	public DateTime getWriteTime() {
+	public Date getWriteTime() {
 		return this.writeTime;
 	}
 
-	public void setWriteTime(final DateTime writeTime) {
+	public void setWriteTime(final Date writeTime) {
 		this.writeTime = writeTime;
 	}
 

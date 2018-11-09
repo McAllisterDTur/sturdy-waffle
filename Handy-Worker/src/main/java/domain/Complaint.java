@@ -1,7 +1,6 @@
 
 package domain;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Access;
@@ -62,11 +61,11 @@ public class Complaint extends DomainEntity {
 
 	@ElementCollection
 	public Collection<String> getAttachments() {
-		return new ArrayList<String>(this.attachments);
+		return this.attachments;
 	}
 
 	public void setAttachments(final Collection<String> attachments) {
-		this.attachments = new ArrayList<String>(attachments);
+		this.attachments = attachments;
 	}
 
 	public boolean isFinal() {

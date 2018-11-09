@@ -3,7 +3,6 @@ package domain;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -24,13 +23,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Report extends DomainEntity {
 
 	//Atributes
-	private Date			reportTime;
+	private Date				reportTime;
 
-	private String			description;
+	private String				description;
 
-	private List<String>	attachment;
+	private Collection<String>	attachment;
 
-	private boolean			isFinal;
+	private boolean				isFinal;
 
 
 	@NotNull
@@ -53,11 +52,11 @@ public class Report extends DomainEntity {
 		this.description = description;
 	}
 
-	public List<String> getAttachment() {
+	public Collection<String> getAttachment() {
 		return this.attachment;
 	}
 
-	public void setAttachment(final List<String> attachment) {
+	public void setAttachment(final Collection<String> attachment) {
 		this.attachment = attachment;
 	}
 

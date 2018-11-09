@@ -143,7 +143,7 @@ public class FixUpTask extends DomainEntity {
 		return this.complaint;
 	}
 
-	public void setComplaint(final List<Complaint> complaint) {
+	public void setComplaint(final Collection<Complaint> complaint) {
 		this.complaint = complaint;
 	}
 

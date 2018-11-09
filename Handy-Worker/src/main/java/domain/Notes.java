@@ -20,7 +20,7 @@ public class Notes extends DomainEntity {
 	private Collection<String>	customerComments;
 	private Collection<String>	refereeComments;
 	private Collection<String>	handyCommetns;
-	private Boolean				isFinal;
+	private boolean				isFinal;
 	//+
 	private Report				report;
 
