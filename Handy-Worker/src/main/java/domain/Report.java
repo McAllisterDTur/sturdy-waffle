@@ -7,8 +7,10 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -31,6 +33,10 @@ public class Report extends DomainEntity {
 
 	private boolean				isFinal;
 
+	//+
+	private Referee				ref;
+	private Complaint			complaint;
+
 
 	@NotNull
 	@Past
@@ -51,7 +57,7 @@ public class Report extends DomainEntity {
 	public void setDescription(final String description) {
 		this.description = description;
 	}
-
+	@ElementCollection
 	public Collection<String> getAttachment() {
 		return this.attachment;
 	}
@@ -69,45 +75,24 @@ public class Report extends DomainEntity {
 		this.isFinal = isFinal;
 	}
 
-
-	//Relationships
-	private Referee				referee;
-
-	private Complaint			complaint;
-
-	private Collection<Notes>	notes;
-
-
 	@NotNull
 	@Valid
 	@ManyToOne(cascade = CascadeType.ALL)
-	public Referee getReferee() {
-		return this.referee;
+	public Referee getRef() {
+		return this.ref;
 	}
 
-	public void setReferee(final Referee referee) {
-		this.referee = referee;
+	public void setRef(final Referee ref) {
+		this.ref = ref;
 	}
 
-	@NotNull
+	@OneToOne
 	public Complaint getComplaint() {
 		return this.complaint;
 	}
 
 	public void setComplaint(final Complaint complaint) {
 		this.complaint = complaint;
-	}
-
-	public Collection<Notes> getNotes() {
-		return this.notes;
-	}
-
-	public void setNotes(final Collection<Notes> notes) {
-		this.notes = notes;
-	}
-	@Override
-	public String toString() {
-		return "Report [reportTime=" + this.reportTime + ", description=" + this.description + ", attachment=" + this.attachment + ", isFinal=" + this.isFinal + ", referee=" + this.referee + ", complaint=" + this.complaint + ", notes=" + this.notes + "]";
 	}
 
 }

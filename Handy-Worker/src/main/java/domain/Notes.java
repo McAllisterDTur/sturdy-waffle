@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
@@ -35,6 +36,7 @@ public class Notes extends DomainEntity {
 		this.moment = moment;
 	}
 
+	@ElementCollection
 	public Collection<String> getCustomerComments() {
 		return this.customerComments;
 	}
@@ -43,6 +45,7 @@ public class Notes extends DomainEntity {
 		this.customerComments = customerComments;
 	}
 
+	@ElementCollection
 	public Collection<String> getRefereeComments() {
 		return this.refereeComments;
 	}
@@ -51,6 +54,7 @@ public class Notes extends DomainEntity {
 		this.refereeComments = refereeComments;
 	}
 
+	@ElementCollection
 	public Collection<String> getHandyCommetns() {
 		return this.handyCommetns;
 	}
@@ -59,7 +63,7 @@ public class Notes extends DomainEntity {
 		this.handyCommetns = handyCommetns;
 	}
 
-	public Boolean getIsFinal() {
+	public boolean getIsFinal() {
 		return this.isFinal;
 	}
 
@@ -72,7 +76,7 @@ public class Notes extends DomainEntity {
 		this.report = report;
 	}
 
-	public void setIsFinal(final Boolean isFinal) {
+	public void setIsFinal(final boolean isFinal) {
 		this.isFinal = isFinal;
 	}
 

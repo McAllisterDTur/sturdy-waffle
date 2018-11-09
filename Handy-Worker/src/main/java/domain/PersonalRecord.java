@@ -1,10 +1,11 @@
 
 package domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Pattern;
@@ -17,20 +18,20 @@ import org.hibernate.validator.constraints.URL;
 @Access(AccessType.PROPERTY)
 public class PersonalRecord extends DomainEntity {
 
-	private String			fullName;
+	private String				fullName;
 
-	private String			photo;
+	private String				photo;
 
-	private String			email;
+	private String				email;
 
-	private String			phoneNumber;
+	private String				phoneNumber;
 
-	private String			linkedInURL;
+	private String				linkedInURL;
 
-	private List<String>	comments;
+	private Collection<String>	comments;
 
 	//+
-	private Curricula		curricula;
+	private Curricula			curricula;
 
 
 	@NotBlank
@@ -76,11 +77,12 @@ public class PersonalRecord extends DomainEntity {
 		this.linkedInURL = linkedInURL;
 	}
 
-	public List<String> getComments() {
+	@ElementCollection
+	public Collection<String> getComments() {
 		return this.comments;
 	}
 
-	public void setComments(final List<String> comments) {
+	public void setComments(final Collection<String> comments) {
 		this.comments = comments;
 	}
 

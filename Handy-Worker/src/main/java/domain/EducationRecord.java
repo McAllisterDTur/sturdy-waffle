@@ -1,11 +1,13 @@
 
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,24 +24,25 @@ public class EducationRecord extends DomainEntity {
 
 	//Atributes
 
-	private String			diplomaTitle;
+	private String				diplomaTitle;
 
-	private String			institution;
+	private String				institution;
 
-	private Date			start;
+	private Date				start;
 
-	private Date			end;
+	private Date				end;
 
-	private List<String>	attachmentURL;
+	private Collection<String>	attachmentURL;
 
-	private List<String>	comments;
+	private Collection<String>	comments;
 
 
-	public List<String> getComments() {
+	@ElementCollection
+	public Collection<String> getComments() {
 		return this.comments;
 	}
 
-	public void setComments(final List<String> comment) {
+	public void setComments(final Collection<String> comment) {
 		this.comments = comment;
 	}
 
@@ -85,7 +88,8 @@ public class EducationRecord extends DomainEntity {
 	}
 
 	@URL
-	public List<String> getAttachmentURL() {
+	@ElementCollection
+	public Collection<String> getAttachmentURL() {
 		return this.attachmentURL;
 	}
 

@@ -1,12 +1,12 @@
 
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -15,14 +15,14 @@ import org.hibernate.validator.constraints.NotBlank;
 @Access(AccessType.PROPERTY)
 public class Box extends DomainEntity {
 
-	private String			name;
+	private String				name;
 
-	private Boolean			deleteable;
+	private boolean				deleteable;
 
-	private List<Message>	messages;
+	private Collection<Message>	messages;
 
 	//+
-	private Actor			owner;
+	private Actor				owner;
 
 
 	//private Collection<Message> messages;
@@ -36,30 +36,22 @@ public class Box extends DomainEntity {
 		this.name = name;
 	}
 
-	public boolean isDeleteable() {
-		return this.deleteable;
-	}
-
 	public void setDeleteable(final boolean deleteable) {
 		this.deleteable = deleteable;
 	}
 
-	public List<Message> getMessages() {
-		return new ArrayList<Message>(this.messages);
+	@ManyToMany
+	public Collection<Message> getMessages() {
+		return this.messages;
 	}
 
-	public void setMessages(final List<Message> messages) {
-		this.messages = new ArrayList<Message>(messages);
+	public void setMessages(final Collection<Message> messages) {
+		this.messages = messages;
 	}
 
 	@NotBlank
-	//{}
-	public Boolean getDeleteable() {
+	public boolean getDeleteable() {
 		return this.deleteable;
-	}
-
-	public void setDeleteable(final Boolean deleteable) {
-		this.deleteable = deleteable;
 	}
 
 	@ManyToOne

@@ -1,10 +1,11 @@
 
 package domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -18,14 +19,14 @@ import org.joda.time.DateTime;
 @Access(AccessType.PROPERTY)
 public class Tutorial extends DomainEntity {
 
-	private String			title;
-	private DateTime		lastTimeUpdated;
-	private String			summary;
-	private List<String>	photoURL;
+	private String				title;
+	private DateTime			lastTimeUpdated;
+	private String				summary;
+	private Collection<String>	photoURL;
 
 	//+
-	private HandyWorker		worker;
-	private Sponsorship		sponsorship;
+	private HandyWorker			worker;
+	private Sponsorship			sponsorship;
 
 
 	@NotBlank
@@ -53,11 +54,12 @@ public class Tutorial extends DomainEntity {
 		this.summary = summary;
 	}
 	@URL
-	public List<String> getPhotoURL() {
+	@ElementCollection
+	public Collection<String> getPhotoURL() {
 		return this.photoURL;
 	}
 
-	public void setPhotoURL(final List<String> photoURL) {
+	public void setPhotoURL(final Collection<String> photoURL) {
 		this.photoURL = photoURL;
 	}
 

@@ -1,10 +1,11 @@
 
 package domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.Email;
@@ -15,11 +16,11 @@ import org.hibernate.validator.constraints.URL;
 @Access(AccessType.PROPERTY)
 public class EndorserRecord extends DomainEntity {
 
-	private String			endorserName;
-	private String			email;
-	private List<String>	phoneNumber;
-	private String			linkedInURL;
-	private List<String>	comments;
+	private String				endorserName;
+	private String				email;
+	private Collection<String>	phoneNumber;
+	private String				linkedInURL;
+	private Collection<String>	comments;
 
 
 	@NotBlank
@@ -39,12 +40,12 @@ public class EndorserRecord extends DomainEntity {
 	public void setEmail(final String email) {
 		this.email = email;
 	}
-
-	public List<String> getPhoneNumber() {
+	@ElementCollection
+	public Collection<String> getPhoneNumber() {
 		return this.phoneNumber;
 	}
 
-	public void setPhoneNumber(final List<String> phoneNumber) {
+	public void setPhoneNumber(final Collection<String> phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
@@ -57,15 +58,15 @@ public class EndorserRecord extends DomainEntity {
 	public void setLinkedInURL(final String linkedInURL) {
 		this.linkedInURL = linkedInURL;
 	}
-
-	public List<String> getComments() {
+	@ElementCollection
+	public Collection<String> getComments() {
 		return this.comments;
 	}
 
-	public void setComments(final List<String> comments) {
+	public void setComments(final Collection<String> comments) {
 		this.comments = comments;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "EndorserRecord [endorserName=" + this.endorserName + ", email=" + this.email + ", phoneNumber=" + this.phoneNumber + ", linkedInURL=" + this.linkedInURL + ", comments=" + this.comments + "]";

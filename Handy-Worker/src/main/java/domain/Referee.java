@@ -9,22 +9,4 @@ import javax.persistence.Entity;
 @Access(AccessType.PROPERTY)
 public class Referee extends Actor {
 
-	//Atributes
-
-	//Relationships
-	private Complaint	complaint;
-
-	public Complaint getComplaint() {
-		return this.complaint;
-	}
-
-	public void setComplaint(final Complaint complaint) {
-		this.complaint = complaint;
-	}
-
-	@Override
-	public String toString() {
-		return "Referee [complaint=" + this.complaint + "]";
-	}
-
 }

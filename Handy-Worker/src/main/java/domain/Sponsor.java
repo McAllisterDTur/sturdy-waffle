@@ -9,4 +9,9 @@ import javax.persistence.Entity;
 @Access(AccessType.PROPERTY)
 public class Sponsor extends Actor {
 
+	@Override
+	public String toString() {
+		return "Sponsor [sponsorship=" + this.getId() + "]";
+	}
+
 }

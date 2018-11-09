@@ -1,11 +1,12 @@
 
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,17 +22,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class ProfessionalRecord extends DomainEntity {
 
 	// Atributes
-	private String			companyName;
+	private String				companyName;
 
-	private String			role;
+	private String				role;
 
-	private Date			start;
+	private Date				start;
 
-	private Date			end;
+	private Date				end;
 
-	private List<String>	attachmentURL;
+	private Collection<String>	attachmentURL;
 
-	private List<String>	comments;
+	private Collection<String>	comments;
 
 
 	@NotBlank
@@ -75,19 +76,21 @@ public class ProfessionalRecord extends DomainEntity {
 	}
 
 	@URL
-	public List<String> getAttachmentURL() {
+	@ElementCollection
+	public Collection<String> getAttachmentURL() {
 		return this.attachmentURL;
 	}
 
-	public void setAttachmentURL(final List<String> attachmentURL) {
+	public void setAttachmentURL(final Collection<String> attachmentURL) {
 		this.attachmentURL = attachmentURL;
 	}
 
-	public List<String> getComments() {
+	@ElementCollection
+	public Collection<String> getComments() {
 		return this.comments;
 	}
 
-	public void setComments(final List<String> comments) {
+	public void setComments(final Collection<String> comments) {
 		this.comments = comments;
 	}
 

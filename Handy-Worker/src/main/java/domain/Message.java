@@ -6,8 +6,10 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
@@ -32,6 +34,7 @@ public class Message extends DomainEntity {
 
 
 	@NotNull
+	@ManyToOne
 	public Actor getSender() {
 		return this.sender;
 	}
@@ -41,6 +44,7 @@ public class Message extends DomainEntity {
 	}
 
 	@NotNull
+	@ManyToOne
 	public Actor getReciever() {
 		return this.reciever;
 	}
@@ -77,6 +81,7 @@ public class Message extends DomainEntity {
 	}
 
 	@NotNull
+	@ElementCollection
 	public Collection<String> getTags() {
 		return this.tags;
 	}
