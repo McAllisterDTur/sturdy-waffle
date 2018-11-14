@@ -8,6 +8,8 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -17,7 +19,7 @@ public class Box extends DomainEntity {
 
 	private String				name;
 
-	private boolean				deleteable;
+	private Boolean				deleteable;
 
 	private Collection<Message>	messages;
 
@@ -36,11 +38,17 @@ public class Box extends DomainEntity {
 		this.name = name;
 	}
 
-	public void setDeleteable(final boolean deleteable) {
+	@NotNull
+	public Boolean getDeleteable() {
+		return this.deleteable;
+	}
+	
+	public void setDeleteable(final Boolean deleteable) {
 		this.deleteable = deleteable;
 	}
-
-	@ManyToMany
+	
+	@Valid
+	@ManyToMany(mappedBy= "boxes")
 	public Collection<Message> getMessages() {
 		return this.messages;
 	}
@@ -49,12 +57,8 @@ public class Box extends DomainEntity {
 		this.messages = messages;
 	}
 
-	@NotBlank
-	public boolean getDeleteable() {
-		return this.deleteable;
-	}
-
-	@ManyToOne
+	
+	@ManyToOne(optional = false)
 	public Actor getOwner() {
 		return this.owner;
 	}

@@ -1,4 +1,3 @@
-
 package domain;
 
 import javax.persistence.Access;
@@ -11,7 +10,7 @@ public class Sponsor extends Actor {
 
 	@Override
 	public String toString() {
-		return "Sponsor [sponsorship=" + this.getId() + "]";
+		return "Sponsor [getId()=" + getId() + "]";
 	}
 
 }

@@ -51,7 +51,7 @@ public class MiscellaneousRecord extends Curricula {
 		this.comments = comments;
 	}
 
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = false)
 	public Curricula getCurricula() {
 		return this.curricula;
 	}

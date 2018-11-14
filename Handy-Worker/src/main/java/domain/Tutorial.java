@@ -2,32 +2,37 @@
 package domain;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
-import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Tutorial extends DomainEntity {
 
 	private String				title;
-	private DateTime			lastTimeUpdated;
+	private Date			lastTimeUpdated;
 	private String				summary;
 	private Collection<String>	photoURL;
 
 	//+
 	private HandyWorker			worker;
 	private Sponsorship			sponsorship;
-
+	private Collection<Section>	sections;
 
 	@NotBlank
 	public String getTitle() {
@@ -37,14 +42,19 @@ public class Tutorial extends DomainEntity {
 	public void setTitle(final String title) {
 		this.title = title;
 	}
+	
+	@NotNull
 	@Past
-	public DateTime getLastTimeUpdated() {
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	public Date getLastTimeUpdated() {
 		return this.lastTimeUpdated;
 	}
 
-	public void setLastTimeUpdated(final DateTime lastTimeUpdated) {
+	public void setLastTimeUpdated(final Date lastTimeUpdated) {
 		this.lastTimeUpdated = lastTimeUpdated;
 	}
+	
 	@NotBlank
 	public String getSummary() {
 		return this.summary;
@@ -53,7 +63,7 @@ public class Tutorial extends DomainEntity {
 	public void setSummary(final String summary) {
 		this.summary = summary;
 	}
-	@URL
+	
 	@ElementCollection
 	public Collection<String> getPhotoURL() {
 		return this.photoURL;
@@ -63,7 +73,8 @@ public class Tutorial extends DomainEntity {
 		this.photoURL = photoURL;
 	}
 
-	@ManyToOne(optional = true)
+	@NotNull
+	@ManyToOne(optional = false)
 	public HandyWorker getWorker() {
 		return this.worker;
 	}
@@ -72,13 +83,22 @@ public class Tutorial extends DomainEntity {
 		this.worker = worker;
 	}
 
-	@OneToOne
+	@OneToOne(optional=true)
 	public Sponsorship getSponsorship() {
 		return this.sponsorship;
 	}
 
 	public void setSponsorship(final Sponsorship sponsorship) {
 		this.sponsorship = sponsorship;
+	}
+
+	@OneToMany(cascade=CascadeType.ALL)
+	public Collection<Section> getSections() {
+		return sections;
+	}
+
+	public void setSections(final Collection<Section> sections) {
+		this.sections = sections;
 	}
 
 	@Override

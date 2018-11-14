@@ -1,15 +1,20 @@
 
 package domain;
 
+import java.util.Date;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -17,12 +22,11 @@ public class Endorsement extends DomainEntity {
 
 	private Endorsable	sender;
 	private Endorsable	reciever;
-	private DateTime	writeTime;
+	private Date	writeTime;
 	private String		comment;
 
-
 	@NotNull
-	@OneToOne(optional = true)
+	@ManyToOne(optional=false)
 	public Endorsable getSender() {
 		return this.sender;
 	}
@@ -32,7 +36,7 @@ public class Endorsement extends DomainEntity {
 	}
 
 	@NotNull
-	@OneToOne(optional = true)
+	@OneToOne(optional=false)
 	public Endorsable getReciever() {
 		return this.reciever;
 	}
@@ -41,12 +45,15 @@ public class Endorsement extends DomainEntity {
 		this.reciever = reciever;
 	}
 
+	@NotNull
 	@Past
-	public DateTime getWriteTime() {
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	public Date getWriteTime() {
 		return this.writeTime;
 	}
 
-	public void setWriteTime(final DateTime writeTime) {
+	public void setWriteTime(final Date writeTime) {
 		this.writeTime = writeTime;
 	}
 

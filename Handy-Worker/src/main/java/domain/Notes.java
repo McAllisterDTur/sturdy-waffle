@@ -2,6 +2,7 @@
 package domain;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -11,28 +12,26 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
-import org.joda.time.DateTime;
-
 @Entity
 @Access(AccessType.PROPERTY)
 public class Notes extends DomainEntity {
 
-	private DateTime			moment;
+	private Date				moment;
 	private Collection<String>	customerComments;
 	private Collection<String>	refereeComments;
-	private Collection<String>	handyCommetns;
-	private boolean				isFinal;
+	private Collection<String>	handyComments;
+	private Boolean				isFinal;
 	//+
 	private Report				report;
 
 
 	@Past
 	@NotNull
-	public DateTime getMoment() {
+	public Date getMoment() {
 		return this.moment;
 	}
 
-	public void setMoment(final DateTime moment) {
+	public void setMoment(final Date moment) {
 		this.moment = moment;
 	}
 
@@ -55,19 +54,24 @@ public class Notes extends DomainEntity {
 	}
 
 	@ElementCollection
-	public Collection<String> getHandyCommetns() {
-		return this.handyCommetns;
+	public Collection<String> getHandyComments() {
+		return this.handyComments;
 	}
 
-	public void setHandyCommetns(final Collection<String> handyCommetns) {
-		this.handyCommetns = handyCommetns;
+	public void setHandyComments(final Collection<String> handyComments) {
+		this.handyComments = handyComments;
 	}
 
-	public boolean getIsFinal() {
+	@NotNull
+	public Boolean getIsFinal() {
 		return this.isFinal;
 	}
 
-	@ManyToOne(optional = true)
+	public void setIsFinal(final Boolean isFinal) {
+		this.isFinal = isFinal;
+	}
+
+	@ManyToOne(optional = false)
 	public Report getReport() {
 		return this.report;
 	}
@@ -76,13 +80,9 @@ public class Notes extends DomainEntity {
 		this.report = report;
 	}
 
-	public void setIsFinal(final boolean isFinal) {
-		this.isFinal = isFinal;
-	}
-
 	@Override
 	public String toString() {
-		return "Notes [moment=" + this.moment + ", customerComments=" + this.customerComments + ", refereeComments=" + this.refereeComments + ", handyCommetns=" + this.handyCommetns + ", isFinal=" + this.isFinal + "]";
+		return "Notes [moment=" + this.moment + ", customerComments=" + this.customerComments + ", refereeComments=" + this.refereeComments + ", handyCommetns=" + this.handyComments + ", isFinal=" + this.isFinal + "]";
 	}
 
 }

@@ -10,12 +10,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,20 +24,32 @@ public class Report extends DomainEntity {
 
 	//Atributes
 	private Date				reportTime;
-
 	private String				description;
-
 	private Collection<String>	attachment;
-
-	private boolean				isFinal;
-
-	//+
-	private Referee				ref;
-	private Complaint			complaint;
+	private Boolean				isFinal;
+	private Collection<Notes>	notes;
 
 
 	@NotNull
-	@Past
+	public Boolean getIsFinal() {
+		return this.isFinal;
+	}
+
+	public void setIsFinal(final Boolean isFinal) {
+		this.isFinal = isFinal;
+	}
+
+	@OneToMany(cascade=CascadeType.ALL)
+	public Collection<Notes> getNotes() {
+		return this.notes;
+	}
+
+	public void setNotes(final Collection<Notes> notes) {
+		this.notes = notes;
+	}
+
+	@NotNull
+	//@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getReportTime() {
@@ -50,6 +60,7 @@ public class Report extends DomainEntity {
 		this.reportTime = reportTime;
 	}
 
+	@NotBlank
 	public String getDescription() {
 		return this.description;
 	}
@@ -57,6 +68,7 @@ public class Report extends DomainEntity {
 	public void setDescription(final String description) {
 		this.description = description;
 	}
+
 	@ElementCollection
 	public Collection<String> getAttachment() {
 		return this.attachment;
@@ -66,33 +78,35 @@ public class Report extends DomainEntity {
 		this.attachment = attachment;
 	}
 
-	@NotBlank
-	public boolean isFinal() {
-		return this.isFinal;
+
+	//Relationships
+	private Referee		referee;
+	private Complaint	complaint;
+
+
+	@NotNull
+	@ManyToOne(optional = false)
+	public Referee getReferee() {
+		return this.referee;
 	}
 
-	public void setFinal(final boolean isFinal) {
-		this.isFinal = isFinal;
+	public void setReferee(final Referee referee) {
+		this.referee = referee;
 	}
 
 	@NotNull
-	@Valid
-	@ManyToOne(cascade = CascadeType.ALL)
-	public Referee getRef() {
-		return this.ref;
-	}
-
-	public void setRef(final Referee ref) {
-		this.ref = ref;
-	}
-
-	@OneToOne
+	@ManyToOne(optional = false)
 	public Complaint getComplaint() {
 		return this.complaint;
 	}
 
 	public void setComplaint(final Complaint complaint) {
 		this.complaint = complaint;
+	}
+
+	@Override
+	public String toString() {
+		return "Report [reportTime=" + this.reportTime + ", description=" + this.description + ", attachment=" + this.attachment + ", isFinal=" + this.isFinal + ", referee=" + this.referee + ", complaint=" + this.complaint + "]";
 	}
 
 }
