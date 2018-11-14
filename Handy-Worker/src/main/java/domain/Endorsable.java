@@ -1,20 +1,21 @@
 
 package domain;
 
-import java.util.List;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Endorsable extends Actor {
 
 	private Double				score;
-	private List<Endorsement>	endorsements;
 
-
+	@NotNull
 	public Double getScore() {
 		return this.score;
 	}
@@ -23,17 +24,9 @@ public class Endorsable extends Actor {
 		this.score = score;
 	}
 
-	public List<Endorsement> getEndorsements() {
-		return this.endorsements;
-	}
-
-	public void setEndorsements(final List<Endorsement> endorsements) {
-		this.endorsements = endorsements;
-	}
-
 	@Override
 	public String toString() {
-		return "Endorsable [score=" + this.score + ", endorsements=" + this.endorsements + "]";
+		return "Endorsable [score=" + score + "]";
 	}
 
 }

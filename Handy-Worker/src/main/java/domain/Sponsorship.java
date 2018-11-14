@@ -1,9 +1,10 @@
-
 package domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -13,12 +14,10 @@ import org.hibernate.validator.constraints.URL;
 @Access(AccessType.PROPERTY)
 public class Sponsorship extends DomainEntity {
 
-	private String		bannerURL;
-	private String		targetPageLink;
-	private CreditCard	creditCard;
-	private Sponsor		sponsor;
-	private Tutorial	tutorial;
-
+	private String bannerURL;
+	private String targetPageLink;
+	private CreditCard creditCard;
+	private Sponsor sponsor;
 
 	@NotBlank
 	@URL
@@ -50,6 +49,8 @@ public class Sponsorship extends DomainEntity {
 	}
 
 	@NotNull
+	@Valid
+	@ManyToOne(optional = false)
 	public Sponsor getSponsor() {
 		return this.sponsor;
 	}
@@ -58,18 +59,11 @@ public class Sponsorship extends DomainEntity {
 		this.sponsor = sponsor;
 	}
 
-	@NotNull
-	public Tutorial getTutorial() {
-		return this.tutorial;
-	}
-
-	public void setTutorial(final Tutorial tutorial) {
-		this.tutorial = tutorial;
-	}
-
 	@Override
 	public String toString() {
-		return "Sponsorship [bannerURL=" + this.bannerURL + ", targetPageLink=" + this.targetPageLink + ", creditCard=" + this.creditCard + ", sponsor=" + this.sponsor + ", tutorial=" + this.tutorial + "]";
+		return "Sponsorship [bannerURL=" + bannerURL + ", targetPageLink="
+				+ targetPageLink + ", creditCard=" + creditCard + ", sponsor="
+				+ sponsor + "]";
 	}
 
 }

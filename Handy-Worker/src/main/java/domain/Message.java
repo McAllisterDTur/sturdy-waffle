@@ -2,18 +2,23 @@
 package domain;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -21,7 +26,7 @@ public class Message extends DomainEntity {
 
 	private Actor				sender;
 	private Actor				reciever;
-	private DateTime			sendTime;
+	private Date			sendTime;
 	private String				subject;
 	private String				body;
 	private Collection<String>	tags;
@@ -32,6 +37,7 @@ public class Message extends DomainEntity {
 
 
 	@NotNull
+	@ManyToOne(optional=false)
 	public Actor getSender() {
 		return this.sender;
 	}
@@ -41,6 +47,7 @@ public class Message extends DomainEntity {
 	}
 
 	@NotNull
+	@ManyToOne(optional=false)
 	public Actor getReciever() {
 		return this.reciever;
 	}
@@ -49,12 +56,15 @@ public class Message extends DomainEntity {
 		this.reciever = reciever;
 	}
 
+	@NotNull
 	@Past
-	public DateTime getSendTime() {
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	public Date getSendTime() {
 		return this.sendTime;
 	}
 
-	public void setSendTime(final DateTime sendTime) {
+	public void setSendTime(final Date sendTime) {
 		this.sendTime = sendTime;
 	}
 
@@ -76,7 +86,7 @@ public class Message extends DomainEntity {
 		this.body = body;
 	}
 
-	@NotNull
+	@ElementCollection
 	public Collection<String> getTags() {
 		return this.tags;
 	}
@@ -84,8 +94,9 @@ public class Message extends DomainEntity {
 	public void setTags(final Collection<String> tags) {
 		this.tags = tags;
 	}
+	
 	@NotBlank
-	@Pattern(regexp = "\b(HIGH|NEUTRAL|LOW)\b")
+	@Pattern(regexp = "\\b(HIGH|NEUTRAL|LOW)\\b")
 	public String getPriority() {
 		return this.priority;
 	}
@@ -94,7 +105,8 @@ public class Message extends DomainEntity {
 		this.priority = priority;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@Valid
+	@ManyToMany
 	public Collection<Box> getBoxes() {
 		return this.boxes;
 	}

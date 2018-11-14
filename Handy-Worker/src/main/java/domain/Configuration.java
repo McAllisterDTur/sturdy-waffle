@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -78,7 +79,7 @@ public class Configuration extends DomainEntity {
 	public void setWelcomeSP(final String welcomeSP) {
 		this.welcomeSP = welcomeSP;
 	}
-
+	@ElementCollection
 	public Collection<String> getSpamWords() {
 		return this.spamWords;
 	}
@@ -94,7 +95,7 @@ public class Configuration extends DomainEntity {
 	public void setCountryCode(final String countryCode) {
 		this.countryCode = countryCode;
 	}
-
+	@ElementCollection
 	public Collection<String> getPositiveWords() {
 		return this.positiveWords;
 	}
@@ -102,7 +103,7 @@ public class Configuration extends DomainEntity {
 	public void setPositiveWords(final Collection<String> positiveWords) {
 		this.positiveWords = positiveWords;
 	}
-
+	@ElementCollection
 	public Collection<String> getNegativeWords() {
 		return this.negativeWords;
 	}

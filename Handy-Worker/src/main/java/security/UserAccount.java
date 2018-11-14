@@ -18,7 +18,6 @@ import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
@@ -79,7 +78,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	@Valid
 	@ElementCollection
 	@Override
-	@OneToOne
+	//	@OneToOne
 	public Collection<Authority> getAuthorities() {
 		// WARNING: Should return an unmodifiable copy, but it's not possible with hibernate!
 		return this.authorities;

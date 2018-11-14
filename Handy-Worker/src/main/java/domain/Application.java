@@ -1,43 +1,50 @@
 
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.NotBlank;
-import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Application extends DomainEntity {
 
-	private DateTime		registerTime;
-	private Double			offeredPrice;
-	private List<String>	customerComment;
-	private List<String>	handyComments;
-	private String			status;
+	private Date				registerTime;
+	private Double				offeredPrice;
+	private Collection<String>	customerComments;
+	private Collection<String>	handyComments;
+	private String				status;
 	//+
-	private HandyWorker		worker;
-	private FixUpTask		task;
+	private HandyWorker			handyWorker;
+	private FixUpTask			fixUpTask;
+	private Collection<Phase>	phases;
 
-
+	@NotNull
 	@Past
-	@NotBlank
-	public DateTime getRegisterTime() {
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	public Date getRegisterTime() {
 		return this.registerTime;
 	}
 
-	public void setRegisterTime(final DateTime registerTime) {
+	public void setRegisterTime(final Date registerTime) {
 		this.registerTime = registerTime;
 	}
+	
 	@NotNull
 	public Double getOfferedPrice() {
 		return this.offeredPrice;
@@ -46,24 +53,26 @@ public class Application extends DomainEntity {
 	public void setOfferedPrice(final Double offeredPrice) {
 		this.offeredPrice = offeredPrice;
 	}
-	@NotNull
-	public List<String> getCustomerComment() {
-		return new ArrayList<String>(this.customerComment);
+
+	@ElementCollection
+	public Collection<String> getCustomerComments() {
+		return customerComments;
 	}
 
-	public void setCustomerComment(final List<String> customerComment) {
-		this.customerComment = customerComment;
+	public void setCustomerComments(final Collection<String> customerComments) {
+		this.customerComments = customerComments;
 	}
-	@NotNull
-	public List<String> getHandyComments() {
+	
+	@ElementCollection
+	public Collection<String> getHandyComments() {
 		return this.handyComments;
 	}
 
-	public void setHandyComments(final List<String> handyComments) {
+	public void setHandyComments(final Collection<String> handyComments) {
 		this.handyComments = handyComments;
 	}
 
-	@Pattern(regexp = "\b(ACCEPTED|REJECTED|PENDING)\b")
+	@Pattern(regexp = "\\b(ACCEPTED|REJECTED|PENDING)\\b")
 	public String getStatus() {
 		return this.status;
 	}
@@ -72,26 +81,36 @@ public class Application extends DomainEntity {
 		this.status = status;
 	}
 
-	@ManyToOne(optional = true)
-	public HandyWorker getWorker() {
-		return this.worker;
+	@ManyToOne(optional = false)
+	public HandyWorker getHandyWorker() {
+		return this.handyWorker;
 	}
 
-	public void setWorker(final HandyWorker worker) {
-		this.worker = worker;
+	public void setHandyWorker(final HandyWorker handyWorker) {
+		this.handyWorker = handyWorker;
 	}
-	@ManyToOne(optional = true)
-	public FixUpTask getTask() {
-		return this.task;
+	
+	@ManyToOne(optional = false)
+	public FixUpTask getFixUpTask() {
+		return fixUpTask;
 	}
 
-	public void setTask(final FixUpTask task) {
-		this.task = task;
+	public void setFixUpTask(final FixUpTask fixUpTask) {
+		this.fixUpTask = fixUpTask;
+	}
+
+	@OneToMany(cascade=CascadeType.ALL)
+	public Collection<Phase> getPhases() {
+		return phases;
+	}
+
+	public void setPhases(final Collection<Phase> phases) {
+		this.phases = phases;
 	}
 
 	@Override
 	public String toString() {
-		return "Application [registerTime=" + this.registerTime + ", offeredPrice=" + this.offeredPrice + ", customerComment=" + this.customerComment + ", handyComments=" + this.handyComments + ", status=" + this.status + "]";
+		return "Application [registerTime=" + this.registerTime + ", offeredPrice=" + this.offeredPrice + ", customerComment=" + this.customerComments + ", handyComments=" + this.handyComments + ", status=" + this.status + "]";
 	}
 
 }

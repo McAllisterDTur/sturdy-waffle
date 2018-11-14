@@ -1,13 +1,14 @@
 
 package domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -18,11 +19,10 @@ public class Finder extends DomainEntity {
 	private String			category;
 	private String			priceRange;
 	private String			dateRange;
-	private List<FixUpTask>	fixUpTask;
+	private Collection<FixUpTask>	fixUpTask;
 
 	//+
 	private HandyWorker		worker;
-
 
 	public String getWarranty() {
 		return this.warranty;
@@ -64,16 +64,17 @@ public class Finder extends DomainEntity {
 		this.dateRange = dateRange;
 	}
 
-	@OneToMany
-	public List<FixUpTask> getFixUpTask() {
+	@ManyToMany()
+	public Collection<FixUpTask> getFixUpTask() {
 		return this.fixUpTask;
 	}
 
-	public void setFixUpTask(final List<FixUpTask> fixUpTask) {
+	public void setFixUpTask(final Collection<FixUpTask> fixUpTask) {
 		this.fixUpTask = fixUpTask;
 	}
 
-	@OneToOne
+	@NotNull
+	@OneToOne(optional=false)
 	public HandyWorker getWorker() {
 		return this.worker;
 	}
@@ -84,7 +85,8 @@ public class Finder extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "Finder [warranty=" + this.warranty + ", keyWord=" + this.keyWord + ", category=" + this.category + ", priceRange=" + this.priceRange + ", dateRange=" + this.dateRange + ", fixUpTask=" + this.fixUpTask + "]";
+		return "Finder [warranty=" + warranty + ", keyWord=" + keyWord + ", category=" + category + ", priceRange="
+				+ priceRange + ", dateRange=" + dateRange + ", fixUpTask=" + fixUpTask + ", worker=" + worker + "]";
 	}
-
+	
 }

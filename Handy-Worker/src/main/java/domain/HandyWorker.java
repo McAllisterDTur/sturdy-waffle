@@ -1,20 +1,33 @@
 
 package domain;
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class HandyWorker extends Actor {
+public class HandyWorker extends Endorsable {
 
-	private String	make;
+	private String					make;
+	private Collection<Application>	applications;
 
 
 	//+
+
+	@OneToMany
+	public Collection<Application> getApplications() {
+		return this.applications;
+	}
+
+	public void setApplications(final Collection<Application> applications) {
+		this.applications = applications;
+	}
 
 	@NotBlank
 	public String getMake() {

@@ -1,10 +1,10 @@
-
 package domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Pattern;
@@ -17,21 +17,15 @@ import org.hibernate.validator.constraints.URL;
 @Access(AccessType.PROPERTY)
 public class PersonalRecord extends DomainEntity {
 
-	private String			fullName;
+	private String fullName;
+	private String photo;
+	private String email;
+	private String phoneNumber;
+	private String linkedInURL;
+	private Collection<String> comments;
 
-	private String			photo;
-
-	private String			email;
-
-	private String			phoneNumber;
-
-	private String			linkedInURL;
-
-	private List<String>	comments;
-
-	//+
-	private Curricula		curricula;
-
+	// +
+	private Curricula curricula;
 
 	@NotBlank
 	public String getFullName() {
@@ -41,6 +35,8 @@ public class PersonalRecord extends DomainEntity {
 	public void setFullName(final String fullName) {
 		this.fullName = fullName;
 	}
+
+	@NotBlank
 	@URL
 	public String getPhoto() {
 		return this.photo;
@@ -49,6 +45,7 @@ public class PersonalRecord extends DomainEntity {
 	public void setPhoto(final String photo) {
 		this.photo = photo;
 	}
+
 	@Email
 	public String getEmail() {
 		return this.email;
@@ -67,6 +64,8 @@ public class PersonalRecord extends DomainEntity {
 	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+
+	@NotBlank
 	@URL
 	public String getLinkedInURL() {
 		return this.linkedInURL;
@@ -76,15 +75,16 @@ public class PersonalRecord extends DomainEntity {
 		this.linkedInURL = linkedInURL;
 	}
 
-	public List<String> getComments() {
+	@ElementCollection
+	public Collection<String> getComments() {
 		return this.comments;
 	}
 
-	public void setComments(final List<String> comments) {
+	public void setComments(final Collection<String> comments) {
 		this.comments = comments;
 	}
 
-	@OneToOne
+	@OneToOne(optional=false)
 	public Curricula getCurricula() {
 		return this.curricula;
 	}
@@ -95,7 +95,10 @@ public class PersonalRecord extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "PersonalRecord [fullName=" + this.fullName + ", photo=" + this.photo + ", email=" + this.email + ", phoneNumber=" + this.phoneNumber + ", linkedInURL=" + this.linkedInURL + ", comments=" + this.comments + "]";
+		return "PersonalRecord [fullName=" + this.fullName + ", photo="
+				+ this.photo + ", email=" + this.email + ", phoneNumber="
+				+ this.phoneNumber + ", linkedInURL=" + this.linkedInURL
+				+ ", comments=" + this.comments + "]";
 	}
 
 }
