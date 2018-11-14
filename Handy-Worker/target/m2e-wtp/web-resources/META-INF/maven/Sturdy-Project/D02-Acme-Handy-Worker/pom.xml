@@ -313,20 +313,13 @@
 			<version>1.7.4</version>
 		</dependency>
 
+		<!-- Full-Text Search -->
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search -->
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.4.1.3</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>2.4.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.4.1.1</version>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search</artifactId>
+			<!-- <version>5.6.6.Final</version> -->
+			<version>5.0.1.Final</version>
 		</dependency>
 
 	</dependencies>

@@ -4,7 +4,10 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
@@ -15,6 +18,7 @@ import security.UserAccount;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Actor extends DomainEntity {
 
 	private String		name;
@@ -91,7 +95,7 @@ public class Actor extends DomainEntity {
 		this.address = address;
 	}
 
-	@NotBlank
+	@NotNull
 	public Boolean getBanned() {
 		return this.banned;
 	}

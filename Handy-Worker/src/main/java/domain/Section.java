@@ -1,28 +1,26 @@
-
 package domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Section extends DomainEntity {
 
-	//Atributes
-	private int				number;
-
-	private String			title;
-
-	private String			text;
-
-	private List<String>	photoURL;
-
+	// Atributes
+	private int number;
+	private String title;
+	private String text;
+	private Collection<String> photoURL;
+	private Tutorial tutorial;
 
 	@NotBlank
 	public int getNumber() {
@@ -51,18 +49,30 @@ public class Section extends DomainEntity {
 		this.text = text;
 	}
 
-	@URL
-	public List<String> getPhotoURL() {
+	@ElementCollection
+	public Collection<String> getPhotoURL() {
 		return this.photoURL;
 	}
 
-	public void setPhotoURL(final List<String> photoURL) {
+	public void setPhotoURL(final Collection<String> photoURL) {
 		this.photoURL = photoURL;
+	}
+
+	@NotNull
+	@ManyToOne(optional=false)
+	public Tutorial getTutorial() {
+		return tutorial;
+	}
+
+	public void setTutorial(Tutorial tutorial) {
+		this.tutorial = tutorial;
 	}
 
 	@Override
 	public String toString() {
-		return "Section [number=" + this.number + ", title=" + this.title + ", text=" + this.text + ", photoURL=" + this.photoURL + "]";
+		return "Section [number=" + number + ", title=" + title + ", text="
+				+ text + ", photoURL=" + photoURL + ", tutorial=" + tutorial
+				+ "]";
 	}
 
 }

@@ -12,25 +12,21 @@ import javax.persistence.OneToMany;
 @Access(AccessType.PROPERTY)
 public class Customer extends Endorsable {
 
-	// Atributes
-
-	// Relationships
-
-	private Collection<FixUpTask>	fixUpTask;
+	private Collection<FixUpTask>	fixUpTasks;
 
 
 	@OneToMany
-	public Collection<FixUpTask> getFixUpTask() {
-		return this.fixUpTask;
+	public Collection<FixUpTask> getFixUpTasks() {
+		return this.fixUpTasks;
 	}
 
-	public void setFixUpTask(final Collection<FixUpTask> fixUpTask) {
-		this.fixUpTask = fixUpTask;
+	public void setFixUpTasks(final Collection<FixUpTask> fixUpTasks) {
+		this.fixUpTasks = fixUpTasks;
 	}
 
 	@Override
 	public String toString() {
-		return "Customer [" + super.toString() + "fixUpTask=" + this.fixUpTask + "]";
+		return "Customer [getId()=" + this.getId() + "]";
 	}
 
 }

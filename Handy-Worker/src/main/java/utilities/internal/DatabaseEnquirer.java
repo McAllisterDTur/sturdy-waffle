@@ -40,7 +40,6 @@ public class DatabaseEnquirer {
 			databaseUtil.initialise();
 			databaseUtil.setReadUncommittedIsolationLevel();
 			System.out.println();
-
 			reader = new ConsoleReader();
 			do {
 				line = reader.readCommand();

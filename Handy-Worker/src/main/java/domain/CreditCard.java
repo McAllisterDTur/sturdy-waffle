@@ -21,6 +21,17 @@ public class CreditCard {
 	private int		expirationYear;
 	private Integer	codeCVV;
 
+	//+
+	private String maker;
+	
+	@NotBlank
+	public String getMaker() {
+		return maker;
+	}
+
+	public void setMaker(String maker) {
+		this.maker = maker;
+	}
 
 	@NotBlank
 	public String getHolderName() {
