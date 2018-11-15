@@ -4,6 +4,7 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
@@ -86,7 +87,8 @@ public class CreditCard {
 	public Integer getCodeCVV() {
 		return this.codeCVV;
 	}
-
+	
+	@NotNull
 	public void setCodeCVV(final Integer codeCVV) {
 		this.codeCVV = codeCVV;
 	}
