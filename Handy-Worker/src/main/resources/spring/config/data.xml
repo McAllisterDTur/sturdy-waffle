@@ -30,6 +30,7 @@
 		<property name="maxPoolSize" value="5" /> 
 	</bean>
 
+
 	<!-- JPA -->
 
 	<bean id="persistenceUnit" class="java.lang.String">

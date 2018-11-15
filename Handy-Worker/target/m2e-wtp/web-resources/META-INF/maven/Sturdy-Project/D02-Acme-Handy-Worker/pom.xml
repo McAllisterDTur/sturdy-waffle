@@ -23,7 +23,7 @@
 	<!-- Indexing information -->
 
 	<name>Acme-Handy-Worker</name>
-	<url>http://www.acme-handy-worker.com</url>
+	<url>http://www.Acme-Handy-Worker.com</url>
 
 	<!-- Build commands -->
 
@@ -311,6 +311,15 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.7.4</version>
+		</dependency>
+
+		<!-- Full-Text Search -->
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search</artifactId>
+			<!-- <version>5.6.6.Final</version> -->
+			<version>5.0.1.Final</version>
 		</dependency>
 
 	</dependencies>
