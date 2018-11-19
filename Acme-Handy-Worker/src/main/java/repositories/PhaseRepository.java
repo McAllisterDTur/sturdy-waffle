@@ -1,6 +1,5 @@
-package repositories;
 
-import javax.transaction.Transactional;
+package repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import domain.Phase;
 
 @Repository
-@Transactional
 public interface PhaseRepository extends JpaRepository<Phase, Integer> {
 
 }
