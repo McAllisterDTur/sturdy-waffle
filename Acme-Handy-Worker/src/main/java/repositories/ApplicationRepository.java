@@ -13,7 +13,7 @@ import domain.HandyWorker;
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
 
-	// TODO: Esto debería estar en "AdministratorRepository"
+	// TODO: Esto debería estar en "HandyWorkerRepository"
 	// Ratio de las aplicaciones aceptadas
 	@Query("SELECT ((SELECT COUNT(A) FROM APPLICATION A WHERE A.STATUS = 'ACCEPTED')/(SELECT COUNT(B) FROM APPLICATION B))*100")
 	Collection<HandyWorker> findRatioApplicationAccepted();
