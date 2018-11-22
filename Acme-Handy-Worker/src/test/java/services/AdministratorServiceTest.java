@@ -1,8 +1,6 @@
 
 package services;
 
-import java.util.Collection;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,21 +25,13 @@ public class AdministratorServiceTest extends AbstractTest {
 
 
 	@Test
-	public void testSaving() {
+	public void testCreate() {
 
-		//Initialising the administrator
-		final Administrator admin = new Administrator();
-		admin.setAddress("Dirección");
-		admin.setBanned(false);
-		admin.setEmail("email@domain.com");
-		admin.setName("Nombre");
-		admin.setSurname("Apellido");
-
-		//Saving the administrator
-		final Administrator saved = this.administratorService.save(admin);
-
-		//Asserting
-		final Collection<Administrator> allAdmins = this.administratorService.findAll();
-		Assert.isTrue(allAdmins.contains(saved));
+		//Login as Administrator
+		super.authenticate("admin");
+		//Creating the administrator
+		final Administrator a = this.administratorService.create();
+		//Is it actually created?
+		Assert.notNull(a);
 	}
 }

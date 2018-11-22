@@ -6,8 +6,11 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.AdministratorRepository;
+import security.Authority;
+import utilities.AuthenticationUtility;
 import domain.Administrator;
 
 @Service
@@ -22,8 +25,8 @@ public class AdministratorService {
 	//CRUDs
 
 	public Administrator create() {
-		//TODO: ?????
-		return null;
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
+		return new Administrator();
 	}
 
 	public Collection<Administrator> findAll() {
@@ -43,12 +46,5 @@ public class AdministratorService {
 
 	public void delete(final Administrator admin) {
 		this.administratorRepository.delete(admin);
-	}
-
-	//Extra methods
-
-	public Collection<Double> fixUpTaskPerUserStats() {
-		final Collection<Double> res = this.administratorRepository.fixUpTaskPerUserStats();
-		return res;
 	}
 }
