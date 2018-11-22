@@ -29,6 +29,12 @@ public class AdministratorService {
 		return new Administrator();
 	}
 
+	public Administrator save(final Administrator admin) {
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
+		final Administrator res = this.administratorRepository.save(admin);
+		return res;
+	}
+
 	public Collection<Administrator> findAll() {
 		final Collection<Administrator> res = this.administratorRepository.findAll();
 		return res;
@@ -36,11 +42,6 @@ public class AdministratorService {
 
 	public Administrator findOne(final int adminId) {
 		final Administrator res = this.administratorRepository.findOne(adminId);
-		return res;
-	}
-
-	public Administrator save(final Administrator admin) {
-		final Administrator res = this.administratorRepository.save(admin);
 		return res;
 	}
 
