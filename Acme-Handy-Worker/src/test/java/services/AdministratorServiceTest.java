@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import security.Authority;
+import security.UserAccount;
 import utilities.AbstractTest;
 import domain.Administrator;
 
@@ -23,15 +27,52 @@ public class AdministratorServiceTest extends AbstractTest {
 	@Autowired
 	private AdministratorService	administratorService;
 
+	//Auxiliar services
+	@Autowired
+	private UserAccountService		userAccountService;
+
 
 	@Test
 	public void testCreate() {
-
 		//Login as Administrator
 		super.authenticate("admin");
 		//Creating the administrator
 		final Administrator a = this.administratorService.create();
 		//Is it actually created?
 		Assert.notNull(a);
+	}
+
+	@Test
+	public void testSave() {
+		//Login as an administrator
+		super.authenticate("admin");
+
+		//Creating a new Administrator
+		////First, we create and save a UserAccount for this new admin
+		final UserAccount ac = new UserAccount();
+		ac.setUsername("admin3");
+		ac.setPassword("admin3");
+		final Authority a = new Authority();
+		a.setAuthority(Authority.ADMIN);
+		ac.addAuthority(a);
+		final UserAccount sac = this.userAccountService.save(ac);
+
+		////Then, we actually create the admin
+		final Administrator admin = this.administratorService.create();
+		admin.setAccount(sac);
+		admin.setAddress("Dirección");
+		admin.setBanned(false);
+		admin.setEmail("yeah@rig.com");
+		admin.setName("Admini");
+		admin.setSurname("Strator");
+		admin.setPhone("+34 673721182");
+		admin.setPhotoURL("http://tiniurl.com/profilePic.jpg");
+
+		//Saving the administrator
+		final Administrator saved = this.administratorService.save(admin);
+
+		//Is the administrator actually saved?
+		final Collection<Administrator> all = this.administratorService.findAll();
+		Assert.isTrue(all.contains(saved));
 	}
 }
