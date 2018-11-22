@@ -276,7 +276,70 @@
 			</list>
 		</property>
 	</bean>
-
+	<!-- Configuration -->
+	<bean id="configuration" class="domain.Configuration">
+		<property name="cacheTime" value="1" />
+		<property name="vat" value="21" />
+		<property name="bannerURL" value="https://tinyurl.com/acme-handy-worker-logo" />
+		<property name="welcomeSP" value="¡Bienvenidos a Acme Handy Worker! Precio, calidad y confianza en el mismo sitio" />
+		<property name="welcomeEN" value="Welcome to Acme Handy Worker! Price, quality, and trust in a single place" />
+		<property name="spamWords">
+			<list>
+				<value>sex</value>
+				<value>viagra</value>
+				<value>cialis</value>
+				<value>one million</value>
+				<value>you’ve been selected</value>
+				<value>Nigeria</value>
+				<value>sexo</value>
+				<value>un millón</value>
+				<value>ha sido seleccionado</value>
+			</list>
+		</property>
+		<property name="countryCode" value="+34" />
+		<property name="positiveWords">
+			<list>
+				<value>good</value>
+				<value>fantastic</value>
+				<value>excellent</value>
+				<value>great</value>
+				<value>amaz-ing</value>
+				<value>terrific</value>
+				<value>beautiful</value>
+				<value>bien</value>
+				<value>fantastico</value>
+				<value>excelente</value>
+				<value>grandioso</value>
+				<value>increible</value>
+				<value>estupendo</value>
+				<value>bonito</value>
+			</list>
+		</property>
+		<property name="negativeWords">
+			<list>
+				<value>not</value>
+				<value>bad</value>
+				<value>horrible</value>
+				<value>average</value>
+				<value>disaster</value>
+				<value>no</value>
+				<value>mal</value>
+				<value>horrible</value>
+				<value>promedio</value>
+				<value>desastre</value>
+			</list>
+		</property>
+		<property name="finderResults" value="10" />
+		<property name="cardMaker">
+			<list>
+				<value>VISA</value>
+				<value>MASTER</value>
+				<value>DINNERS</value>
+				<value>AMEX</value>
+			</list>
+		</property>
+	</bean>
+	
 	<!-- Social profiles -->
 	<bean id="SocialProfile1" class="domain.SocialProfile">
 		<property name="nick" value="McAllisterDTur" />
