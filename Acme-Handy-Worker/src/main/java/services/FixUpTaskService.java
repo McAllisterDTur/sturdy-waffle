@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.FixUpTaskRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.FixUpTask;
@@ -34,16 +35,16 @@ public class FixUpTaskService {
 	 * 
 	 * @param fixUpTask
 	 */
-	public FixUpTask create(final FixUpTask fixUpTask) {
+	public FixUpTask create() {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
 		// Comprobamos que el usuario registrado sea un customer y propietario de la FixUpTask
-		Assert.isTrue(fixUpTask.getCustomer().equals(userAccount));
+		final Authority au = new Authority();
+		au.setAuthority(Authority.CUSTOMER);
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
-		// Hay que recordar que la FixUpTask que devuelve el método .save del repositorio ha 
-		// sido modificada al introducirse en la base de datos y permanece así en ella
-		final FixUpTask res = this.fixUpTaskRepository.save(fixUpTask);
+		final FixUpTask res = new FixUpTask();
 		return res;
 
 	}
@@ -85,7 +86,7 @@ public class FixUpTaskService {
 		final FixUpTask res = this.fixUpTaskRepository.findOne(fixUpTaskId);
 
 		// Comprobamos que el usuario registrado sea un customer y propietario de la FixUpTask
-		Assert.isTrue(res.getCustomer().equals(userAccount));
+		Assert.isTrue(res.getCustomer().getAccount().equals(userAccount));
 
 		return res;
 
