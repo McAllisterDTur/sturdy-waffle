@@ -30,10 +30,10 @@ public class FixUpTaskService {
 	// private HandyWorkerService handyWorkerService;
 
 	/**
-	 * This method is responsible for checking that the user is a customer.
-	 * Creates the fix up task passed as parameter.
+	 * Checks customer authority
 	 * 
 	 * @param fixUpTask
+	 * @return a new fix up task
 	 */
 	public FixUpTask create() {
 		UserAccount userAccount;
@@ -50,13 +50,12 @@ public class FixUpTaskService {
 	}
 
 	/**
-	 * This method is responsible for checking that the user is a customer.
-	 * Updates the fix up task passed as parameter.
+	 * Checks customer authority.
 	 * 
 	 * @param fixUpTask
+	 * @return the fix up task saved in the database
 	 */
-	// TODO: This method will fail since we dont have a way to track the original FixUpTask
-	public FixUpTask update(final FixUpTask fixUpTask) {
+	public FixUpTask save(final FixUpTask fixUpTask) {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
@@ -65,18 +64,16 @@ public class FixUpTaskService {
 
 		// Hay que recordar que la FixUpTask que devuelve el método .save del repositorio ha 
 		// sido modificada al introducirse en la base de datos y permanece así en ella
-		final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTask.getId());
-		fixUpTask.setId(aux.getId());
 		final FixUpTask res = this.fixUpTaskRepository.save(fixUpTask);
 		return res;
 
 	}
 
 	/**
-	 * This method is responsible for checking that the user is a customer.
-	 * Finds the fix up task whose id is the one passed as parameter.
+	 * Checks customer authority.
 	 * 
 	 * @param fixUpTaskId
+	 * @return the fix up task whose id is the one passed as parameter
 	 */
 	public FixUpTask findOne(final int fixUpTaskId) {
 		UserAccount userAccount;
@@ -93,8 +90,7 @@ public class FixUpTaskService {
 	}
 
 	/**
-	 * This method is responsible for checking that the user is a customer.
-	 * Deletes the fix up task passed as parameter.
+	 * Deletes the fix up task passed as parameter checking customer authority.
 	 * 
 	 * @param fixUpTask
 	 */
@@ -109,8 +105,7 @@ public class FixUpTaskService {
 	}
 
 	/**
-	 * This method is responsible for checking that the user is a customer.
-	 * Deletes the fix up task whose id is the one passed as parameter.
+	 * Deletes the fix up task whose id is the one passed as parameter checking customer authority.
 	 * 
 	 * @param fixUpTaskId
 	 */
@@ -126,7 +121,7 @@ public class FixUpTaskService {
 	}
 
 	/**
-	 * This method is responsible for checking that the user is a customer
+	 * Checks customer authority
 	 * 
 	 * @param CustomerId
 	 * @return Collection of the fix up tasks related to a customer
@@ -144,7 +139,7 @@ public class FixUpTaskService {
 	}
 
 	/**
-	 * This method is responsible for checking that the user is a handy worker
+	 * Checks customer authority
 	 * 
 	 * @param handyWorkerId
 	 * @return Collection of all the fix up tasks
@@ -159,5 +154,9 @@ public class FixUpTaskService {
 
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.findAsHandyWorker(handyWorkerId);
 		return res;
+	}
+
+	public int getNumberOfTickers(final String ticker) {
+		return this.fixUpTaskRepository.getNumberOfTickers(ticker);
 	}
 }
