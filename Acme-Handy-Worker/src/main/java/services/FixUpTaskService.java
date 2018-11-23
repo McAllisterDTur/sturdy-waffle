@@ -19,15 +19,9 @@ import domain.FixUpTask;
 @Transactional
 public class FixUpTaskService {
 
-	// Porque no podemos crear instancias de esta interfaz y spring hace su magia.
 	@Autowired
 	private FixUpTaskRepository	fixUpTaskRepository;
 
-
-	// TODO: Implementar "CustomerService"
-	// private CustomerService customerService;
-	// TODO: Implementar "HandyWorkerService"
-	// private HandyWorkerService handyWorkerService;
 
 	/**
 	 * Checks customer authority
@@ -36,17 +30,8 @@ public class FixUpTaskService {
 	 * @return a new fix up task
 	 */
 	public FixUpTask create() {
-		UserAccount userAccount;
-
-		userAccount = LoginService.getPrincipal();
-		// Comprobamos que el usuario registrado sea un customer y propietario de la FixUpTask
-		final Authority au = new Authority();
-		au.setAuthority(Authority.CUSTOMER);
-		Assert.isTrue(userAccount.getAuthorities().contains(au));
-
 		final FixUpTask res = new FixUpTask();
 		return res;
-
 	}
 
 	/**
@@ -59,11 +44,8 @@ public class FixUpTaskService {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
-		// Comprobamos que el usuario registrado sea un customer y propietario de la FixUpTask
 		Assert.isTrue(fixUpTask.getCustomer().equals(userAccount));
-
-		// Hay que recordar que la FixUpTask que devuelve el método .save del repositorio ha 
-		// sido modificada al introducirse en la base de datos y permanece así en ella
+		
 		final FixUpTask res = this.fixUpTaskRepository.save(fixUpTask);
 		return res;
 
@@ -81,8 +63,7 @@ public class FixUpTaskService {
 		userAccount = LoginService.getPrincipal();
 
 		final FixUpTask res = this.fixUpTaskRepository.findOne(fixUpTaskId);
-
-		// Comprobamos que el usuario registrado sea un customer y propietario de la FixUpTask
+		
 		Assert.isTrue(res.getCustomer().getAccount().equals(userAccount));
 
 		return res;
@@ -90,32 +71,35 @@ public class FixUpTaskService {
 	}
 
 	/**
-	 * Deletes the fix up task passed as parameter checking customer authority.
+	 * Deletes the fix up task whose id is passed as parameter checking customer authority.
 	 * 
 	 * @param fixUpTask
-	 */
-	public void delete(final FixUpTask fixUpTask) {
-		UserAccount userAccount;
-
-		userAccount = LoginService.getPrincipal();
-		// Comprobamos que el usuario registrado sea un customer y propietario de la FixUpTask
-		Assert.isTrue(fixUpTask.getCustomer().equals(userAccount));
-		final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTask.getId());
-		this.fixUpTaskRepository.delete(aux);
-	}
-
-	/**
-	 * Deletes the fix up task whose id is the one passed as parameter checking customer authority.
-	 * 
-	 * @param fixUpTaskId
 	 */
 	public void delete(final int fixUpTaskId) {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
-		// Comprobamos que el usuario registrado sea un customer y propietario de la FixUpTask
+		
 		final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTaskId);
-		Assert.isTrue(aux.getCustomer().equals(userAccount));
+		
+		Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
+		
+		this.fixUpTaskRepository.delete(aux);
+	}
+
+	/**
+	 * Deletes the fix up task passed as parameter checking customer authority.
+	 * 
+	 * @param fixUpTask
+	 */
+	public void delete(FixUpTask fixUpTask) {
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		
+		final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTask.getId());
+		
+		Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
 
 		this.fixUpTaskRepository.delete(aux);
 	}
@@ -130,8 +114,6 @@ public class FixUpTaskService {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
-		// Comprobamos que el usuario registrado sea un customer y propietario de la FixUpTask
-		// TODO: Implementar el servicio "CustomerService"
 		// Assert.isTrue(this.customerService.findOne(customerId).equals(userAccount));
 
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.findFromCustomer(customerId);
@@ -144,13 +126,14 @@ public class FixUpTaskService {
 	 * @param handyWorkerId
 	 * @return Collection of all the fix up tasks
 	 */
-	public Collection<FixUpTask> findAsHandyWorker(final int handyWorkerId) {
+	public Collection<FixUpTask> findAsHandyWorker(int handyWorkerId) {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
 		// Comprobamos que el usuario registrado sea un customer y propietario de la FixUpTask
-		// TODO: Implementar el servicio "HandyWorkerService"
-		// Assert.isTrue(this.handyWorkerService.findOne(handyWorkerId).equals(userAccount));
+		Authority au = new Authority();
+		au.setAuthority(Authority.HANDYWORKER);
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.findAsHandyWorker(handyWorkerId);
 		return res;
