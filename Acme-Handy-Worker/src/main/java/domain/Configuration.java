@@ -37,6 +37,8 @@ public class Configuration extends DomainEntity {
 
 	private int					finderResults;
 
+	private Collection<String>	cardMaker;
+
 
 	@Min(1)
 	@Max(24)
@@ -118,6 +120,15 @@ public class Configuration extends DomainEntity {
 
 	public void setFinderResults(final int finderResults) {
 		this.finderResults = finderResults;
+	}
+
+	@ElementCollection
+	public Collection<String> getCardMaker() {
+		return this.cardMaker;
+	}
+
+	public void setCardMaker(final Collection<String> cardMaker) {
+		this.cardMaker = cardMaker;
 	}
 
 	@Override
