@@ -24,7 +24,7 @@ public class FixUpTaskService {
 
 
 	/**
-	 * Checks customer authority
+	 * Checks customer authority (Req 10.1)
 	 * 
 	 * @param fixUpTask
 	 * @return a new fix up task
@@ -35,7 +35,7 @@ public class FixUpTaskService {
 	}
 
 	/**
-	 * Checks customer authority.
+	 * Checks customer authority. (Req 10.1)
 	 * 
 	 * @param fixUpTask
 	 * @return the fix up task saved in the database
@@ -44,15 +44,37 @@ public class FixUpTaskService {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
-		Assert.isTrue(fixUpTask.getCustomer().equals(userAccount));
+		Authority au = new Authority();
+		au.setAuthority(Authority.CUSTOMER);
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+		// TODO: necesito un customer para que funcione
+		//Assert.isTrue(fixUpTask.getCustomer().equals(userAccount));
 		
 		final FixUpTask res = this.fixUpTaskRepository.save(fixUpTask);
 		return res;
 
 	}
+	
+	/**
+	 * Checks customer authority. (Req 10.1)
+	 * 
+	 * @param fixUpTask
+	 * @return the fix up task saved in the database
+	 */
+	public FixUpTask update(final FixUpTask fixUpTask) {
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		Assert.isTrue(fixUpTask.getCustomer().equals(userAccount));
+		
+		final FixUpTask res = this.fixUpTaskRepository.findOne(fixUpTask.getId());
+		
+		return res;
+
+	}
 
 	/**
-	 * Checks customer authority.
+	 * Checks customer authority. (Req 10.1)
 	 * 
 	 * @param fixUpTaskId
 	 * @return the fix up task whose id is the one passed as parameter
@@ -71,7 +93,7 @@ public class FixUpTaskService {
 	}
 
 	/**
-	 * Deletes the fix up task whose id is passed as parameter checking customer authority.
+	 * Deletes the fix up task whose id is passed as parameter checking customer authority. (Req 10.1)
 	 * 
 	 * @param fixUpTask
 	 */
@@ -90,7 +112,7 @@ public class FixUpTaskService {
 	/**
 	 * Deletes the fix up task passed as parameter checking customer authority.
 	 * 
-	 * @param fixUpTask
+	 * @param fixUpTask (Req 10.1)
 	 */
 	public void delete(FixUpTask fixUpTask) {
 		UserAccount userAccount;
@@ -103,9 +125,27 @@ public class FixUpTaskService {
 
 		this.fixUpTaskRepository.delete(aux);
 	}
+	
+	/**
+	 * Checks customer authority (Req 10.1)
+	 * 
+	 * @return Collection of the fix up tasks related to the logged customer
+	 */
+	public Collection<FixUpTask> findFromLoggedCustomer() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		
+		Authority au = new Authority();
+		au.setAuthority(Authority.CUSTOMER);
+		
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
+		final Collection<FixUpTask> res = this.fixUpTaskRepository.findFromCustomer(userAccount.getId());
+		return res;
+	}
 
 	/**
-	 * Checks customer authority
+	 * Checks handy worker authority (11.1)
 	 * 
 	 * @param CustomerId
 	 * @return Collection of the fix up tasks related to a customer
@@ -114,31 +154,36 @@ public class FixUpTaskService {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
-		// Assert.isTrue(this.customerService.findOne(customerId).equals(userAccount));
+		
+		Authority au = new Authority();
+		au.setAuthority(Authority.HANDYWORKER);
+		
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.findFromCustomer(customerId);
 		return res;
 	}
 
 	/**
-	 * Checks customer authority
+	 * Checks customer authority (Req 11.1)
 	 * 
 	 * @param handyWorkerId
 	 * @return Collection of all the fix up tasks
 	 */
-	public Collection<FixUpTask> findAsHandyWorker(int handyWorkerId) {
+	public Collection<FixUpTask> findAsHandyWorker() {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
-		// Comprobamos que el usuario registrado sea un customer y propietario de la FixUpTask
+		
 		Authority au = new Authority();
 		au.setAuthority(Authority.HANDYWORKER);
+		
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
-		final Collection<FixUpTask> res = this.fixUpTaskRepository.findAsHandyWorker(handyWorkerId);
+		final Collection<FixUpTask> res = this.fixUpTaskRepository.findAsHandyWorker();
 		return res;
 	}
-
+	
 	public int getNumberOfTickers(final String ticker) {
 		return this.fixUpTaskRepository.getNumberOfTickers(ticker);
 	}

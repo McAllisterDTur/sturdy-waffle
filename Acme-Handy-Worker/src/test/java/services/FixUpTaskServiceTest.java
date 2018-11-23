@@ -23,31 +23,35 @@ import domain.FixUpTask;
 @Transactional
 public class FixUpTaskServiceTest extends AbstractTest {
 
-	private static final int	TASK_ID	= 1064;
-
 	@Autowired
 	private FixUpTaskService	fixUpTaskService;
 
 
 	@Test
-	public void testFindFixUpTask1() {
+	public void saveGood() {
+		FixUpTask f = fixUpTaskService.create();
+		
 		super.authenticate("Customer1");
 
-		final FixUpTask f3 = this.fixUpTaskService.findOne(FixUpTaskServiceTest.TASK_ID);
+		FixUpTask f2 = fixUpTaskService.save(f);
+		FixUpTask f3 = fixUpTaskService.findOne(f2.getId());
+		
 
 		Assert.isTrue(f3 != null);
 
 	}
 
 	@Test
-	public void testFindFixUpTask2() {
-		super.authenticate("Customer2");
+	public void saveBad() {
+		super.authenticate(null);
+		FixUpTask f = fixUpTaskService.create();
 		FixUpTask f3 = null;
 		try {
-			f3 = this.fixUpTaskService.findOne(FixUpTaskServiceTest.TASK_ID);
-
+			FixUpTask f2 = fixUpTaskService.save(f);
+			f3 = fixUpTaskService.findOne(f2.getId());
+			
 		} catch (final Exception e) {
-
+			f3 = null;
 		}
 		Assert.isTrue(f3 == null);
 

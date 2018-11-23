@@ -17,7 +17,7 @@ public interface FixUpTaskRepository extends JpaRepository<FixUpTask, Integer> {
 
 	// TODO: Solo las que no han sido completadas o todas?
 	@Query("select f from FixUpTask f")
-	public Collection<FixUpTask> findAsHandyWorker(final int handyWorkerId);
+	public Collection<FixUpTask> findAsHandyWorker();
 
 	@Query("select f from FixUpTask f where f.ticker = ?1")
 	public int getNumberOfTickers(String ticker);
