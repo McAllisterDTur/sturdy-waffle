@@ -13,7 +13,8 @@ import javax.validation.constraints.NotNull;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Endorsable extends Actor {
 
-	private Double				score;
+	private Double	score;
+
 
 	@NotNull
 	public Double getScore() {
@@ -26,7 +27,7 @@ public class Endorsable extends Actor {
 
 	@Override
 	public String toString() {
-		return "Endorsable [score=" + score + "]";
+		return "Endorsable [score=" + this.score + "]";
 	}
 
 }

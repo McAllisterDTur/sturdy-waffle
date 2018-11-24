@@ -45,7 +45,17 @@ public class AdministratorService {
 		return res;
 	}
 
-	public void delete(final Administrator admin) {
-		this.administratorRepository.delete(admin);
+	public Administrator update(final Administrator admin) {
+		final Administrator toUpdate = this.administratorRepository.findOne(admin.getId());
+		toUpdate.setBanned(admin.getBanned());
+		toUpdate.setAddress(admin.getAddress());
+		toUpdate.setEmail(admin.getEmail());
+		toUpdate.setMiddleName(admin.getMiddleName());
+		toUpdate.setName(admin.getName());
+		toUpdate.setPhone(admin.getPhone());
+		toUpdate.setPhotoURL(admin.getPhotoURL());
+		toUpdate.setSurname(admin.getSurname());
+		final Administrator updated = this.administratorRepository.save(toUpdate);
+		return updated;
 	}
 }
