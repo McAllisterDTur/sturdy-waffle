@@ -1424,4 +1424,60 @@
 			</list>
 		</property>
 	</bean>
+	
+	<!-- Box -->
+	<bean id="Box1" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer1" />
+		<property name="messages">
+			<list>
+				<null/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Box2" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer1" />
+		<property name="messages">
+			<list>
+				<null/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Box3" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer1" />
+		<property name="messages">
+			<list>
+				<null/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Box4" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer1" />
+		<property name="messages">
+			<list>
+				<null/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Box5" class="domain.Box">
+		<property name="name" value="TRIPS" />
+		<property name="deleteable" value="true" />
+		<property name="owner" ref="Customer1" />
+		<property name="messages">
+			<list>
+				<null/>
+			</list>
+		</property>
+	</bean>
 </beans>
