@@ -2,6 +2,7 @@
 package domain;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -14,15 +15,26 @@ import javax.validation.constraints.NotNull;
 @Access(AccessType.PROPERTY)
 public class Finder extends DomainEntity {
 
-	private String			warranty;
-	private String			keyWord;
-	private String			category;
-	private String			priceRange;
-	private String			dateRange;
+	private String					warranty;
+	private String					keyWord;
+	private String					category;
+	private Double					minPrice;
+	private Double					maxPrice;
+	private String					dateRange;
+	private Date					cacheUpdate;
 	private Collection<FixUpTask>	fixUpTask;
 
 	//+
-	private HandyWorker		worker;
+	private HandyWorker				worker;
+
+
+	public Date getCacheUpdate() {
+		return this.cacheUpdate;
+	}
+
+	public void setCacheUpdate(final Date cacheUpdate) {
+		this.cacheUpdate = cacheUpdate;
+	}
 
 	public String getWarranty() {
 		return this.warranty;
@@ -48,12 +60,20 @@ public class Finder extends DomainEntity {
 		this.category = category;
 	}
 
-	public String getPriceRange() {
-		return this.priceRange;
+	public Double getMinPrice() {
+		return this.minPrice;
 	}
 
-	public void setPriceRange(final String priceRange) {
-		this.priceRange = priceRange;
+	public void setMinPrice(final Double minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	public Double getMaxPrice() {
+		return this.maxPrice;
+	}
+
+	public void setMaxPrice(final Double maxPrice) {
+		this.maxPrice = maxPrice;
 	}
 
 	public String getDateRange() {
@@ -74,7 +94,7 @@ public class Finder extends DomainEntity {
 	}
 
 	@NotNull
-	@OneToOne(optional=false)
+	@OneToOne(optional = false)
 	public HandyWorker getWorker() {
 		return this.worker;
 	}
@@ -83,10 +103,4 @@ public class Finder extends DomainEntity {
 		this.worker = worker;
 	}
 
-	@Override
-	public String toString() {
-		return "Finder [warranty=" + warranty + ", keyWord=" + keyWord + ", category=" + category + ", priceRange="
-				+ priceRange + ", dateRange=" + dateRange + ", fixUpTask=" + fixUpTask + ", worker=" + worker + "]";
-	}
-	
 }
