@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -44,31 +45,18 @@ public class FixUpTaskService {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
-		Authority au = new Authority();
+		final Authority au = new Authority();
 		au.setAuthority(Authority.CUSTOMER);
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
-		// TODO: necesito un customer para que funcione
-		//Assert.isTrue(fixUpTask.getCustomer().equals(userAccount));
-		
-		final FixUpTask res = this.fixUpTaskRepository.save(fixUpTask);
-		return res;
+		final FixUpTask res;
+		if (fixUpTask.getId() != 0) {
+			final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTask.getId());
+			Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
 
-	}
-	
-	/**
-	 * Checks customer authority. (Req 10.1)
-	 * 
-	 * @param fixUpTask
-	 * @return the fix up task saved in the database
-	 */
-	public FixUpTask update(final FixUpTask fixUpTask) {
-		UserAccount userAccount;
+			res = this.fixUpTaskRepository.save(fixUpTask);
+		} else
+			res = this.fixUpTaskRepository.save(fixUpTask);
 
-		userAccount = LoginService.getPrincipal();
-		Assert.isTrue(fixUpTask.getCustomer().equals(userAccount));
-		
-		final FixUpTask res = this.fixUpTaskRepository.findOne(fixUpTask.getId());
-		
 		return res;
 
 	}
@@ -85,7 +73,7 @@ public class FixUpTaskService {
 		userAccount = LoginService.getPrincipal();
 
 		final FixUpTask res = this.fixUpTaskRepository.findOne(fixUpTaskId);
-		
+
 		Assert.isTrue(res.getCustomer().getAccount().equals(userAccount));
 
 		return res;
@@ -101,51 +89,34 @@ public class FixUpTaskService {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
-		
+
 		final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTaskId);
-		
+
 		Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
-		
+
 		this.fixUpTaskRepository.delete(aux);
 	}
 
 	/**
-	 * Deletes the fix up task passed as parameter checking customer authority.
+	 * Deletes the fix up task passed as parameter checking customer authority. (Req 10.1)
 	 * 
-	 * @param fixUpTask (Req 10.1)
+	 * @param fixUpTask
+	 * 
 	 */
-	public void delete(FixUpTask fixUpTask) {
+	public void delete(final FixUpTask fixUpTask) {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
-		
+
 		final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTask.getId());
-		
+
 		Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
 
 		this.fixUpTaskRepository.delete(aux);
 	}
-	
-	/**
-	 * Checks customer authority (Req 10.1)
-	 * 
-	 * @return Collection of the fix up tasks related to the logged customer
-	 */
-	public Collection<FixUpTask> findFromLoggedCustomer() {
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
-		
-		Authority au = new Authority();
-		au.setAuthority(Authority.CUSTOMER);
-		
-		Assert.isTrue(userAccount.getAuthorities().contains(au));
-
-		final Collection<FixUpTask> res = this.fixUpTaskRepository.findFromCustomer(userAccount.getId());
-		return res;
-	}
 
 	/**
-	 * Checks handy worker authority (11.1)
+	 * Checks handy worker or customer authority (Req 10.1, 11.1)
 	 * 
 	 * @param CustomerId
 	 * @return Collection of the fix up tasks related to a customer
@@ -154,18 +125,22 @@ public class FixUpTaskService {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
-		
-		Authority au = new Authority();
-		au.setAuthority(Authority.HANDYWORKER);
-		
-		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
+		final Authority au1 = new Authority();
+		au1.setAuthority(Authority.HANDYWORKER);
+
+		final Authority au2 = new Authority();
+		au2.setAuthority(Authority.CUSTOMER);
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au1)
+			|| userAccount.getAuthorities().contains(au2));
 
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.findFromCustomer(customerId);
 		return res;
 	}
 
 	/**
-	 * Checks customer authority (Req 11.1)
+	 * Checks handy worker authority (Req 11.1)
 	 * 
 	 * @param handyWorkerId
 	 * @return Collection of all the fix up tasks
@@ -174,17 +149,55 @@ public class FixUpTaskService {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
-		
-		Authority au = new Authority();
+
+		final Authority au = new Authority();
 		au.setAuthority(Authority.HANDYWORKER);
-		
+
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
-		final Collection<FixUpTask> res = this.fixUpTaskRepository.findAsHandyWorker();
+		final Collection<FixUpTask> res = this.fixUpTaskRepository.findAll();
 		return res;
 	}
-	
+
+	/**
+	 * Checks handy workder authority (Req 11.2)
+	 * 
+	 * @param keyWord
+	 * @param category
+	 * @param warranty
+	 * @param minPrice
+	 * @param maxPrice
+	 * @param open
+	 * @param close
+	 * @return a collection of fix up tasks filtered by the parameters given
+	 */
+	public Collection<FixUpTask> findByFilter(String keyWord, String category, String warranty,
+		Double minPrice, Double maxPrice, Date open, Date close) {
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+
+		final Authority au = new Authority();
+		au.setAuthority(Authority.HANDYWORKER);
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
+		keyWord = (keyWord == null || keyWord.isEmpty()) ? "" : keyWord;
+		category = (category == null || category.isEmpty()) ? "" : category;
+		warranty = (warranty == null || warranty.isEmpty()) ? "" : warranty;
+		minPrice = (minPrice == null) ? 0 : minPrice;
+		maxPrice = (maxPrice == null) ? 0 : maxPrice;
+		open = (Date) (open == null ? Date.UTC(2000, 0, 0, 0, 0, 0) : open);
+		close = (Date) (close == null ? Date.UTC(2200, 0, 0, 0, 0, 0) : close);
+
+		final Collection<FixUpTask> res = this.fixUpTaskRepository.findByFilter(keyWord, category,
+			warranty, minPrice, maxPrice, open, close);
+
+		return res;
+	}
+
 	public int getNumberOfTickers(final String ticker) {
 		return this.fixUpTaskRepository.getNumberOfTickers(ticker);
 	}
+
 }
