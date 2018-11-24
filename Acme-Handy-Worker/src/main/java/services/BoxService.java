@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 import repositories.BoxRepository;
 import security.LoginService;
 import security.UserAccount;
+import domain.Actor;
 import domain.Box;
 
 @Service
@@ -23,6 +24,10 @@ public class BoxService {
 	@Autowired
 	BoxRepository	boxRepository;
 
+	//Auxiliary services
+	@Autowired
+	ActorService	actorService;
+
 
 	//CRUDs
 
@@ -32,7 +37,7 @@ public class BoxService {
 
 	public Box save(final Box box) {
 		final List<String> names = this.allBoxNames();
-		Assert.isTrue(names.contains(box.getName()));
+		Assert.isTrue(!names.contains(box.getName()));
 		final Box saved = this.boxRepository.save(box);
 		return saved;
 	}
@@ -47,38 +52,37 @@ public class BoxService {
 
 	public void delete(final Box box) {
 		Assert.isTrue(LoginService.getPrincipal().equals(box.getOwner().getAccount()));
-		Assert.isTrue(!box.getDeleteable());
+		Assert.isTrue(box.getDeleteable());
 		this.boxRepository.delete(box);
 	}
 
 	//Other requirements
 
 	public void initializeDefaultBoxes() {
-		final UserAccount ownerid = LoginService.getPrincipal();
-		//TODO: Necesito coger un actor a partir de su useraccount
-
+		final UserAccount ownerAccount = LoginService.getPrincipal();
+		final Actor owner = this.actorService.findByUserAccountId(ownerAccount.getId());
 		final Box in = this.create();
 		in.setDeleteable(false);
 		in.setName("IN");
-		//TODO: in.setOwner(owner);
+		in.setOwner(owner);
 		this.save(in);
 
 		final Box trash = this.create();
 		trash.setDeleteable(false);
 		trash.setName("TRASH");
-		//TODO: in.setOwner(owner);
+		trash.setOwner(owner);
 		this.save(trash);
 
 		final Box out = this.create();
 		out.setDeleteable(false);
 		out.setName("OUT");
-		//TODO: in.setOwner(owner);
+		out.setOwner(owner);
 		this.save(out);
 
 		final Box spam = this.create();
 		spam.setDeleteable(false);
 		spam.setName("SPAM");
-		//TODO: in.setOwner(owner);
+		spam.setOwner(owner);
 		this.save(spam);
 	}
 
@@ -89,8 +93,9 @@ public class BoxService {
 	//Auxiliary methods
 
 	private List<String> allBoxNames() {
+		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final List<String> names = new ArrayList<>();
-		for (final Box b : this.boxRepository.findAll())
+		for (final Box b : this.boxRepository.boxesByActor(owner.getId()))
 			names.add(b.getName());
 		return names;
 	}

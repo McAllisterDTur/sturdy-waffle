@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import security.LoginService;
 import utilities.AbstractTest;
 import domain.Actor;
 import domain.Box;
@@ -24,7 +25,11 @@ public class BoxServiceTest extends AbstractTest {
 
 	//Service that we are testing
 	@Autowired
-	BoxService	boxService;
+	BoxService		boxService;
+
+	//Auxiliary services
+	@Autowired
+	ActorService	actorService;
 
 
 	@Test
@@ -47,8 +52,8 @@ public class BoxServiceTest extends AbstractTest {
 	public void testSave() {
 		//First, we log as a customer (for example)
 		super.authenticate("Customer2");
-		//TODO: We get the actor that is logged with that user
-		final Actor owner = new Actor();
+		//We get the actor that is logged with that user
+		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		//Now we create a box
 		final Box n = this.boxService.create();
 		n.setDeleteable(true);
@@ -65,8 +70,8 @@ public class BoxServiceTest extends AbstractTest {
 	public void testFindOne() {
 		//First, we log as a customer (for example)
 		super.authenticate("Customer2");
-		//TODO: We get the actor that is logged with that user
-		final Actor owner = new Actor();
+		//We get the actor that is logged with that user
+		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		//Now we create a box
 		final Box n = this.boxService.create();
 		n.setDeleteable(true);
@@ -83,8 +88,8 @@ public class BoxServiceTest extends AbstractTest {
 	public void testDelete() {
 		//First, we log as a customer (for example)
 		super.authenticate("Customer2");
-		//TODO: We get the actor that is logged with that user
-		final Actor owner = new Actor();
+		//We get the actor that is logged with that user
+		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		//Now we create a box
 		final Box n = this.boxService.create();
 		n.setDeleteable(true);
@@ -103,8 +108,8 @@ public class BoxServiceTest extends AbstractTest {
 	public void testFindByOwner() {
 		//First, we log as a customer (for example)
 		super.authenticate("Customer2");
-		//TODO: We get the actor that is logged with that user
-		final Actor owner = new Actor();
+		//We get the actor that is logged with that user
+		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		//Now we create a box
 		final Box n = this.boxService.create();
 		n.setDeleteable(true);
@@ -121,8 +126,9 @@ public class BoxServiceTest extends AbstractTest {
 	public void testInitializeDefaultBoxes() {
 		//First, we log as a customer (for example)
 		super.authenticate("Customer2");
+		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		//Now we get the id of this actor
-		//TODO: int id = id del actor que hemos creado arriba 
+		final int id = owner.getId();
 		//Let's initialize the four default boxes [IN, OUT, TRASH, SPAM]
 		this.boxService.initializeDefaultBoxes();
 		//Have we created four boxes?
