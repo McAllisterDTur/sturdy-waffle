@@ -3,7 +3,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,31 +66,32 @@ public class MessageService {
 		toupd.setPriority(msg.getPriority());
 		toupd.setSubject(msg.getSubject());
 		toupd.setTags(msg.getTags());
+
 		return this.msgRepository.save(toupd);
 	}
 
 	public void delete(final Message msg) {
 		final Actor logged = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.isTrue(msg.getSender().equals(logged) || msg.getReciever().equals(logged));
-		final Message tosupr = this.findOne(msg.getId());
-		final Collection<Box> msgboxes = tosupr.getBoxes();
-		for (final Box b : tosupr.getBoxes())
-			if (b.getOwner().equals(logged)) {
-				b.getMessages().remove(tosupr);
-				msgboxes.remove(b);
-			}
-		tosupr.setBoxes(msgboxes);
-		final Collection<Box> allboxes = this.bService.findByOwner(logged.getId());
-		Box trash = this.bService.create();
-		for (final Box b : allboxes)
-			if (b.getName().equals("TRASH"))
-				trash = b;
-		final Collection<Box> bs = new ArrayList<>();
-		bs.add(trash);
-		trash.getMessages().add(tosupr);
-		tosupr.setBoxes(bs);
-		this.msgRepository.save(tosupr);
+		final Collection<Box> boxesDeletor = this.bService.findByOwner(logged.getId());
+		final Collection<Box> boxesMsg = msg.getBoxes();
+		final Box trash = this.bService.findByName(logged.getId(), "TRASH");
+		final Collection<Message> trashMsg = this.findByBox(trash);
+
+		//		for (final Box b : boxesDeletor) {
+		//			final Collection<Message> msgs = this.findByBox(b);
+		//			msgs.remove(msg);
+		//			b.setMessages(msgs);
+		//			this.bService.save(b);
+		//		}
+		boxesMsg.removeAll(boxesDeletor);
+		boxesMsg.add(trash);
+		msg.setBoxes(boxesMsg);
+		trashMsg.add(msg);
+		trash.setMessages(trashMsg);
+		this.msgRepository.save(msg);
 		this.bService.save(trash);
+
 	}
 	//Other methods
 
@@ -107,26 +107,40 @@ public class MessageService {
 			this.msgRepository.delete(deleted);
 	}
 
-	public Message send(final Message msg, final Actor a) {
-		final Actor logged = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
+	public Message send(final Message msg, final Actor receiver) {
+		final Actor sender = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		if (msg.getSender() != null)
-			Assert.isTrue(msg.getSender().equals(logged));
+			Assert.isTrue(sender.equals(msg.getSender()));
 		else
-			msg.setSender(logged);
-		final Collection<Box> allBoxes = this.bService.findByOwner(logged.getId());
-		Box out = this.bService.create();
-		for (final Box b : allBoxes)
-			if (b.getName().equals("OUT"))
-				out = b;
-		final Collection<Box> wout = msg.getBoxes();
-		wout.add(out);
-		msg.setBoxes(wout);
-		msg.setReciever(a);
-		msg.setSendTime(new Date());
-		return this.msgRepository.save(msg);
+			msg.setSender(sender);
+		msg.setReciever(receiver);
+		final Message saved = this.msgRepository.save(msg);
+
+		final Box in = this.bService.findByName(receiver.getId(), "IN");
+		Collection<Message> inMsg = in.getMessages();
+		if (inMsg == null)
+			inMsg = new ArrayList<>();
+		inMsg.add(saved);
+		in.setMessages(inMsg);
+		this.bService.save(in);
+
+		final Box out = this.bService.findByName(sender.getId(), "OUT");
+		Collection<Message> outMsg = out.getMessages();
+		if (outMsg == null)
+			outMsg = new ArrayList<>();
+		outMsg.add(saved);
+		out.setMessages(outMsg);
+		this.bService.save(out);
+
+		return saved;
 	}
 
 	public Collection<Message> findByBox(final Box b) {
-		return this.msgRepository.findByBox(b.getId());
+		try {
+			return this.msgRepository.findByBox(b.getId());
+		} catch (final NullPointerException e) {
+			return null;
+		}
+
 	}
 }

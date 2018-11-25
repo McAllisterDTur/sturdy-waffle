@@ -42,7 +42,7 @@ public class ActorService {
 	 * @return actor
 	 */
 	public Actor save(final Actor actor) {
-		Assert.isNull(actor);
+		Assert.notNull(actor);
 		Actor result = null;
 		if (actor.getId() != 0) {
 			final UserAccount ua = LoginService.getPrincipal();

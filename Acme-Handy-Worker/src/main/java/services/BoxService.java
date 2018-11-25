@@ -37,7 +37,8 @@ public class BoxService {
 
 	public Box save(final Box box) {
 		final List<String> names = this.allBoxNames();
-		Assert.isTrue(names == null || !names.contains(box.getName()));
+		if (box.getId() == 0)
+			Assert.isTrue(names == null || !names.contains(box.getName()));
 		final Box saved = this.boxRepository.save(box);
 		return saved;
 	}
@@ -88,6 +89,10 @@ public class BoxService {
 
 	public Collection<Box> findByOwner(final int actorId) {
 		return this.boxRepository.boxesByActor(actorId);
+	}
+
+	public Box findByName(final int actorId, final String name) {
+		return this.boxRepository.boxByName(actorId, name);
 	}
 
 	//Auxiliary methods

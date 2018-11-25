@@ -119,7 +119,6 @@ public class BoxServiceTest extends AbstractTest {
 		//And now we save it
 		final Box saved = this.boxService.save(n);
 		//Is it associated with the user?
-		System.out.println(this.boxService.findByOwner(owner.getId()));
 		Assert.isTrue(this.boxService.findByOwner(owner.getId()).contains(saved));
 	}
 
@@ -134,6 +133,23 @@ public class BoxServiceTest extends AbstractTest {
 		this.boxService.initializeDefaultBoxes();
 		//Have we created four boxes?
 		Assert.isTrue(this.boxService.findByOwner(id).size() == 4);
+	}
+
+	public void testFindByName() {
+		//First, we log as a customer (for example)
+		super.authenticate("Customer2");
+		//We get the actor that is logged with that user
+		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		//Now we create a box
+		final Box n = this.boxService.create();
+		n.setDeleteable(true);
+		n.setName("TEST BOX");
+		n.setOwner(owner);
+		n.setMessages(null);
+		//And now we save it
+		final Box saved = this.boxService.save(n);
+		//Is it associated with the user?
+		Assert.isTrue(this.boxService.findByName(owner.getId(), n.getName()).equals(saved));
 	}
 
 }

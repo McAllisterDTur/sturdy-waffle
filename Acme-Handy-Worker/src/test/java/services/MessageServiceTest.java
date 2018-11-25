@@ -86,13 +86,10 @@ public class MessageServiceTest extends AbstractTest {
 	@Test
 	public void testDelete() {
 		super.authenticate("Customer1");
-		final Message dlt = (Message) this.msgService.findAll().toArray()[0];
-		this.msgService.delete(dlt);
-		Box trash = this.bService.create();
-		for (final Box b : this.bService.findByOwner(this.aService.findByUserAccountId(LoginService.getPrincipal().getId()).getId()))
-			if (b.getName().equals("TRASH"))
-				trash = b;
-		Assert.isTrue(trash.getMessages().contains(dlt));
+		final Message m = (Message) this.msgService.findAll().toArray()[0];
+		this.msgService.delete(m);
+		final Box trashU = this.bService.findByName(LoginService.getPrincipal().getId(), "TRASH");
+		Assert.isTrue(this.msgService.findByBox(trashU).contains(m));
 	}
 
 	@Test
@@ -128,6 +125,7 @@ public class MessageServiceTest extends AbstractTest {
 		a.setPhone("678912345");
 		a.setPhotoURL("http://tiniutl.com/h/uegmnsas.png");
 		a.setSurname("Testing");
+		final Actor sa = this.aService.save(a);
 
 		super.authenticate("customerTest");
 		this.bService.initializeDefaultBoxes();
@@ -137,11 +135,12 @@ public class MessageServiceTest extends AbstractTest {
 		m.setBody("Test");
 		m.setPriority("NEUTRAL");
 		m.setSubject("Test");
-		this.msgService.send(m, a);
+		final Message ms = this.msgService.save(m);
+		this.msgService.send(ms, sa);
 		super.unauthenticate();
 
 		super.authenticate("customerTest");
-		Assert.isTrue(this.msgService.findAll().contains(m));
+		Assert.isTrue(this.msgService.findAll().contains(ms));
 	}
 
 	@Test

@@ -14,4 +14,7 @@ public interface BoxRepository extends JpaRepository<Box, Integer> {
 
 	@Query("select b from Box b join b.owner o where o.id = ?1")
 	public Collection<Box> boxesByActor(int actorid);
+
+	@Query("select b from Box b join b.owner o where o.id = ?1 and b.name = ?2")
+	public Box boxByName(int actorid, String name);
 }
