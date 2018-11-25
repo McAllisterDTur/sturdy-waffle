@@ -119,6 +119,7 @@ public class BoxServiceTest extends AbstractTest {
 		//And now we save it
 		final Box saved = this.boxService.save(n);
 		//Is it associated with the user?
+		System.out.println(this.boxService.findByOwner(owner.getId()));
 		Assert.isTrue(this.boxService.findByOwner(owner.getId()).contains(saved));
 	}
 

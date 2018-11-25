@@ -37,7 +37,7 @@ public class BoxService {
 
 	public Box save(final Box box) {
 		final List<String> names = this.allBoxNames();
-		Assert.isTrue(!names.contains(box.getName()));
+		Assert.isTrue(names == null || !names.contains(box.getName()));
 		final Box saved = this.boxRepository.save(box);
 		return saved;
 	}
@@ -94,9 +94,14 @@ public class BoxService {
 
 	private List<String> allBoxNames() {
 		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
-		final List<String> names = new ArrayList<>();
-		for (final Box b : this.boxRepository.boxesByActor(owner.getId()))
-			names.add(b.getName());
+		List<String> names = new ArrayList<>();
+		try {
+			for (final Box b : this.boxRepository.boxesByActor(owner.getId()))
+				names.add(b.getName());
+		} catch (final NullPointerException e) {
+			names = null;
+		}
+
 		return names;
 	}
 }

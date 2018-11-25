@@ -1432,7 +1432,7 @@
 		<property name="owner" ref="Customer1" />
 		<property name="messages">
 			<list>
-				<null/>
+				<ref bean="Msg3"/>
 			</list>
 		</property>
 	</bean>
@@ -1443,7 +1443,7 @@
 		<property name="owner" ref="Customer1" />
 		<property name="messages">
 			<list>
-				<null/>
+				<ref bean="Msg1"/>
 			</list>
 		</property>
 	</bean>
@@ -1454,7 +1454,7 @@
 		<property name="owner" ref="Customer1" />
 		<property name="messages">
 			<list>
-				<null/>
+				<ref bean="Msg2"/>
 			</list>
 		</property>
 	</bean>
@@ -1465,7 +1465,7 @@
 		<property name="owner" ref="Customer1" />
 		<property name="messages">
 			<list>
-				<null/>
+				<ref bean="Msg4"/>
 			</list>
 		</property>
 	</bean>
@@ -1476,7 +1476,85 @@
 		<property name="owner" ref="Customer1" />
 		<property name="messages">
 			<list>
+				<ref bean="Msg3"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Messages -->
+	<bean id="Msg1" class="domain.Message">
+		<property name="sender" ref="Customer1" />
+		<property name="reciever" ref="Customer2" />
+		<property name="sendTime" value="11/24/2018 21:45"/>
+		<property name="subject" value="Msg1"/>
+		<property name="body" value="Hi"/>
+		<property name="tags">
+			<list>
+				<value>Greetings</value>
+			</list>
+		</property>
+		<property name="priority" value="NEUTRAL"/>
+		<property name="boxes">
+			<list>
+				<ref bean="Box2"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Msg2" class="domain.Message">
+		<property name="sender" ref="Worker6" />
+		<property name="reciever" ref="Customer1" />
+		<property name="sendTime" value="11/24/2018 21:45"/>
+		<property name="subject" value="Nigerian prince"/>
+		<property name="body" value="I am Dr. Bakare Tunde, the cousin of Nigerian Astronaut, Air Force Major Abacha Tunde." />
+		<property name="tags">
+			<list>
 				<null/>
+			</list>
+		</property>
+		<property name="priority" value="LOW"/>
+		<property name="boxes">
+			<list>
+				<ref bean="Box3"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Msg3" class="domain.Message">
+		<property name="sender" ref="Admin1" />
+		<property name="reciever" ref="Customer1" />
+		<property name="sendTime" value="11/24/2018 21:45"/>
+		<property name="subject" value="Msg3"/>
+		<property name="body" value="You have won a trip to our HQ"/>
+		<property name="tags">
+			<list>
+				<value>Administration</value>
+			</list>
+		</property>
+		<property name="priority" value="HIGH"/>
+		<property name="boxes">
+			<list>
+				<ref bean="Box1"/>
+				<ref bean="Box5"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Msg4" class="domain.Message">
+		<property name="sender" ref="Worker2" />
+		<property name="reciever" ref="Customer1" />
+		<property name="sendTime" value="11/24/2018 21:45"/>
+		<property name="subject" value="Msg4"/>
+		<property name="body" value="I hate you"/>
+		<property name="tags">
+			<list>
+				<null/>
+			</list>
+		</property>
+		<property name="priority" value="NEUTRAL"/>
+		<property name="boxes">
+			<list>
+				<ref bean="Box4"/>
 			</list>
 		</property>
 	</bean>
