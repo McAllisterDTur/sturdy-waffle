@@ -12,6 +12,7 @@ import repositories.EndorsableRepository;
 import security.Authority;
 import security.LoginService;
 import utilities.AuthenticationUtility;
+import domain.Configuration;
 import domain.Endorsable;
 
 @Service
@@ -25,6 +26,8 @@ public class EndorsableService {
 	//Auxiliary
 	@Autowired
 	ActorService			actService;
+	@Autowired
+	ConfigurationService	confService;
 
 
 	public Endorsable create() {
@@ -83,14 +86,22 @@ public class EndorsableService {
 		this.endRepository.save(end);
 	}
 
-	//TODO:
-	//public Endorsable computeScore(final Endorsable end) {
-	//1. Coger palabras positivas
-	//2. Coger palabras negativas
-	//3. Contar palabras positivas en los endorsements
-	//4. Contar palabras negativas en los endorsements
-	//5. Positivas menos negativas
-	//6. Palabras en total
-	//7. Resta menos total
-	//}
+	public Endorsable computeScore(final Endorsable end) {
+		final Configuration conf = (Configuration) this.confService.findAll().toArray()[0];
+		final Collection<String> pWs = conf.getPositiveWords();
+		final Collection<String> nWs = conf.getNegativeWords();
+
+		final Integer p, n;
+		for (final String s : pWs) {
+			//TODO: necesito el endorsement service
+		}
+		for (final String s : nWs) {
+			//TODO: necesito el endorsement service
+		}
+		final Double score = p - n + 0.0;
+		final Double total = p + n + 0.0;
+		final Double normalized = score / total;
+		end.setScore(normalized);
+		return this.endRepository.save(end);
+	}
 }
