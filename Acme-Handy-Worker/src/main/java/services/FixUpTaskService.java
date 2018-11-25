@@ -1,8 +1,10 @@
 
 package services;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.transaction.Transactional;
 
@@ -58,7 +60,6 @@ public class FixUpTaskService {
 			res = this.fixUpTaskRepository.save(fixUpTask);
 
 		return res;
-
 	}
 
 	/**
@@ -73,8 +74,8 @@ public class FixUpTaskService {
 		userAccount = LoginService.getPrincipal();
 
 		final FixUpTask res = this.fixUpTaskRepository.findOne(fixUpTaskId);
-
-		Assert.isTrue(res.getCustomer().getAccount().equals(userAccount));
+		if (res != null)
+			Assert.isTrue(res.getCustomer().getAccount().equals(userAccount));
 
 		return res;
 
@@ -160,7 +161,7 @@ public class FixUpTaskService {
 	}
 
 	/**
-	 * Checks handy workder authority (Req 11.2)
+	 * Checks handy worker authority (Req 11.2)
 	 * 
 	 * @param keyWord
 	 * @param category
@@ -186,9 +187,12 @@ public class FixUpTaskService {
 		category = (category == null || category.isEmpty()) ? "" : category;
 		warranty = (warranty == null || warranty.isEmpty()) ? "" : warranty;
 		minPrice = (minPrice == null) ? 0 : minPrice;
-		maxPrice = (maxPrice == null) ? 0 : maxPrice;
-		open = (Date) (open == null ? Date.UTC(2000, 0, 0, 0, 0, 0) : open);
-		close = (Date) (close == null ? Date.UTC(2200, 0, 0, 0, 0, 0) : close);
+		maxPrice = (maxPrice == null) ? 1000000 : maxPrice;
+
+		final Date d1 = new GregorianCalendar(2000, Calendar.JANUARY, 1).getTime();
+		final Date d2 = new GregorianCalendar(2200, Calendar.JANUARY, 1).getTime();
+		open = open == null ? d1 : open;
+		close = close == null ? d2 : close;
 
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.findByFilter(keyWord, category,
 			warranty, minPrice, maxPrice, open, close);

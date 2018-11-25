@@ -4,13 +4,17 @@ package services;
 import java.util.Random;
 
 import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TickerService {
 
+	@Autowired
 	private CurriculaService	curriculaService;
+	@Autowired
 	private FixUpTaskService	fixUpTaskService;
+	@Autowired
 	private ComplaintService	complaintService;
 
 
@@ -32,12 +36,12 @@ public class TickerService {
 
 		final String tickerBase = year + month + day;
 		String ticker = "";
-		Integer t = null;
+		Integer t = 1;
 		while (t != 0) {
-			t = 0;
 			final String s = this.randomAlphaNumeric();
 			ticker = tickerBase + "-" + s;
 
+			t = 0;
 			t += this.curriculaService.getNumberOfTickers(ticker);
 			t += this.fixUpTaskService.getNumberOfTickers(ticker);
 			t += this.complaintService.getNumberOfTickers(ticker);
@@ -62,9 +66,11 @@ public class TickerService {
 
 			int randomLimitedInt = 0;
 			if (random.nextFloat() < 0.5)
-				randomLimitedInt = leftNumberLimit + (int) (random.nextFloat() * (rightNumberLimit - leftNumberLimit + 1));
+				randomLimitedInt = leftNumberLimit
+					+ (int) (random.nextFloat() * (rightNumberLimit - leftNumberLimit + 1));
 			else
-				randomLimitedInt = leftCharLimit + (int) (random.nextFloat() * (rightCharLimit - leftCharLimit + 1));
+				randomLimitedInt = leftCharLimit
+					+ (int) (random.nextFloat() * (rightCharLimit - leftCharLimit + 1));
 
 			buffer.append((char) randomLimitedInt);
 		}
