@@ -13,7 +13,7 @@ import org.springframework.util.Assert;
 import security.LoginService;
 import security.UserAccount;
 import utilities.AbstractTest;
-import domain.Actor;
+import domain.Customer;
 
 // Indica que se tiene que ejecutar a través de Spring
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -35,10 +35,10 @@ public class ActorServiceTest extends AbstractTest {
 
 		final UserAccount userAccount = LoginService.getPrincipal();
 
-		final Actor a = this.actorService.findByUserAccountId(userAccount.getId());
+		final Customer c = (Customer) this.actorService.findByUserAccountId(userAccount.getId());
 
-		System.out.println(a);
-		Assert.isTrue(a != null);
+		System.out.println(c);
+		Assert.isTrue(c != null);
 
 		super.unauthenticate();
 

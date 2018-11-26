@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 
@@ -19,6 +20,7 @@ import utilities.AbstractTest;
 import domain.Actor;
 import domain.Customer;
 import domain.FixUpTask;
+import domain.Warranty;
 
 // Indica que se tiene que ejecutar a través de Spring
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -34,6 +36,8 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	private FixUpTaskService	fixUpTaskService;
 	@Autowired
 	private ActorService		actorService;
+	@Autowired
+	private WarrantyService		warrantyService;
 
 
 	@Test
@@ -45,6 +49,16 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		final Actor c = this.actorService.findByUserAccountId(userAccount.getId());
 		// TODO: Esto no peta y debería porque no tenemos los valores necesarios.
 		f.setCustomer((Customer) c);
+		super.unauthenticate();
+		super.authenticate("admin");
+		final Warranty w = this.warrantyService.create();
+		w.setDraft(false);
+		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
+		w.setTerms("Términos");
+		w.setTitle("La ley de la selva");
+		f.setWarranty(this.warrantyService.save(w));
+		super.unauthenticate();
+		super.authenticate("Customer1");
 		final FixUpTask f2 = this.fixUpTaskService.save(f);
 		final FixUpTask f3 = this.fixUpTaskService.findOne(f2.getId());
 		System.out.println("=============TEST SAVE AND FIND=================");
@@ -52,7 +66,6 @@ public class FixUpTaskServiceTest extends AbstractTest {
 
 		Assert.isTrue(f3 != null);
 		super.unauthenticate();
-
 	}
 	@Test
 	public void saveAndFindOneBad() {
@@ -74,6 +87,32 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	}
 
 	@Test
+	public void saveAndFindOneBad2() {
+		final FixUpTask f = this.fixUpTaskService.create();
+
+		super.authenticate("Customer1");
+		final UserAccount userAccount = LoginService.getPrincipal();
+		final Actor c = this.actorService.findByUserAccountId(userAccount.getId());
+		// TODO: Esto no peta y debería porque no tenemos los valores necesarios.
+		f.setCustomer((Customer) c);
+		super.unauthenticate();
+		super.authenticate("admin");
+		final Warranty w = this.warrantyService.create();
+		w.setDraft(true);
+		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
+		w.setTerms("Términos");
+		w.setTitle("La ley de la selva");
+		f.setWarranty(w);
+		try {
+			super.unauthenticate();
+			super.authenticate("Customer1");
+			this.fixUpTaskService.save(f);
+		} catch (final Exception e) {
+		}
+		super.unauthenticate();
+	}
+
+	@Test
 	public void deleteGood1() {
 		final FixUpTask f = this.fixUpTaskService.create();
 
@@ -81,6 +120,18 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		final UserAccount userAccount = LoginService.getPrincipal();
 		final Actor c = this.actorService.findByUserAccountId(userAccount.getId());
 		f.setCustomer((Customer) c);
+		super.unauthenticate();
+
+		super.authenticate("admin");
+		final Warranty w = this.warrantyService.create();
+		w.setDraft(false);
+		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
+		w.setTerms("Términos");
+		w.setTitle("La ley de la selva");
+		f.setWarranty(this.warrantyService.save(w));
+		super.unauthenticate();
+
+		super.authenticate("Customer1");
 		final FixUpTask f2 = this.fixUpTaskService.save(f);
 		this.fixUpTaskService.delete(f2);
 
@@ -89,7 +140,6 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		super.unauthenticate();
 
 	}
-
 	@Test
 	public void deleteGood2() {
 		final FixUpTask f = this.fixUpTaskService.create();
@@ -98,14 +148,24 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		final UserAccount userAccount = LoginService.getPrincipal();
 		final Actor c = this.actorService.findByUserAccountId(userAccount.getId());
 		f.setCustomer((Customer) c);
+		super.unauthenticate();
+		super.authenticate("admin");
+		final Warranty w = this.warrantyService.create();
+		w.setDraft(false);
+		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
+		w.setTerms("Términos");
+		w.setTitle("La ley de la selva");
+		f.setWarranty(this.warrantyService.save(w));
+		super.unauthenticate();
+		super.authenticate("Customer1");
 		final FixUpTask f2 = this.fixUpTaskService.save(f);
+
 		this.fixUpTaskService.delete(f2.getId());
 
 		final FixUpTask f3 = this.fixUpTaskService.findOne(f2.getId());
 		super.unauthenticate();
 		Assert.isTrue(f3 == null);
 	}
-
 	@Test
 	public void deleteBad() {
 		final FixUpTask f = this.fixUpTaskService.create();
