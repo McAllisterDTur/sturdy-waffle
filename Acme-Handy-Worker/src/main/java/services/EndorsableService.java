@@ -46,17 +46,6 @@ public class EndorsableService {
 	}
 
 	public Endorsable save(final Endorsable end) {
-		//		final Actor a = this.actService.create();
-		//		a.setAccount(end.getAccount());
-		//		a.setAddress(end.getAddress());
-		//		a.setBanned(end.getBanned());
-		//		a.setEmail(end.getEmail());
-		//		a.setMiddleName(end.getMiddleName());
-		//		a.setName(end.getName());
-		//		a.setPhone(end.getPhone());
-		//		a.setPhotoURL(end.getPhotoURL());
-		//		a.setSurname(end.getSurname());
-		//		actService.save(a);
 		return this.endRepository.save(end);
 	}
 
@@ -91,7 +80,8 @@ public class EndorsableService {
 		final Collection<String> pWs = conf.getPositiveWords();
 		final Collection<String> nWs = conf.getNegativeWords();
 
-		final Integer p, n;
+		final Integer p = 0;
+		final Integer n = 0;
 		for (final String s : pWs) {
 			//TODO: necesito el endorsement service
 		}
