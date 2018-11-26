@@ -19,6 +19,7 @@ import utilities.AbstractTest;
 import domain.Actor;
 import domain.Customer;
 import domain.FixUpTask;
+import domain.HandyWorker;
 
 // Indica que se tiene que ejecutar a través de Spring
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -43,13 +44,20 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		super.authenticate("Customer1");
 		final UserAccount userAccount = LoginService.getPrincipal();
 		final Actor c = this.actorService.findByUserAccountId(userAccount.getId());
+		// TODO: Esto no peta y debería porque no tenemos los valores necesarios.
 		f.setCustomer((Customer) c);
 		final FixUpTask f2 = this.fixUpTaskService.save(f);
 		final FixUpTask f3 = this.fixUpTaskService.findOne(f2.getId());
+		System.out.println("=============TEST SAVE AND FIND=================");
+		System.out.println(f3.getId());
 
 		Assert.isTrue(f3 != null);
 		super.unauthenticate();
-
+		super.authenticate("handy1");
+		final HandyWorker customer = (HandyWorker) this.actorService
+			.findByUserAccountId(LoginService.getPrincipal().getId());
+		System.out.println("===============TEST getHandyByAcoount (Ckeching make)==============");
+		System.out.println(customer.getMake());
 	}
 	@Test
 	public void saveAndFindOneBad() {
@@ -190,7 +198,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 			null, null, new GregorianCalendar(2018, 2, 11, 19, 0, 0).getTime(),
 			new GregorianCalendar(2018, 2, 11, 20, 0, 0).getTime());
 		for (final FixUpTask a : f) {
-			System.out.println("==========FIX UP TASK===========");
+			System.out.println("==========FIX UP TASK Test 0===========");
 			System.out.println("Ticker: " + a.getTicker());
 			System.out.println("Descripción: " + a.getDescription());
 			System.out.println("Dirección: " + a.getAddress());
@@ -208,7 +216,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		final Collection<FixUpTask> f = this.fixUpTaskService.findByFilter("niño", null, null,
 			null, null, null, null);
 		for (final FixUpTask a : f) {
-			System.out.println("==========FIX UP TASK===========");
+			System.out.println("==========FIX UP TASK Test 1===========");
 			System.out.println("Ticker: " + a.getTicker());
 			System.out.println("Descripción: " + a.getDescription());
 			System.out.println("Dirección: " + a.getAddress());
