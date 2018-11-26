@@ -27,10 +27,9 @@ public class FixUpTaskService {
 
 
 	/**
-	 * Checks customer authority (Req 10.1)
+	 * Creates a new fix up task(Req 10.1)
 	 * 
-	 * @param fixUpTask
-	 * @return a new fix up task
+	 * @return a new empty fix up task
 	 */
 	public FixUpTask create() {
 		final FixUpTask res = new FixUpTask();
@@ -38,7 +37,7 @@ public class FixUpTaskService {
 	}
 
 	/**
-	 * Checks customer authority. (Req 10.1)
+	 * Checks customer authority. Saves or updates a fix up task(Req 10.1)
 	 * 
 	 * @param fixUpTask
 	 * @return the fix up task saved in the database
@@ -50,7 +49,9 @@ public class FixUpTaskService {
 		final Authority au = new Authority();
 		au.setAuthority(Authority.CUSTOMER);
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
 		final FixUpTask res;
+
 		if (fixUpTask.getId() != 0) {
 			final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTask.getId());
 			Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));

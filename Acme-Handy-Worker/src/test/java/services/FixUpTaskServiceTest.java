@@ -19,7 +19,6 @@ import utilities.AbstractTest;
 import domain.Actor;
 import domain.Customer;
 import domain.FixUpTask;
-import domain.HandyWorker;
 
 // Indica que se tiene que ejecutar a través de Spring
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -53,11 +52,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 
 		Assert.isTrue(f3 != null);
 		super.unauthenticate();
-		super.authenticate("handy1");
-		final HandyWorker customer = (HandyWorker) this.actorService
-			.findByUserAccountId(LoginService.getPrincipal().getId());
-		System.out.println("===============TEST getHandyByAcoount (Ckeching make)==============");
-		System.out.println(customer.getMake());
+
 	}
 	@Test
 	public void saveAndFindOneBad() {
