@@ -9,7 +9,116 @@
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
+	
+	<!-- Sponsors -->
+	
+	<bean id="Sponsor1" class="domain.Sponsor">
+		<property name="account" ref="userAccountSponsor1" />
+		<property name="name" value="Marta" />
+		<property name="middleName">
+			<null />
+		</property>
+		<property name="surname" value="Tejada" />
+		<property name="photoURL">
+			<null />
+		</property>
+		<property name="email" value="martiita@outlook.com" />
+		<property name="phone" value="663123459" />
+		<property name="address" value="Plaza de Cuba 38 (Sevilla)" />
+		<property name="banned" value="false" />
+	</bean>
+
+	<bean id="Sponsor2" class="domain.Sponsor">
+		<property name="account" ref="userAccountSponsor2" />
+		<property name="name" value="Martirio" />
+		<property name="middleName">
+			<null />
+		</property>
+		<property name="surname" value="Salto" />
+		<property name="photoURL">
+			<null />
+		</property>
+		<property name="email" value="martirioS@outlook.com" />
+		<property name="phone" value="663123459" />
+		<property name="address" value="Plaza de Cuba 38 (Sevilla)" />
+		<property name="banned" value="false" />
+	</bean>
+
+	<!-- Sponsorships -->
+
+	<bean id="Sponsorship1" class="domain.Sponsorship">
+		<property name="bannerURL" value="https://i.imgur.com/Ybhzgcj.jpg" />
+		<property name="targetPageLink"
+			value="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Talha.jpg/800px-Talha.jpg" />
+		<property name="creditCard" ref="CreditCard1" />
+		<property name="sponsor" ref="Sponsor1" />
+		<property name="tutorials" ref="Tutorial1" />
+	</bean>
+
+	<bean id="Sponsorship2" class="domain.Sponsorship">
+		<property name="bannerURL"
+			value="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Talha.jpg/800px-Talha.jpg" />
+		<property name="targetPageLink" value="https://i.imgur.com/Ybhzgcj.jpg" />
+		<property name="creditCard" ref="CreditCard1" />
+		<property name="sponsor" ref="Sponsor1" />
+		<property name="tutorials" ref="Tutorial2" />
+	</bean>
+
+	<bean id="Sponsorship3" class="domain.Sponsorship">
+		<property name="bannerURL" value="https://i.imgur.com/Ybhzgcj.jpg" />
+		<property name="targetPageLink" value="https://i.imgur.com/Ybhzgcj.jpg" />
+		<property name="creditCard" ref="CreditCard2" />
+		<property name="sponsor" ref="Sponsor2" />
+		<property name="tutorials" ref="Tutorial2" />
+	</bean>
+	<!-- Sections -->
+	<bean id="Section1" class="domain.Section">
+		<property name="number" value="1" />
+		<property name="title" value="Obtenemos los materiales" />
+		<property name="text" value="Obtenemos los matereriales, empezaremos con los elementos de la masa." />
+		<property name="photoURL">
+			<list>
+				<value>https://upload.wikimedia.org/wikipedia/commons/7/73/Museo_Chinchilla_Belmonte-Useros_Botijos.JPG
+				</value>
+			</list>
+		</property>
+		<property name="tutorial">
+				<ref bean="Tutorial1" />
+		  </property>
+	</bean>
+	
+		<bean id="Section2" class="domain.Section">
+		<property name="number" value="2" />
+		<property name="title" value="Preparamos los materiales" />
+		<property name="text" value="Una vez obtenidos los elementos para la masa, la haremos." />
+		<property name="photoURL">
+			<list>
+				<value>https://upload.wikimedia.org/wikipedia/commons/7/73/Museo_Chinchilla_Belmonte-Useros_Botijos.JPG
+				</value>
+			</list>
+		</property>
+		<property name="tutorial">
+				<ref bean="Tutorial1" />
+		  </property>
+	</bean>
+	
+		<bean id="Section3" class="domain.Section">
+		<property name="number" value="1" />
+		<property name="title" value="Obtenemos los materiales de esto tan popular" />
+		<property name="text" value="Obtenemos los matereriales, empezaremos con los elementos de la masa." />
+		<property name="photoURL">
+			<list>
+				<value>https://upload.wikimedia.org/wikipedia/commons/7/73/Museo_Chinchilla_Belmonte-Useros_Botijos.JPG
+				</value>
+			</list>
+		</property>
+		<property name="tutorial">
+				<ref bean="Tutorial2" />
+		  </property>
+	</bean>
+
 	<!-- Tutorials -->
+
 	<bean id="Tutorial1" class="domain.Tutorial">
 		<property name="lastTimeUpdated" value="11/11/2018 20:45" />
 		<property name="summary" value="Se enseñará a reparar botijos de barro" />
@@ -20,18 +129,21 @@
 				</value>
 			</list>
 		</property>
-		<property name="sections">
+		<property name="worker" ref="Worker1" />
+		<property name="sponsorships">
 			<list>
-				<null />
+				<ref bean="Sponsorship1" />
 			</list>
 		</property>
-		<property name="worker" ref="Worker3" />
-		<property name="sponsorship">
-			<null />
+		<property name="sections">
+			<list>
+				<ref bean="Section1" />
+				<ref bean="Section2" />
+			</list>
 		</property>
 	</bean>
 
-	<bean id="Tutorial3" class="domain.Tutorial">
+	<bean id="Tutorial2" class="domain.Tutorial">
 		<property name="lastTimeUpdated" value="11/13/2018 20:45" />
 		<property name="summary"
 			value="Se enseñará a reparar todo tipo de objetos de barro, viendo que se a puesto de moda" />
@@ -42,55 +154,21 @@
 				</value>
 			</list>
 		</property>
+		<property name="worker" ref="Worker3" />
+		<property name="sponsorships">
+			<list>
+				<ref bean="Sponsorship2" />
+				<ref bean="Sponsorship3" />
+			</list>
+		</property>
 		<property name="sections">
 			<list>
-				<null />
+				<ref bean="Section3" />
 			</list>
-		</property>
-		<property name="worker" ref="Worker3" />
-		<property name="sponsorship">
-			<null />
 		</property>
 	</bean>
 
-	<!-- Sections -->
-
-	<bean id="Section1" class="domain.Section">
-		<property name="number" value="1" />
-		<property name="title" value="Materiales" />
-		<property name="text" value="Veremos los materiales necesarios para la reparación" />
-		<property name="photoURL">
-			<list>
-				<null/>
-			</list>
-		</property>
-		<property name="tutorial" ref="Tutorial1" />
-	</bean>
 	
-	<bean id="Section2" class="domain.Section">
-		<property name="number" value="1" />
-		<property name="title" value="Materiales" />
-		<property name="text" value="Veremos los materiales necesarios para la reparación" />
-		<property name="photoURL">
-			<list>
-				<value>https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Talha.jpg/800px-Talha.jpg
-				</value>
-			</list>
-		</property>
-		<property name="tutorial" ref="Tutorial3" />
-	</bean>
-	
-	<bean id="Section3" class="domain.Section">
-		<property name="number" value="2" />
-		<property name="title" value="Preparación" />
-		<property name="text" value="Prepararemos los materiales para su uso" />
-		<property name="photoURL">
-			<list>
-				<null/>
-			</list>
-		</property>
-		<property name="tutorial" ref="Tutorial3" />
-	</bean>
 	<!-- User accounts -->
 
 	<bean id="userAccountAdmin1" class="security.UserAccount">
