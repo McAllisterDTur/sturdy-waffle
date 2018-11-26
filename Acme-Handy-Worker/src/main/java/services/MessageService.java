@@ -77,14 +77,15 @@ public class MessageService {
 		final Collection<Box> boxesMsg = msg.getBoxes();
 		final Box trash = this.bService.findByName(logged.getId(), "TRASH");
 		final Collection<Message> trashMsg = this.findByBox(trash);
-
-		//		for (final Box b : boxesDeletor) {
-		//			final Collection<Message> msgs = this.findByBox(b);
-		//			msgs.remove(msg);
-		//			b.setMessages(msgs);
-		//			this.bService.save(b);
-		//		}
-		boxesMsg.removeAll(boxesDeletor);
+		for (final Box b : boxesDeletor) {
+			final Collection<Message> msgs = this.findByBox(b);
+			if (msgs.contains(msg)) {
+				msgs.remove(msg);
+				b.setMessages(msgs);
+				this.bService.save(b);
+				boxesMsg.remove(msg);
+			}
+		}
 		boxesMsg.add(trash);
 		msg.setBoxes(boxesMsg);
 		trashMsg.add(msg);
@@ -99,9 +100,16 @@ public class MessageService {
 		final Actor logged = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.isTrue(msg.getSender().equals(logged) || msg.getReciever().equals(logged));
 		final Message tosupr = this.findOne(msg.getId());
-		for (final Box b : tosupr.getBoxes())
-			if (b.getOwner().equals(logged))
-				tosupr.getBoxes().remove(b);
+		final Box trash = this.bService.findByName(logged.getId(), "TRASH");
+		final Collection<Message> msgs = this.findByBox(trash);
+		final Collection<Box> boxesMsg = tosupr.getBoxes();
+		if (msgs.contains(tosupr)) {
+			msgs.remove(tosupr);
+			trash.setMessages(msgs);
+			this.bService.save(trash);
+			boxesMsg.remove(msg);
+			tosupr.setBoxes(boxesMsg);
+		}
 		final Message deleted = this.msgRepository.save(tosupr);
 		if (deleted.getBoxes().isEmpty())
 			this.msgRepository.delete(deleted);

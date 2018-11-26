@@ -87,8 +87,9 @@ public class MessageServiceTest extends AbstractTest {
 	public void testDelete() {
 		super.authenticate("Customer1");
 		final Message m = (Message) this.msgService.findAll().toArray()[0];
+		final Actor owner = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		this.msgService.delete(m);
-		final Box trashU = this.bService.findByName(LoginService.getPrincipal().getId(), "TRASH");
+		final Box trashU = this.bService.findByName(owner.getId(), "TRASH");
 		Assert.isTrue(this.msgService.findByBox(trashU).contains(m));
 	}
 

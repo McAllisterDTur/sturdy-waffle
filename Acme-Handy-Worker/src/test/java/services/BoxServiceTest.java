@@ -137,7 +137,7 @@ public class BoxServiceTest extends AbstractTest {
 
 	public void testFindByName() {
 		//First, we log as a customer (for example)
-		super.authenticate("Customer2");
+		super.authenticate("Customer1");
 		//We get the actor that is logged with that user
 		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		//Now we create a box
@@ -149,7 +149,7 @@ public class BoxServiceTest extends AbstractTest {
 		//And now we save it
 		final Box saved = this.boxService.save(n);
 		//Is it associated with the user?
-		Assert.isTrue(this.boxService.findByName(owner.getId(), n.getName()).equals(saved));
+		Assert.notNull(this.boxService.findByName(owner.getId(), "TRASH"));
 	}
 
 }
