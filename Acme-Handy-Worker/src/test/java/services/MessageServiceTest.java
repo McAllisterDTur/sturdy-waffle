@@ -96,12 +96,24 @@ public class MessageServiceTest extends AbstractTest {
 	@Test
 	public void testDeleteFromTrash() {
 		super.authenticate("Customer1");
-		final Message dlt = (Message) this.msgService.findAll().toArray()[0];
-		this.msgService.delete(dlt);
-		this.msgService.deleteFromTrash(dlt);
-		Assert.isTrue(!this.msgService.findAll().contains(dlt));
+		final Actor owner = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final Message m = this.msgService.create();
+		final Box trash = this.bService.findByName(owner.getId(), "TRASH");
+		final Collection<Box> bxs = new ArrayList<>();
+		bxs.add(trash);
+		m.setBody("Test");
+		m.setPriority("NEUTRAL");
+		m.setSubject("Test");
+		m.setBoxes(bxs);
+		final Message ms = this.msgService.save(m);
+		final Collection<Message> newMsg = this.msgService.findByBox(trash);
+		newMsg.add(ms);
+		trash.setMessages(newMsg);
+		this.bService.save(trash);
+		this.msgService.deleteFromTrash(ms);
+		final Box trashU = this.bService.findByName(owner.getId(), "TRASH");
+		Assert.isTrue(!trashU.getMessages().contains(ms));
 	}
-
 	@Test
 	public void testSend() {
 		final Message m = this.msgService.create();
