@@ -303,7 +303,7 @@
 				<value>fantastic</value>
 				<value>excellent</value>
 				<value>great</value>
-				<value>amaz-ing</value>
+				<value>amazing</value>
 				<value>terrific</value>
 				<value>beautiful</value>
 				<value>bien</value>
@@ -1801,5 +1801,28 @@
 				<ref bean="Section3" />
 			</list>
 		</property>
+	</bean>
+	
+	<!-- Endorsement -->
+	
+	<bean id="Endorsment1" class="domain.Endorsement">
+		<property name="sender" ref="Customer4"/>
+		<property name="reciever" ref="Worker2"/>
+		<property name="writeTime" value="05/12/2018 18:45"/>
+		<property name="comment" value="No arregló nada. Pesimo, no lo recomiendo. Lo ensució todo y no limpió después." />
+	</bean>
+	
+	<bean id="Endorsment2" class="domain.Endorsement">
+		<property name="sender" ref="Worker2"/>
+		<property name="reciever" ref="Customer4"/>
+		<property name="writeTime" value="04/06/2018 11:00"/>
+		<property name="comment" value="Señora muy amable la de este señor. Siempre muy atenta." />
+	</bean>
+	
+	<bean id="Endorsment3" class="domain.Endorsement">
+		<property name="sender" ref="Customer1"/>
+		<property name="reciever" ref="Worker2"/>
+		<property name="writeTime" value="11/25/2018 05:00"/>
+		<property name="comment" value="Vino, trabajó, cobró y se fué. Ok." />
 	</bean>
 </beans>

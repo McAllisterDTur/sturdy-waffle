@@ -101,23 +101,4 @@ public class RefereeServiceTest extends AbstractTest {
 		final Referee updtd = this.refService.update(toUpd);
 		Assert.isTrue(this.refService.findOne(updtd.getId()).getEmail().equals(toUpd.getEmail()));
 	}
-
-	@Test
-	public void testBan() {
-		super.authenticate("admin");
-		final Referee r = (Referee) this.refService.findAll().toArray()[0];
-		this.refService.ban(r);
-		final Referee rs = this.refService.save(r);
-		Assert.isTrue(this.refService.findOne(rs.getId()).getBanned());
-	}
-	@Test
-	public void testUnBan() {
-		super.authenticate("admin");
-		final Referee r = (Referee) this.refService.findAll().toArray()[0];
-		this.refService.ban(r);
-		final Referee rs = this.refService.save(r);
-		this.refService.unban(rs);
-		final Referee rsu = this.refService.save(rs);
-		Assert.isTrue(!this.refService.findOne(rsu.getId()).getBanned());
-	}
 }
