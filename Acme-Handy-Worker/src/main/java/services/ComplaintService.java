@@ -31,7 +31,12 @@ public class ComplaintService {
 	}
 
 	//====== CUSTOMER
-
+	/**
+	 * Checks customer authority. Saves a complaint. Complaints can't be updated. (Req 35.1)
+	 * 
+	 * @param complaint
+	 * @return the complaint saved in the database
+	 */
 	public Complaint save(final Complaint complaint) {
 		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.CUSTOMER);
 		Assert.isTrue(hasAu);
@@ -41,7 +46,11 @@ public class ComplaintService {
 
 		return this.complaintRepository.save(complaint);
 	}
-
+	/**
+	 * Checks customer authority (Req 35.1)
+	 * 
+	 * @return Collection of the complaints related to the logged customer
+	 */
 	public Collection<Complaint> findFromLoggedCustomer() {
 		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.CUSTOMER);
 		Assert.isTrue(hasAu);
@@ -53,4 +62,5 @@ public class ComplaintService {
 	public int getNumberOfTickers(final String ticker) {
 		return this.complaintRepository.getNumberOfTickers(ticker);
 	}
+
 }

@@ -1,7 +1,6 @@
 
 package domain;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -14,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,7 +37,7 @@ public class Complaint extends DomainEntity {
 
 	@Column(unique = true)
 	@NotBlank
-	//@Pattern(regexp = "^(\\d{2})(\\d{2})(\\d{2})\\-([1-9a-zA-Z]{6})$")
+	@Pattern(regexp = "^(\\d{2})(\\d{2})(\\d{2})\\-([1-9a-zA-Z]{6})$")
 	public String getTicker() {
 		return this.ticker;
 	}
@@ -48,9 +48,10 @@ public class Complaint extends DomainEntity {
 
 	@NotNull
 	//@Past
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	public Date getComplaintTime() {
+		@Temporal(TemporalType.DATE)
+		@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+		public
+		Date getComplaintTime() {
 		return this.complaintTime;
 	}
 
@@ -69,11 +70,11 @@ public class Complaint extends DomainEntity {
 
 	@ElementCollection
 	public Collection<String> getAttachments() {
-		return new ArrayList<String>(this.attachments);
+		return this.attachments;
 	}
 
 	public void setAttachments(final Collection<String> attachments) {
-		this.attachments = new ArrayList<String>(attachments);
+		this.attachments = attachments;
 	}
 	@NotNull
 	public Boolean getIsFinal() {
@@ -95,7 +96,9 @@ public class Complaint extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "Complaint [ticker=" + this.ticker + ", complaintTime=" + this.complaintTime + ", description=" + this.description + ", attachments=" + this.attachments + ", isFinal=" + this.isFinal + ", fixUpTask=" + this.fixUpTask + "]";
+		return "Complaint [ticker=" + this.ticker + ", complaintTime=" + this.complaintTime
+			+ ", description=" + this.description + ", attachments=" + this.attachments
+			+ ", isFinal=" + this.isFinal + ", fixUpTask=" + this.fixUpTask + "]";
 	}
 
 }
