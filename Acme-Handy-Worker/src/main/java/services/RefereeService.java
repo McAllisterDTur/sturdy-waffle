@@ -10,7 +10,6 @@ import org.springframework.util.Assert;
 
 import repositories.RefereeRepository;
 import security.Authority;
-import security.LoginService;
 import utilities.AuthenticationUtility;
 import domain.Referee;
 
@@ -38,20 +37,6 @@ public class RefereeService {
 
 	public Referee save(final Referee ref) {
 		return this.refRepository.save(ref);
-	}
-
-	public Referee update(final Referee ref) {
-		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN) || ref.getAccount().equals(LoginService.getPrincipal()));
-		final Referee toUpd = this.refRepository.findOne(ref.getId());
-		toUpd.setAddress(ref.getAddress());
-		toUpd.setBanned(ref.getBanned());
-		toUpd.setEmail(ref.getEmail());
-		toUpd.setMiddleName(ref.getMiddleName());
-		toUpd.setName(ref.getName());
-		toUpd.setPhone(ref.getPhone());
-		toUpd.setPhotoURL(ref.getPhotoURL());
-		toUpd.setSurname(ref.getSurname());
-		return this.refRepository.save(toUpd);
 	}
 
 	public void ban(final Referee ref) {
