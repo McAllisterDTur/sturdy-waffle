@@ -21,23 +21,22 @@ public class MessageService {
 
 	//The repository that we are managing
 	@Autowired
-	MessageRepository	msgRepository;
+	MessageRepository		msgRepository;
 
 	//Auxiliary repositories
 	@Autowired
-	ActorService		aService;
+	ActorService			aService;
 	@Autowired
-	BoxService			bService;
+	BoxService				bService;
+	@Autowired
+	ConfigurationService	cService;
+	@Autowired
+	SpamService				sService;
 
 
 	//CRUDs
 	public Message create() {
 		return new Message();
-	}
-
-	public Message save(final Message msg) {
-		msg.setSender(this.aService.findByUserAccountId(LoginService.getPrincipal().getId()));
-		return this.msgRepository.save(msg);
 	}
 
 	public Collection<Message> findAll() {
@@ -55,19 +54,6 @@ public class MessageService {
 		final Actor logged = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.isTrue(res.getSender().equals(logged) || res.getReciever().equals(logged));
 		return res;
-	}
-
-	public Message update(final Message msg) {
-		final Actor logged = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
-		Assert.isTrue(msg.getSender().equals(logged));
-		final Message toupd = this.findOne(msg.getId());
-		toupd.setBody(msg.getBody());
-		toupd.setBoxes(msg.getBoxes());
-		toupd.setPriority(msg.getPriority());
-		toupd.setSubject(msg.getSubject());
-		toupd.setTags(msg.getTags());
-
-		return this.msgRepository.save(toupd);
 	}
 
 	public void delete(final Message msg) {
@@ -132,17 +118,21 @@ public class MessageService {
 		in.setMessages(inMsg);
 		this.bService.save(in);
 
-		final Box out = this.bService.findByName(sender.getId(), "OUT");
-		Collection<Message> outMsg = out.getMessages();
+		final Boolean spam = this.sService.isSpam(msg.getSender(), msg.getBody());
+		Box send;
+		if (spam)
+			send = this.bService.findByName(sender.getId(), "SPAM");
+		else
+			send = this.bService.findByName(sender.getId(), "OUT");
+		Collection<Message> outMsg = send.getMessages();
 		if (outMsg == null)
 			outMsg = new ArrayList<>();
 		outMsg.add(saved);
-		out.setMessages(outMsg);
-		this.bService.save(out);
+		send.setMessages(outMsg);
+		this.bService.save(send);
 
 		return saved;
 	}
-
 	public Collection<Message> findByBox(final Box b) {
 		try {
 			return this.msgRepository.findByBox(b.getId());

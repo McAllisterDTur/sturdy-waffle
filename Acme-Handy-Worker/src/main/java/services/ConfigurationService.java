@@ -54,7 +54,6 @@ public class ConfigurationService {
 		final Authority a = new Authority();
 		a.setAuthority(Authority.ADMIN);
 		System.out.println(userAccount.getAuthorities().contains(a));
-		Assert.isTrue(userAccount.getAuthorities().contains(a));
 		final Collection<Configuration> result = this.configurationRepository.findAll();
 		return result;
 	}

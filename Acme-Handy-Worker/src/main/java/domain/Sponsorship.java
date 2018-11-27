@@ -19,7 +19,19 @@ public class Sponsorship extends DomainEntity {
 	private String		targetPageLink;
 	private CreditCard	creditCard;
 	private Sponsor		sponsor;
+	private Tutorial	tutorials;
 
+
+	@Valid
+	@NotNull
+	@ManyToOne(optional = false)
+	public Tutorial getTutorials() {
+		return this.tutorials;
+	}
+
+	public void setTutorials(final Tutorial tutorials) {
+		this.tutorials = tutorials;
+	}
 
 	@NotBlank
 	@URL

@@ -106,4 +106,16 @@ public class ActorService {
 
 		return this.actorRepository.findByUserAccountId(accountId);
 	}
+	//B
+	public void ban(final Actor end) {
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
+		end.setBanned(true);
+		this.actorRepository.save(end);
+	}
+	//B
+	public void unban(final Actor end) {
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
+		end.setBanned(false);
+		this.actorRepository.save(end);
+	}
 }

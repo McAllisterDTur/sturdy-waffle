@@ -137,9 +137,9 @@ public class FixUpTask extends DomainEntity {
 		this.creditCard = creditCard;
 	}
 
-	@NotNull
+	//@NotNull
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	public Category getCategory() {
 		return this.category;
 	}

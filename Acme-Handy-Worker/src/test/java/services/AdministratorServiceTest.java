@@ -114,18 +114,4 @@ public class AdministratorServiceTest extends AbstractTest {
 		Assert.notNull(this.administratorService.findOne(saved.getId()));
 	}
 
-	@Test
-	public void testUpdate() {
-		//Let's take an arbitrary administrator
-		final Administrator test = (Administrator) this.administratorService.findAll().toArray()[0];
-		//Now let's update, say, it's name
-		test.setName("Updated");
-		//And let's update it
-		this.administratorService.update(test);
-		//Did it work?
-		////We take the admin with the id of test
-		final Administrator updated = this.administratorService.findOne(test.getId());
-		////And we assert
-		Assert.isTrue(test.getName().equals(updated.getName()));
-	}
 }

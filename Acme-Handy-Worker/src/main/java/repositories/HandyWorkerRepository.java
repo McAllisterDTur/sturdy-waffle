@@ -1,8 +1,7 @@
+
 package repositories;
 
 import java.util.Collection;
-
-import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,13 +10,14 @@ import org.springframework.stereotype.Repository;
 import domain.HandyWorker;
 
 @Repository
-@Transactional
 public interface HandyWorkerRepository extends JpaRepository<HandyWorker, Integer> {
+
+	//TODO
 	// Queries
 
-	// Lista de los handy-workers que tienen al menos un 10% más de aplicaciones
+	// Lista de los handy-workers que tienen al menos un 10% mï¿½s de aplicaciones
 	// aceptadas que la media
-	@Query("SELECT W FROM HANDYWORKER W WHERE (SELECT COUNT(P) FROM W.APPLICATION P WHERE P.ID_HANDYWORKER = W.ID_HANDYWORKER AND P.STATUS = 'ACCEPTED') >= "
-			+ "SELECT ((SELECT COUNT(A) FROM HANDYWORKER Y JOIN Y.APPLICATION A WHERE A.STATUS='ACCEPTED')/(SELECT COUNT(H) FROM HANDYWORKER H))")
+	@Query("select avg(a.offeredPrice),  min(a.offeredPrice), max(a.offeredPrice), sqrt(sum(a.offeredPrice * a.offeredPrice) / count(a) - avg(a.offeredPrice) * avg(a.offeredPrice)) from Application a")
 	Collection<HandyWorker> findHandyWorkerMoreAverage();
+
 }
