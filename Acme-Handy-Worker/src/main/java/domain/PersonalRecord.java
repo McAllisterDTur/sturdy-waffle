@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -17,15 +18,16 @@ import org.hibernate.validator.constraints.URL;
 @Access(AccessType.PROPERTY)
 public class PersonalRecord extends DomainEntity {
 
-	private String fullName;
-	private String photo;
-	private String email;
-	private String phoneNumber;
-	private String linkedInURL;
-	private Collection<String> comments;
+	private String				fullName;
+	private String				photo;
+	private String				email;
+	private String				phoneNumber;
+	private String				linkedInURL;
+	private Collection<String>	comments;
 
 	// +
-	private Curricula curricula;
+	private Curricula			curricula;
+
 
 	@NotBlank
 	public String getFullName() {
@@ -84,7 +86,7 @@ public class PersonalRecord extends DomainEntity {
 		this.comments = comments;
 	}
 
-	@OneToOne(optional=false)
+	@OneToOne(optional = false)
 	public Curricula getCurricula() {
 		return this.curricula;
 	}
@@ -95,10 +97,7 @@ public class PersonalRecord extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "PersonalRecord [fullName=" + this.fullName + ", photo="
-				+ this.photo + ", email=" + this.email + ", phoneNumber="
-				+ this.phoneNumber + ", linkedInURL=" + this.linkedInURL
-				+ ", comments=" + this.comments + "]";
+		return "PersonalRecord [fullName=" + this.fullName + ", photo=" + this.photo + ", email=" + this.email + ", phoneNumber=" + this.phoneNumber + ", linkedInURL=" + this.linkedInURL + ", comments=" + this.comments + "]";
 	}
 
 }

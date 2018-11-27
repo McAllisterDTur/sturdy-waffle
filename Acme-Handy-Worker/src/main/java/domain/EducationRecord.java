@@ -23,13 +23,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class EducationRecord extends DomainEntity {
 
 	//Atributes
-	private String			diplomaTitle;
-	private String			institution;
-	private Date			start;
-	private Date			end;
-	private String attachmentURL;
+	private String				diplomaTitle;
+	private String				institution;
+	private Date				start;
+	private Date				end;
+	private String				attachmentURL;
 	private Collection<String>	comments;
-	private Curricula		curricula;
+	private Curricula			curricula;
+
 
 	@ElementCollection
 	public Collection<String> getComments() {
@@ -90,20 +91,19 @@ public class EducationRecord extends DomainEntity {
 	}
 
 	@NotNull
-	@ManyToOne(optional=true)
+	@ManyToOne(optional = true)
 	public Curricula getCurricula() {
-		return curricula;
+		return this.curricula;
 	}
 
-	public void setCurricula(Curricula curricula) {
+	public void setCurricula(final Curricula curricula) {
 		this.curricula = curricula;
 	}
 
 	@Override
 	public String toString() {
-		return "EducationRecord [diplomaTitle=" + diplomaTitle + ", institution=" + institution + ", start=" + start
-				+ ", end=" + end + ", attachmentURL=" + attachmentURL + ", comments=" + comments + ", curricula="
-				+ curricula + "]";
+		return "EducationRecord [diplomaTitle=" + this.diplomaTitle + ", institution=" + this.institution + ", start=" + this.start + ", end=" + this.end + ", attachmentURL=" + this.attachmentURL + ", comments=" + this.comments + ", curricula="
+			+ this.curricula + "]";
 	}
 
 }

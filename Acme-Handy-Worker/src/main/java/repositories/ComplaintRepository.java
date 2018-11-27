@@ -9,7 +9,7 @@ import domain.Complaint;
 
 @Repository
 public interface ComplaintRepository extends JpaRepository<Complaint, Integer> {
-	@Query("select c from Complaint c where c.ticker = ?1")
-	public int getNumberOfTickers(String ticker);
 
+	@Query("select count(c) from Complaint c where c.ticker = ?1")
+	public int getNumberOfTickers(String ticker);
 }

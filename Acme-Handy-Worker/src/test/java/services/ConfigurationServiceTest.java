@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -45,7 +46,7 @@ public class ConfigurationServiceTest extends AbstractTest {
 		} catch (final Exception e) {
 			ac = null;
 		}
-		Assert.isTrue(!(a.equals(ac)));
+		Assert.isNull(!(a.equals(ac)));
 		super.unauthenticate();
 	}
 
@@ -58,13 +59,22 @@ public class ConfigurationServiceTest extends AbstractTest {
 		a.setWelcomeEN("haha");
 		a.setWelcomeSP("jaja");
 		a.setFinderResults(10);
+		a.setVat(0.2);
+		a.setFinderResults(10);
+		final Collection<String> cardMaker = new ArrayList<>();
+		final Collection<String> negativeWords = new ArrayList<>();
+		final Collection<String> positiveWords = new ArrayList<>();
+		final Collection<String> spamWords = new ArrayList<>();
+		a.setCardMaker(cardMaker);
+		a.setNegativeWords(negativeWords);
+		a.setPositiveWords(positiveWords);
+		a.setSpamWords(spamWords);
 		final Configuration ac = this.configurationService.save(a);
 		a.setId(ac.getId());
 		a.setVersion(ac.getVersion());
 		Assert.isTrue(a.equals(ac));
 		super.unauthenticate();
 	}
-
 	@Test
 	public void SavebBadTest() {
 		super.authenticate("Customer1");

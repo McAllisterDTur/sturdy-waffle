@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -16,11 +17,12 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Section extends DomainEntity {
 
 	// Atributes
-	private int number;
-	private String title;
-	private String text;
-	private Collection<String> photoURL;
-	private Tutorial tutorial;
+	private int					number;
+	private String				title;
+	private String				text;
+	private Collection<String>	photoURL;
+	private Tutorial			tutorial;
+
 
 	@NotBlank
 	public int getNumber() {
@@ -59,20 +61,18 @@ public class Section extends DomainEntity {
 	}
 
 	@NotNull
-	@ManyToOne(optional=false)
+	@ManyToOne(optional = false)
 	public Tutorial getTutorial() {
-		return tutorial;
+		return this.tutorial;
 	}
 
-	public void setTutorial(Tutorial tutorial) {
+	public void setTutorial(final Tutorial tutorial) {
 		this.tutorial = tutorial;
 	}
 
 	@Override
 	public String toString() {
-		return "Section [number=" + number + ", title=" + title + ", text="
-				+ text + ", photoURL=" + photoURL + ", tutorial=" + tutorial
-				+ "]";
+		return "Section [number=" + this.number + ", title=" + this.title + ", text=" + this.text + ", photoURL=" + this.photoURL + ", tutorial=" + this.tutorial + "]";
 	}
 
 }

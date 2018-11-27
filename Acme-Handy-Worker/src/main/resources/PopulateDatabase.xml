@@ -276,70 +276,7 @@
 			</list>
 		</property>
 	</bean>
-	<!-- Configuration -->
-	<bean id="configuration" class="domain.Configuration">
-		<property name="cacheTime" value="1" />
-		<property name="vat" value="21" />
-		<property name="bannerURL" value="https://tinyurl.com/acme-handy-worker-logo" />
-		<property name="welcomeSP" value="¡Bienvenidos a Acme Handy Worker! Precio, calidad y confianza en el mismo sitio" />
-		<property name="welcomeEN" value="Welcome to Acme Handy Worker! Price, quality, and trust in a single place" />
-		<property name="spamWords">
-			<list>
-				<value>sex</value>
-				<value>viagra</value>
-				<value>cialis</value>
-				<value>one million</value>
-				<value>you’ve been selected</value>
-				<value>Nigeria</value>
-				<value>sexo</value>
-				<value>un millón</value>
-				<value>ha sido seleccionado</value>
-			</list>
-		</property>
-		<property name="countryCode" value="+34" />
-		<property name="positiveWords">
-			<list>
-				<value>good</value>
-				<value>fantastic</value>
-				<value>excellent</value>
-				<value>great</value>
-				<value>amaz-ing</value>
-				<value>terrific</value>
-				<value>beautiful</value>
-				<value>bien</value>
-				<value>fantastico</value>
-				<value>excelente</value>
-				<value>grandioso</value>
-				<value>increible</value>
-				<value>estupendo</value>
-				<value>bonito</value>
-			</list>
-		</property>
-		<property name="negativeWords">
-			<list>
-				<value>not</value>
-				<value>bad</value>
-				<value>horrible</value>
-				<value>average</value>
-				<value>disaster</value>
-				<value>no</value>
-				<value>mal</value>
-				<value>horrible</value>
-				<value>promedio</value>
-				<value>desastre</value>
-			</list>
-		</property>
-		<property name="finderResults" value="10" />
-		<property name="cardMaker">
-			<list>
-				<value>VISA</value>
-				<value>MASTER</value>
-				<value>DINNERS</value>
-				<value>AMEX</value>
-			</list>
-		</property>
-	</bean>
-	
+
 	<!-- Social profiles -->
 	<bean id="SocialProfile1" class="domain.SocialProfile">
 		<property name="nick" value="McAllisterDTur" />
@@ -1484,6 +1421,140 @@
 			<list>
 				<ref bean="Note3"/>
 				<ref bean="Note4"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Box -->
+	<bean id="Box1" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer1" />
+		<property name="messages">
+			<list>
+				<ref bean="Msg3"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Box2" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer1" />
+		<property name="messages">
+			<list>
+				<ref bean="Msg1"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Box3" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer1" />
+		<property name="messages">
+			<list>
+				<ref bean="Msg2"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Box4" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer1" />
+		<property name="messages">
+			<list>
+				<ref bean="Msg4"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Box5" class="domain.Box">
+		<property name="name" value="TRIPS" />
+		<property name="deleteable" value="true" />
+		<property name="owner" ref="Customer1" />
+		<property name="messages">
+			<list>
+				<ref bean="Msg3"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Messages -->
+	<bean id="Msg1" class="domain.Message">
+		<property name="sender" ref="Customer1" />
+		<property name="reciever" ref="Customer2" />
+		<property name="sendTime" value="11/24/2018 21:45"/>
+		<property name="subject" value="Msg1"/>
+		<property name="body" value="Hi"/>
+		<property name="tags">
+			<list>
+				<value>Greetings</value>
+			</list>
+		</property>
+		<property name="priority" value="NEUTRAL"/>
+		<property name="boxes">
+			<list>
+				<ref bean="Box2"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Msg2" class="domain.Message">
+		<property name="sender" ref="Worker6" />
+		<property name="reciever" ref="Customer1" />
+		<property name="sendTime" value="11/24/2018 21:45"/>
+		<property name="subject" value="Nigerian prince"/>
+		<property name="body" value="I am Dr. Bakare Tunde, the cousin of Nigerian Astronaut, Air Force Major Abacha Tunde." />
+		<property name="tags">
+			<list>
+				<null/>
+			</list>
+		</property>
+		<property name="priority" value="LOW"/>
+		<property name="boxes">
+			<list>
+				<ref bean="Box3"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Msg3" class="domain.Message">
+		<property name="sender" ref="Admin1" />
+		<property name="reciever" ref="Customer1" />
+		<property name="sendTime" value="11/24/2018 21:45"/>
+		<property name="subject" value="Msg3"/>
+		<property name="body" value="You have won a trip to our HQ"/>
+		<property name="tags">
+			<list>
+				<value>Administration</value>
+			</list>
+		</property>
+		<property name="priority" value="HIGH"/>
+		<property name="boxes">
+			<list>
+				<ref bean="Box1"/>
+				<ref bean="Box5"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Msg4" class="domain.Message">
+		<property name="sender" ref="Worker2" />
+		<property name="reciever" ref="Customer1" />
+		<property name="sendTime" value="11/24/2018 21:45"/>
+		<property name="subject" value="Msg4"/>
+		<property name="body" value="I hate you"/>
+		<property name="tags">
+			<list>
+				<null/>
+			</list>
+		</property>
+		<property name="priority" value="NEUTRAL"/>
+		<property name="boxes">
+			<list>
+				<ref bean="Box4"/>
 			</list>
 		</property>
 	</bean>
