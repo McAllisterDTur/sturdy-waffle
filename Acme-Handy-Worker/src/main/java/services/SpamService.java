@@ -27,7 +27,10 @@ public class SpamService {
 		final Configuration c = (Configuration) this.cService.findAll().toArray()[0];
 		final Collection<String> spamWords = c.getSpamWords();
 		final Collection<String> sWords = new ArrayList<>(Arrays.asList(s.toLowerCase().split(" ")));
-		final Boolean spam = sWords.removeAll(spamWords);
+		final Integer originalWords = sWords.size();
+		sWords.removeAll(spamWords);
+		final Integer finalWords = sWords.size();
+		final Boolean spam = !(originalWords == finalWords);
 		a.setIsSuspicious(spam);
 		this.aService.save(a);
 		return spam;

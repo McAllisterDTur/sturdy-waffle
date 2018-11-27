@@ -34,10 +34,10 @@ public class SpamServiceTest extends AbstractTest {
 	public void spamGood() {
 		super.authenticate("Customer2");
 		final Actor tester = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
-		final String s = "Un millón en nigeria";
+		final String s = "sex viagra";
 		final Boolean spam = this.sService.isSpam(tester, s);
 		Assert.isTrue(spam);
-		Assert.isTrue(tester.getBanned());
+		Assert.isTrue(tester.getIsSuspicious());
 	}
 
 	@Test
@@ -46,7 +46,7 @@ public class SpamServiceTest extends AbstractTest {
 		final Actor tester = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final String s = "Tryig to recognize myself when I feel I've been replaced";
 		final Boolean spam = this.sService.isSpam(tester, s);
-		Assert.isTrue(spam);
-		Assert.isTrue(tester.getBanned());
+		Assert.isTrue(!spam);
+		Assert.isTrue(!tester.getIsSuspicious());
 	}
 }
