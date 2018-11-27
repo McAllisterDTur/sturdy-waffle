@@ -1151,6 +1151,15 @@
         <property name="handyWorker" ref="Worker2" />
     </bean>
 
+	<!-- Phases -->
+	<bean id="Phase1" class="domain.Phase">
+		<property name="title" value="Inspección inicial"/>
+		<property name="description" value="Aprenderemos a realizar una inspección inicial para determinar el problema."/>
+		<property name="startTime" value="12/06/2018 12:00" />
+		<property name="endTime" value="13/06/2018 15:00" />
+		<property name="application" ref="Application9" />
+	</bean>
+
 	<!-- Category -->
 
 	<bean id="CategoryBase" class="domain.Category">

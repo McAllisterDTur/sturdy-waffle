@@ -1,21 +1,25 @@
 
 package tests;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import repositories.HandyWorkerRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
-import security.UserAccountRepository;
+import services.ActorService;
 import services.HandyWorkerService;
 import services.UserAccountService;
+import utilities.AbstractTest;
 import domain.HandyWorker;
 
 // Indica que se tiene que ejecutar a través de Spring
@@ -26,19 +30,18 @@ import domain.HandyWorker;
 })
 //Para que la base de datos no quede incoherente
 @Transactional
-public class HandyWorkerServiceTest {
+public class HandyWorkerServiceTest extends AbstractTest {
 
 	@Autowired
-	private UserAccountService		account;
+	private UserAccountService	account;
 	@Autowired
-	private UserAccountRepository	accountRepo;
+	private HandyWorkerService	worker;
 	@Autowired
-	private HandyWorkerService		worker;
-	@Autowired
-	private HandyWorkerRepository	workerRepo;
+	private ActorService		actorService;
 
 
 	@Test
+	@Rollback
 	public void createAndSave() {
 
 		//Creamos un nuevo worker
@@ -60,7 +63,7 @@ public class HandyWorkerServiceTest {
 		a.addAuthority(auth);
 
 		//Almacenamos el valor en al base de datos
-		final UserAccount aF = this.accountRepo.save(a);
+		final UserAccount aF = this.account.save(a);
 
 		//Añadimos los valores restantes al worker
 		w.setAccount(aF);
@@ -72,18 +75,31 @@ public class HandyWorkerServiceTest {
 		w.setName("Fulgencio");
 		w.setSurname("Ramirez");
 		w.setPhotoURL("https://www.tuenti.com/FulgenR/Albun:?noxesitawena/1682903.jpg");
+		w.setMake("FRChapuzas");
+		w.setScore(0.0);
 
 		//Guardamos el nuevo worker en la base de datos
-		final HandyWorker wF = this.workerRepo.save(w);
+		final HandyWorker wF = this.worker.save(w);
 		//Verificamos que no es un objeto nulo
 		Assert.notNull(wF);
-		//Verificamos que el id se ha asignado correctamente
-		//Assert.isTrue(wF.getId() != 0);
-
-		//Borramos los elementos creados para no incurrir en duplicidades
-		this.accountRepo.delete(aF);
-		this.workerRepo.delete(wF);
 
 	}
 
+	@Test
+	public void testFindOne() {
+		super.authenticate("worker3");
+		final HandyWorker w = (HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(w);
+	}
+
+	@Test
+	public void testAverage() {
+		super.authenticate("Admin");
+
+		final Collection<HandyWorker> res = this.worker.findWorkerMoreAverage();
+
+		Assert.notNull(res);
+
+		super.unauthenticate();
+	}
 }

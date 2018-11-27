@@ -1,21 +1,23 @@
 
 package tests;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import repositories.CustomerRepository;
 import security.Authority;
 import security.UserAccount;
-import security.UserAccountRepository;
 import services.CustomerService;
 import services.UserAccountService;
+import utilities.AbstractTest;
 import domain.Customer;
 
 // Indica que se tiene que ejecutar a través de Spring
@@ -26,20 +28,16 @@ import domain.Customer;
 })
 //Para que la base de datos no quede incoherente
 @Transactional
-public class CustomerServiceTest {
+public class CustomerServiceTest extends AbstractTest {
 
 	@Autowired
-	private CustomerService			customerService;
+	private CustomerService		customerService;
 	@Autowired
-	private UserAccountService		userAccountService;
-
-	@Autowired
-	private UserAccountRepository	accountRepo;
-	@Autowired
-	private CustomerRepository		customerRepo;
+	private UserAccountService	userAccountService;
 
 
 	@Test
+	@Rollback
 	public void testCreateYSave() {
 		//creamos un nuevo customer
 		final Customer c = this.customerService.create();
@@ -78,8 +76,26 @@ public class CustomerServiceTest {
 		//Verificamos que el custmoer ha sido añadido
 		Assert.notNull(c1);
 
-		//Borramos las instacias creadas para evitar duplicidades
-		this.customerRepo.delete(c1);
-		this.accountRepo.delete(a1);
+		//		//Borramos las instacias creadas para evitar duplicidades
+		//		this.customerRepo.delete(c1);
+		//		this.accountRepo.delete(a1);
 	}
+
+	@Test
+	public void testCollectionMaxAverage() {
+		super.authenticate("Admin");
+
+		final Collection<Customer> res = this.customerService.findCustomerMaxAverage();
+		Assert.notNull(res);
+
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testFindOne() {
+		final Customer c = this.customerService.findOne(1024);
+
+		Assert.notNull(c);
+	}
+
 }

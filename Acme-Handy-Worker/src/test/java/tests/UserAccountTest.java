@@ -6,13 +6,13 @@ import javax.transaction.Transactional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import security.Authority;
 import security.UserAccount;
-import security.UserAccountRepository;
 import services.UserAccountService;
 
 // Indica que se tiene que ejecutar a través de Spring
@@ -26,12 +26,11 @@ import services.UserAccountService;
 public class UserAccountTest {
 
 	@Autowired
-	private UserAccountRepository	repo;
-	@Autowired
-	private UserAccountService		serv;
+	private UserAccountService	serv;
 
 
 	@Test
+	@Rollback
 	public void CreateAndSave() {
 		//Creamos el account vacío
 		final UserAccount account = this.serv.create();
@@ -47,15 +46,15 @@ public class UserAccountTest {
 		account.addAuthority(a);
 
 		//Guardamos el 'account' ya creado
-		final UserAccount res = this.repo.save(account);
+		final UserAccount res = this.serv.save(account);
 		//Vemos que no sea 'null'
 		Assert.notNull(res);
 
 		//Vemos su id para comprobar que esté bien guardado
 		Assert.isTrue(res.getId() != 0);
 
-		//Borramos el account creado para no concurrir en duplicidad
-		this.repo.delete(res);
+		//		//Borramos el account creado para no concurrir en duplicidad
+		//		this.repo.delete(res);
 	}
 
 }
