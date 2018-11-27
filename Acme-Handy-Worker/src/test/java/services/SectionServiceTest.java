@@ -13,7 +13,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import repositories.SectionRepository;
 import utilities.AbstractTest;
 import domain.Section;
 import domain.Tutorial;
@@ -26,13 +25,10 @@ import domain.Tutorial;
 public class SectionServiceTest extends AbstractTest {
 
 	@Autowired
-	private SectionService		sectionService;
+	private SectionService	sectionService;
 
 	@Autowired
-	private TutorialService		tutorialService;
-
-	@Autowired
-	private SectionRepository	sectionRepository;
+	private TutorialService	tutorialService;
 
 
 	@Test
