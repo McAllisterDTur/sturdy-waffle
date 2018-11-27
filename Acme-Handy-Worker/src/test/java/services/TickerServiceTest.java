@@ -21,12 +21,12 @@ import org.springframework.util.Assert;
 public class TickerServiceTest {
 
 	@Autowired
-	private TickerService	tickerRepository;
+	private TickerService	tickerService;
 
 
 	@Test
 	public void getTickerGood() {
-		final String t = this.tickerRepository.getTicker();
+		final String t = this.tickerService.getTicker();
 		System.out.println(t);
 		Assert.isTrue(t != null);
 	}

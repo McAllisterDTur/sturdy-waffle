@@ -62,11 +62,13 @@ public class WarrantyServiceTest extends AbstractTest {
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
 		w.setTerms("Términos");
 		w.setTitle("La ley de la selva");
+		Warranty w1 = null;
 		try {
-			this.wService.save(w);
+			w1 = this.wService.save(w);
 		} catch (final Exception e) {
 
 		}
+		Assert.isNull(w1);
 		super.unauthenticate();
 	}
 
@@ -78,11 +80,15 @@ public class WarrantyServiceTest extends AbstractTest {
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
 		w.setTerms("Términos");
 		w.setTitle("La ley de la selva");
+		final Warranty w1 = this.wService.save(w);
+		Warranty w2 = null;
 		try {
-			this.wService.save(w);
+			w1.setDraft(true);
+			w2 = this.wService.save(w1);
 		} catch (final Exception e) {
 
 		}
+		Assert.isNull(w2);
 		super.unauthenticate();
 	}
 
@@ -109,11 +115,13 @@ public class WarrantyServiceTest extends AbstractTest {
 		w.setTerms("Términos");
 		w.setTitle("La ley de la selva");
 		final Warranty w1 = this.wService.save(w);
+		Warranty w2 = null;
 		try {
-			this.wService.save(w1);
+			w2 = this.wService.save(w1);
 		} catch (final Exception e) {
 
 		}
+		Assert.isNull(w2);
 		super.unauthenticate();
 	}
 

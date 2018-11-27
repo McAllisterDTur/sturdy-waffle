@@ -103,12 +103,14 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		w.setTerms("Términos");
 		w.setTitle("La ley de la selva");
 		f.setWarranty(w);
+		FixUpTask f1 = null;
 		try {
 			super.unauthenticate();
-			super.authenticate("Customer1");
-			this.fixUpTaskService.save(f);
+			super.authenticate("Customer2");
+			f1 = this.fixUpTaskService.save(f);
 		} catch (final Exception e) {
 		}
+		Assert.isNull(f1);
 		super.unauthenticate();
 	}
 

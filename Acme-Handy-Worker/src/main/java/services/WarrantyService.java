@@ -32,7 +32,8 @@ public class WarrantyService {
 	}
 
 	/**
-	 * Checks administrator authority. Saves or updates a warranty (Req 12.2)
+	 * Checks administrator authority. Saves or updates a warranty.
+	 * Only warranties in draft mode can be updated. (Req 12.2)
 	 * 
 	 * @param warranty
 	 * @return the warranty saved in the database
