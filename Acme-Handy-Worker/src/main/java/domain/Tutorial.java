@@ -11,7 +11,6 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -24,15 +23,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Tutorial extends DomainEntity {
 
-	private String				title;
-	private Date			lastTimeUpdated;
-	private String				summary;
-	private Collection<String>	photoURL;
+	private String					title;
+	private Date					lastTimeUpdated;
+	private String					summary;
+	private Collection<String>		photoURL;
 
 	//+
-	private HandyWorker			worker;
-	private Sponsorship			sponsorship;
-	private Collection<Section>	sections;
+	private HandyWorker				worker;
+	private Collection<Sponsorship>	sponsorships;
+	private Collection<Section>		sections;
+
 
 	@NotBlank
 	public String getTitle() {
@@ -42,7 +42,7 @@ public class Tutorial extends DomainEntity {
 	public void setTitle(final String title) {
 		this.title = title;
 	}
-	
+
 	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
@@ -54,7 +54,7 @@ public class Tutorial extends DomainEntity {
 	public void setLastTimeUpdated(final Date lastTimeUpdated) {
 		this.lastTimeUpdated = lastTimeUpdated;
 	}
-	
+
 	@NotBlank
 	public String getSummary() {
 		return this.summary;
@@ -63,7 +63,7 @@ public class Tutorial extends DomainEntity {
 	public void setSummary(final String summary) {
 		this.summary = summary;
 	}
-	
+
 	@ElementCollection
 	public Collection<String> getPhotoURL() {
 		return this.photoURL;
@@ -83,18 +83,18 @@ public class Tutorial extends DomainEntity {
 		this.worker = worker;
 	}
 
-	@OneToOne(optional=true)
-	public Sponsorship getSponsorship() {
-		return this.sponsorship;
+	@OneToMany
+	public Collection<Sponsorship> getSponsorships() {
+		return this.sponsorships;
 	}
 
-	public void setSponsorship(final Sponsorship sponsorship) {
-		this.sponsorship = sponsorship;
+	public void setSponsorships(final Collection<Sponsorship> sponsorships) {
+		this.sponsorships = sponsorships;
 	}
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Section> getSections() {
-		return sections;
+		return this.sections;
 	}
 
 	public void setSections(final Collection<Section> sections) {

@@ -39,7 +39,6 @@ public class Configuration extends DomainEntity {
 
 	private Collection<String>	cardMaker;
 
-
 	@Min(1)
 	@Max(24)
 	public int getCacheTime() {
