@@ -83,8 +83,12 @@ public class WarrantyServiceTest extends AbstractTest {
 		final Warranty w1 = this.wService.save(w);
 		Warranty w2 = null;
 		try {
+			// TODO: ????????????????
+			System.out.println("Draft after first save: " + w1.isDraft());
 			w1.setDraft(true);
+			System.out.println("Draft after set: " + w1.isDraft());
 			w2 = this.wService.save(w1);
+			System.out.println("Draft after second save: " + w2.isDraft());
 		} catch (final Exception e) {
 
 		}

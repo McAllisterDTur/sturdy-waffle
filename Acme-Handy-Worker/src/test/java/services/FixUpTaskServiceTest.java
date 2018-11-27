@@ -211,10 +211,32 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
+	public void findFromLoggedCustomerGood() {
+		super.authenticate("Customer1");
+		final Collection<FixUpTask> f = this.fixUpTaskService.findFromLoggedCustomer();
+		Assert.isTrue(f != null);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void findFromLoggedCustomerBad() {
+		super.authenticate("handy1");
+		Collection<FixUpTask> f = null;
+		try {
+			f = this.fixUpTaskService.findFromLoggedCustomer();
+		} catch (final Exception e) {
+		}
+		Assert.isTrue(f == null);
+		super.unauthenticate();
+	}
+
+	@Test
 	public void findFromCustomerGood1() {
 		super.authenticate("Customer1");
 		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService
 			.getPrincipal().getId());
+		super.unauthenticate();
+		super.authenticate("handy1");
 		final Collection<FixUpTask> f = this.fixUpTaskService.findFromCustomer(c.getId());
 		Assert.isTrue(f != null);
 		super.unauthenticate();

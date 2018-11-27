@@ -16,6 +16,7 @@ import repositories.FixUpTaskRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Customer;
 import domain.FixUpTask;
 
 @Service
@@ -24,6 +25,8 @@ public class FixUpTaskService {
 
 	@Autowired
 	private FixUpTaskRepository	fixUpTaskRepository;
+	@Autowired
+	private ActorService		actorService;
 
 
 	/**
@@ -120,7 +123,29 @@ public class FixUpTaskService {
 	}
 
 	/**
-	 * Checks handy worker or customer authority (Req 10.1, 11.1)
+	 * Checks customer authority (Req 10.1)
+	 * 
+	 * @param CustomerId
+	 * @return Collection of the fix up tasks related to the logged customer
+	 */
+	public Collection<FixUpTask> findFromLoggedCustomer() {
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+
+		final Authority au = new Authority();
+		au.setAuthority(Authority.CUSTOMER);
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
+		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService
+			.getPrincipal().getId());
+		final Collection<FixUpTask> res = this.fixUpTaskRepository.findFromCustomer(c.getId());
+		return res;
+	}
+
+	/**
+	 * Checks handy worker authority (11.1)
 	 * 
 	 * @param CustomerId
 	 * @return Collection of the fix up tasks related to a customer
@@ -133,11 +158,7 @@ public class FixUpTaskService {
 		final Authority au1 = new Authority();
 		au1.setAuthority(Authority.HANDYWORKER);
 
-		final Authority au2 = new Authority();
-		au2.setAuthority(Authority.CUSTOMER);
-
-		Assert.isTrue(userAccount.getAuthorities().contains(au1)
-			|| userAccount.getAuthorities().contains(au2));
+		Assert.isTrue(userAccount.getAuthorities().contains(au1));
 
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.findFromCustomer(customerId);
 		return res;
