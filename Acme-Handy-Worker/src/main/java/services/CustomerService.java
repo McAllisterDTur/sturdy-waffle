@@ -40,6 +40,9 @@ public class CustomerService {
 
 		Assert.notNull(c);
 
+		if (c.getId() <= 0)
+			c.setScore(0.0);
+
 		return this.customerRepo.save(c);
 	}
 
@@ -58,6 +61,18 @@ public class CustomerService {
 
 		return this.customerRepo.findCustomerMaxAverage();
 
+	}
+
+	public Customer findOneHandyWorker(final int id) {
+		this.account = LoginService.getPrincipal();
+		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER));
+
+		Customer res;
+		Assert.isTrue(id != 0);
+
+		res = this.customerRepo.findOne(id);
+		Assert.notNull(res);
+		return res;
 	}
 
 }

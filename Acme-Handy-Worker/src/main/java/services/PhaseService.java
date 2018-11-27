@@ -39,7 +39,7 @@ public class PhaseService {
 		return this.repo.save(phase);
 	}
 
-	public Phase finOne(final int id) {
+	public Phase findOne(final int id) {
 
 		this.account = LoginService.getPrincipal();
 		Assert.notNull(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER));

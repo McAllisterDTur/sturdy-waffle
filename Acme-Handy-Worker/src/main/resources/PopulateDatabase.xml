@@ -1226,6 +1226,29 @@
 		<property name="draft" value="false" />
 	</bean>
 	
+	<!-- Endorsement -->
+	
+	<bean id="Endorsment1" class="domain.Endorsement">
+		<property name="sender" ref="Customer4"/>
+		<property name="reciever" ref="handy2"/>
+		<property name="writeTime" value="12/05/2018 18:45"/>
+		<property name="comments" value="No arregló nada. Pesimo, no lo recomiendo. Lo ensució todo y no limpió después." />
+	</bean>
+	
+	<bean id="Endorsment2" class="domain.Endorsement">
+		<property name="sender" ref="handy2"/>
+		<property name="reciever" ref="Customer4h"/>
+		<property name="writeTime" value="04/06/2018 11:00"/>
+		<property name="comments" value="Señora muy amable la de este señor. Siempre muy atenta." />
+	</bean>
+	
+	<bean id="Endorsment3" class="domain.Endorsement">
+		<property name="sender" ref="handy1"/>
+		<property name="reciever" ref="Customer1"/>
+		<property name="writeTime" value="25/11/2018 05:00"/>
+		<property name="comments" value="Vino, trabajó, cobró y se fué. Ok." />
+	</bean>
+	
 	<!-- Complaints -->
 	
 	<bean id="Complaint1" class="domain.Complaint">

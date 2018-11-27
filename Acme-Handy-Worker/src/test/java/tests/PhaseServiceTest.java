@@ -16,8 +16,6 @@ import org.springframework.util.Assert;
 
 import security.LoginService;
 import services.ActorService;
-import services.ApplicationService;
-import services.HandyWorkerService;
 import services.PhaseService;
 import utilities.AbstractTest;
 import domain.Application;
@@ -35,13 +33,9 @@ import domain.Phase;
 public class PhaseServiceTest extends AbstractTest {
 
 	@Autowired
-	private PhaseService		phaseService;
+	private PhaseService	phaseService;
 	@Autowired
-	private HandyWorkerService	workerService;
-	@Autowired
-	private ApplicationService	applicationService;
-	@Autowired
-	private ActorService		actorService;
+	private ActorService	actorService;
 
 
 	@Test

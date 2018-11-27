@@ -45,7 +45,7 @@ public class ApplicationService {
 	public Application save(final Application application) {
 		Assert.notNull(application);
 		Assert.isTrue(application.getOfferedPrice() != 0);
-
+		//TODO: restricción para aceptarla
 		return this.applicationRepo.save(application);
 	}
 

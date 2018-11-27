@@ -76,7 +76,7 @@ public class HandyWorkerServiceTest extends AbstractTest {
 		w.setSurname("Ramirez");
 		w.setPhotoURL("https://www.tuenti.com/FulgenR/Albun:?noxesitawena/1682903.jpg");
 		w.setMake("FRChapuzas");
-		w.setScore(0.0);
+		//w.setScore(0.0);
 
 		//Guardamos el nuevo worker en la base de datos
 		final HandyWorker wF = this.worker.save(w);

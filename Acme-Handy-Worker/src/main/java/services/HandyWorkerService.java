@@ -37,6 +37,12 @@ public class HandyWorkerService {
 	public HandyWorker save(final HandyWorker worker) {
 		Assert.notNull(worker);
 
+		if (worker.getId() <= 0) {
+			worker.setScore(0.0);
+			if (worker.getMake().equals(null) || worker.getMake().equals(""))
+				worker.setMake(worker.getName() + worker.getMiddleName() + worker.getSurname());
+		}
+
 		return this.repo.save(worker);
 
 	}

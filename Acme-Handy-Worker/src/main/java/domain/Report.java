@@ -29,6 +29,10 @@ public class Report extends DomainEntity {
 	private Boolean				isFinal;
 	private Collection<Notes>	notes;
 
+	//+
+	private Referee				referee;
+	private Complaint			complaint;
+
 
 	@NotNull
 	public Boolean getIsFinal() {
@@ -39,7 +43,7 @@ public class Report extends DomainEntity {
 		this.isFinal = isFinal;
 	}
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Notes> getNotes() {
 		return this.notes;
 	}
@@ -77,12 +81,6 @@ public class Report extends DomainEntity {
 	public void setAttachment(final Collection<String> attachment) {
 		this.attachment = attachment;
 	}
-
-
-	//Relationships
-	private Referee		referee;
-	private Complaint	complaint;
-
 
 	@NotNull
 	@ManyToOne(optional = false)
