@@ -61,8 +61,6 @@ public class ActorService {
 				result = this.actorRepository.save(actor);
 			}
 		} else {
-			//TODO Por ahora, por decisión de grupo, la useracount se agrega
-			//en el controller
 			actor.setBanned(false);
 			result = this.actorRepository.save(actor);
 		}
@@ -75,7 +73,6 @@ public class ActorService {
 	 * @return actors
 	 */
 	public Collection<Actor> findAll() {
-		//TODO Posee más lógica de negocio?
 		final UserAccount ua = LoginService.getPrincipal();
 		Assert.isNull(ua);
 		final Collection<Actor> result = this.actorRepository.findAll();

@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 import javax.transaction.Transactional;
 
@@ -75,17 +76,14 @@ public class WarrantyServiceTest extends AbstractTest {
 	@Test
 	public void saveBad1() {
 		super.authenticate("admin");
-		final Warranty w = this.wService.create();
-		w.setDraft(false);
-		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
-		w.setTitle("La ley de la selva");
-		final Warranty w1 = this.wService.save(w);
+		final Collection<Warranty> warranties = this.wService.findAll();
+		Warranty w1 = null;
+		for (final Warranty w : warranties)
+			if (w.isDraft() == false)
+				w1 = w;
 		Warranty w2 = null;
 		try {
-			// TODO: ????????????????
-			System.out.println("Draft after first save: " + w1.isDraft());
-			w1.setDraft(true);
+			w1.setTerms("TEST");
 			System.out.println("Draft after set: " + w1.isDraft());
 			w2 = this.wService.save(w1);
 			System.out.println("Draft after second save: " + w2.isDraft());

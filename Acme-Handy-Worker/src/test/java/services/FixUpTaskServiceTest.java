@@ -46,9 +46,9 @@ public class FixUpTaskServiceTest extends AbstractTest {
 
 		super.authenticate("Customer1");
 		final UserAccount userAccount = LoginService.getPrincipal();
-		final Actor c = this.actorService.findByUserAccountId(userAccount.getId());
+		final Customer c = (Customer) this.actorService.findByUserAccountId(userAccount.getId());
 		// TODO: Esto no peta y debería porque no tenemos los valores necesarios.
-		f.setCustomer((Customer) c);
+		f.setCustomer(c);
 		super.unauthenticate();
 		super.authenticate("admin");
 		final Warranty w = this.warrantyService.create();
