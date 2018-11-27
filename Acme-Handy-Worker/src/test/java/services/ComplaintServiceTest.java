@@ -75,4 +75,24 @@ public class ComplaintServiceTest extends AbstractTest {
 		Assert.isNull(c);
 		super.unauthenticate();
 	}
+
+	@Test
+	public void findFromLoggedHandyWorkerGood() {
+		super.authenticate("handy1");
+		final Collection<Complaint> c = this.cService.findFromLoggedHandyWorker();
+		Assert.notNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void findFromLoggedHandyWorkerBad() {
+		super.authenticate("Customer1");
+		Collection<Complaint> c = null;
+		try {
+			c = this.cService.findFromLoggedHandyWorker();
+		} catch (final Exception e) {
+		}
+		Assert.isNull(c);
+		super.unauthenticate();
+	}
 }

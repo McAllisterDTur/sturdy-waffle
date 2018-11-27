@@ -15,6 +15,7 @@ import security.LoginService;
 import utilities.AuthenticationUtility;
 import domain.Complaint;
 import domain.Customer;
+import domain.HandyWorker;
 
 @Service
 @Transactional
@@ -59,8 +60,21 @@ public class ComplaintService {
 		return this.complaintRepository.findFromCustomer(c.getId());
 	}
 
+	//===============HANDY WORKER
+	/**
+	 * Checks handy worker authority (Req 37.3)
+	 * 
+	 * @return Collection of the complaints related to the logged handy worker
+	 */
+	public Collection<Complaint> findFromLoggedHandyWorker() {
+		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.HANDYWORKER);
+		Assert.isTrue(hasAu);
+		final HandyWorker h = (HandyWorker) this.actorService.findByUserAccountId(LoginService
+			.getPrincipal().getId());
+		return this.complaintRepository.findFromHandyWorker(h.getId());
+	}
+
 	public int getNumberOfTickers(final String ticker) {
 		return this.complaintRepository.getNumberOfTickers(ticker);
 	}
-
 }
