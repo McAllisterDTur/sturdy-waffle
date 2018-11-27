@@ -1302,7 +1302,7 @@
 	<!-- Complaints -->
 	
 	<bean id="Complaint1" class="domain.Complaint">
-		<property name="ticker" value="181031-g726has"/>
+		<property name="ticker" value="181031-g726ha"/>
 		<property name="complaintTime" value="10/31/2018 12:00"/>
 		<property name="description" value="Creo que la cuidadora dejó ver a mi hijo películas violentas"/>
 		<property name="attachments">
