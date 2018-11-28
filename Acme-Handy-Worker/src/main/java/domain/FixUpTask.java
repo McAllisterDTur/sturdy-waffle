@@ -28,7 +28,6 @@ public class FixUpTask extends DomainEntity {
 	private Date					publishTime;
 	private String					description;
 	private String					address;
-	private Double					minPrice;
 	private Double					maxPrice;
 	private Date					periodStart;
 	private Date					periodEnd;
@@ -107,15 +106,6 @@ public class FixUpTask extends DomainEntity {
 	public void setMaxPrice(final Double maxPrice) {
 		this.maxPrice = maxPrice;
 	}
-
-	public Double getMinPrice() {
-		return this.minPrice;
-	}
-
-	public void setMinPrice(final Double minPrice) {
-		this.minPrice = minPrice;
-	}
-
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
