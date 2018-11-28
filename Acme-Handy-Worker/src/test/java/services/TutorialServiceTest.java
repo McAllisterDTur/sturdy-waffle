@@ -13,7 +13,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import security.LoginService;
 import utilities.AbstractTest;
+import domain.HandyWorker;
 import domain.Section;
 import domain.Tutorial;
 
@@ -26,6 +28,9 @@ public class TutorialServiceTest extends AbstractTest {
 
 	@Autowired
 	private TutorialService	tutorialService;
+
+	@Autowired
+	private ActorService	actorService;
 
 
 	//@Autowired
@@ -67,6 +72,12 @@ public class TutorialServiceTest extends AbstractTest {
 	}
 
 	@Test
+	public void FindAllGoodTest() {
+		final Collection<Tutorial> ac = this.tutorialService.findAll();
+		Assert.isTrue(!(ac.isEmpty()));
+	}
+
+	@Test
 	public void FindTutorialsByHandyWorkerGoodTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial a = ac.iterator().next();
@@ -74,38 +85,37 @@ public class TutorialServiceTest extends AbstractTest {
 		Assert.isTrue(!(tu.isEmpty()));
 	}
 
-	//	@Test
-	//	public void SaveNewGoodTest() {
-	//		final Collection<HandyWorker> workers = this.handyWorkerService.findAll();
-	//		final HandyWorker worker = workers.iterator().next();
-	//		super.authenticate(worker.getAccount().getUsername());
-	//		final Tutorial ac = this.tutorialService.create();
-	//		ac.setSummary("one");
-	//		ac.setTitle("two");
-	//		ac.setWorker(worker);
-	//		final Tutorial tu = this.tutorialService.save(ac);
-	//		ac.setId(tu.getId());
-	//		ac.setVersion(tu.getVersion());
-	//		Assert.isTrue(tu.equals(ac));
-	//		super.unauthenticate();
-	//	}
-	//
-	//	@Test
-	//	public void SaveNewBadTest() {
-	//		final Collection<HandyWorker> workers = this.handyWorkerService.findAll();
-	//		final HandyWorker worker = workers.iterator().next();
-	//		super.authenticate("Customer1");
-	//		final Tutorial ac = this.tutorialService.create();
-	//		ac.setSummary("one");
-	//		ac.setTitle("two");
-	//		ac.setWorker(worker);
-	//		final Tutorial tu = this.tutorialService.save(ac);
-	//		ac.setId(tu.getId());
-	//		ac.setVersion(tu.getVersion());
-	//		Assert.isTrue(tu.equals(ac));
-	//		super.unauthenticate();
-	//	}
-
+	@Test
+	public void SaveNewGoodTest() {
+		final Collection<Tutorial> ac = this.tutorialService.findAll();
+		final Tutorial a = ac.iterator().next();
+		super.authenticate(a.getWorker().getAccount().getUsername());
+		final Tutorial tuto = this.tutorialService.create();
+		tuto.setTitle(a.getTitle());
+		tuto.setSummary(a.getSummary());
+		final Tutorial tu = this.tutorialService.save(tuto);
+		tuto.setId(tu.getId());
+		tuto.setVersion(tu.getVersion());
+		Assert.isTrue(tu.equals(tuto));
+		super.unauthenticate();
+	}
+	@Test
+	public void SaveNewBadTest() {
+		final Collection<Tutorial> ac = this.tutorialService.findAll();
+		final Tutorial a = ac.iterator().next();
+		super.authenticate(a.getWorker().getAccount().getUsername());
+		final Tutorial tuto = a;
+		tuto.setId(0);
+		tuto.setId(0);
+		Tutorial tu = a;
+		try {
+			tu = this.tutorialService.save(tuto);
+		} catch (final Exception e) {
+			tu = null;
+		}
+		Assert.isNull(tu);
+		super.unauthenticate();
+	}
 	@Test
 	public void SaveEditGoodTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
@@ -135,33 +145,49 @@ public class TutorialServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 
-	//	@Test
-	//	public void DeleteGoodTest() {
-	//		final Collection<HandyWorker> workers = this.handyWorkerService.findAll();
-	//		final HandyWorker worker = workers.iterator().next();
-	//		super.authenticate(worker.getAccount().getUsername());
-	//		final Tutorial ac = this.tutorialService.create();
-	//		ac.setSummary("one");
-	//		ac.setTitle("two");
-	//		ac.setWorker(worker);
-	//		final Tutorial tu = this.tutorialService.save(ac);
-	//		this.tutorialService.delete(tu);
-	//		Assert.isNull(this.tutorialService.findOne(tu.getId()));
-	//		super.unauthenticate();
-	//	}
+	@Test
+	public void DeleteGoodTest() {
+		final Tutorial tuto = this.tutorialService.findAll().iterator().next();
+		final HandyWorker worker = tuto.getWorker();
+		super.authenticate(worker.getAccount().getUsername());
+		this.tutorialService.delete(tuto);
+		Assert.isNull(this.tutorialService.findOne(tuto.getId()));
+		super.unauthenticate();
+	}
 
 	@Test
 	public void DeleteBadTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial tuto = ac.iterator().next();
 		super.authenticate("Customer1");
-		Tutorial tu = null;
+		Boolean tu = null;
 		try {
 			this.tutorialService.delete(tuto);
+			tu = false;
 		} catch (final Exception e) {
-			tu = null;
+			tu = true;
 		}
-		Assert.isNull(tu);
+		Assert.isTrue(tu);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void DeleteBad2Test() {
+		final Collection<Tutorial> ac = this.tutorialService.findAll();
+		final Tutorial tuto = ac.iterator().next();
+		super.authenticate("handy5");
+		final HandyWorker prueba = (HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		super.unauthenticate();
+		super.authenticate(tuto.getWorker().getAccount().getUsername());
+		tuto.setWorker(prueba);
+		Boolean tu = null;
+		try {
+			this.tutorialService.delete(tuto);
+			tu = false;
+		} catch (final Exception e) {
+			tu = true;
+		}
+		Assert.isTrue(tu);
 		super.unauthenticate();
 	}
 }
