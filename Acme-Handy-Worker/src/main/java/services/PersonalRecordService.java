@@ -24,7 +24,7 @@ public class PersonalRecordService {
 
 
 	public PersonalRecord create() {
-		Assert.isNull(this.cService.findFromLoggedHandyWorker().getPersonalRecord());
+		Assert.isNull(this.cService.findFromLoggedHandyWorker());
 		return new PersonalRecord();
 	}
 
@@ -38,6 +38,7 @@ public class PersonalRecordService {
 
 	public PersonalRecord save(final PersonalRecord pr) {
 		final Curricula c = this.cService.findFromLoggedHandyWorker();
+		Assert.notNull(c);
 		c.setPersonalRecord(pr);
 		this.cService.save(c);
 		return this.prRepository.save(pr);

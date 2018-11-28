@@ -1,11 +1,13 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.EndorserRecordRepository;
 import domain.Curricula;
@@ -35,8 +37,15 @@ public class EndorserRecordService {
 
 	public EndorserRecord save(final EndorserRecord e) {
 		final Curricula c = this.cService.findFromLoggedHandyWorker();
-		final Collection<EndorserRecord> es = c.getEndorserRecords();
-		if (e.getId() != 0)
+		Assert.notNull(c);
+		Collection<EndorserRecord> es;
+		try {
+			es = c.getEndorserRecords();
+		} catch (final NullPointerException ex) {
+			es = new ArrayList<>();
+		}
+
+		if (e.getId() == 0)
 			es.add(e);
 		else
 			for (final EndorserRecord ei : es)
@@ -46,10 +55,10 @@ public class EndorserRecordService {
 					break;
 				}
 		c.setEndorserRecords(es);
+
 		this.cService.save(c);
 		return this.eRepository.save(e);
 	}
-
 	public Collection<EndorserRecord> findByCurricula(final int id) {
 		return this.eRepository.findByCurricula(id);
 	}

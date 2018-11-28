@@ -1738,6 +1738,25 @@
 		</property>
 	</bean>
 	
+	<!-- Curricula -->
+	<bean id="Curricula1" class="domain.Curricula">
+		<property name="ticker" value="181128-t562h1"/>
+		<property name="handyWorker" ref="Worker1"/>
+		<property name="personalRecord" ref="PersonalRecord1"/>
+		<property name="professionalRecords">
+			<list><ref bean="ProfessionalRecord1"/></list>
+		</property>
+		<property name="miscellaneousRecords">
+			<list><ref bean="MiscellaneousRecord1"/></list>
+		</property>
+		<property name="educationRecord">
+			<list><ref bean="EducationRecord1"/></list>
+		</property>
+		<property name="endorserRecords">
+			<list><ref bean="EndorserRecord1"/></list>
+		</property>
+	</bean>
+	
 	<!-- Phases -->
 	<bean id="Phase1" class="domain.Phase">
 		<property name="title" value="Inspección inicial"/>

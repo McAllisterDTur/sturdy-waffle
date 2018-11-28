@@ -1,11 +1,13 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.ProfessionalRecordRepository;
 import domain.Curricula;
@@ -35,17 +37,25 @@ public class ProfessionalRecordService {
 
 	public ProfessionalRecord save(final ProfessionalRecord pr) {
 		final Curricula c = this.cService.findFromLoggedHandyWorker();
-		final Collection<ProfessionalRecord> prs = c.getProfessionalRecords();
-		if (pr.getId() != 0)
+		Assert.notNull(c);
+		Collection<ProfessionalRecord> prs;
+		try {
+			prs = c.getProfessionalRecords();
+		} catch (final NullPointerException ex) {
+			prs = new ArrayList<>();
+		}
+
+		if (pr.getId() == 0)
 			prs.add(pr);
 		else
-			for (final ProfessionalRecord pri : prs)
-				if (pri.getId() == pr.getId()) {
-					prs.remove(pri);
+			for (final ProfessionalRecord mi : prs)
+				if (mi.getId() == pr.getId()) {
+					prs.remove(mi);
 					prs.add(pr);
 					break;
 				}
 		c.setProfessionalRecords(prs);
+
 		this.cService.save(c);
 		return this.prRepository.save(pr);
 	}

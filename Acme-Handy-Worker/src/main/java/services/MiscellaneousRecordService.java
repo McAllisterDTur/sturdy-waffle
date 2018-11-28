@@ -1,11 +1,13 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.MiscellaneousRecordRepository;
 import domain.Curricula;
@@ -35,8 +37,15 @@ public class MiscellaneousRecordService {
 
 	public MiscellaneousRecord save(final MiscellaneousRecord m) {
 		final Curricula c = this.cService.findFromLoggedHandyWorker();
-		final Collection<MiscellaneousRecord> ms = c.getMiscellaneousRecords();
-		if (m.getId() != 0)
+		Assert.notNull(c);
+		Collection<MiscellaneousRecord> ms;
+		try {
+			ms = c.getMiscellaneousRecords();
+		} catch (final NullPointerException ex) {
+			ms = new ArrayList<>();
+		}
+
+		if (m.getId() == 0)
 			ms.add(m);
 		else
 			for (final MiscellaneousRecord mi : ms)
@@ -46,6 +55,7 @@ public class MiscellaneousRecordService {
 					break;
 				}
 		c.setMiscellaneousRecords(ms);
+
 		this.cService.save(c);
 		return this.mRepository.save(m);
 	}

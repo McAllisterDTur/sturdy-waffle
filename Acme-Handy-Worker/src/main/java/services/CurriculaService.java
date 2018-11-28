@@ -50,7 +50,7 @@ public class CurriculaService {
 
 	public Curricula findFromLoggedHandyWorker() {
 		final HandyWorker h = (HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
-		return this.curriculaRepository.findOne(h.getId());
+		return this.curriculaRepository.getFromHandyWorker(h.getId());
 	}
 
 	public int getNumberOfTickers(final String ticker) {
