@@ -37,7 +37,7 @@ public class Complaint extends DomainEntity {
 
 	@Column(unique = true)
 	@NotBlank
-	@Pattern(regexp = "^(\\d{2})(\\d{2})(\\d{2})\\-([1-9a-zA-Z]{6})$")
+	//@Pattern(regexp = "^(\\d{2})(\\d{2})(\\d{2})\\-([1-9a-zA-Z]{6})$")
 	public String getTicker() {
 		return this.ticker;
 	}

@@ -35,7 +35,7 @@ public class CurriculaService {
 		Assert.isTrue(au);
 		final Curricula c = this.findFromLoggedHandyWorker();
 		// If we have a curricula we can't create another
-		if (c.getId() != 0) {
+		if (c != null) {
 			Assert.isTrue(c.getHandyWorker().equals(curricula.getHandyWorker()));
 			Assert.isTrue(c.getId() == curricula.getId());
 		}
