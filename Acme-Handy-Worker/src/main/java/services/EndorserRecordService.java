@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.EndorserRecordRepository;
+import domain.Curricula;
 import domain.EndorserRecord;
 
 @Service
@@ -16,6 +17,8 @@ public class EndorserRecordService {
 
 	@Autowired
 	private EndorserRecordRepository	eRepository;
+	@Autowired
+	private CurriculaService			cService;
 
 
 	public EndorserRecord create() {
@@ -31,10 +34,23 @@ public class EndorserRecordService {
 	}
 
 	public EndorserRecord save(final EndorserRecord e) {
+		final Curricula c = this.cService.findFromLoggedHandyWorker();
+		final Collection<EndorserRecord> es = c.getEndorserRecords();
+		if (e.getId() != 0)
+			es.add(e);
+		else
+			for (final EndorserRecord ei : es)
+				if (ei.getId() == e.getId()) {
+					es.remove(ei);
+					es.add(e);
+					break;
+				}
+		c.setEndorserRecords(es);
+		this.cService.save(c);
 		return this.eRepository.save(e);
 	}
 
-	public EndorserRecord findByCurricula(final int id) {
+	public Collection<EndorserRecord> findByCurricula(final int id) {
 		return this.eRepository.findByCurricula(id);
 	}
 }

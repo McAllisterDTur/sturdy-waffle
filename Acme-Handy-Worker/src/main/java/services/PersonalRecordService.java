@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.PersonalRecordRepository;
+import domain.Curricula;
 import domain.PersonalRecord;
 
 @Service
@@ -36,6 +37,9 @@ public class PersonalRecordService {
 	}
 
 	public PersonalRecord save(final PersonalRecord pr) {
+		final Curricula c = this.cService.findFromLoggedHandyWorker();
+		c.setPersonalRecord(pr);
+		this.cService.save(c);
 		return this.prRepository.save(pr);
 	}
 

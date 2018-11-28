@@ -7,7 +7,6 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
@@ -24,9 +23,6 @@ public class PersonalRecord extends DomainEntity {
 	private String				phoneNumber;
 	private String				linkedInURL;
 	private Collection<String>	comments;
-
-	// +
-	private Curricula			curricula;
 
 
 	@NotBlank
@@ -84,15 +80,6 @@ public class PersonalRecord extends DomainEntity {
 
 	public void setComments(final Collection<String> comments) {
 		this.comments = comments;
-	}
-
-	@OneToOne(optional = false)
-	public Curricula getCurricula() {
-		return this.curricula;
-	}
-
-	public void setCurricula(final Curricula curricula) {
-		this.curricula = curricula;
 	}
 
 	@Override

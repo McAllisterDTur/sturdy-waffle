@@ -10,6 +10,6 @@ import domain.PersonalRecord;
 @Repository
 public interface PersonalRecordRepository extends JpaRepository<PersonalRecord, Integer> {
 
-	@Query("select pr from PersonalRecord pr where pr.curricula.id = ?1")
+	@Query("select pr from Curricula c join c.personalRecord pr where c.id = ?1")
 	public PersonalRecord findByCurricula(int curriculaId);
 }

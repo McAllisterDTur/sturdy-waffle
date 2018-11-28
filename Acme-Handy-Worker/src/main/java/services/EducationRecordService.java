@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import repositories.EducationRecordRepository;
+import domain.Curricula;
 import domain.EducationRecord;
 
 @Service
@@ -17,6 +18,8 @@ public class EducationRecordService {
 
 	@Autowired
 	private EducationRecordRepository	eRepository;
+	@Autowired
+	private CurriculaService			cService;
 
 
 	public EducationRecord create() {
@@ -32,10 +35,23 @@ public class EducationRecordService {
 	}
 
 	public EducationRecord save(final EducationRecord e) {
+		final Curricula c = this.cService.findFromLoggedHandyWorker();
+		final Collection<EducationRecord> es = c.getEducationRecord();
+		if (e.getId() != 0)
+			es.add(e);
+		else
+			for (final EducationRecord ei : es)
+				if (ei.getId() == e.getId()) {
+					es.remove(ei);
+					es.add(e);
+					break;
+				}
+		c.setEducationRecord(es);
+		this.cService.save(c);
 		return this.eRepository.save(e);
 	}
 
-	public EducationRecord findByCurricula(final int id) {
+	public Collection<EducationRecord> findByCurricula(final int id) {
 		return this.eRepository.findByCurricula(id);
 	}
 }

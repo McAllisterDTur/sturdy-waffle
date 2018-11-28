@@ -1643,6 +1643,7 @@
 		</property>
 	</bean>
 	
+	
 	<!-- Sponsors -->
 	
 	<bean id="Sponsor1" class="domain.Sponsor">
@@ -1678,7 +1679,74 @@
 		<property name="banned" value="false" />
 		<property name="isSuspicious" value="false" />
 	</bean>
-
+	
+	
+	
+	<!-- Personal Record -->
+	<bean id="PersonalRecord1" class="domain.PersonalRecord">
+		<property name="fullName" value="Marta Hernández Torroja"/>
+		<property name="photo" value="http://www.imgur.com/tx729n.jpg"/>
+		<property name="email" value="marta@gmail.com"/>
+		<property name="phoneNumber" value="+34 678123678"/>
+		<property name="linkedInURL" value="https://www.linked.in/profile/Marta"/>
+		<property name="comments">
+			<value>Pedazo de perfil!</value>
+		</property>
+	</bean>
+	
+	<!-- Professional Record -->
+	<bean id="ProfessionalRecord1" class="domain.ProfessionalRecord">
+		<property name="companyName" value="Telepizza"/>
+		<property name="role" value="Repartidora"/>
+		<property name="start" value="04/12/2014"/>
+		<property name="end" value="07/16/2014"/>
+		<property name="attachmentURL"><null/></property>
+		<property name="comments">
+			<value>¡Guau!</value>
+		</property>
+	</bean>
+	
+	<!-- Endorser Record -->
+	<bean id="EndorserRecord1" class="domain.EndorserRecord">
+		<property name="endorserName" value="Arturo Pérez-Reverte"/>
+		<property name="email" value="acapayespada@clubdumas.com"/>
+		<property name="phoneNumber" value="+34 678123456"/>
+		<property name="linkedInURL" value="https://linked.in/profile/Reverte"/>
+		<property name="comments">
+			<value>Ante una infamia es vil guardar silencio</value>
+		</property>
+	</bean>
+	
+	<!-- Miscellaneous Record -->
+	<bean id="MiscellaneousRecord1" class="domain.MiscellaneousRecord">
+		<property name="title" value="Un perrete mu mono"/>
+		<property name="attachmentURL" value="https://hips.hearstapps.com/ghk.h-cdn.co/assets/17/30/pembroke-welsh-corgi.jpg"/>
+		<property name="comments">
+			<value>¿Y esto cómo ayuda a tu currículum?</value>
+		</property>
+	</bean> 
+	
+	<!-- Education Record -->
+	<bean id="EducationRecord1" class="domain.EducationRecord">
+		<property name="diplomaTitle" value="Curso de carpintería"/>
+		<property name="institution" value="Universidad de Sevilla"/>
+		<property name="start" value="04/12/2014"/>
+		<property name="end" value="07/16/2014"/>
+		<property name="attachmentURL" value="https://previews.123rf.com/images/totallyout/totallyout1507/totallyout150700027/42551448-certificado-diploma-de-finalizaci%C3%B3n.jpg"/>
+		<property name="comments">
+			<value>Impresionante</value>
+		</property>
+	</bean>
+	
+	<!-- Phases -->
+	<bean id="Phase1" class="domain.Phase">
+		<property name="title" value="Inspección inicial"/>
+		<property name="description" value="Aprenderemos a realizar una inspección inicial para determinar el problema."/>
+		<property name="startTime" value="12/06/2018 12:00" />
+		<property name="endTime" value="13/06/2018 15:00" />
+		<property name="application" ref="Application9" />
+	</bean>
+	
 	<!-- Sponsorships -->
 
 	<bean id="Sponsorship1" class="domain.Sponsorship">
@@ -1706,6 +1774,7 @@
 		<property name="sponsor" ref="Sponsor2" />
 		<property name="tutorials" ref="Tutorial2" />
 	</bean>
+	
 	<!-- Sections -->
 	<bean id="Section1" class="domain.Section">
 		<property name="number" value="1" />
@@ -1821,7 +1890,7 @@
 	
 	<bean id="Endorsment3" class="domain.Endorsement">
 		<property name="sender" ref="Customer1"/>
-		<property name="reciever" ref="Worker2"/>
+		<property name="reciever" ref="Worker1"/>
 		<property name="writeTime" value="11/25/2018 05:00"/>
 		<property name="comment" value="Vino, trabajó, cobró y se fué. Ok." />
 	</bean>

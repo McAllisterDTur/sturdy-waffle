@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.ProfessionalRecordRepository;
+import domain.Curricula;
 import domain.ProfessionalRecord;
 
 @Service
@@ -16,6 +17,8 @@ public class ProfessionalRecordService {
 
 	@Autowired
 	private ProfessionalRecordRepository	prRepository;
+	@Autowired
+	private CurriculaService				cService;
 
 
 	public ProfessionalRecord create() {
@@ -31,10 +34,22 @@ public class ProfessionalRecordService {
 	}
 
 	public ProfessionalRecord save(final ProfessionalRecord pr) {
+		final Curricula c = this.cService.findFromLoggedHandyWorker();
+		final Collection<ProfessionalRecord> prs = c.getProfessionalRecords();
+		if (pr.getId() != 0)
+			prs.add(pr);
+		else
+			for (final ProfessionalRecord pri : prs)
+				if (pri.getId() == pr.getId()) {
+					prs.remove(pri);
+					prs.add(pr);
+					break;
+				}
+		c.setProfessionalRecords(prs);
+		this.cService.save(c);
 		return this.prRepository.save(pr);
 	}
-
-	public ProfessionalRecord findByCurricula(final int id) {
+	public Collection<ProfessionalRecord> findByCurricula(final int id) {
 		return this.prRepository.findByCurricula(id);
 	}
 }
