@@ -34,9 +34,10 @@ public class FinderService {
 
 
 	public Finder create() {
-		return new Finder();
+		final Finder f = new Finder();
+		f.setFixUpTask(new ArrayList<FixUpTask>());
+		return f;
 	}
-
 	public Collection<Finder> findAll() {
 		return this.finderRepository.findAll();
 	}
@@ -82,7 +83,9 @@ public class FinderService {
 
 		final Configuration configuration = this.cService.findAll().iterator().next();
 
-		final List<FixUpTask> futSearched = this.finderRepository.search(f.getWarranty(), f.getKeyWord(), f.getCategory(), f.getMinPrice(), f.getMaxPrice(), f.getStartDate(), f.getEndDate()).subList(0, configuration.getFinderResults() - 1);
+		List<FixUpTask> futSearched = this.finderRepository.search(f.getWarranty(), f.getKeyWord(), f.getCategory(), f.getMinPrice(), f.getMaxPrice(), f.getStartDate(), f.getEndDate());
+		if (futSearched.size() > configuration.getFinderResults())
+			futSearched = futSearched.subList(0, configuration.getFinderResults());
 
 		f.setCacheUpdate(new Date());
 		f.setFixUpTask(futSearched);
