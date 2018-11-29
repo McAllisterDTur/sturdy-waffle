@@ -15,4 +15,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 	@Query("select distinct c from Customer c join c.fixUpTasks x where (select count(f) from FixUpTask f join f.customer d where d.id = c.id) >= 1.1*((select count(g) from FixUpTask g)*1.0/(select count(e) from Customer e )) order by x.applications.size desc")
 	public Collection<Customer> findCustomerMaxAverage();
 
+	//select top 3 distinct c from Customer c join c.fixUpTasks f join f.complaints co order by co.size desc
+	@Query("select c from Customer c join c.fixUpTasks f join f.complaints co order by co.size desc")
+	public Collection<Customer> findCustomerMaxComplaints();
+
 }

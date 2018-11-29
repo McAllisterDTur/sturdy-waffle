@@ -14,10 +14,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
+import services.ActorService;
 import services.CustomerService;
 import services.UserAccountService;
 import utilities.AbstractTest;
+import domain.Actor;
 import domain.Customer;
 
 // Indica que se tiene que ejecutar a través de Spring
@@ -34,6 +37,8 @@ public class CustomerServiceTest extends AbstractTest {
 	private CustomerService		customerService;
 	@Autowired
 	private UserAccountService	userAccountService;
+	@Autowired
+	private ActorService		actorService;
 
 
 	@Test
@@ -93,9 +98,23 @@ public class CustomerServiceTest extends AbstractTest {
 
 	@Test
 	public void testFindOne() {
-		final Customer c = this.customerService.findOne(1024);
+		super.authenticate("Customer4");
+		final Actor a = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final Customer c = this.customerService.findOne(a.getId());
 
 		Assert.notNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testTop3Customer() {
+		super.authenticate("admin");
+
+		final Collection<Customer> res = this.customerService.findCustomerMaxComplaintsTop3();
+		Assert.notNull(res);
+		Assert.notEmpty(res);
+
+		super.unauthenticate();
 	}
 
 }
