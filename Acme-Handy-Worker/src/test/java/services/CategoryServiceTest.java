@@ -121,6 +121,14 @@ public class CategoryServiceTest extends AbstractTest {
 	}
 
 	@Test
+	public void findByName() {
+		super.authenticate("admin");
+		final Category c2 = this.catService.findByName("CATEGORY");
+		Assert.notNull(c2);
+		super.unauthenticate();
+	}
+
+	@Test
 	public void findOneBad() {
 		super.authenticate("admin");
 		final Category c = this.catService.create();

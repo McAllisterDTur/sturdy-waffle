@@ -219,10 +219,9 @@ public class FixUpTaskService {
 	/**
 	 * Checks handy worker authority (Req 11.1)
 	 * 
-	 * @param handyWorkerId
 	 * @return Collection of all the fix up tasks
 	 */
-	public Collection<FixUpTask> findAsHandyWorker() {
+	public Collection<FixUpTask> findAll() {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();

@@ -18,6 +18,7 @@ import utilities.AuthenticationUtility;
 import domain.Actor;
 import domain.Complaint;
 import domain.Customer;
+import domain.FixUpTask;
 import domain.HandyWorker;
 import domain.Referee;
 
@@ -38,6 +39,7 @@ public class ComplaintService {
 	public Complaint create() {
 		final Complaint c = new Complaint();
 		c.setAttachments(new ArrayList<String>());
+		c.setFixUpTask(new FixUpTask());
 		return c;
 	}
 

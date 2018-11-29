@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -28,7 +29,9 @@ public class WarrantyService {
 	 * @return a new empty warranty
 	 */
 	public Warranty create() {
-		return new Warranty();
+		final Warranty w = new Warranty();
+		w.setLaw(new ArrayList<String>());
+		return w;
 	}
 
 	/**

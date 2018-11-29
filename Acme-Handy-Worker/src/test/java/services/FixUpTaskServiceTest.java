@@ -268,7 +268,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	@Test
 	public void findAsHandyWorkerGood() {
 		super.authenticate("handy1");
-		final Collection<FixUpTask> f = this.fixUpTaskService.findAsHandyWorker();
+		final Collection<FixUpTask> f = this.fixUpTaskService.findAll();
 		Assert.isTrue(f != null);
 		super.unauthenticate();
 	}
@@ -277,7 +277,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		super.authenticate("Customer1");
 		Collection<FixUpTask> f = null;
 		try {
-			f = this.fixUpTaskService.findAsHandyWorker();
+			f = this.fixUpTaskService.findAll();
 
 		} catch (final Exception e) {
 			f = null;
