@@ -16,6 +16,7 @@ import utilities.AuthenticationUtility;
 import domain.Complaint;
 import domain.Customer;
 import domain.HandyWorker;
+import domain.Referee;
 
 @Service
 @Transactional
@@ -60,6 +61,29 @@ public class ComplaintService {
 		return this.complaintRepository.findFromCustomer(c.getId());
 	}
 
+	//===============REFEREE
+	/**
+	 * Checks referee authority (Req 36.1)
+	 * 
+	 * @return Collection of the complaints that have no referee
+	 */
+	public Collection<Complaint> findUnassigned() {
+		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.REFEREE);
+		Assert.isTrue(hasAu);
+		return this.complaintRepository.findUnassigned();
+	}
+	/**
+	 * Checks referee authority (Req 36.2)
+	 * 
+	 * @return Collection of the complaints of the logged referee
+	 */
+	public Collection<Complaint> findSelfassigned() {
+		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.REFEREE);
+		Assert.isTrue(hasAu);
+		final Referee referee = (Referee) this.actorService.findByUserAccountId(LoginService
+			.getPrincipal().getId());
+		return this.complaintRepository.findSelfassigned(referee.getId());
+	}
 	//===============HANDY WORKER
 	/**
 	 * Checks handy worker authority (Req 37.3)

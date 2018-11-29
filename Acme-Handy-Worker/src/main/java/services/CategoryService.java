@@ -13,6 +13,7 @@ import repositories.CategoryRepository;
 import security.Authority;
 import utilities.AuthenticationUtility;
 import domain.Category;
+import domain.FixUpTask;
 
 @Service
 @Transactional
@@ -20,6 +21,8 @@ public class CategoryService {
 
 	@Autowired
 	private CategoryRepository	catRepo;
+	@Autowired
+	private FixUpTaskService	futService;
 
 
 	/**
@@ -77,6 +80,11 @@ public class CategoryService {
 		//Admin authority
 		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
 		Assert.isTrue(au);
+		final Collection<FixUpTask> inCat = this.futService.getByCategory(category.getId());
+		for (final FixUpTask f : inCat) {
+			f.setCategory(null);
+			this.futService.save(f);
+		}
 		this.catRepo.delete(category);
 	}
 	/**
@@ -88,6 +96,11 @@ public class CategoryService {
 		//Admin authority
 		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
 		Assert.isTrue(au);
+		final Collection<FixUpTask> inCat = this.futService.getByCategory(categoryId);
+		for (final FixUpTask f : inCat) {
+			f.setCategory(null);
+			this.futService.save(f);
+		}
 		this.catRepo.delete(categoryId);
 	}
 }

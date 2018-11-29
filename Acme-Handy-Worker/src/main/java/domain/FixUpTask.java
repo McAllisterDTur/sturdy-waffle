@@ -106,7 +106,6 @@ public class FixUpTask extends DomainEntity {
 	public void setMaxPrice(final Double maxPrice) {
 		this.maxPrice = maxPrice;
 	}
-
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -137,9 +136,9 @@ public class FixUpTask extends DomainEntity {
 		this.creditCard = creditCard;
 	}
 
-	@NotNull
+	//@NotNull
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	public Category getCategory() {
 		return this.category;
 	}

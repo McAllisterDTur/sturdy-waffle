@@ -34,10 +34,12 @@ public class Complaint extends DomainEntity {
 
 	private FixUpTask			fixUpTask;
 
+	private Referee				referee;
+
 
 	@Column(unique = true)
 	@NotBlank
-	//@Pattern(regexp = "^(\\d{2})(\\d{2})(\\d{2})\\-([1-9a-zA-Z]{6})$")
+	@Pattern(regexp = "^(\\d{2})(\\d{2})(\\d{2})\\-([0-9a-zA-Z]{6})$")
 	public String getTicker() {
 		return this.ticker;
 	}
@@ -48,10 +50,9 @@ public class Complaint extends DomainEntity {
 
 	@NotNull
 	//@Past
-		@Temporal(TemporalType.DATE)
-		@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-		public
-		Date getComplaintTime() {
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	public Date getComplaintTime() {
 		return this.complaintTime;
 	}
 
@@ -94,11 +95,18 @@ public class Complaint extends DomainEntity {
 		this.fixUpTask = fixUpTask;
 	}
 
+	@ManyToOne(optional = true)
+	public Referee getReferee() {
+		return this.referee;
+	}
+
+	public void setReferee(final Referee referee) {
+		this.referee = referee;
+	}
+
 	@Override
 	public String toString() {
-		return "Complaint [ticker=" + this.ticker + ", complaintTime=" + this.complaintTime
-			+ ", description=" + this.description + ", attachments=" + this.attachments
-			+ ", isFinal=" + this.isFinal + ", fixUpTask=" + this.fixUpTask + "]";
+		return "Complaint [ticker=" + this.ticker + ", complaintTime=" + this.complaintTime + ", description=" + this.description + ", attachments=" + this.attachments + ", isFinal=" + this.isFinal + ", fixUpTask=" + this.fixUpTask + "]";
 	}
 
 }

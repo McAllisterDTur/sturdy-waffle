@@ -20,4 +20,10 @@ public interface ComplaintRepository extends JpaRepository<Complaint, Integer> {
 
 	@Query("select c from Complaint c join c.fixUpTask.applications a where a.handyWorker.id = ?1")
 	public Collection<Complaint> findFromHandyWorker(int id);
+
+	@Query("select c from Complaint c where c.referee = null")
+	public Collection<Complaint> findUnassigned();
+
+	@Query("select c from Complaint c where c.referee.id = ?1")
+	public Collection<Complaint> findSelfassigned(int id);
 }

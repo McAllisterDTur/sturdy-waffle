@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -7,7 +8,6 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -22,13 +22,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class ProfessionalRecord extends DomainEntity {
 
 	// Atributes
-	private String companyName;
-	private String role;
-	private Date start;
-	private Date end;
-	private String attachmentURL;
-	private Collection<String> comments;
-	private Curricula curricula;
+	private String				companyName;
+	private String				role;
+	private Date				start;
+	private Date				end;
+	private String				attachmentURL;
+	private Collection<String>	comments;
+
 
 	@NotBlank
 	public String getCompanyName() {
@@ -78,7 +78,7 @@ public class ProfessionalRecord extends DomainEntity {
 	public void setAttachmentURL(final String attachmentURL) {
 		this.attachmentURL = attachmentURL;
 	}
-	
+
 	@ElementCollection
 	public Collection<String> getComments() {
 		return this.comments;
@@ -88,22 +88,9 @@ public class ProfessionalRecord extends DomainEntity {
 		this.comments = comments;
 	}
 
-	@NotNull
-	@OneToOne(optional=false)
-	public Curricula getCurricula() {
-		return curricula;
-	}
-
-	public void setCurricula(Curricula curricula) {
-		this.curricula = curricula;
-	}
-
 	@Override
 	public String toString() {
-		return "ProfessionalRecord [companyName=" + companyName + ", role="
-				+ role + ", start=" + start + ", end=" + end
-				+ ", attachmentURL=" + attachmentURL + ", comments=" + comments
-				+ ", curricula=" + curricula + "]";
+		return "ProfessionalRecord [companyName=" + this.companyName + ", role=" + this.role + ", start=" + this.start + ", end=" + this.end + ", attachmentURL=" + this.attachmentURL + ", comments=" + this.comments + "]";
 	}
 
 }

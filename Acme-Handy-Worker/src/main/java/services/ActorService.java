@@ -42,7 +42,7 @@ public class ActorService {
 	 * @return actor
 	 */
 	public Actor save(final Actor actor) {
-		Assert.isNull(actor);
+		Assert.notNull(actor);
 		Actor result = null;
 		if (actor.getId() != 0) {
 			final UserAccount ua = LoginService.getPrincipal();
@@ -61,6 +61,8 @@ public class ActorService {
 				result = this.actorRepository.save(actor);
 			}
 		} else {
+			//TODO Por ahora, por decisión de grupo, la useracount se agrega
+			//en el controller
 			actor.setBanned(false);
 			result = this.actorRepository.save(actor);
 		}
@@ -73,8 +75,6 @@ public class ActorService {
 	 * @return actors
 	 */
 	public Collection<Actor> findAll() {
-		final UserAccount ua = LoginService.getPrincipal();
-		Assert.isNull(ua);
 		final Collection<Actor> result = this.actorRepository.findAll();
 		return result;
 	}
@@ -86,9 +86,6 @@ public class ActorService {
 	 * @return actor
 	 */
 	public Actor findOne(final int actorId) {
-		//TODO Posee más lógica de negocio?
-		final UserAccount ua = LoginService.getPrincipal();
-		Assert.isNull(ua);
 		final Actor result = this.actorRepository.findOne(actorId);
 		return result;
 	}
@@ -102,5 +99,17 @@ public class ActorService {
 	public Actor findByUserAccountId(final int accountId) {
 
 		return this.actorRepository.findByUserAccountId(accountId);
+	}
+	//B
+	public void ban(final Actor end) {
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
+		end.setBanned(true);
+		this.actorRepository.save(end);
+	}
+	//B
+	public void unban(final Actor end) {
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
+		end.setBanned(false);
+		this.actorRepository.save(end);
 	}
 }

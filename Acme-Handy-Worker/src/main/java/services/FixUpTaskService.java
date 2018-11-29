@@ -138,8 +138,7 @@ public class FixUpTaskService {
 
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
-		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService
-			.getPrincipal().getId());
+		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.findFromCustomer(c.getId());
 		return res;
 	}
@@ -196,8 +195,7 @@ public class FixUpTaskService {
 	 * @param close
 	 * @return a collection of fix up tasks filtered by the parameters given
 	 */
-	public Collection<FixUpTask> findByFilter(String keyWord, String category, String warranty,
-		Double minPrice, Double maxPrice, Date open, Date close) {
+	public Collection<FixUpTask> findByFilter(String keyWord, String category, String warranty, Double minPrice, Double maxPrice, Date open, Date close) {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
@@ -218,14 +216,17 @@ public class FixUpTaskService {
 		open = open == null ? d1 : open;
 		close = close == null ? d2 : close;
 
-		final Collection<FixUpTask> res = this.fixUpTaskRepository.findByFilter(keyWord, category,
-			warranty, minPrice, maxPrice, open, close);
+		final Collection<FixUpTask> res = this.fixUpTaskRepository.findByFilter(keyWord, category, warranty, minPrice, maxPrice, open, close);
 
 		return res;
 	}
 
 	public int getNumberOfTickers(final String ticker) {
 		return this.fixUpTaskRepository.getNumberOfTickers(ticker);
+	}
+
+	public Collection<FixUpTask> getByCategory(final int categoryId) {
+		return this.fixUpTaskRepository.getFixUpTasksByCategory(categoryId);
 	}
 
 }

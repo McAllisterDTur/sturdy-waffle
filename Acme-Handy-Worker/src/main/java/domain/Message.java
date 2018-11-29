@@ -26,7 +26,7 @@ public class Message extends DomainEntity {
 
 	private Actor				sender;
 	private Actor				reciever;
-	private Date			sendTime;
+	private Date				sendTime;
 	private String				subject;
 	private String				body;
 	private Collection<String>	tags;
@@ -37,7 +37,7 @@ public class Message extends DomainEntity {
 
 
 	@NotNull
-	@ManyToOne(optional=false)
+	@ManyToOne(optional = false)
 	public Actor getSender() {
 		return this.sender;
 	}
@@ -46,8 +46,9 @@ public class Message extends DomainEntity {
 		this.sender = sender;
 	}
 
-	@NotNull
-	@ManyToOne(optional=false)
+	//@NotNull
+	//@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	public Actor getReciever() {
 		return this.reciever;
 	}
@@ -56,7 +57,7 @@ public class Message extends DomainEntity {
 		this.reciever = reciever;
 	}
 
-	@NotNull
+	//@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -94,7 +95,7 @@ public class Message extends DomainEntity {
 	public void setTags(final Collection<String> tags) {
 		this.tags = tags;
 	}
-	
+
 	@NotBlank
 	@Pattern(regexp = "\\b(HIGH|NEUTRAL|LOW)\\b")
 	public String getPriority() {

@@ -35,13 +35,12 @@ public class CurriculaService {
 		Assert.isTrue(au);
 		final Curricula c = this.findFromLoggedHandyWorker();
 		// If we have a curricula we can't create another
-		if (c != null) {
+		if (c.getId() != 0) {
 			Assert.isTrue(c.getHandyWorker().equals(curricula.getHandyWorker()));
 			Assert.isTrue(c.getId() == curricula.getId());
 		}
 		curricula.setTicker(this.tickerService.getTicker());
-		curricula.setHandyWorker((HandyWorker) this.actorService.findByUserAccountId(LoginService
-			.getPrincipal().getId()));
+		curricula.setHandyWorker((HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()));
 		return this.curriculaRepository.save(curricula);
 	}
 
@@ -50,9 +49,8 @@ public class CurriculaService {
 	}
 
 	public Curricula findFromLoggedHandyWorker() {
-		final HandyWorker h = (HandyWorker) this.actorService.findByUserAccountId(LoginService
-			.getPrincipal().getId());
-		return this.curriculaRepository.findOne(h.getId());
+		final HandyWorker h = (HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		return this.curriculaRepository.getFromHandyWorker(h.getId());
 	}
 
 	public int getNumberOfTickers(final String ticker) {

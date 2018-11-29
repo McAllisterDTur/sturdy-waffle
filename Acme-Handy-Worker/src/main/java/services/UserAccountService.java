@@ -25,6 +25,8 @@ public class UserAccountService {
 	public UserAccount save(final UserAccount user) {
 		Assert.notNull(user);
 
+		//TODO: comprobar que solo existe un authority para el account
+
 		return this.repo.save(user);
 	}
 

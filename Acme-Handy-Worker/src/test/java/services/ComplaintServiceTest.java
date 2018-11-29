@@ -17,9 +17,9 @@ import org.springframework.util.Assert;
 import utilities.AbstractTest;
 import domain.Complaint;
 
-// Indica que se tiene que ejecutar a través de Spring
+// Indica que se tiene que ejecutar a travï¿½s de Spring
 @RunWith(SpringJUnit4ClassRunner.class)
-//Indica los ficheros de configuración
+//Indica los ficheros de configuraciï¿½n
 @ContextConfiguration(locations = {
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
@@ -37,16 +37,16 @@ public class ComplaintServiceTest extends AbstractTest {
 		final Complaint c = this.cService.create();
 		c.setAttachments(Arrays.asList("Attachment 1", "Attachment 2"));
 		c.setComplaintTime(new Date());
-		c.setDescription("Escucha la historia de como mi vida cambió mi movida");
+		c.setDescription("Escucha la historia de como mi vida cambiï¿½ mi movida");
 		c.setIsFinal(false);
 		this.cService.save(c);
 		super.unauthenticate();
 	}
+
 	@Test
 	public void saveBad() {
 		super.authenticate("handy1");
 		final Complaint c = this.cService.create();
-		;
 		Complaint c1 = null;
 		try {
 			c1 = this.cService.save(c);
@@ -75,7 +75,49 @@ public class ComplaintServiceTest extends AbstractTest {
 		Assert.isNull(c);
 		super.unauthenticate();
 	}
+	@Test
+	public void findUnassignedGood() {
+		super.authenticate("referee1");
+		final Collection<Complaint> c = this.cService.findUnassigned();
+		// TODO: Los tickers deben estar en mayÃºscula
+		for (final Complaint co : c)
+			System.out.println(co.getTicker());
+		Assert.notNull(c);
+		super.unauthenticate();
+	}
 
+	@Test
+	public void findUnassignedBad() {
+		super.authenticate("Customer1");
+		Collection<Complaint> c = null;
+		try {
+			c = this.cService.findUnassigned();
+
+		} catch (final Exception e) {
+		}
+		Assert.isNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void findSelfassignedGood() {
+		super.authenticate("referee1");
+		final Collection<Complaint> c = this.cService.findSelfassigned();
+		Assert.notNull(c);
+		super.unauthenticate();
+	}
+	@Test
+	public void findSelfassignedBad() {
+		super.authenticate("Customer1");
+		Collection<Complaint> c = null;
+		try {
+			c = this.cService.findSelfassigned();
+
+		} catch (final Exception e) {
+		}
+		Assert.isNull(c);
+		super.unauthenticate();
+	}
 	@Test
 	public void findFromLoggedHandyWorkerGood() {
 		super.authenticate("handy1");

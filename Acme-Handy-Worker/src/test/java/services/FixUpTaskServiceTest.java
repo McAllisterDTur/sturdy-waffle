@@ -46,9 +46,9 @@ public class FixUpTaskServiceTest extends AbstractTest {
 
 		super.authenticate("Customer1");
 		final UserAccount userAccount = LoginService.getPrincipal();
-		final Customer c = (Customer) this.actorService.findByUserAccountId(userAccount.getId());
+		final Actor c = this.actorService.findByUserAccountId(userAccount.getId());
 		// TODO: Esto no peta y debería porque no tenemos los valores necesarios.
-		f.setCustomer(c);
+		f.setCustomer((Customer) c);
 		super.unauthenticate();
 		super.authenticate("admin");
 		final Warranty w = this.warrantyService.create();
@@ -210,39 +210,9 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		Assert.isTrue(f == null);
 		super.unauthenticate();
 	}
-	@Test
-	public void findFromLoggedCustomerGood() {
-		super.authenticate("Customer1");
-		final Collection<FixUpTask> f = this.fixUpTaskService.findFromLoggedCustomer();
-		Assert.isTrue(f != null);
-		super.unauthenticate();
-	}
-
-	@Test
-	public void findFromLoggedCustomerBad() {
-		super.authenticate("handy1");
-		Collection<FixUpTask> f = null;
-		try {
-			f = this.fixUpTaskService.findFromLoggedCustomer();
-		} catch (final Exception e) {
-		}
-		Assert.isTrue(f == null);
-		super.unauthenticate();
-	}
 
 	@Test
 	public void findFromCustomerGood1() {
-		super.authenticate("Customer1");
-		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService
-			.getPrincipal().getId());
-		super.unauthenticate();
-		super.authenticate("handy1");
-		final Collection<FixUpTask> f = this.fixUpTaskService.findFromCustomer(c.getId());
-		Assert.isTrue(f != null);
-		super.unauthenticate();
-	}
-	@Test
-	public void findFromCustomerGood2() {
 		super.authenticate("Customer1");
 		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService
 			.getPrincipal().getId());

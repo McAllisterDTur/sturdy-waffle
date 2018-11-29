@@ -3,14 +3,11 @@ package services;
 
 import java.util.Random;
 
-import javax.transaction.Transactional;
-
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@Transactional
 public class TickerService {
 
 	@Autowired
