@@ -13,11 +13,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
+import services.ComplaintService;
 import services.NotesServices;
 import services.ReportService;
 import utilities.AbstractTest;
+import domain.Customer;
+import domain.HandyWorker;
 import domain.Notes;
 import domain.Referee;
 import domain.Report;
@@ -33,26 +37,84 @@ import domain.Report;
 public class NotesServicesTest extends AbstractTest {
 
 	@Autowired
-	private NotesServices	notesServices;
+	private NotesServices		notesServices;
 	@Autowired
-	private ReportService	reportService;
+	private ReportService		reportService;
 	@Autowired
-	private ActorService	actorService;
+	private ActorService		actorService;
+	@Autowired
+	private ComplaintService	complaintService;
 
-	private UserAccount		account;
+	private UserAccount			account;
 
 
 	@Test
 	public void testCreateAndTestReferee() {
 		super.authenticate("referee1");
+		this.account = LoginService.getPrincipal();
 		final Notes n = this.notesServices.create();
 
 		Assert.notNull(n);
-		final Collection<Report> repor = this.reportService.findReportsReferee((Referee) this.actorService.findByUserAccountId(this.account.getId()));
+		final Referee actor = (Referee) this.actorService.findByUserAccountId(this.account.getId());
+		final Collection<Report> reports = this.reportService.findReportsActor(actor.getId());
+
+		Report r = null;
+		for (final Report t : reports)
+			if (t.getNotes().isEmpty()) {
+				r = t;
+				break;
+			}
 
 		n.setMoment(new Date());
-		n.setReport();
+		n.setReport(r);
 
 		super.unauthenticate();
 	}
+
+	@Test
+	public void testCreateAndTestCustomer() {
+		super.authenticate("Customer1");
+		this.account = LoginService.getPrincipal();
+		final Notes n = this.notesServices.create();
+
+		Assert.notNull(n);
+		final Customer actor = (Customer) this.actorService.findByUserAccountId(this.account.getId());
+		final Collection<Report> reports = this.reportService.findReportsActor(actor.getId());
+
+		Report r = null;
+		for (final Report t : reports)
+			if (t.getNotes().isEmpty()) {
+				r = t;
+				break;
+			}
+
+		n.setMoment(new Date());
+		n.setReport(r);
+
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testCreateAndTestWorker() {
+		super.authenticate("handy2");
+		this.account = LoginService.getPrincipal();
+		final Notes n = this.notesServices.create();
+
+		Assert.notNull(n);
+		final HandyWorker actor = (HandyWorker) this.actorService.findByUserAccountId(this.account.getId());
+		final Collection<Report> reports = this.reportService.findReportsActor(actor.getId());
+
+		Report r = null;
+		for (final Report t : reports)
+			if (t.getNotes().isEmpty()) {
+				r = t;
+				break;
+			}
+
+		n.setMoment(new Date());
+		n.setReport(r);
+
+		super.unauthenticate();
+	}
+
 }
