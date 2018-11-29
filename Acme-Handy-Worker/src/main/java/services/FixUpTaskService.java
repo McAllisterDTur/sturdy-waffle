@@ -45,10 +45,10 @@ public class FixUpTaskService {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
-		//final Authority au = new Authority();
-		//au.setAuthority(Authority.CUSTOMER);
-		//Assert.isTrue(userAccount.getAuthorities().contains(au));
-		Assert.isTrue(userAccount.getAuthorities().iterator().next().getAuthority().equals(Authority.CUSTOMER));
+		final Authority au = new Authority();
+		au.setAuthority(Authority.CUSTOMER);
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
 		final FixUpTask res;
 		if (fixUpTask.getId() != 0) {
 			final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTask.getId());

@@ -16,7 +16,6 @@ import org.springframework.util.Assert;
 import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
-import services.ComplaintService;
 import services.NotesServices;
 import services.ReportService;
 import utilities.AbstractTest;
@@ -37,15 +36,13 @@ import domain.Report;
 public class NotesServicesTest extends AbstractTest {
 
 	@Autowired
-	private NotesServices		notesServices;
+	private NotesServices	notesServices;
 	@Autowired
-	private ReportService		reportService;
+	private ReportService	reportService;
 	@Autowired
-	private ActorService		actorService;
-	@Autowired
-	private ComplaintService	complaintService;
+	private ActorService	actorService;
 
-	private UserAccount			account;
+	private UserAccount		account;
 
 
 	@Test

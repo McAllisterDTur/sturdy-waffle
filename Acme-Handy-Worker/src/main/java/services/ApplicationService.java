@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -14,8 +15,10 @@ import repositories.ApplicationRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import utilities.AuthenticationUtility;
 import domain.Application;
 import domain.Customer;
+import domain.FixUpTask;
 import domain.HandyWorker;
 import domain.Phase;
 
@@ -29,6 +32,10 @@ public class ApplicationService {
 	private CustomerService			customerService;
 	@Autowired
 	private HandyWorkerService		workerService;
+	@Autowired
+	private FixUpTaskService		taskService;
+	@Autowired
+	private ActorService			actorService;
 	private UserAccount				account;
 
 
@@ -44,9 +51,54 @@ public class ApplicationService {
 
 	public Application save(final Application application) {
 		Assert.notNull(application);
-		Assert.isTrue(application.getOfferedPrice() != 0);
-		//TODO: restricción para aceptarla
-		return this.applicationRepo.save(application);
+
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER) || AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
+		Application a;
+		if (application.getId() == 0) {//creacción port parte del handyWorker
+			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
+			Assert.isTrue(application.getOfferedPrice() != 0);
+
+			application.setRegisterTime(new Date());
+			application.setStatus("PENDING");
+			a = this.applicationRepo.save(application);
+
+			final FixUpTask task = a.getFixUpTask();
+			task.getApplications().add(a);
+
+			this.taskService.save(task);
+		} else {//Actualizacion del status por parte del customer dueño de la fixUpTask
+			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
+			Assert.isTrue(application.getFixUpTask().getCustomer().getAccount().equals(this.account));//customer loggeado dueño de la task
+			if (application.getStatus().equals("ACCEPTED"))
+				Assert.notNull(application.getFixUpTask().getCreditCard());
+			a = this.applicationRepo.save(application);
+		}
+		return a;
+	}
+
+	public Application saveComment(final int applicationId, final String comment) {
+
+		Assert.isTrue(applicationId > 0);
+		Assert.notNull(comment);
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER) || AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
+		this.account = LoginService.getPrincipal();
+		final Application application = this.findOne(applicationId);
+		Application res;
+		if (AuthenticationUtility.checkAuthority(Authority.CUSTOMER)) {
+			final Customer c = (Customer) this.actorService.findByUserAccountId(this.account.getId());
+			Assert.isTrue(c.getFixUpTasks().contains(application));
+
+			application.getCustomerComments().add(comment);
+		} else {
+			final HandyWorker h = (HandyWorker) this.actorService.findByUserAccountId(this.account.getId());
+			Assert.isTrue(h.getApplications().contains(application));
+
+			application.getHandyComments().add(comment);
+		}
+
+		res = this.applicationRepo.save(application);
+
+		return res;
 	}
 
 	public Collection<Application> findAllCustomer(final int customerId) {

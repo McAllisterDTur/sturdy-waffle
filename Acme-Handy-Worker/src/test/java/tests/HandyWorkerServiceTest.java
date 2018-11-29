@@ -87,18 +87,30 @@ public class HandyWorkerServiceTest extends AbstractTest {
 
 	@Test
 	public void testFindOne() {
-		super.authenticate("worker3");
+		super.authenticate("handy3");
 		final HandyWorker w = (HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(w);
 	}
 
 	@Test
 	public void testAverage() {
-		super.authenticate("Admin");
+		super.authenticate("admin");
 
 		final Collection<HandyWorker> res = this.worker.findWorkerMoreAverage();
 
 		Assert.notNull(res);
+
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testTop3Workers() {
+		super.authenticate("admin");
+
+		final Collection<HandyWorker> res = this.worker.findTop3HandyWorkers();
+
+		Assert.notNull(res);
+		Assert.notEmpty(res);
 
 		super.unauthenticate();
 	}

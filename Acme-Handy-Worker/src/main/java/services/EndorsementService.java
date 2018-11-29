@@ -21,10 +21,6 @@ public class EndorsementService {
 
 	@Autowired
 	private EndorsementRepository	endorsementRepository;
-	@Autowired
-	private ActorService			actorService;
-	@Autowired
-	private FixUpTaskService		taskService;
 
 	private UserAccount				account;
 
