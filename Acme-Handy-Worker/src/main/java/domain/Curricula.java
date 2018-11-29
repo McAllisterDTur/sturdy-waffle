@@ -23,16 +23,17 @@ public class Curricula extends DomainEntity {
 	private String							ticker;
 
 	// Relationships
-	private HandyWorker					handyWorker;
-	private PersonalRecord	personalRecord;
-	private Collection<ProfessionalRecord> ProfessionalRecords;
-	private Collection<EndorserRecord> endorserRecords;
-	private Collection<MiscellaneousRecord> miscellaneousRecords;
-	private Collection<EducationRecord> educationRecord;
+	private HandyWorker						handyWorker;
+	private PersonalRecord					personalRecord;
+	private Collection<ProfessionalRecord>	professionalRecords;
+	private Collection<EndorserRecord>		endorserRecords;
+	private Collection<MiscellaneousRecord>	miscellaneousRecords;
+	private Collection<EducationRecord>		educationRecord;
+
 
 	@Column(unique = true)
 	@NotBlank
-	@Pattern(regexp = "(\\d{2})(([0][1-9])|([1][0-2]))(([0][1-9])|[1-2][0-9]|[3][0-1])-(([A-Z]|[0-9]){6})$")
+	@Pattern(regexp = "^(\\d{2})(\\d{2})(\\d{2})\\-([0-9a-zA-Z]{6})$")
 	public String getTicker() {
 		return this.ticker;
 	}
@@ -42,55 +43,53 @@ public class Curricula extends DomainEntity {
 	}
 
 	@NotNull
-	@OneToOne(optional=false)
+	@OneToOne(optional = false)
 	public HandyWorker getHandyWorker() {
-		return handyWorker;
+		return this.handyWorker;
 	}
 
 	public void setHandyWorker(final HandyWorker handyWorker) {
 		this.handyWorker = handyWorker;
 	}
-	
-	@OneToOne(cascade=CascadeType.ALL)
+
+	@OneToOne(cascade = CascadeType.ALL)
 	public PersonalRecord getPersonalRecord() {
-		return personalRecord;
+		return this.personalRecord;
 	}
 
 	public void setPersonalRecord(final PersonalRecord personalRecord) {
 		this.personalRecord = personalRecord;
 	}
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<ProfessionalRecord> getProfessionalRecords() {
-		return ProfessionalRecords;
+		return this.professionalRecords;
 	}
 
-	public void setProfessionalRecords(
-			final Collection<ProfessionalRecord> professionalRecords) {
-		ProfessionalRecords = professionalRecords;
+	public void setProfessionalRecords(final Collection<ProfessionalRecord> professionalRecords) {
+		this.professionalRecords = professionalRecords;
 	}
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<EndorserRecord> getEndorserRecords() {
-		return endorserRecords;
+		return this.endorserRecords;
 	}
 
 	public void setEndorserRecords(final Collection<EndorserRecord> endorserRecords) {
 		this.endorserRecords = endorserRecords;
 	}
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<MiscellaneousRecord> getMiscellaneousRecords() {
-		return miscellaneousRecords;
+		return this.miscellaneousRecords;
 	}
 
-	public void setMiscellaneousRecords(
-			final Collection<MiscellaneousRecord> miscellaneousRecords) {
+	public void setMiscellaneousRecords(final Collection<MiscellaneousRecord> miscellaneousRecords) {
 		this.miscellaneousRecords = miscellaneousRecords;
 	}
-	
-	@OneToMany(cascade=CascadeType.ALL)
+
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<EducationRecord> getEducationRecord() {
-		return educationRecord;
+		return this.educationRecord;
 	}
 
 	public void setEducationRecord(final Collection<EducationRecord> educationRecord) {
@@ -98,7 +97,7 @@ public class Curricula extends DomainEntity {
 	}
 	@Override
 	public String toString() {
-		return "Curricula [ticker=" + ticker + ", handyWorker=" + handyWorker + "]";
+		return "Curricula [ticker=" + this.ticker + ", handyWorker=" + this.handyWorker + "]";
 	}
 
 }

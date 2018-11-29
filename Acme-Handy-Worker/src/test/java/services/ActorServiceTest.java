@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 import security.LoginService;
 import security.UserAccount;
 import utilities.AbstractTest;
+import domain.Actor;
 import domain.Customer;
 
 // Indica que se tiene que ejecutar a través de Spring
@@ -42,5 +43,24 @@ public class ActorServiceTest extends AbstractTest {
 
 		super.unauthenticate();
 
+	}
+
+	@Test
+	public void testBan() {
+		super.authenticate("admin");
+		final Actor a = this.actorService.findAll().iterator().next();
+		this.actorService.ban(a);
+		final Actor as = this.actorService.save(a);
+		Assert.isTrue(this.actorService.findOne(as.getId()).getBanned());
+	}
+	@Test
+	public void testUnBan() {
+		super.authenticate("admin");
+		final Actor a = this.actorService.findAll().iterator().next();
+		this.actorService.ban(a);
+		final Actor as = this.actorService.save(a);
+		this.actorService.unban(as);
+		final Actor asu = this.actorService.save(a);
+		Assert.isTrue(!this.actorService.findOne(asu.getId()).getBanned());
 	}
 }

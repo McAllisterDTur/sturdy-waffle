@@ -33,21 +33,23 @@ public class SectionServiceTest extends AbstractTest {
 
 	@Test
 	public void CreateGoodTest() {
-		super.authenticate("handy1");
+		final Tutorial tuto = this.tutorialService.findAll().iterator().next();
+		super.authenticate(tuto.getWorker().getAccount().getUsername());
 		final Section section = new Section();
 		final Collection<String> photos = new ArrayList<>();
 		section.setPhotoURL(photos);
-		final Section ac = this.sectionService.create();
+		final Section ac = this.sectionService.create(tuto);
 		Assert.isTrue(section.equals(ac));
 		super.unauthenticate();
 	}
 	@Test
 	public void CreateBadTest() {
+		final Tutorial tuto = this.tutorialService.findAll().iterator().next();
 		super.authenticate("Customer1");
 		final Section a = new Section();
-		Section ac = null;
+		Section ac = a;
 		try {
-			ac = this.sectionService.create();
+			ac = this.sectionService.create(tuto);
 		} catch (final Exception e) {
 			ac = null;
 		}
@@ -84,11 +86,10 @@ public class SectionServiceTest extends AbstractTest {
 		final Collection<Tutorial> tutorial = this.tutorialService.findAll();
 		final Tutorial tuto = tutorial.iterator().next();
 		super.authenticate(tuto.getWorker().getAccount().getUsername());
-		final Section ac = this.sectionService.create();
+		final Section ac = this.sectionService.create(tuto);
 		ac.setNumber(3);
 		ac.setText("one");
 		ac.setTitle("two");
-		ac.setTutorial(tuto);
 		final Section tu = this.sectionService.save(ac);
 		ac.setId(tu.getId());
 		ac.setVersion(tu.getVersion());
@@ -106,7 +107,7 @@ public class SectionServiceTest extends AbstractTest {
 		ac.setText("one");
 		ac.setTitle("two");
 		ac.setTutorial(tuto);
-		Section tu = null;
+		Section tu = ac;
 		try {
 			tu = this.sectionService.save(ac);
 		} catch (final Exception e) {
@@ -132,10 +133,10 @@ public class SectionServiceTest extends AbstractTest {
 	public void SaveEditBadTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial tu = ac.iterator().next();
-		super.authenticate("Customer1");
+		super.authenticate("handy5");
 		final Section sec = tu.getSections().iterator().next();
 		sec.setTitle("dos");
-		Section sect = null;
+		Section sect = sec;
 		try {
 			sect = this.sectionService.save(sec);
 		} catch (final Exception e) {
@@ -169,13 +170,14 @@ public class SectionServiceTest extends AbstractTest {
 		final Tutorial tu = ac.iterator().next();
 		super.authenticate("Customer1");
 		final Section sec = tu.getSections().iterator().next();
-		Section sect = null;
+		Boolean sect = null;
 		try {
 			this.sectionService.delete(sec);
+			sect = false;
 		} catch (final Exception e) {
-			sect = null;
+			sect = true;
 		}
-		Assert.isNull(sect);
+		Assert.isTrue(sect);
 		super.unauthenticate();
 	}
 

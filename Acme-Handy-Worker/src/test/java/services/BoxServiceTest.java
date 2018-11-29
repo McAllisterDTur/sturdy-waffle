@@ -146,8 +146,6 @@ public class BoxServiceTest extends AbstractTest {
 		n.setName("TEST BOX");
 		n.setOwner(owner);
 		n.setMessages(null);
-		//And now we save it
-		final Box saved = this.boxService.save(n);
 		//Is it associated with the user?
 		Assert.notNull(this.boxService.findByName(owner.getId(), "TRASH"));
 	}

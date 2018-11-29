@@ -39,7 +39,7 @@ public class Report extends DomainEntity {
 		this.isFinal = isFinal;
 	}
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Notes> getNotes() {
 		return this.notes;
 	}
@@ -80,19 +80,19 @@ public class Report extends DomainEntity {
 
 
 	//Relationships
-	private Referee		referee;
+	//	private Referee		referee;
 	private Complaint	complaint;
 
 
-	@NotNull
-	@ManyToOne(optional = false)
-	public Referee getReferee() {
-		return this.referee;
-	}
-
-	public void setReferee(final Referee referee) {
-		this.referee = referee;
-	}
+	//	@NotNull
+	//	@ManyToOne(optional = false)
+	//	public Referee getReferee() {
+	//		return this.referee;
+	//	}
+	//
+	//	public void setReferee(final Referee referee) {
+	//		this.referee = referee;
+	//	}
 
 	@NotNull
 	@ManyToOne(optional = false)
@@ -106,7 +106,7 @@ public class Report extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "Report [reportTime=" + this.reportTime + ", description=" + this.description + ", attachment=" + this.attachment + ", isFinal=" + this.isFinal + ", referee=" + this.referee + ", complaint=" + this.complaint + "]";
+		return "Report [reportTime=" + this.reportTime + ", description=" + this.description + ", attachment=" + this.attachment + ", isFinal=" + this.isFinal + ", complaint=" + this.complaint + "]";
 	}
 
 }

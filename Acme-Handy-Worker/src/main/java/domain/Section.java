@@ -24,7 +24,7 @@ public class Section extends DomainEntity {
 	private Tutorial			tutorial;
 
 
-	@NotBlank
+	@NotNull
 	public int getNumber() {
 		return this.number;
 	}

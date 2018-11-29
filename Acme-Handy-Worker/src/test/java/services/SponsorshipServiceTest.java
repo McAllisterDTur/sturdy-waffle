@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.transaction.Transactional;
 
@@ -30,25 +31,24 @@ public class SponsorshipServiceTest extends AbstractTest {
 	private TutorialService		tutorialService;
 
 
-	//
-	//	@Autowired
-	//	private SectionRepository	sectionRepository;
-
 	@Test
 	public void CreateGoodTest() {
+		final Tutorial tuto = this.tutorialService.findAll().iterator().next();
 		super.authenticate("sponsor1");
 		final Sponsorship a = new Sponsorship();
-		final Sponsorship ac = this.sponsorshipService.create();
+		final Sponsorship ac = this.sponsorshipService.create(tuto);
 		Assert.isTrue(a.equals(ac));
 		super.unauthenticate();
 	}
 	@Test
 	public void CreateBadTest() {
 		super.authenticate("Customer1");
+		final Tutorial tuto = this.tutorialService.findAll().iterator().next();
 		final Sponsorship a = new Sponsorship();
+		a.setTutorials(tuto);
 		Sponsorship ac = null;
 		try {
-			ac = this.sponsorshipService.create();
+			ac = this.sponsorshipService.create(tuto);
 		} catch (final Exception e) {
 			ac = null;
 		}
@@ -74,21 +74,22 @@ public class SponsorshipServiceTest extends AbstractTest {
 
 	@Test
 	public void SaveNewGoodTest() {
-		final Collection<Tutorial> ac = this.tutorialService.findAll();
-		final Tutorial tu = ac.iterator().next();
+		final Iterator<Tutorial> ac = this.tutorialService.findAll().iterator();
+		final Tutorial tu = ac.next();
 		final Sponsorship s = tu.getSponsorships().iterator().next();
 		super.authenticate(s.getSponsor().getAccount().getUsername());
 
 		final Sponsorship acs = new Sponsorship();
-		acs.setBannerURL(s.getBannerURL());
+		acs.setBannerURL("www.us.es");
 		acs.setCreditCard(s.getCreditCard());
-		acs.setTargetPageLink(s.getTargetPageLink());
-		acs.setSponsor(s.getSponsor());
-		acs.setTutorials(s.getTutorials());
-
+		acs.setTargetPageLink("lsi.us.es");
+		acs.setTutorials(tu);
+		System.out.println(acs);
 		final Sponsorship sect = this.sponsorshipService.save(acs);
+		System.out.println(sect);
 		acs.setId(sect.getId());
 		acs.setVersion(sect.getVersion());
+		acs.setSponsor(sect.getSponsor());
 		Assert.isTrue(sect.equals(acs));
 		super.unauthenticate();
 	}
@@ -106,8 +107,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 		acs.setTargetPageLink(s.getTargetPageLink());
 		acs.setSponsor(s.getSponsor());
 		acs.setTutorials(s.getTutorials());
-
-		Sponsorship sect = null;
+		Sponsorship sect = acs;
 		try {
 			sect = this.sponsorshipService.save(acs);
 		} catch (final Exception e) {
@@ -170,15 +170,16 @@ public class SponsorshipServiceTest extends AbstractTest {
 	public void DeleteBadTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial tu = ac.iterator().next();
-		super.authenticate("Customer1");
+		super.authenticate("sponsor2");
 		final Sponsorship sec = tu.getSponsorships().iterator().next();
-		Sponsorship sect = null;
+		Boolean prueba = null;
 		try {
 			this.sponsorshipService.delete(sec);
+			prueba = false;
 		} catch (final Exception e) {
-			sect = null;
+			prueba = true;
 		}
-		Assert.isNull(sect);
+		Assert.isTrue(prueba);
 		super.unauthenticate();
 	}
 

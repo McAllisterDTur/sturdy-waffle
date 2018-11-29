@@ -21,8 +21,8 @@ public interface FixUpTaskRepository extends JpaRepository<FixUpTask, Integer> {
 
 	//@Query("select f from FixUpTask f where f.ticker like ?1 and f.description like ?1 and f.address like ?1 and f.category.name = ?2 and f.warranty.title = ?3 and f.maxPrice >= ?4 and f.maxPrice <= ?5 and (f.periodStart between ?6 and ?7)")
 	@Query("select f from FixUpTask f where (f.ticker like %?1% or f.description like %?1% or f.address like %?1%) and f.category.name like %?2% and f.warranty.title like %?3% and f.maxPrice >= ?4 and f.maxPrice <= ?5 and f.periodStart between ?6 and ?7")
-	public
-		Collection<FixUpTask> findByFilter(String keyWord, String category, String warranty,
-			double minPrice, double maxPrice, Date open, Date close);
+	public Collection<FixUpTask> findByFilter(String keyWord, String category, String warranty, double minPrice, double maxPrice, Date open, Date close);
 
+	@Query("select f from FixUpTask f where f.category.id = ?1")
+	public Collection<FixUpTask> getFixUpTasksByCategory(int catId);
 }

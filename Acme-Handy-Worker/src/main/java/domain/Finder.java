@@ -2,27 +2,36 @@
 package domain;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Finder extends DomainEntity {
 
-	private String			warranty;
-	private String			keyWord;
-	private String			category;
-	private String			priceRange;
-	private String			dateRange;
+	private String					warranty;
+	private String					keyWord;
+	private String					category;
+	private Double					minPrice;
+	private Double					maxPrice;
 	private Collection<FixUpTask>	fixUpTask;
+	private Date					endDate;
+	private Date					startDate;
+	private Date					cacheUpdate;
 
 	//+
-	private HandyWorker		worker;
+	private HandyWorker				worker;
+
 
 	public String getWarranty() {
 		return this.warranty;
@@ -48,22 +57,6 @@ public class Finder extends DomainEntity {
 		this.category = category;
 	}
 
-	public String getPriceRange() {
-		return this.priceRange;
-	}
-
-	public void setPriceRange(final String priceRange) {
-		this.priceRange = priceRange;
-	}
-
-	public String getDateRange() {
-		return this.dateRange;
-	}
-
-	public void setDateRange(final String dateRange) {
-		this.dateRange = dateRange;
-	}
-
 	@ManyToMany()
 	public Collection<FixUpTask> getFixUpTask() {
 		return this.fixUpTask;
@@ -74,7 +67,7 @@ public class Finder extends DomainEntity {
 	}
 
 	@NotNull
-	@OneToOne(optional=false)
+	@OneToOne(optional = false)
 	public HandyWorker getWorker() {
 		return this.worker;
 	}
@@ -83,10 +76,53 @@ public class Finder extends DomainEntity {
 		this.worker = worker;
 	}
 
+	public Double getMinPrice() {
+		return this.minPrice;
+	}
+
+	public void setMinPrice(final Double minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	public Double getMaxPrice() {
+		return this.maxPrice;
+	}
+
+	public void setMaxPrice(final Double maxPrice) {
+		this.maxPrice = maxPrice;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	public Date getEndDate() {
+		return this.endDate;
+	}
+
+	public void setEndDate(final Date endDate) {
+		this.endDate = endDate;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	public Date getStartDate() {
+		return this.startDate;
+	}
+
+	public void setStartDate(final Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getCacheUpdate() {
+		return this.cacheUpdate;
+	}
+
+	public void setCacheUpdate(final Date cacheUpdate) {
+		this.cacheUpdate = cacheUpdate;
+	}
+
 	@Override
 	public String toString() {
-		return "Finder [warranty=" + warranty + ", keyWord=" + keyWord + ", category=" + category + ", priceRange="
-				+ priceRange + ", dateRange=" + dateRange + ", fixUpTask=" + fixUpTask + ", worker=" + worker + "]";
+		return "Finder [warranty=" + this.warranty + ", keyWord=" + this.keyWord + ", category=" + this.category + ", fixUpTask=" + this.fixUpTask + ", worker=" + this.worker + "]";
 	}
-	
+
 }

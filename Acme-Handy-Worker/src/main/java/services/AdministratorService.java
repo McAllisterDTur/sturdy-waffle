@@ -20,15 +20,19 @@ public class AdministratorService {
 	//Managed repo
 	@Autowired
 	private AdministratorRepository	administratorRepository;
+	//Auxiliary services
+	@Autowired
+	private UserAccountService		uaService;
 
 
 	//CRUDs
 
 	public Administrator create() {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
-		return new Administrator();
+		final Administrator a = new Administrator();
+		a.setAccount(this.uaService.create());
+		return a;
 	}
-
 	public Administrator save(final Administrator admin) {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
 		final Administrator res = this.administratorRepository.save(admin);
@@ -43,19 +47,5 @@ public class AdministratorService {
 	public Administrator findOne(final int adminId) {
 		final Administrator res = this.administratorRepository.findOne(adminId);
 		return res;
-	}
-
-	public Administrator update(final Administrator admin) {
-		final Administrator toUpdate = this.administratorRepository.findOne(admin.getId());
-		toUpdate.setBanned(admin.getBanned());
-		toUpdate.setAddress(admin.getAddress());
-		toUpdate.setEmail(admin.getEmail());
-		toUpdate.setMiddleName(admin.getMiddleName());
-		toUpdate.setName(admin.getName());
-		toUpdate.setPhone(admin.getPhone());
-		toUpdate.setPhotoURL(admin.getPhotoURL());
-		toUpdate.setSurname(admin.getSurname());
-		final Administrator updated = this.administratorRepository.save(toUpdate);
-		return updated;
 	}
 }

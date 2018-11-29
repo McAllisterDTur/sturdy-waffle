@@ -8,7 +8,6 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -29,7 +28,6 @@ public class EducationRecord extends DomainEntity {
 	private Date				end;
 	private String				attachmentURL;
 	private Collection<String>	comments;
-	private Curricula			curricula;
 
 
 	@ElementCollection
@@ -90,20 +88,9 @@ public class EducationRecord extends DomainEntity {
 		this.attachmentURL = attachmentURL;
 	}
 
-	@NotNull
-	@ManyToOne(optional = true)
-	public Curricula getCurricula() {
-		return this.curricula;
-	}
-
-	public void setCurricula(final Curricula curricula) {
-		this.curricula = curricula;
-	}
-
 	@Override
 	public String toString() {
-		return "EducationRecord [diplomaTitle=" + this.diplomaTitle + ", institution=" + this.institution + ", start=" + this.start + ", end=" + this.end + ", attachmentURL=" + this.attachmentURL + ", comments=" + this.comments + ", curricula="
-			+ this.curricula + "]";
+		return "EducationRecord [diplomaTitle=" + this.diplomaTitle + ", institution=" + this.institution + ", start=" + this.start + ", end=" + this.end + ", attachmentURL=" + this.attachmentURL + ", comments=" + this.comments + "]";
 	}
 
 }

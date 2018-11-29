@@ -45,22 +45,9 @@ public class SocialProfileService {
 		return this.spRepository.findOne(spId);
 	}
 
-	public SocialProfile update(final SocialProfile sp) {
-		final UserAccount ua = LoginService.getPrincipal();
-		final Actor owner = this.actorService.findByUserAccountId(ua.getId());
-		final SocialProfile toUpdate = this.spRepository.findOne(sp.getId());
-		Assert.isTrue(owner.equals(sp.getActor()));
-		toUpdate.setNick(sp.getNick());
-		toUpdate.setProfileLink(sp.getProfileLink());
-		toUpdate.setSocialNetwork(sp.getSocialNetwork());
-		final SocialProfile updated = this.spRepository.save(toUpdate);
-		return updated;
-	}
-
 	public void delete(final SocialProfile sp) {
 		final UserAccount ua = LoginService.getPrincipal();
 		final Actor owner = this.actorService.findByUserAccountId(ua.getId());
-		final SocialProfile toUpdate = this.spRepository.findOne(sp.getId());
 		Assert.isTrue(owner.equals(sp.getActor()));
 		this.spRepository.delete(sp);
 	}
