@@ -13,6 +13,7 @@ import repositories.ComplaintRepository;
 import security.Authority;
 import security.LoginService;
 import utilities.AuthenticationUtility;
+import domain.Actor;
 import domain.Complaint;
 import domain.Customer;
 import domain.HandyWorker;
@@ -84,6 +85,25 @@ public class ComplaintService {
 			.getPrincipal().getId());
 		return this.complaintRepository.findSelfassigned(referee.getId());
 	}
+
+	/**
+	 * Checks referee or customer authority (Req 36.2)
+	 * 
+	 * @param complaintId
+	 * @return Complaint of the logged referee that has that id;
+	 */
+	public Complaint findOne(final int complaintId) {
+		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.REFEREE);
+		final boolean hasAu1 = AuthenticationUtility.checkAuthority(Authority.CUSTOMER);
+		Assert.isTrue(hasAu || hasAu1);
+		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal()
+			.getId());
+		final Complaint c1 = this.complaintRepository.findOne(complaintId);
+		Assert.isTrue(c1.getReferee() != null && c1.getReferee().equals(actor)
+			|| c1.getFixUpTask().getCustomer().equals(actor));
+		return c1;
+	}
+
 	//===============HANDY WORKER
 	/**
 	 * Checks handy worker authority (Req 37.3)

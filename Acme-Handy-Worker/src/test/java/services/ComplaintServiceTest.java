@@ -57,6 +57,35 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
+	public void findOneGood() {
+		super.authenticate("Customer1");
+		final Complaint c = this.cService.findFromLoggedCustomer().iterator().next();
+		final Complaint c1 = this.cService.findOne(c.getId());
+		Assert.notNull(c1);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void findOneBad() {
+		super.authenticate("Customer1");
+		final Complaint c = this.cService.create();
+		c.setAttachments(Arrays.asList("Attachment 1", "Attachment 2"));
+		c.setComplaintTime(new Date());
+		c.setDescription("Escucha la historia de como mi vida cambi� mi movida");
+		c.setIsFinal(false);
+		final Complaint c2 = this.cService.save(c);
+		super.unauthenticate();
+		super.authenticate("handy1");
+		Complaint c1 = null;
+		try {
+			c1 = this.cService.findOne(c2.getId());
+		} catch (final Exception e) {
+		}
+		Assert.isNull(c1);
+		super.unauthenticate();
+	}
+
+	@Test
 	public void findFromLoggedCustomerGood() {
 		super.authenticate("Customer2");
 		final Collection<Complaint> c = this.cService.findFromLoggedCustomer();
