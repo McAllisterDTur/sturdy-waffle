@@ -113,7 +113,7 @@ public class ApplicationServiceTest extends AbstractTest {
 	}
 	@Test
 	public void listWorker() {
-		super.authenticate("worker3");
+		super.authenticate("handy3");
 		final HandyWorker w = (HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 
 		final Collection<Application> res = this.applicationService.findAllWorker(w.getId());
