@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -11,8 +12,7 @@ import org.springframework.util.Assert;
 
 import repositories.ConfigurationRepository;
 import security.Authority;
-import security.LoginService;
-import security.UserAccount;
+import utilities.AuthenticationUtility;
 import domain.Configuration;
 
 @Service
@@ -29,15 +29,19 @@ public class ConfigurationService {
 	 * @return configuration
 	 */
 	public Configuration create() {
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
-		System.out.println(userAccount.getAuthorities());
-		// Only the admin can save a configuration	
-		final Authority a = new Authority();
-		a.setAuthority(Authority.ADMIN);
-		System.out.println(userAccount.getAuthorities().contains(a));
-		Assert.isTrue(userAccount.getAuthorities().contains(a));
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
+
 		final Configuration configuration = new Configuration();
+
+		final Collection<String> cardMaker = new ArrayList<>();
+		final Collection<String> negativeWords = new ArrayList<>();
+		final Collection<String> positiveWords = new ArrayList<>();
+		final Collection<String> spamWords = new ArrayList<>();
+		configuration.setCardMaker(cardMaker);
+		configuration.setNegativeWords(negativeWords);
+		configuration.setPositiveWords(positiveWords);
+		configuration.setSpamWords(spamWords);
+
 		return configuration;
 	}
 
@@ -47,34 +51,7 @@ public class ConfigurationService {
 	 * @return Collection<Configuration>
 	 */
 	public Collection<Configuration> findAll() {
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
-		System.out.println(userAccount.getAuthorities());
-		// Only the admin can save a configuration	
-		final Authority a = new Authority();
-		a.setAuthority(Authority.ADMIN);
-		System.out.println(userAccount.getAuthorities().contains(a));
 		final Collection<Configuration> result = this.configurationRepository.findAll();
-		return result;
-	}
-
-	/**
-	 * Admin get a configuration from DB
-	 * with an especific id
-	 * 
-	 * @param id
-	 * @return Configuration
-	 */
-	public Configuration findOne(final int id) {
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
-		System.out.println(userAccount.getAuthorities());
-		// Only the admin can save a configuration	
-		final Authority a = new Authority();
-		a.setAuthority(Authority.ADMIN);
-		System.out.println(userAccount.getAuthorities().contains(a));
-		Assert.isTrue(userAccount.getAuthorities().contains(a));
-		final Configuration result = this.configurationRepository.findOne(id);
 		return result;
 	}
 
@@ -85,16 +62,19 @@ public class ConfigurationService {
 	 * @return Configuration
 	 */
 	public Configuration save(final Configuration configuration) {
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
-		System.out.println(userAccount.getAuthorities());
-		// Only the admin can save a configuration	
-		final Authority a = new Authority();
-		a.setAuthority(Authority.ADMIN);
-		System.out.println(userAccount.getAuthorities().contains(a));
-		Assert.isTrue(userAccount.getAuthorities().contains(a));
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
+		Configuration result = null;
 		Assert.notNull(configuration);
-		final Configuration result = this.configurationRepository.save(configuration);
+		final Collection<Configuration> config = this.findAll();
+
+		//comprobar que la modificada sea la que está en bd
+		if (configuration.getId() != 0) {
+			Assert.isTrue(configuration.getId() == config.iterator().next().getId());
+			result = this.configurationRepository.save(configuration);
+		} else {
+			Assert.isTrue(config.isEmpty());
+			result = this.configurationRepository.save(configuration);
+		}
 		return result;
 	}
 
@@ -105,14 +85,8 @@ public class ConfigurationService {
 	 * @param configuration
 	 */
 	public void delete(final Configuration configuration) {
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
-		System.out.println(userAccount.getAuthorities());
-		// Only the admin can save a configuration	
-		final Authority a = new Authority();
-		a.setAuthority(Authority.ADMIN);
-		System.out.println(userAccount.getAuthorities().contains(a));
-		Assert.isTrue(userAccount.getAuthorities().contains(a));
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
+		Assert.notNull(configuration);
 		this.configurationRepository.delete(configuration);
 	}
 

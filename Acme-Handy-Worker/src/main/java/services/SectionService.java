@@ -15,7 +15,9 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import utilities.AuthenticationUtility;
+import domain.HandyWorker;
 import domain.Section;
+import domain.Tutorial;
 
 @Service
 @Transactional
@@ -24,17 +26,26 @@ public class SectionService {
 	@Autowired
 	private SectionRepository	sectionRepository;
 
+	@Autowired
+	private SpamService			spamService;
+
+	@Autowired
+	private ActorService		actorService;
+
 
 	/**
 	 * HandyWorker creates a empty section
 	 * 
 	 * @return section
 	 */
-	public Section create() {
+	public Section create(final Tutorial tutorial) {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
+		final UserAccount ua = LoginService.getPrincipal();
+		Assert.isTrue(tutorial.getWorker().getAccount().equals(ua));
 		final Section section = new Section();
 		final Collection<String> photos = new ArrayList<>();
 		section.setPhotoURL(photos);
+		section.setTutorial(tutorial);
 		return section;
 	}
 
@@ -68,20 +79,24 @@ public class SectionService {
 	 * @return Section
 	 */
 	public Section save(final Section section) {
+		//The section has a tutorial, when enter here
 		Assert.notNull(section);
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
 		final UserAccount ua = LoginService.getPrincipal();
-		Assert.isTrue(section.getTutorial().getWorker().getAccount().equals(ua));
+		final HandyWorker worker = (HandyWorker) this.actorService.findByUserAccountId(ua.getId());
+		Assert.isTrue(section.getTutorial().getWorker().equals(worker));
 		Section result = null;
-		//TODO suponemos que las secciones son creadas con una llamada en el controller
-		// y se insertan en el tutorial dentro del controller
 		if (section.getId() != 0) {
 			final Section ac = this.findOne(section.getId());
 			Assert.isTrue(ac.getTutorial().getWorker().getAccount().equals(section.getTutorial().getWorker().getAccount()));
+			this.spamService.isSpam(worker, section.getText());
+			this.spamService.isSpam(worker, section.getTitle());
 			result = this.sectionRepository.save(section);
-
-		} else
+		} else {
+			this.spamService.isSpam(worker, section.getText());
+			this.spamService.isSpam(worker, section.getTitle());
 			result = this.sectionRepository.save(section);
+		}
 		return result;
 	}
 

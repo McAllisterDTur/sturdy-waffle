@@ -46,9 +46,8 @@ public class Message extends DomainEntity {
 		this.sender = sender;
 	}
 
-	//@NotNull
-	//@ManyToOne(optional = false)
-	@ManyToOne(optional = true)
+	@NotNull
+	@ManyToOne(optional = false)
 	public Actor getReciever() {
 		return this.reciever;
 	}
@@ -57,7 +56,7 @@ public class Message extends DomainEntity {
 		this.reciever = reciever;
 	}
 
-	//@NotNull
+	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
