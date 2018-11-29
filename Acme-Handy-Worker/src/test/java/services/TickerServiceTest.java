@@ -10,9 +10,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-// Indica que se tiene que ejecutar a través de Spring
+// Indica que se tiene que ejecutar a travï¿½s de Spring
 @RunWith(SpringJUnit4ClassRunner.class)
-//Indica los ficheros de configuración
+//Indica los ficheros de configuraciï¿½n
 @ContextConfiguration(locations = {
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
