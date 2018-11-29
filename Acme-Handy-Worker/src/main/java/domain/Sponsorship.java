@@ -1,3 +1,4 @@
+
 package domain;
 
 import javax.persistence.Access;
@@ -14,10 +15,23 @@ import org.hibernate.validator.constraints.URL;
 @Access(AccessType.PROPERTY)
 public class Sponsorship extends DomainEntity {
 
-	private String bannerURL;
-	private String targetPageLink;
-	private CreditCard creditCard;
-	private Sponsor sponsor;
+	private String		bannerURL;
+	private String		targetPageLink;
+	private CreditCard	creditCard;
+	private Sponsor		sponsor;
+	private Tutorial	tutorials;
+
+
+	@Valid
+	@NotNull
+	@ManyToOne(optional = false)
+	public Tutorial getTutorials() {
+		return this.tutorials;
+	}
+
+	public void setTutorials(final Tutorial tutorials) {
+		this.tutorials = tutorials;
+	}
 
 	@NotBlank
 	@URL
@@ -61,9 +75,7 @@ public class Sponsorship extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "Sponsorship [bannerURL=" + bannerURL + ", targetPageLink="
-				+ targetPageLink + ", creditCard=" + creditCard + ", sponsor="
-				+ sponsor + "]";
+		return "Sponsorship [bannerURL=" + this.bannerURL + ", targetPageLink=" + this.targetPageLink + ", creditCard=" + this.creditCard + ", sponsor=" + this.sponsor + "]";
 	}
 
 }

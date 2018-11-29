@@ -22,11 +22,12 @@ public class Endorsement extends DomainEntity {
 
 	private Endorsable	sender;
 	private Endorsable	reciever;
-	private Date	writeTime;
+	private Date		writeTime;
 	private String		comment;
 
+
 	@NotNull
-	@ManyToOne(optional=false)
+	@ManyToOne(optional = false)
 	public Endorsable getSender() {
 		return this.sender;
 	}
@@ -36,7 +37,7 @@ public class Endorsement extends DomainEntity {
 	}
 
 	@NotNull
-	@OneToOne(optional=false)
+	@OneToOne(optional = false)
 	public Endorsable getReciever() {
 		return this.reciever;
 	}
