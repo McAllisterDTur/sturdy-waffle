@@ -22,9 +22,9 @@ import domain.Customer;
 import domain.FixUpTask;
 import domain.Warranty;
 
-// Indica que se tiene que ejecutar a través de Spring
+// Indica que se tiene que ejecutar a travï¿½s de Spring
 @RunWith(SpringJUnit4ClassRunner.class)
-// Indica los ficheros de configuración
+// Indica los ficheros de configuraciï¿½n
 @ContextConfiguration(locations = {
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
@@ -41,22 +41,26 @@ public class FixUpTaskServiceTest extends AbstractTest {
 
 
 	@Test
-	public void saveAndFindOneGoodTest() {
+	public void saveAndFindOneGood() {
 		final FixUpTask f = this.fixUpTaskService.create();
 
 		super.authenticate("Customer1");
 		final UserAccount userAccount = LoginService.getPrincipal();
 		final Actor c = this.actorService.findByUserAccountId(userAccount.getId());
-		// TODO: Esto no peta y debería porque no tenemos los valores necesarios.
 		f.setCustomer((Customer) c);
 		super.unauthenticate();
 		super.authenticate("admin");
 		final Warranty w = this.warrantyService.create();
 		w.setDraft(false);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		f.setWarranty(this.warrantyService.save(w));
+		f.setAddress("Godric's Hollow");
+		f.setDescription("Por favor maten a Voldemort. Gracias.");
+		f.setMaxPrice(50d);
+		f.setPeriodStart(new GregorianCalendar(2020, 0, 1).getTime());
+		f.setPeriodEnd(new GregorianCalendar(2021, 0, 1).getTime());
 		super.unauthenticate();
 		super.authenticate("Customer1");
 		final FixUpTask f2 = this.fixUpTaskService.save(f);
@@ -68,7 +72,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void saveAndFindOneBadTest() {
+	public void saveAndFindOneBad() {
 		super.authenticate(null);
 		final FixUpTask f = this.fixUpTaskService.create();
 		FixUpTask f3 = null;
@@ -87,20 +91,76 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void saveAndFindOneBad2Test() {
+	public void avgMinMaxDevFixUpTaskCountGood() {
+		super.authenticate("admin");
+		final Collection<Double> c = this.fixUpTaskService.avgMinMaxDevFixUpTaskCount();
+		Assert.notNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void avgMinMaxDevFixUpTaskPriceGood() {
+		super.authenticate("admin");
+		final Collection<Double> c = this.fixUpTaskService.avgMinMaxDevFixUpTaskPrice();
+		Assert.notNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void ratioFixUpTaskComplaintGood() {
+		super.authenticate("admin");
+		final Double c = this.fixUpTaskService.ratioFixUpTaskComplaint();
+		Assert.notNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void avgMinMaxDevFixUpTaskCountBad() {
+		super.authenticate("Customer1");
+		Collection<Double> c = null;
+		try {
+			c = this.fixUpTaskService.avgMinMaxDevFixUpTaskCount();
+		} catch (final Exception e) {
+		}
+		Assert.isNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void avgMinMaxDevFixUpTaskPriceBad() {
+		super.authenticate("Customer1");
+		Collection<Double> c = null;
+		try {
+			c = this.fixUpTaskService.avgMinMaxDevFixUpTaskPrice();
+		} catch (final Exception e) {
+		}
+		Assert.isNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void ratioFixUpTaskComplaintBad() {
+		super.authenticate("Customer1");
+		Double c = null;
+		try {
+			c = this.fixUpTaskService.ratioFixUpTaskComplaint();
+		} catch (final Exception e) {
+		}
+		Assert.isNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void saveAndFindOneBad2() {
 		final FixUpTask f = this.fixUpTaskService.create();
 
 		super.authenticate("Customer1");
-		final UserAccount userAccount = LoginService.getPrincipal();
-		final Actor c = this.actorService.findByUserAccountId(userAccount.getId());
-		// TODO: Esto no peta y debería porque no tenemos los valores necesarios.
-		f.setCustomer((Customer) c);
 		super.unauthenticate();
 		super.authenticate("admin");
 		final Warranty w = this.warrantyService.create();
 		w.setDraft(true);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		f.setWarranty(w);
 		FixUpTask f1 = null;
@@ -115,7 +175,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void deleteGood1Test() {
+	public void deleteGood1() {
 		final FixUpTask f = this.fixUpTaskService.create();
 
 		super.authenticate("Customer1");
@@ -128,9 +188,14 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		final Warranty w = this.warrantyService.create();
 		w.setDraft(false);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		f.setWarranty(this.warrantyService.save(w));
+		f.setAddress("Godric's Hollow");
+		f.setDescription("Por favor maten a Voldemort. Gracias.");
+		f.setMaxPrice(50d);
+		f.setPeriodStart(new GregorianCalendar(2020, 0, 1).getTime());
+		f.setPeriodEnd(new GregorianCalendar(2021, 0, 1).getTime());
 		super.unauthenticate();
 
 		super.authenticate("Customer1");
@@ -143,7 +208,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 
 	}
 	@Test
-	public void deleteGood2Test() {
+	public void deleteGood2() {
 		final FixUpTask f = this.fixUpTaskService.create();
 
 		super.authenticate("Customer1");
@@ -155,9 +220,14 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		final Warranty w = this.warrantyService.create();
 		w.setDraft(false);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		f.setWarranty(this.warrantyService.save(w));
+		f.setAddress("Godric's Hollow");
+		f.setDescription("Por favor maten a Voldemort. Gracias.");
+		f.setMaxPrice(50d);
+		f.setPeriodStart(new GregorianCalendar(2020, 0, 1).getTime());
+		f.setPeriodEnd(new GregorianCalendar(2021, 0, 1).getTime());
 		super.unauthenticate();
 		super.authenticate("Customer1");
 		final FixUpTask f2 = this.fixUpTaskService.save(f);
@@ -169,7 +239,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		Assert.isTrue(f3 == null);
 	}
 	@Test
-	public void deleteBadTest() {
+	public void deleteBad() {
 		final FixUpTask f = this.fixUpTaskService.create();
 
 		super.authenticate(null);
@@ -191,9 +261,9 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void findAsHandyWorkerGoodTest() {
+	public void findAsHandyWorkerGood() {
 		super.authenticate("handy1");
-		final Collection<FixUpTask> f = this.fixUpTaskService.findAsHandyWorker();
+		final Collection<FixUpTask> f = this.fixUpTaskService.findAll();
 		Assert.isTrue(f != null);
 		super.unauthenticate();
 	}
@@ -202,7 +272,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		super.authenticate("Customer1");
 		Collection<FixUpTask> f = null;
 		try {
-			f = this.fixUpTaskService.findAsHandyWorker();
+			f = this.fixUpTaskService.findAll();
 
 		} catch (final Exception e) {
 			f = null;
@@ -210,16 +280,9 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		Assert.isTrue(f == null);
 		super.unauthenticate();
 	}
+
 	@Test
-	public void findFromCustomerGood1Test() {
-		super.authenticate("Customer1");
-		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
-		final Collection<FixUpTask> f = this.fixUpTaskService.findFromCustomer(c.getId());
-		Assert.isTrue(f != null);
-		super.unauthenticate();
-	}
-	@Test
-	public void findFromCustomerGood2Test() {
+	public void findFromCustomerGood1() {
 		super.authenticate("Customer1");
 		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		super.unauthenticate();
@@ -230,7 +293,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findFromCustomerBadTest() {
+	public void findFromCustomerBad() {
 		super.authenticate("Customer1");
 		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		Collection<FixUpTask> f = null;
@@ -246,16 +309,16 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findByFilterTestTest() {
+	public void findByFilterTest() {
 		super.authenticate("handy1");
-		final Collection<FixUpTask> f = this.fixUpTaskService.findByFilter("niño", null, null, null, null, new GregorianCalendar(2018, 2, 11, 19, 0, 0).getTime(), new GregorianCalendar(2018, 2, 11, 20, 0, 0).getTime());
+		final Collection<FixUpTask> f = this.fixUpTaskService.findByFilter("niï¿½o", null, null, null, null, new GregorianCalendar(2018, 2, 11, 19, 0, 0).getTime(), new GregorianCalendar(2018, 2, 11, 20, 0, 0).getTime());
 		for (final FixUpTask a : f) {
 			System.out.println("==========FIX UP TASK Test 0===========");
 			System.out.println("Ticker: " + a.getTicker());
-			System.out.println("Descripción: " + a.getDescription());
-			System.out.println("Dirección: " + a.getAddress());
-			System.out.println("Categoría: " + a.getCategory());
-			System.out.println("Precio máximo: " + a.getMaxPrice());
+			System.out.println("Descripciï¿½n: " + a.getDescription());
+			System.out.println("Direcciï¿½n: " + a.getAddress());
+			System.out.println("Categorï¿½a: " + a.getCategory());
+			System.out.println("Precio mï¿½ximo: " + a.getMaxPrice());
 			System.out.println("Fecha de inicio: " + a.getPeriodStart());
 		}
 		Assert.isTrue(f != null);
@@ -263,16 +326,16 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findByFilter1Test() {
+	public void findByFilterTest1() {
 		super.authenticate("handy1");
-		final Collection<FixUpTask> f = this.fixUpTaskService.findByFilter("niño", null, null, null, null, null, null);
+		final Collection<FixUpTask> f = this.fixUpTaskService.findByFilter("niï¿½o", null, null, null, null, null, null);
 		for (final FixUpTask a : f) {
 			System.out.println("==========FIX UP TASK Test 1===========");
 			System.out.println("Ticker: " + a.getTicker());
-			System.out.println("Descripción: " + a.getDescription());
-			System.out.println("Dirección: " + a.getAddress());
-			System.out.println("Categoría: " + a.getCategory());
-			System.out.println("Precio máximo: " + a.getMaxPrice());
+			System.out.println("Descripciï¿½n: " + a.getDescription());
+			System.out.println("Direcciï¿½n: " + a.getAddress());
+			System.out.println("Categorï¿½a: " + a.getCategory());
+			System.out.println("Precio mï¿½ximo: " + a.getMaxPrice());
 			System.out.println("Fecha de inicio: " + a.getPeriodStart());
 		}
 		Assert.isTrue(f != null);

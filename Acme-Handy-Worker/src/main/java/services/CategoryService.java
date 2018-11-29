@@ -31,19 +31,33 @@ public class CategoryService {
 	 * @return a new empty category
 	 */
 	public Category create() {
-		return new Category();
+		final Category c = new Category();
+		c.setFather(this.findByName("CATEGORY"));
+		return c;
 	}
 	/**
 	 * Checks administrator authority. Saves or updates a category (Req 12.3)
 	 * 
-	 * @param warranty
-	 * @return the warranty saved in the database
+	 * @param category
+	 * @return the category saved in the database
 	 */
 	public Category save(final Category category) {
 		//Admin authority
 		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
 		Assert.isTrue(au);
 		return this.catRepo.save(category);
+	}
+
+	/**
+	 * Checks administrator authority
+	 * 
+	 * @return Collection of all the categories
+	 */
+	public Category findByName(final String name) {
+		//Admin authority
+		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
+		Assert.isTrue(au);
+		return this.catRepo.findByName(name);
 	}
 
 	/**

@@ -100,6 +100,11 @@ public class ActorService {
 
 		return this.actorRepository.findByUserAccountId(accountId);
 	}
+
+	public Collection<Actor> findBySuspicious() {
+		return this.actorRepository.findSuspiciousActors();
+	}
+
 	//B
 	public void ban(final Actor end) {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));

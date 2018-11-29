@@ -16,6 +16,7 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Complaint;
+import domain.FixUpTask;
 
 // Indica que se tiene que ejecutar a trav�s de Spring
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,10 +30,12 @@ public class ComplaintServiceTest extends AbstractTest {
 
 	@Autowired
 	private ComplaintService	cService;
+	@Autowired
+	private FixUpTaskService	fService;
 
 
 	@Test
-	public void saveGoodTest() {
+	public void saveGood() {
 		super.authenticate("Customer1");
 		final Complaint c = this.cService.create();
 		c.setAttachments(Arrays.asList("Attachment 1", "Attachment 2"));
@@ -44,7 +47,7 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void saveBadTest() {
+	public void saveBad() {
 		super.authenticate("handy1");
 		final Complaint c = this.cService.create();
 		Complaint c1 = null;
@@ -57,7 +60,7 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findOneGoodTest() {
+	public void findOneGood() {
 		super.authenticate("Customer1");
 		final Complaint c = this.cService.findFromLoggedCustomer().iterator().next();
 		final Complaint c1 = this.cService.findOne(c.getId());
@@ -66,13 +69,35 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findOneBadTest() {
+	public void minMaxAvgDevComplaintsPerFixUpTaskGood() {
+		super.authenticate("admin");
+		final Collection<Double> c = this.cService.minMaxAvgDevComplaintsPerFixUpTask();
+		Assert.notNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void minMaxAvgDevComplaintsPerFixUpTaskBad() {
+		super.authenticate("Customer1");
+		Collection<Double> c = null;
+		try {
+			c = this.cService.minMaxAvgDevComplaintsPerFixUpTask();
+		} catch (final Exception e) {
+		}
+		Assert.isNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void findOneBad() {
 		super.authenticate("Customer1");
 		final Complaint c = this.cService.create();
 		c.setAttachments(Arrays.asList("Attachment 1", "Attachment 2"));
 		c.setComplaintTime(new Date());
 		c.setDescription("Escucha la historia de como mi vida cambi� mi movida");
 		c.setIsFinal(false);
+		final FixUpTask f = this.fService.findFromLoggedCustomer().iterator().next();
+		c.setFixUpTask(f);
 		final Complaint c2 = this.cService.save(c);
 		super.unauthenticate();
 		super.authenticate("handy1");
@@ -84,9 +109,8 @@ public class ComplaintServiceTest extends AbstractTest {
 		Assert.isNull(c1);
 		super.unauthenticate();
 	}
-
 	@Test
-	public void findFromLoggedCustomerGoodTest() {
+	public void findFromLoggedCustomerGood() {
 		super.authenticate("Customer2");
 		final Collection<Complaint> c = this.cService.findFromLoggedCustomer();
 		Assert.notNull(c);
@@ -94,7 +118,7 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findFromLoggedCustomerBadTest() {
+	public void findFromLoggedCustomerBad() {
 		super.authenticate("handy1");
 		Collection<Complaint> c = null;
 		try {
@@ -105,17 +129,16 @@ public class ComplaintServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void findUnassignedGoodTest() {
+	public void findUnassignedGood() {
 		super.authenticate("referee1");
 		final Collection<Complaint> c = this.cService.findUnassigned();
-		for (final Complaint co : c)
-			System.out.println(co.getTicker());
+		// TODO: Los tickers deben estar en mayúscula
 		Assert.notNull(c);
 		super.unauthenticate();
 	}
 
 	@Test
-	public void findUnassignedBadTest() {
+	public void findUnassignedBad() {
 		super.authenticate("Customer1");
 		Collection<Complaint> c = null;
 		try {
@@ -128,14 +151,14 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findSelfassignedGoodTest() {
+	public void findSelfassignedGood() {
 		super.authenticate("referee1");
 		final Collection<Complaint> c = this.cService.findSelfassigned();
 		Assert.notNull(c);
 		super.unauthenticate();
 	}
 	@Test
-	public void findSelfassignedBadTest() {
+	public void findSelfassignedBad() {
 		super.authenticate("Customer1");
 		Collection<Complaint> c = null;
 		try {
@@ -147,7 +170,7 @@ public class ComplaintServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void findFromLoggedHandyWorkerGoodTest() {
+	public void findFromLoggedHandyWorkerGood() {
 		super.authenticate("handy1");
 		final Collection<Complaint> c = this.cService.findFromLoggedHandyWorker();
 		Assert.notNull(c);
@@ -155,7 +178,7 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findFromLoggedHandyWorkerBadTest() {
+	public void findFromLoggedHandyWorkerBad() {
 		super.authenticate("Customer1");
 		Collection<Complaint> c = null;
 		try {

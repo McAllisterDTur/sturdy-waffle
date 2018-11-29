@@ -33,13 +33,13 @@ public class PhaseService {
 		this.account = LoginService.getPrincipal();
 		//Verificamos que el creador de la phase sea un HANDYWORKER
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER));
-		//Verificamos que el creador de la phase sea el dueño de la application
+		//Verificamos que el creador de la phase sea el dueï¿½o de la application
 		Assert.isTrue(phase.getApplication().getHandyWorker().getAccount().getId() == this.account.getId());
 
 		return this.repo.save(phase);
 	}
 
-	public Phase finOne(final int id) {
+	public Phase findOne(final int id) {
 
 		this.account = LoginService.getPrincipal();
 		Assert.notNull(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER));

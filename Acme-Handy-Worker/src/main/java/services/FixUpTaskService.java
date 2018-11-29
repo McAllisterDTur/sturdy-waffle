@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -16,6 +17,9 @@ import repositories.FixUpTaskRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import utilities.AuthenticationUtility;
+import domain.Application;
+import domain.Complaint;
 import domain.Customer;
 import domain.FixUpTask;
 
@@ -27,6 +31,10 @@ public class FixUpTaskService {
 	private FixUpTaskRepository	fixUpTaskRepository;
 	@Autowired
 	private ActorService		actorService;
+	@Autowired
+	private TickerService		tickerService;
+	@Autowired
+	private SpamService			spamService;
 
 
 	/**
@@ -36,6 +44,8 @@ public class FixUpTaskService {
 	 */
 	public FixUpTask create() {
 		final FixUpTask res = new FixUpTask();
+		res.setComplaints(new HashSet<Complaint>());
+		res.setApplications(new HashSet<Application>());
 		return res;
 	}
 
@@ -53,18 +63,23 @@ public class FixUpTaskService {
 		au.setAuthority(Authority.CUSTOMER);
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
-		final FixUpTask res;
+		FixUpTask res;
 
-		//comprobamos que la warranty NO esté en draft mode
+		//comprobamos que la warranty NO estï¿½ en draft mode
 		Assert.isTrue(!fixUpTask.getWarranty().isDraft());
 		if (fixUpTask.getId() != 0) {
-			// Ya está en base de datos
+			// Ya estï¿½ en base de datos
 			final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTask.getId());
 			Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
+			Assert.isTrue(fixUpTask.getCustomer().getAccount().equals(aux.getCustomer().getAccount()));
 			res = this.fixUpTaskRepository.save(fixUpTask);
-		} else
+		} else {
+			fixUpTask.setTicker(this.tickerService.getTicker());
+			fixUpTask.setPublishTime(new Date());
+			fixUpTask.setCustomer((Customer) this.actorService.findByUserAccountId(userAccount.getId()));
 			res = this.fixUpTaskRepository.save(fixUpTask);
-
+		}
+		this.spamService.isSpam(this.actorService.findByUserAccountId(userAccount.getId()), res.getDescription());
 		return res;
 	}
 
@@ -142,9 +157,43 @@ public class FixUpTaskService {
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.findFromCustomer(c.getId());
 		return res;
 	}
+	/**
+	 * Checks admin authority (Req 12.5.1)
+	 * 
+	 * @return Collection of fix up task count statistics
+	 */
+	public Collection<Double> avgMinMaxDevFixUpTaskCount() {
+		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
+		Assert.isTrue(au);
+
+		return this.fixUpTaskRepository.avgMinMaxDevFixUpTaskCount();
+	}
 
 	/**
-	 * Checks handy worker authority (11.1)
+	 * Checks admin authority (Req 38.5.3)
+	 * 
+	 * @return Ratio of fix up tasks with complaints
+	 */
+	public Double ratioFixUpTaskComplaint() {
+		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
+		Assert.isTrue(au);
+
+		return this.fixUpTaskRepository.ratioFixUpTaskComplaint();
+	}
+
+	/**
+	 * Checks admin authority (Req 12.5.3)
+	 * 
+	 * @return Collection of fix up task price statistics
+	 */
+	public Collection<Double> avgMinMaxDevFixUpTaskPrice() {
+		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
+		Assert.isTrue(au);
+
+		return this.fixUpTaskRepository.avgMinMaxDevFixUpTaskPrice();
+	}
+	/**
+	 * Checks handy worker authority (Req 11.1)
 	 * 
 	 * @param CustomerId
 	 * @return Collection of the fix up tasks related to a customer
@@ -166,10 +215,9 @@ public class FixUpTaskService {
 	/**
 	 * Checks handy worker authority (Req 11.1)
 	 * 
-	 * @param handyWorkerId
 	 * @return Collection of all the fix up tasks
 	 */
-	public Collection<FixUpTask> findAsHandyWorker() {
+	public Collection<FixUpTask> findAll() {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
@@ -227,6 +275,26 @@ public class FixUpTaskService {
 
 	public Collection<FixUpTask> getByCategory(final int categoryId) {
 		return this.fixUpTaskRepository.getFixUpTasksByCategory(categoryId);
+	}
+
+	/**
+	 * Checks handy worker authority (Req 11.1)
+	 * 
+	 * @param handyWorkerId
+	 * @return Collection of all the fix up tasks
+	 */
+	public Collection<FixUpTask> findAsHandyWorker() {
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+
+		final Authority au = new Authority();
+		au.setAuthority(Authority.HANDYWORKER);
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
+		final Collection<FixUpTask> res = this.fixUpTaskRepository.findAll();
+		return res;
 	}
 
 }

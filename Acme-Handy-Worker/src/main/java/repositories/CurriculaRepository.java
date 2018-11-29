@@ -14,4 +14,5 @@ public interface CurriculaRepository extends JpaRepository<Curricula, Integer> {
 	public int getNumberOfTickers(String ticker);
 	@Query("select c from Curricula c where c.handyWorker.id = ?1")
 	public Curricula getFromHandyWorker(int handyId);
+
 }

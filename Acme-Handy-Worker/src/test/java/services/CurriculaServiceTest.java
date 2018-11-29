@@ -28,7 +28,7 @@ public class CurriculaServiceTest extends AbstractTest {
 
 
 	@Test
-	public void saveGoodTest() {
+	public void saveGood() {
 		super.authenticate("handy2");
 		final Curricula c = this.curriculaService.create();
 		this.curriculaService.save(c);
@@ -36,7 +36,7 @@ public class CurriculaServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void saveBadTest() {
+	public void saveBad() {
 		super.authenticate("Customer1");
 		final Curricula c = this.curriculaService.create();
 		Curricula c2 = null;
@@ -50,7 +50,7 @@ public class CurriculaServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findOneGoodTest() {
+	public void findOneGood() {
 		super.authenticate("handy2");
 		final Curricula c = this.curriculaService.create();
 		final Curricula c2 = this.curriculaService.save(c);
@@ -60,7 +60,7 @@ public class CurriculaServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findFromCurrentHandyWorkerGoodTest() {
+	public void findFromCurrentHandyWorkerGood() {
 		super.authenticate("handy2");
 		final Curricula c = this.curriculaService.create();
 		this.curriculaService.save(c);
@@ -69,7 +69,7 @@ public class CurriculaServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void findFromCurrentHandyWorkerBadTest() {
+	public void findFromCurrentHandyWorkerBad() {
 		super.authenticate("Customer1");
 		Curricula c = null;
 		try {

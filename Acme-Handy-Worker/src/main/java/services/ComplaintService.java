@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -17,6 +18,7 @@ import utilities.AuthenticationUtility;
 import domain.Actor;
 import domain.Complaint;
 import domain.Customer;
+import domain.FixUpTask;
 import domain.HandyWorker;
 import domain.Referee;
 
@@ -35,7 +37,10 @@ public class ComplaintService {
 
 
 	public Complaint create() {
-		return new Complaint();
+		final Complaint c = new Complaint();
+		c.setAttachments(new ArrayList<String>());
+		c.setFixUpTask(new FixUpTask());
+		return c;
 	}
 
 	//====== CUSTOMER
@@ -67,6 +72,17 @@ public class ComplaintService {
 		Assert.isTrue(hasAu);
 		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		return this.complaintRepository.findFromCustomer(c.getId());
+	}
+
+	/**
+	 * Checks admin authority (Req 38.5.1)
+	 * 
+	 * @return Collection of complaints per fix up task statistics
+	 */
+	public Collection<Double> minMaxAvgDevComplaintsPerFixUpTask() {
+		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
+		Assert.isTrue(au);
+		return this.complaintRepository.minMaxAvgDevComplaintsPerFixUpTask();
 	}
 
 	//===============REFEREE

@@ -36,7 +36,6 @@ public class EndorsableServiceTest extends AbstractTest {
 		final Actor a = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final Endorsable e = this.endService.findOne(a.getId());
 		this.endService.computeScore(e);
-		System.out.println(e.getScore());
 		Assert.isTrue(e.getScore() != 0.0);
 	}
 }
