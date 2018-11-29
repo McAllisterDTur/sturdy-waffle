@@ -23,6 +23,8 @@ public class CustomerService {
 
 	@Autowired
 	private CustomerRepository	customerRepo;
+	@Autowired
+	private UserAccountService	userAccountService;
 
 	private UserAccount			account;
 
@@ -30,7 +32,12 @@ public class CustomerService {
 	public Customer create() {
 
 		final Customer res = new Customer();
+		final UserAccount a = this.userAccountService.create();
 
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.CUSTOMER);
+		a.addAuthority(auth);
+		res.setAccount(a);
 		res.setFixUpTasks(new ArrayList<FixUpTask>());
 
 		return res;
@@ -39,9 +46,6 @@ public class CustomerService {
 	public Customer save(final Customer c) {
 
 		Assert.notNull(c);
-
-		if (c.getId() <= 0)
-			c.setScore(0.0);
 
 		return this.customerRepo.save(c);
 	}
@@ -61,18 +65,6 @@ public class CustomerService {
 
 		return this.customerRepo.findCustomerMaxAverage();
 
-	}
-
-	public Customer findOneHandyWorker(final int id) {
-		this.account = LoginService.getPrincipal();
-		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER));
-
-		Customer res;
-		Assert.isTrue(id != 0);
-
-		res = this.customerRepo.findOne(id);
-		Assert.notNull(res);
-		return res;
 	}
 
 }

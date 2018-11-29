@@ -42,7 +42,7 @@ public class ActorService {
 	 * @return actor
 	 */
 	public Actor save(final Actor actor) {
-		Assert.isNull(actor);
+		Assert.notNull(actor);
 		Actor result = null;
 		if (actor.getId() != 0) {
 			final UserAccount ua = LoginService.getPrincipal();
@@ -77,7 +77,7 @@ public class ActorService {
 	public Collection<Actor> findAll() {
 		//TODO Posee más lógica de negocio?
 		final UserAccount ua = LoginService.getPrincipal();
-		Assert.isNull(ua);
+		Assert.notNull(ua);
 		final Collection<Actor> result = this.actorRepository.findAll();
 		return result;
 	}
@@ -91,7 +91,7 @@ public class ActorService {
 	public Actor findOne(final int actorId) {
 		//TODO Posee más lógica de negocio?
 		final UserAccount ua = LoginService.getPrincipal();
-		Assert.isNull(ua);
+		Assert.notNull(ua);
 		final Actor result = this.actorRepository.findOne(actorId);
 		return result;
 	}

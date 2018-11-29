@@ -1,6 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,8 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import utilities.AuthenticationUtility;
+import domain.Actor;
+import domain.Notes;
 import domain.Report;
 
 @Service
@@ -20,21 +25,35 @@ public class ReportService {
 
 	@Autowired
 	private ReportRepository	reportRepo;
+	@Autowired
+	private SpamService			spamService;
+	@Autowired
+	private ActorService		actorService;
 
 	private UserAccount			account;
 
 
 	public Report create() {
-		return new Report();
+		final Report res = new Report();
+
+		res.setAttachment(new ArrayList<String>());
+		res.setNotes(new ArrayList<Notes>());
+
+		return res;
+
 	}
 
 	public Report save(final Report report) {
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.REFEREE));
 
-		Assert.isTrue(report.getReferee().getAccount().equals(this.account));
+		Assert.isTrue(report.getComplaint().getReferee().getAccount().equals(this.account));
 		if (report.getId() != 0)
 			Assert.isTrue(!report.getIsFinal());
+		else if (report.getId() == 0)
+			report.setIsFinal(false);
+
+		this.spamService.isSpam(this.actorService.findByUserAccountId(this.account.getId()), report.getDescription());
 
 		return this.reportRepo.save(report);
 	}
@@ -51,16 +70,22 @@ public class ReportService {
 		return res;
 	}
 
-	//	public Collection<Report> findReportsReferee(final Referee ref) {
-	//
-	//		this.account = LoginService.getPrincipal();
-	//		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.REFEREE));
-	//
-	//		Assert.notNull(ref);
-	//		Assert.isTrue(ref.getAccount().getId() == this.account.getId());
-	//
-	//		return this.reportRepo.findAllReferee(ref.getId());
-	//
-	//	}
+	//TODO: cambiar a encontrar por id de un actor para abarcar referee, customer y worker
+	public Collection<Report> findReportsActor(final int actorId) {
+		Assert.notNull(actorId);
+
+		this.account = LoginService.getPrincipal();
+		final Actor actor = this.actorService.findOne(actorId);
+
+		if (AuthenticationUtility.checkAuthority(Authority.REFEREE) && (this.account.getId() == actor.getAccount().getId()))
+			return this.reportRepo.findAllReportsReferee(actor.getId());
+		else if (AuthenticationUtility.checkAuthority(Authority.CUSTOMER) && (this.account.getId() == actor.getAccount().getId()))
+			return this.reportRepo.findAllReportsCustomer(actor.getId());
+		else if (AuthenticationUtility.checkAuthority(Authority.HANDYWORKER) && (this.account.getId() == actor.getAccount().getId()))
+			return this.reportRepo.findAllReportsWorker(actor.getId());
+		else
+			return null;
+
+	}
 
 }

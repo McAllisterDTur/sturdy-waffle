@@ -1,6 +1,7 @@
 
 package tests;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.transaction.Transactional;
@@ -14,9 +15,11 @@ import org.springframework.util.Assert;
 
 import security.LoginService;
 import services.ActorService;
+import services.ComplaintService;
 import services.ReportService;
 import utilities.AbstractTest;
-import domain.Referee;
+import domain.Actor;
+import domain.Complaint;
 import domain.Report;
 
 // Indica que se tiene que ejecutar a través de Spring
@@ -30,13 +33,12 @@ import domain.Report;
 public class ReportServiceTest extends AbstractTest {
 
 	@Autowired
-	private ReportService	reportService;
+	private ReportService		reportService;
 	@Autowired
-	private ActorService	actorService;
+	private ActorService		actorService;
+	@Autowired
+	private ComplaintService	complaintService;
 
-
-	//	@Autowired
-	//	private ComplaintService	complaintService;
 
 	@Test
 	public void testCreateAndSave() {
@@ -46,12 +48,11 @@ public class ReportServiceTest extends AbstractTest {
 		final Report r = this.reportService.create();
 		Assert.notNull(r);
 
-		r.setIsFinal(false);
 		r.setReportTime(new Date());
 		r.setDescription("some Description");
-		//TODO: pendiente de cambio en el UML
-		r.setReferee((Referee) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()));
-		//r.setComplaint();
+
+		final Complaint c = (Complaint) this.complaintService.findSelfassigned().toArray()[0];
+		r.setComplaint(c);
 
 		final Report res = this.reportService.save(r);
 		Assert.notNull(res);
@@ -59,4 +60,42 @@ public class ReportServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 
+	@Test
+	public void testSelectAllReferee() {
+		super.authenticate("referee1");
+
+		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+
+		final Collection<Report> res = this.reportService.findReportsActor(actor.getId());
+
+		Assert.notNull(res);
+
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testSelectAllCustomer() {
+		super.authenticate("Customer2");
+
+		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+
+		final Collection<Report> res = this.reportService.findReportsActor(actor.getId());
+
+		Assert.notNull(res);
+
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testSelectAllWorker() {
+		super.authenticate("handy2");
+
+		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+
+		final Collection<Report> res = this.reportService.findReportsActor(actor.getId());
+
+		Assert.notNull(res);
+
+		super.unauthenticate();
+	}
 }

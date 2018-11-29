@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Date;
@@ -17,16 +18,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Phase extends DomainEntity {
 
-	private String title;
+	private String		title;
 
-	private String description;
+	private String		description;
 
-	private Date startTime;
+	private Date		startTime;
 
-	private Date endTime;
+	private Date		endTime;
 
 	// +
-	private Application application;
+	private Application	application;
+
 
 	@NotBlank
 	public String getTitle() {
@@ -79,9 +81,7 @@ public class Phase extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "Phase [title=" + this.title + ", description="
-				+ this.description + ", startTime=" + this.startTime
-				+ ", endTime=" + this.endTime + "]";
+		return "Phase [title=" + this.title + ", description=" + this.description + ", startTime=" + this.startTime + ", endTime=" + this.endTime + "]";
 	}
 
 }

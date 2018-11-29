@@ -7,21 +7,17 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class MiscellaneousRecord extends Curricula {
+public class MiscellaneousRecord extends DomainEntity {
 
 	private String				title;
 	private String				attachmentURL;
 	private Collection<String>	comments;
-
-	//+
-	private Curricula			curricula;
 
 
 	@NotBlank
@@ -49,15 +45,6 @@ public class MiscellaneousRecord extends Curricula {
 
 	public void setComments(final Collection<String> comments) {
 		this.comments = comments;
-	}
-
-	@ManyToOne(optional = false)
-	public Curricula getCurricula() {
-		return this.curricula;
-	}
-
-	public void setCurricula(final Curricula curricula) {
-		this.curricula = curricula;
 	}
 
 	@Override

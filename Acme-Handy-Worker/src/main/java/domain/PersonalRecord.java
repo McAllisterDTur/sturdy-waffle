@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -6,7 +7,6 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
@@ -17,15 +17,13 @@ import org.hibernate.validator.constraints.URL;
 @Access(AccessType.PROPERTY)
 public class PersonalRecord extends DomainEntity {
 
-	private String fullName;
-	private String photo;
-	private String email;
-	private String phoneNumber;
-	private String linkedInURL;
-	private Collection<String> comments;
+	private String				fullName;
+	private String				photo;
+	private String				email;
+	private String				phoneNumber;
+	private String				linkedInURL;
+	private Collection<String>	comments;
 
-	// +
-	private Curricula curricula;
 
 	@NotBlank
 	public String getFullName() {
@@ -84,21 +82,9 @@ public class PersonalRecord extends DomainEntity {
 		this.comments = comments;
 	}
 
-	@OneToOne(optional=false)
-	public Curricula getCurricula() {
-		return this.curricula;
-	}
-
-	public void setCurricula(final Curricula curricula) {
-		this.curricula = curricula;
-	}
-
 	@Override
 	public String toString() {
-		return "PersonalRecord [fullName=" + this.fullName + ", photo="
-				+ this.photo + ", email=" + this.email + ", phoneNumber="
-				+ this.phoneNumber + ", linkedInURL=" + this.linkedInURL
-				+ ", comments=" + this.comments + "]";
+		return "PersonalRecord [fullName=" + this.fullName + ", photo=" + this.photo + ", email=" + this.email + ", phoneNumber=" + this.phoneNumber + ", linkedInURL=" + this.linkedInURL + ", comments=" + this.comments + "]";
 	}
 
 }

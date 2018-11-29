@@ -31,6 +31,7 @@ public class Actor extends DomainEntity {
 	private Boolean		banned;
 	//+
 	private UserAccount	account;
+	private Boolean		isSuspicious;
 
 
 	@NotBlank
@@ -111,6 +112,14 @@ public class Actor extends DomainEntity {
 
 	public void setAccount(final UserAccount account) {
 		this.account = account;
+	}
+
+	public Boolean getIsSuspicious() {
+		return this.isSuspicious;
+	}
+
+	public void setIsSuspicious(final Boolean isSuspicious) {
+		this.isSuspicious = isSuspicious;
 	}
 
 	@Override

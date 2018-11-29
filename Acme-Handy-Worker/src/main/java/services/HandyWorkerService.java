@@ -23,12 +23,19 @@ public class HandyWorkerService {
 
 	@Autowired
 	private HandyWorkerRepository	repo;
+	@Autowired
+	private UserAccountService		userAccountService;
 	private UserAccount				account;
 
 
 	public HandyWorker create() {
 		final HandyWorker res = new HandyWorker();
+		final UserAccount a = this.userAccountService.create();
 
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.HANDYWORKER);
+		a.addAuthority(auth);
+		res.setAccount(a);
 		res.setApplications(new ArrayList<Application>());
 
 		return res;
@@ -36,12 +43,6 @@ public class HandyWorkerService {
 
 	public HandyWorker save(final HandyWorker worker) {
 		Assert.notNull(worker);
-
-		if (worker.getId() <= 0) {
-			worker.setScore(0.0);
-			if (worker.getMake().equals(null) || worker.getMake().equals(""))
-				worker.setMake(worker.getName() + worker.getMiddleName() + worker.getSurname());
-		}
 
 		return this.repo.save(worker);
 

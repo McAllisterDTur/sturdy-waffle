@@ -1,7 +1,6 @@
 
 package domain;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -35,10 +34,12 @@ public class Complaint extends DomainEntity {
 
 	private FixUpTask			fixUpTask;
 
+	private Referee				referee;
+
 
 	@Column(unique = true)
 	@NotBlank
-	@Pattern(regexp = "^(\\d{2})(\\d{2})(\\d{2})\\-([1-9a-zA-Z]{6})$")
+	@Pattern(regexp = "^(\\d{2})(\\d{2})(\\d{2})\\-([0-9a-zA-Z]{6})$")
 	public String getTicker() {
 		return this.ticker;
 	}
@@ -70,11 +71,11 @@ public class Complaint extends DomainEntity {
 
 	@ElementCollection
 	public Collection<String> getAttachments() {
-		return new ArrayList<String>(this.attachments);
+		return this.attachments;
 	}
 
 	public void setAttachments(final Collection<String> attachments) {
-		this.attachments = new ArrayList<String>(attachments);
+		this.attachments = attachments;
 	}
 	@NotNull
 	public Boolean getIsFinal() {
@@ -92,6 +93,15 @@ public class Complaint extends DomainEntity {
 
 	public void setFixUpTask(final FixUpTask fixUpTask) {
 		this.fixUpTask = fixUpTask;
+	}
+
+	@ManyToOne(optional = true)
+	public Referee getReferee() {
+		return this.referee;
+	}
+
+	public void setReferee(final Referee referee) {
+		this.referee = referee;
 	}
 
 	@Override

@@ -28,6 +28,7 @@ public class FixUpTask extends DomainEntity {
 	private Date					publishTime;
 	private String					description;
 	private String					address;
+	private Double					minPrice;
 	private Double					maxPrice;
 	private Date					periodStart;
 	private Date					periodEnd;
@@ -107,6 +108,14 @@ public class FixUpTask extends DomainEntity {
 		this.maxPrice = maxPrice;
 	}
 
+	public Double getMinPrice() {
+		return this.minPrice;
+	}
+
+	public void setMinPrice(final Double minPrice) {
+		this.minPrice = minPrice;
+	}
+
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -137,9 +146,9 @@ public class FixUpTask extends DomainEntity {
 		this.creditCard = creditCard;
 	}
 
-	@NotNull
+	//@NotNull
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	public Category getCategory() {
 		return this.category;
 	}
