@@ -9,7 +9,166 @@
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
+	
+	<!-- Sponsors -->
+	
+	<bean id="Sponsor1" class="domain.Sponsor">
+		<property name="account" ref="userAccountSponsor1" />
+		<property name="name" value="Marta" />
+		<property name="middleName">
+			<null />
+		</property>
+		<property name="surname" value="Tejada" />
+		<property name="photoURL">
+			<null />
+		</property>
+		<property name="email" value="martiita@outlook.com" />
+		<property name="phone" value="663123459" />
+		<property name="address" value="Plaza de Cuba 38 (Sevilla)" />
+		<property name="banned" value="false" />
+	</bean>
 
+	<bean id="Sponsor2" class="domain.Sponsor">
+		<property name="account" ref="userAccountSponsor2" />
+		<property name="name" value="Martirio" />
+		<property name="middleName">
+			<null />
+		</property>
+		<property name="surname" value="Salto" />
+		<property name="photoURL">
+			<null />
+		</property>
+		<property name="email" value="martirioS@outlook.com" />
+		<property name="phone" value="663123459" />
+		<property name="address" value="Plaza de Cuba 38 (Sevilla)" />
+		<property name="banned" value="false" />
+	</bean>
+
+	<!-- Sponsorships -->
+
+	<bean id="Sponsorship1" class="domain.Sponsorship">
+		<property name="bannerURL" value="https://i.imgur.com/Ybhzgcj.jpg" />
+		<property name="targetPageLink"
+			value="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Talha.jpg/800px-Talha.jpg" />
+		<property name="creditCard" ref="CreditCard1" />
+		<property name="sponsor" ref="Sponsor1" />
+		<property name="tutorials" ref="Tutorial1" />
+	</bean>
+
+	<bean id="Sponsorship2" class="domain.Sponsorship">
+		<property name="bannerURL"
+			value="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Talha.jpg/800px-Talha.jpg" />
+		<property name="targetPageLink" value="https://i.imgur.com/Ybhzgcj.jpg" />
+		<property name="creditCard" ref="CreditCard1" />
+		<property name="sponsor" ref="Sponsor1" />
+		<property name="tutorials" ref="Tutorial2" />
+	</bean>
+
+	<bean id="Sponsorship3" class="domain.Sponsorship">
+		<property name="bannerURL" value="https://i.imgur.com/Ybhzgcj.jpg" />
+		<property name="targetPageLink" value="https://i.imgur.com/Ybhzgcj.jpg" />
+		<property name="creditCard" ref="CreditCard2" />
+		<property name="sponsor" ref="Sponsor2" />
+		<property name="tutorials" ref="Tutorial2" />
+	</bean>
+	<!-- Sections -->
+	<bean id="Section1" class="domain.Section">
+		<property name="number" value="1" />
+		<property name="title" value="Obtenemos los materiales" />
+		<property name="text" value="Obtenemos los matereriales, empezaremos con los elementos de la masa." />
+		<property name="photoURL">
+			<list>
+				<value>https://upload.wikimedia.org/wikipedia/commons/7/73/Museo_Chinchilla_Belmonte-Useros_Botijos.JPG
+				</value>
+			</list>
+		</property>
+		<property name="tutorial">
+				<ref bean="Tutorial1" />
+		  </property>
+	</bean>
+	
+		<bean id="Section2" class="domain.Section">
+		<property name="number" value="2" />
+		<property name="title" value="Preparamos los materiales" />
+		<property name="text" value="Una vez obtenidos los elementos para la masa, la haremos." />
+		<property name="photoURL">
+			<list>
+				<value>https://upload.wikimedia.org/wikipedia/commons/7/73/Museo_Chinchilla_Belmonte-Useros_Botijos.JPG
+				</value>
+			</list>
+		</property>
+		<property name="tutorial">
+				<ref bean="Tutorial1" />
+		  </property>
+	</bean>
+	
+		<bean id="Section3" class="domain.Section">
+		<property name="number" value="1" />
+		<property name="title" value="Obtenemos los materiales de esto tan popular" />
+		<property name="text" value="Obtenemos los matereriales, empezaremos con los elementos de la masa." />
+		<property name="photoURL">
+			<list>
+				<value>https://upload.wikimedia.org/wikipedia/commons/7/73/Museo_Chinchilla_Belmonte-Useros_Botijos.JPG
+				</value>
+			</list>
+		</property>
+		<property name="tutorial">
+				<ref bean="Tutorial2" />
+		  </property>
+	</bean>
+
+	<!-- Tutorials -->
+
+	<bean id="Tutorial1" class="domain.Tutorial">
+		<property name="lastTimeUpdated" value="11/11/2018 20:45" />
+		<property name="summary" value="Se enseñará a reparar botijos de barro" />
+		<property name="title" value="Reparación de botijos" />
+		<property name="photoURL">
+			<list>
+				<value>https://upload.wikimedia.org/wikipedia/commons/7/73/Museo_Chinchilla_Belmonte-Useros_Botijos.JPG
+				</value>
+			</list>
+		</property>
+		<property name="worker" ref="Worker1" />
+		<property name="sponsorships">
+			<list>
+				<ref bean="Sponsorship1" />
+			</list>
+		</property>
+		<property name="sections">
+			<list>
+				<ref bean="Section1" />
+				<ref bean="Section2" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="Tutorial2" class="domain.Tutorial">
+		<property name="lastTimeUpdated" value="11/13/2018 20:45" />
+		<property name="summary"
+			value="Se enseñará a reparar todo tipo de objetos de barro, viendo que se a puesto de moda" />
+		<property name="title" value="Reparación de objetos de barro" />
+		<property name="photoURL">
+			<list>
+				<value>https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Talha.jpg/800px-Talha.jpg
+				</value>
+			</list>
+		</property>
+		<property name="worker" ref="Worker3" />
+		<property name="sponsorships">
+			<list>
+				<ref bean="Sponsorship2" />
+				<ref bean="Sponsorship3" />
+			</list>
+		</property>
+		<property name="sections">
+			<list>
+				<ref bean="Section3" />
+			</list>
+		</property>
+	</bean>
+
+	
 	<!-- User accounts -->
 
 	<bean id="userAccountAdmin1" class="security.UserAccount">
@@ -281,8 +440,10 @@
 		<property name="cacheTime" value="1" />
 		<property name="vat" value="21" />
 		<property name="bannerURL" value="https://tinyurl.com/acme-handy-worker-logo" />
-		<property name="welcomeSP" value="¡Bienvenidos a Acme Handy Worker! Precio, calidad y confianza en el mismo sitio" />
-		<property name="welcomeEN" value="Welcome to Acme Handy Worker! Price, quality, and trust in a single place" />
+		<property name="welcomeSP"
+			value="¡Bienvenidos a Acme Handy Worker! Precio, calidad y confianza en el mismo sitio" />
+		<property name="welcomeEN"
+			value="Welcome to Acme Handy Worker! Price, quality, and trust in a single place" />
 		<property name="spamWords">
 			<list>
 				<value>sex</value>
@@ -290,7 +451,7 @@
 				<value>cialis</value>
 				<value>one million</value>
 				<value>you’ve been selected</value>
-				<value>Nigeria</value>
+				<value>nigeria</value>
 				<value>sexo</value>
 				<value>un millón</value>
 				<value>ha sido seleccionado</value>
@@ -339,27 +500,27 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- Social profiles -->
 	<bean id="SocialProfile1" class="domain.SocialProfile">
 		<property name="nick" value="McAllisterDTur" />
 		<property name="socialNetwork" value="Twitter" />
 		<property name="profileLink" value="http://www.twitter.com/mcallisterdtur" />
-		<property name="actor" ref="Worker1"/>
+		<property name="actor" ref="Worker1" />
 	</bean>
 
 	<bean id="SocialProfile2" class="domain.SocialProfile">
 		<property name="nick" value="Jose Manuel" />
 		<property name="socialNetwork" value="LinkedIn" />
 		<property name="profileLink" value="http://www.linkedin.com/mcallisterdtur" />
-		<property name="actor" ref="Worker1"/>
+		<property name="actor" ref="Worker1" />
 	</bean>
 
 	<bean id="SocialProfile3" class="domain.SocialProfile">
 		<property name="nick" value="Jose Manuel" />
 		<property name="socialNetwork" value="Facebook" />
 		<property name="profileLink" value="http://www.facebook.com" />
-		<property name="actor" ref="Worker1"/>
+		<property name="actor" ref="Worker1" />
 	</bean>
 
 	<!-- Credit Cards -->
@@ -486,14 +647,14 @@
 		<property name="category" ref="Category1" />
 		<property name="applications">
 			<list>
-				<ref bean="Application1"/>
-				<ref bean="Application11"/>
+				<ref bean="Application1" />
+				<ref bean="Application11" />
 			</list>
 		</property>
 		<property name="complaints">
 			<list>
-				<ref bean="Complaint1"/>
-				<ref bean="Complaint2"/>
+				<ref bean="Complaint1" />
+				<ref bean="Complaint2" />
 			</list>
 		</property>
 	</bean>
@@ -510,14 +671,14 @@
 		<property name="customer" ref="Customer1" />
 		<property name="warranty" ref="Warranty2" />
 		<property name="category" ref="Category4" />
-				<property name="applications">
+		<property name="applications">
 			<list>
-				<ref bean="Application2"/>
+				<ref bean="Application2" />
 			</list>
 		</property>
 		<property name="complaints">
 			<list>
-				<ref bean="Complaint3"/>
+				<ref bean="Complaint3" />
 			</list>
 		</property>
 	</bean>
@@ -537,12 +698,12 @@
 		<property name="category" ref="Category2" />
 		<property name="applications">
 			<list>
-				<ref bean="Application3"/>
+				<ref bean="Application3" />
 			</list>
 		</property>
 		<property name="complaints">
 			<list>
-				<ref bean="Complaint4"/>
+				<ref bean="Complaint4" />
 			</list>
 		</property>
 	</bean>
@@ -561,12 +722,12 @@
 		<property name="category" ref="Category1" />
 		<property name="applications">
 			<list>
-				<ref bean="Application4"/>
+				<ref bean="Application4" />
 			</list>
 		</property>
 		<property name="complaints">
 			<list>
-				<ref bean="Complaint5"/>
+				<ref bean="Complaint5" />
 			</list>
 		</property>
 	</bean>
@@ -585,16 +746,16 @@
 		<property name="category" ref="Category2" />
 		<property name="applications">
 			<list>
-				<ref bean="Application5"/>
-				<ref bean="Application6"/>
-				<ref bean="Application7"/>
-				<ref bean="Application8"/>
-				<ref bean="Application9"/>
+				<ref bean="Application5" />
+				<ref bean="Application6" />
+				<ref bean="Application7" />
+				<ref bean="Application8" />
+				<ref bean="Application9" />
 			</list>
 		</property>
 		<property name="complaints">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 	</bean>
@@ -613,12 +774,12 @@
 		<property name="category" ref="Category4" />
 		<property name="applications">
 			<list>
-				<ref bean="Application10"/>
+				<ref bean="Application10" />
 			</list>
 		</property>
 		<property name="complaints">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 	</bean>
@@ -640,12 +801,12 @@
 		<property name="score" value="0.0" />
 		<property name="fixUpTasks">
 			<list>
-				<ref bean="FixUpTask1"/>
-				<ref bean="FixUpTask2"/>
+				<ref bean="FixUpTask1" />
+				<ref bean="FixUpTask2" />
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="Customer2" class="domain.Customer">
 		<property name="account" ref="userAccountCustomer2" />
 		<property name="name" value="Ana" />
@@ -659,7 +820,7 @@
 		<property name="score" value="0.4" />
 		<property name="fixUpTasks">
 			<list>
-				<ref bean="FixUpTask3"/>
+				<ref bean="FixUpTask3" />
 			</list>
 		</property>
 	</bean>
@@ -677,9 +838,9 @@
 		<property name="address" value="Calle Avenida, 46 (Bollullos)" />
 		<property name="banned" value="false" />
 		<property name="score" value="-0.8" />
-			<property name="fixUpTasks">
+		<property name="fixUpTasks">
 			<list>
-				<ref bean="FixUpTask4"/>
+				<ref bean="FixUpTask4" />
 			</list>
 		</property>
 	</bean>
@@ -699,9 +860,9 @@
 		<property name="address" value="Lora del Río" />
 		<property name="banned" value="true" />
 		<property name="score" value="-1.0" />
-			<property name="fixUpTasks">
+		<property name="fixUpTasks">
 			<list>
-				<ref bean="FixUpTask5"/>
+				<ref bean="FixUpTask5" />
 			</list>
 		</property>
 	</bean>
@@ -719,9 +880,9 @@
 		<property name="address" value="Avenida Kansas City, 67" />
 		<property name="banned" value="false" />
 		<property name="score" value="0.9" />
-			<property name="fixUpTasks">
+		<property name="fixUpTasks">
 			<list>
-				<ref bean="FixUpTask6"/>
+				<ref bean="FixUpTask6" />
 			</list>
 		</property>
 	</bean>
@@ -741,9 +902,9 @@
 		<property name="address" value="Wembley St., 88" />
 		<property name="banned" value="false" />
 		<property name="score" value="0.67" />
-			<property name="fixUpTasks">
+		<property name="fixUpTasks">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 	</bean>
@@ -765,7 +926,7 @@
 		<property name="score" value="0.4" />
 		<property name="fixUpTasks">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 	</bean>
@@ -787,7 +948,7 @@
 		<property name="score" value="0.2" />
 		<property name="fixUpTasks">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 	</bean>
@@ -807,7 +968,7 @@
 		<property name="score" value="0.0" />
 		<property name="fixUpTasks">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 	</bean>
@@ -827,7 +988,7 @@
 		<property name="score" value="0.0" />
 		<property name="fixUpTasks">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 	</bean>
@@ -852,7 +1013,7 @@
 		<property name="make" value="CuquiArreglos de Martita" />
 		<property name="applications">
 			<list>
-				<ref bean="Application1"/>
+				<ref bean="Application1" />
 			</list>
 		</property>
 	</bean>
@@ -875,12 +1036,12 @@
 		<property name="make" value="Arreglamos Todo" />
 		<property name="applications">
 			<list>
-				<ref bean="Application2"/>
-				<ref bean="Application4"/>
-				<ref bean="Application5"/>
-				<ref bean="Application6"/>
-				<ref bean="Application7"/>
-				<ref bean="Application11"/>
+				<ref bean="Application2" />
+				<ref bean="Application4" />
+				<ref bean="Application5" />
+				<ref bean="Application6" />
+				<ref bean="Application7" />
+				<ref bean="Application11" />
 			</list>
 		</property>
 	</bean>
@@ -903,9 +1064,9 @@
 		<property name="make" value="Chema Carnicer" />
 		<property name="applications">
 			<list>
-				<ref bean="Application3"/>
-				<ref bean="Application8"/>
-				<ref bean="Application10"/>
+				<ref bean="Application3" />
+				<ref bean="Application8" />
+				<ref bean="Application10" />
 			</list>
 		</property>
 	</bean>
@@ -928,7 +1089,7 @@
 		<property name="make" value="Mecano" />
 		<property name="applications">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 
@@ -952,7 +1113,7 @@
 		<property name="make" value="Lo Malo" />
 		<property name="applications">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 	</bean>
@@ -975,35 +1136,43 @@
 		<property name="make" value="Norge Workers and Singers" />
 		<property name="applications">
 			<list>
-				<ref bean="Application9"/>
+				<ref bean="Application9" />
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- Referees -->
 
-		<bean id="Referee1" class="domain.Referee">
-		<property name="account" ref="userAccountReferee1"/>
+	<bean id="Referee1" class="domain.Referee">
+		<property name="account" ref="userAccountReferee1" />
 		<property name="name" value="Federico" />
-		<property name="middleName"><null/></property>
-		<property name="surname" value="García Lorca"/>
-		<property name="photoURL"><null/></property>
-		<property name="email" value="lorca@gmail.com"/>
-		<property name="phone" value="646271896"/>
-		<property name="address" value="La Casa de Bernarda Alba, Granada"/>
-		<property name="banned" value="false"/>
+		<property name="middleName">
+			<null />
+		</property>
+		<property name="surname" value="García Lorca" />
+		<property name="photoURL">
+			<null />
+		</property>
+		<property name="email" value="lorca@gmail.com" />
+		<property name="phone" value="646271896" />
+		<property name="address" value="La Casa de Bernarda Alba, Granada" />
+		<property name="banned" value="false" />
 	</bean>
-	
+
 	<bean id="Referee2" class="domain.Referee">
-		<property name="account" ref="userAccountReferee2"/>
+		<property name="account" ref="userAccountReferee2" />
 		<property name="name" value="Loles" />
-		<property name="middleName"><null/></property>
-		<property name="surname" value="Hidalgo"/>
-		<property name="photoURL"><null/></property>
-		<property name="email" value="loles@pepsi.co.uk"/>
-		<property name="phone" value="638263723"/>
-		<property name="address" value="Plaza San Carlos, 8"/>
-		<property name="banned" value="false"/>
+		<property name="middleName">
+			<null />
+		</property>
+		<property name="surname" value="Hidalgo" />
+		<property name="photoURL">
+			<null />
+		</property>
+		<property name="email" value="loles@pepsi.co.uk" />
+		<property name="phone" value="638263723" />
+		<property name="address" value="Plaza San Carlos, 8" />
+		<property name="banned" value="false" />
 	</bean>
 
 	<!-- Applications -->
@@ -1095,7 +1264,7 @@
 		</property>
 		<property name="customerComments">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 		<property name="status" value="ACCEPTED" />
@@ -1194,25 +1363,25 @@
 		<property name="fixUpTask" ref="FixUpTask6" />
 		<property name="handyWorker" ref="Worker3" />
 	</bean>
-	
+
 	<bean id="Application11" class="domain.Application">
-        <property name="registerTime" value="03/11/2018 11:32" />
-        <property name="offeredPrice" value="35.7" />
-        <property name="handyComments">
-            <list>
-                <value>Creo que este presupuesto es aceptado</value>
-                <value>Creo que este presupuesto es aceptado</value>
-            </list>
-        </property>
-        <property name="customerComments">
-            <list>
-                <value>Lo veo caro</value>
-            </list>
-        </property>
-        <property name="status" value="PENDING" />
-        <property name="fixUpTask" ref="FixUpTask1" />
-        <property name="handyWorker" ref="Worker2" />
-    </bean>
+		<property name="registerTime" value="03/11/2018 11:32" />
+		<property name="offeredPrice" value="35.7" />
+		<property name="handyComments">
+			<list>
+				<value>Creo que este presupuesto es aceptado</value>
+				<value>Creo que este presupuesto es aceptado</value>
+			</list>
+		</property>
+		<property name="customerComments">
+			<list>
+				<value>Lo veo caro</value>
+			</list>
+		</property>
+		<property name="status" value="PENDING" />
+		<property name="fixUpTask" ref="FixUpTask1" />
+		<property name="handyWorker" ref="Worker2" />
+	</bean>
 
 	<!-- Category -->
 
@@ -1279,74 +1448,75 @@
 		</property>
 		<property name="draft" value="false" />
 	</bean>
-	
+
 	<!-- Complaints -->
-	
+
 	<bean id="Complaint1" class="domain.Complaint">
-		<property name="ticker" value="181031-g726has"/>
-		<property name="complaintTime" value="31/10/2018 12:00"/>
-		<property name="description" value="Creo que la cuidadora dejó ver a mi hijo películas violentas"/>
+		<property name="ticker" value="181031-g726has" />
+		<property name="complaintTime" value="31/10/2018 12:00" />
+		<property name="description"
+			value="Creo que la cuidadora dejó ver a mi hijo películas violentas" />
 		<property name="attachments">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 		<property name="isFinal" value="True" />
-		<property name="fixUpTask" ref="FixUpTask1"/>
+		<property name="fixUpTask" ref="FixUpTask1" />
 	</bean>
-	
+
 	<bean id="Complaint2" class="domain.Complaint">
-		<property name="ticker" value="181110-tya716"/>
-		<property name="complaintTime" value="31/10/2018 21:30"/>
-		<property name="description" value="La puerta no aguantó la lluvia"/>
+		<property name="ticker" value="181110-tya716" />
+		<property name="complaintTime" value="31/10/2018 21:30" />
+		<property name="description" value="La puerta no aguantó la lluvia" />
 		<property name="attachments">
 			<list>
 				<value>http://www.imgur.com/hyw7173m</value>
 			</list>
 		</property>
 		<property name="isFinal" value="False" />
-		<property name="fixUpTask" ref="FixUpTask1"/>
+		<property name="fixUpTask" ref="FixUpTask1" />
 	</bean>
-	
+
 	<bean id="Complaint3" class="domain.Complaint">
-		<property name="ticker" value="181031-z7x8c9"/>
-		<property name="complaintTime" value="31/10/2018 12:00"/>
-		<property name="description" value="Queja"/>
+		<property name="ticker" value="181031-z7x8c9" />
+		<property name="complaintTime" value="31/10/2018 12:00" />
+		<property name="description" value="Queja" />
 		<property name="attachments">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 		<property name="isFinal" value="True" />
-		<property name="fixUpTask" ref="FixUpTask6"/>
+		<property name="fixUpTask" ref="FixUpTask6" />
 	</bean>
-	
+
 	<bean id="Complaint4" class="domain.Complaint">
-		<property name="ticker" value="181031-q1w2e3"/>
-		<property name="complaintTime" value="31/10/2018 12:00"/>
-		<property name="description" value="Queja"/>
+		<property name="ticker" value="181031-q1w2e3" />
+		<property name="complaintTime" value="31/10/2018 12:00" />
+		<property name="description" value="Queja" />
 		<property name="attachments">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 		<property name="isFinal" value="True" />
-		<property name="fixUpTask" ref="FixUpTask3"/>
+		<property name="fixUpTask" ref="FixUpTask3" />
 	</bean>
-	
+
 	<bean id="Complaint5" class="domain.Complaint">
-		<property name="ticker" value="181031-p0o9i8"/>
-		<property name="complaintTime" value="31/10/2018 12:00"/>
-		<property name="description" value="Queja"/>
+		<property name="ticker" value="181031-p0o9i8" />
+		<property name="complaintTime" value="31/10/2018 12:00" />
+		<property name="description" value="Queja" />
 		<property name="attachments">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 		<property name="isFinal" value="True" />
-		<property name="fixUpTask" ref="FixUpTask5"/>
+		<property name="fixUpTask" ref="FixUpTask5" />
 	</bean>
-	
+
 	<!-- Notes -->
 	<bean id="Note1" class="domain.Notes">
 		<property name="moment" value="01/11/2018 12:40" />
@@ -1368,7 +1538,7 @@
 		<property name="isFinal" value="true" />
 		<property name="report" ref="Report1" />
 	</bean>
-	
+
 	<bean id="Note2" class="domain.Notes">
 		<property name="moment" value="01/11/2018 12:40" />
 		<property name="customerComments">
@@ -1389,7 +1559,7 @@
 		<property name="isFinal" value="true" />
 		<property name="report" ref="Report2" />
 	</bean>
-	
+
 	<bean id="Note3" class="domain.Notes">
 		<property name="moment" value="01/11/2018 12:40" />
 		<property name="customerComments">
@@ -1410,7 +1580,7 @@
 		<property name="isFinal" value="true" />
 		<property name="report" ref="Report3" />
 	</bean>
-	
+
 	<bean id="Note4" class="domain.Notes">
 		<property name="moment" value="01/11/2018 12:40" />
 		<property name="customerComments">
@@ -1431,14 +1601,14 @@
 		<property name="isFinal" value="true" />
 		<property name="report" ref="Report3" />
 	</bean>
-	
+
 	<!-- Reports -->
 	<bean id="Report1" class="domain.Report">
 		<property name="reportTime" value="01/11/2018 12:34" />
 		<property name="description" value="Descripción" />
 		<property name="attachment">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 		<property name="isFinal" value="true" />
@@ -1446,17 +1616,17 @@
 		<property name="complaint" ref="Complaint1" />
 		<property name="notes">
 			<list>
-				<ref bean="Note1"/>
+				<ref bean="Note1" />
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="Report2" class="domain.Report">
 		<property name="reportTime" value="01/11/2018 12:34" />
 		<property name="description" value="Descripción" />
 		<property name="attachment">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 		<property name="isFinal" value="true" />
@@ -1464,17 +1634,17 @@
 		<property name="complaint" ref="Complaint2" />
 		<property name="notes">
 			<list>
-				<ref bean="Note2"/>
+				<ref bean="Note2" />
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="Report3" class="domain.Report">
 		<property name="reportTime" value="01/11/2018 12:34" />
 		<property name="description" value="Descripción" />
 		<property name="attachment">
 			<list>
-				<null/>
+				<null />
 			</list>
 		</property>
 		<property name="isFinal" value="true" />
@@ -1482,8 +1652,8 @@
 		<property name="complaint" ref="Complaint3" />
 		<property name="notes">
 			<list>
-				<ref bean="Note3"/>
-				<ref bean="Note4"/>
+				<ref bean="Note3" />
+				<ref bean="Note4" />
 			</list>
 		</property>
 	</bean>

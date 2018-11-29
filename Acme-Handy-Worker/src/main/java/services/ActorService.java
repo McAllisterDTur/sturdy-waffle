@@ -36,7 +36,7 @@ public class ActorService {
 
 	/**
 	 * Saves a new actor in the DB or update it
-	 * If an admin update other actor, only can ban
+	 * If an admin is updating other actor, only can ban
 	 * 
 	 * @param actor
 	 * @return actor
@@ -96,4 +96,14 @@ public class ActorService {
 		return result;
 	}
 
+	/**
+	 * Finds an actor by his/her user account
+	 * 
+	 * @param userAccount
+	 * @return an actor
+	 */
+	public Actor findByUserAccountId(final int accountId) {
+
+		return this.actorRepository.findByUserAccountId(accountId);
+	}
 }
