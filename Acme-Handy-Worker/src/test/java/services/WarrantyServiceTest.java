@@ -30,7 +30,7 @@ public class WarrantyServiceTest extends AbstractTest {
 
 
 	@Test
-	public void saveGood() {
+	public void saveGoodTest() {
 		super.authenticate("admin");
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
@@ -42,7 +42,7 @@ public class WarrantyServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void saveGood2() {
+	public void saveGood2Test() {
 		super.authenticate("admin");
 		final Warranty w = this.wService.create();
 		// Saving in final mode
@@ -55,7 +55,7 @@ public class WarrantyServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void saveBad() {
+	public void saveBadTest() {
 		super.authenticate("Customer1");
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
@@ -73,27 +73,7 @@ public class WarrantyServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void saveBad1() {
-		super.authenticate("admin");
-		final Warranty w = this.wService.create();
-		w.setDraft(false);
-		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
-		w.setTitle("La ley de la selva");
-		final Warranty w1 = this.wService.save(w);
-		Warranty w2 = null;
-		try {
-			w1.setDraft(true);
-			w2 = this.wService.save(w1);
-		} catch (final Exception e) {
-
-		}
-		Assert.isNull(w2);
-		super.unauthenticate();
-	}
-
-	@Test
-	public void updateGood() {
+	public void updateGoodTest() {
 		super.authenticate("admin");
 		final Warranty w = this.wService.create();
 		// Saving in draft mode
@@ -106,7 +86,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void updateBad() {
+	public void updateBadTest() {
 		super.authenticate("admin");
 		final Warranty w = this.wService.create();
 		// Saving in final mode
@@ -126,7 +106,7 @@ public class WarrantyServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findAllGood() {
+	public void findAllGoodTest() {
 		super.authenticate("admin");
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
@@ -139,7 +119,7 @@ public class WarrantyServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findAllBad() {
+	public void findAllBadTest() {
 		super.authenticate("Customer1");
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
@@ -157,7 +137,7 @@ public class WarrantyServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findOneGood() {
+	public void findOneGoodTest() {
 		super.authenticate("admin");
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
@@ -171,7 +151,7 @@ public class WarrantyServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findOneBad() {
+	public void findOneBadTest() {
 		super.authenticate("Customer1");
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
@@ -191,7 +171,7 @@ public class WarrantyServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void deleteGood() {
+	public void deleteGoodTest() {
 		super.authenticate("admin");
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
@@ -206,7 +186,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void deleteGood1() {
+	public void deleteGood1Test() {
 		super.authenticate("admin");
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
@@ -222,7 +202,7 @@ public class WarrantyServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void deleteBad() {
+	public void deleteBadTest() {
 		super.authenticate("admin");
 		final Warranty w = this.wService.create();
 		w.setDraft(true);

@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.ArrayList;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,11 @@ import security.Authority;
 import security.LoginService;
 import utilities.AuthenticationUtility;
 import domain.Curricula;
+import domain.EducationRecord;
+import domain.EndorserRecord;
 import domain.HandyWorker;
+import domain.MiscellaneousRecord;
+import domain.ProfessionalRecord;
 
 @Service
 @Transactional
@@ -27,7 +33,12 @@ public class CurriculaService {
 
 
 	public Curricula create() {
-		return new Curricula();
+		final Curricula c = new Curricula();
+		c.setEducationRecord(new ArrayList<EducationRecord>());
+		c.setEndorserRecords(new ArrayList<EndorserRecord>());
+		c.setMiscellaneousRecords(new ArrayList<MiscellaneousRecord>());
+		c.setProfessionalRecords(new ArrayList<ProfessionalRecord>());
+		return c;
 	}
 
 	public Curricula save(final Curricula curricula) {

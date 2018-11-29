@@ -38,7 +38,7 @@ public class EndorsementServiceTest extends AbstractTest {
 
 
 	@Test
-	public void testCreateAndSave() {
+	public void createAndSaveTest() {
 
 		final Endorsement e = this.endorsementService.create();
 		Assert.notNull(e);
@@ -77,7 +77,7 @@ public class EndorsementServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindCustomer() {
+	public void findCustomerTest() {
 		super.authenticate("Customer2");
 		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final Collection<Endorsement> res = this.endorsementService.findAllCustomer(c.getId());
@@ -88,7 +88,7 @@ public class EndorsementServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindWorker() {
+	public void findWorkerTest() {
 		super.authenticate("handy2");
 
 		final HandyWorker w = (HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());

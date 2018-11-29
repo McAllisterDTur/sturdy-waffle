@@ -15,6 +15,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
 import domain.Box;
+import domain.Message;
 
 @Service
 @Transactional
@@ -32,9 +33,10 @@ public class BoxService {
 	//CRUDs
 
 	public Box create() {
-		return new Box();
+		final Box b = new Box();
+		b.setMessages(new ArrayList<Message>());
+		return b;
 	}
-
 	public Box save(final Box box) {
 		final List<String> names = this.allBoxNames();
 		if (box.getId() == 0)

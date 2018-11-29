@@ -24,6 +24,7 @@ public class RefereeService {
 
 	public Referee create() {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
+
 		return new Referee();
 	}
 

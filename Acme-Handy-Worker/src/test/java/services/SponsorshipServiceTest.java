@@ -32,7 +32,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 
 
 	@Test
-	public void CreateGoodTest() {
+	public void createGoodTest() {
 		final Tutorial tuto = this.tutorialService.findAll().iterator().next();
 		super.authenticate("sponsor1");
 		final Sponsorship a = new Sponsorship();
@@ -41,7 +41,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void CreateBadTest() {
+	public void createBadTest() {
 		super.authenticate("Customer1");
 		final Tutorial tuto = this.tutorialService.findAll().iterator().next();
 		final Sponsorship a = new Sponsorship();
@@ -57,7 +57,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void FindAllSponsorshipFromTutorialGoodTest() {
+	public void findAllSponsorshipFromTutorialGoodTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial a = ac.iterator().next();
 		final Collection<Sponsorship> tu = this.sponsorshipService.findAllSponsorshipFromTutorial(a.getId());
@@ -65,7 +65,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void FindOneGoodTest() {
+	public void findOneGoodTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial a = ac.iterator().next();
 		final Sponsorship tu = this.sponsorshipService.findOne(a.getSponsorships().iterator().next().getId());
@@ -73,7 +73,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void SaveNewGoodTest() {
+	public void saveNewGoodTest() {
 		final Iterator<Tutorial> ac = this.tutorialService.findAll().iterator();
 		final Tutorial tu = ac.next();
 		final Sponsorship s = tu.getSponsorships().iterator().next();
@@ -95,7 +95,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void SaveNewBadTest() {
+	public void saveNewBadTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial tu = ac.iterator().next();
 		final Sponsorship s = tu.getSponsorships().iterator().next();
@@ -118,7 +118,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void SaveEditGoodTest() {
+	public void saveEditGoodTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial tu = ac.iterator().next();
 		final Sponsorship s = tu.getSponsorships().iterator().next();
@@ -130,7 +130,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void SaveEditBadTest() {
+	public void saveEditBadTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial tu = ac.iterator().next();
 		final Sponsorship s = tu.getSponsorships().iterator().next();
@@ -147,7 +147,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void DeleteGoodTest() {
+	public void deleteGoodTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial tu = ac.iterator().next();
 		super.authenticate(tu.getSponsorships().iterator().next().getSponsor().getAccount().getUsername());
@@ -167,7 +167,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void DeleteBadTest() {
+	public void deleteBadTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial tu = ac.iterator().next();
 		super.authenticate("sponsor2");

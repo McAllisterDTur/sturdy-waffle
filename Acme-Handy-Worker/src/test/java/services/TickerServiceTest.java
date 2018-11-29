@@ -25,7 +25,7 @@ public class TickerServiceTest {
 
 
 	@Test
-	public void getTickerGood() {
+	public void getTickerGoodTest() {
 		final String t = this.tickerService.getTicker();
 		System.out.println(t);
 		Assert.isTrue(t != null);

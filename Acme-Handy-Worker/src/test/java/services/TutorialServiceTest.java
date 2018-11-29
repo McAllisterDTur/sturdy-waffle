@@ -37,7 +37,7 @@ public class TutorialServiceTest extends AbstractTest {
 	//private HandyWorkerService	handyWorkerService;
 
 	@Test
-	public void CreateGoodTest() {
+	public void createGoodTest() {
 		super.authenticate("handy1");
 		final Tutorial tutorial = new Tutorial();
 		final Collection<String> photos = new ArrayList<>();
@@ -50,7 +50,7 @@ public class TutorialServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void CreateBadTest() {
+	public void createBadTest() {
 		super.authenticate("Customer1");
 		final Tutorial a = new Tutorial();
 		Tutorial ac = null;
@@ -64,7 +64,7 @@ public class TutorialServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void FindOneGoodTest() {
+	public void findOneGoodTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial a = ac.iterator().next();
 		final Tutorial tu = this.tutorialService.findOne(a.getId());
@@ -72,13 +72,13 @@ public class TutorialServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void FindAllGoodTest() {
+	public void findAllGoodTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		Assert.isTrue(!(ac.isEmpty()));
 	}
 
 	@Test
-	public void FindTutorialsByHandyWorkerGoodTest() {
+	public void findTutorialsByHandyWorkerGoodTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial a = ac.iterator().next();
 		final Collection<Tutorial> tu = this.tutorialService.findAllFromHandyworker(a.getWorker().getId());
@@ -86,7 +86,7 @@ public class TutorialServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void SaveNewGoodTest() {
+	public void saveNewGoodTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial a = ac.iterator().next();
 		super.authenticate(a.getWorker().getAccount().getUsername());
@@ -100,7 +100,7 @@ public class TutorialServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void SaveNewBadTest() {
+	public void saveNewBadTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial a = ac.iterator().next();
 		super.authenticate(a.getWorker().getAccount().getUsername());
@@ -117,7 +117,7 @@ public class TutorialServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void SaveEditGoodTest() {
+	public void saveEditGoodTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial tu = ac.iterator().next();
 		super.authenticate(tu.getWorker().getAccount().getUsername());
@@ -129,7 +129,7 @@ public class TutorialServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void SaveEditBadTest() {
+	public void saveEditBadTest() {
 
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial tuto = ac.iterator().next();
@@ -146,7 +146,7 @@ public class TutorialServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void DeleteGoodTest() {
+	public void deleteGoodTest() {
 		final Tutorial tuto = this.tutorialService.findAll().iterator().next();
 		final HandyWorker worker = tuto.getWorker();
 		super.authenticate(worker.getAccount().getUsername());
@@ -156,7 +156,7 @@ public class TutorialServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void DeleteBadTest() {
+	public void deleteBadTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial tuto = ac.iterator().next();
 		super.authenticate("Customer1");
@@ -172,7 +172,7 @@ public class TutorialServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void DeleteBad2Test() {
+	public void deleteBad2Test() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial tuto = ac.iterator().next();
 		super.authenticate("handy5");

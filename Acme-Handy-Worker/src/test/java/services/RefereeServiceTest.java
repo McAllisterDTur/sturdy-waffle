@@ -31,19 +31,19 @@ public class RefereeServiceTest extends AbstractTest {
 
 
 	@Test
-	public void testCreate() {
+	public void createTest() {
 		super.authenticate("admin");
 		final Referee r = this.refService.create();
 		Assert.notNull(r);
 	}
 
 	@Test
-	public void testFindAll() {
+	public void findAllTest() {
 		Assert.notEmpty(this.refService.findAll());
 	}
 
 	@Test
-	public void testSave() {
+	public void saveTest() {
 		super.authenticate("admin");
 		final UserAccount ac = new UserAccount();
 		ac.setUsername("refereeTest");
@@ -69,7 +69,7 @@ public class RefereeServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void tesFindOne() {
+	public void findOneTest() {
 		super.authenticate("admin");
 		final UserAccount ac = new UserAccount();
 		ac.setUsername("refereeTest");

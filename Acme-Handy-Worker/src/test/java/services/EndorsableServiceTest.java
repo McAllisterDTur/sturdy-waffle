@@ -31,7 +31,7 @@ public class EndorsableServiceTest extends AbstractTest {
 
 
 	@Test
-	public void testScore() {
+	public void scoreTest() {
 		super.authenticate("handy2");
 		final Actor a = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final Endorsable e = this.endService.findOne(a.getId());

@@ -1,8 +1,8 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,27 +40,27 @@ public class MessageServiceTest extends AbstractTest {
 
 
 	@Test
-	public void testCreate() {
+	public void createTest() {
 		final Message m = this.msgService.create();
 		Assert.notNull(m);
 	}
 
 	@Test
-	public void testFindAll() {
+	public void findAllTest() {
 		super.authenticate("Customer1");
 		final Collection<Message> all = this.msgService.findAll();
 		Assert.notEmpty(all);
 	}
 
 	@Test
-	public void testFindOne() {
+	public void findOneTest() {
 		super.authenticate("Customer1");
 		final Message m = this.msgService.findAll().iterator().next();
 		Assert.isTrue(this.msgService.findOne(m.getId()).equals(m));
 	}
 
 	@Test
-	public void testDelete() {
+	public void deleteTest() {
 		super.authenticate("Customer1");
 		final Message m = (Message) this.msgService.findAll().toArray()[0];
 		final Actor owner = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
@@ -70,29 +70,17 @@ public class MessageServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testDeleteFromTrash() {
+	public void deleteFromTrashTest() {
 		super.authenticate("Customer1");
 		final Actor owner = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final Message m = this.msgService.findAll().iterator().next();
-		final Box trash = this.bService.findByName(owner.getId(), "TRASH");
-		final Collection<Box> bxs = new ArrayList<>();
 		this.msgService.delete(m);
-		//		bxs.add(trash);
-		//		m.setBody("Test");
-		//		m.setPriority("NEUTRAL");
-		//		m.setSubject("Test");
-		//		m.setBoxes(bxs);
-		//		final Message ms = this.msgService.save(m);
-		//		final Collection<Message> newMsg = this.msgService.findByBox(trash);
-		//		newMsg.add(ms);
-		//		trash.setMessages(newMsg);
-		//		this.bService.save(trash);
 		this.msgService.deleteFromTrash(m);
 		final Box trashU = this.bService.findByName(owner.getId(), "TRASH");
 		Assert.isTrue(!trashU.getMessages().contains(m));
 	}
 	@Test
-	public void testSend() {
+	public void sendTest() {
 		final Message m = this.msgService.create();
 		m.setBody("Test");
 		m.setPriority("NEUTRAL");
@@ -125,7 +113,9 @@ public class MessageServiceTest extends AbstractTest {
 		m.setBody("Test");
 		m.setPriority("NEUTRAL");
 		m.setSubject("Test");
-		//final Message ms = this.msgService.save(m);
+		final Date d = new Date();
+		d.setTime(895442400000L);
+		m.setSendTime(d);
 		final Message ms = this.msgService.send(m, sa);
 		super.unauthenticate();
 
@@ -134,30 +124,11 @@ public class MessageServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindByBox() {
+	public void findByBoxTest() {
 		//First, we log as a customer (for example)
 		super.authenticate("Customer1");
 		//We get the actor that is logged with that user
 		final Actor owner = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
-		//		//Now we create a box
-		//		final Box n = this.bService.create();
-		//		n.setDeleteable(true);
-		//		n.setName("TEST BOX");
-		//		n.setOwner(owner);
-		//		n.setMessages(null);
-		//		//And now we save it
-		//		final Box b = this.bService.save(n);
-		//		final Message m = this.msgService.create();
-		//		m.setBody("Test");
-		//		m.setPriority("NEUTRAL");
-		//		m.setSubject("Test");
-		//		final Collection<Box> boxes = new ArrayList<>();
-		//		boxes.add(b);
-		//		m.setBoxes(boxes);
-		//		final Message saved = this.msgService.save(m);
-		//		final Collection<Message> msgs = new ArrayList<>();
-		//		msgs.add(saved);
-		//		b.setMessages(msgs);
 		final Box b = this.bService.findByName(owner.getId(), "IN");
 		Assert.notEmpty(this.msgService.findByBox(b));
 	}

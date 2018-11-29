@@ -31,7 +31,7 @@ public class SponsorServiceTest extends AbstractTest {
 
 
 	@Test
-	public void CreateGoodTest() {
+	public void createGoodTest() {
 		final Sponsor a = new Sponsor();
 		final UserAccount ua = this.useraccountService.create();
 		a.setAccount(ua);
@@ -55,13 +55,13 @@ public class SponsorServiceTest extends AbstractTest {
 	//	}
 
 	@Test
-	public void FindAllTest() {
+	public void findAllTest() {
 		final Collection<Sponsor> a = this.sponsorService.findAll();
 		Assert.notEmpty(a);
 	}
 
 	@Test
-	public void FindOneTest() {
+	public void findOneTest() {
 		final Collection<Sponsor> acs = this.sponsorService.findAll();
 		final Sponsor base = acs.iterator().next();
 		final Sponsor a = this.sponsorService.findOne(base.getId());
@@ -69,7 +69,7 @@ public class SponsorServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void SaveNewGoodTest() {
+	public void saveNewGoodTest() {
 		final Sponsor ac = this.sponsorService.create();
 		ac.setAddress("one");
 		ac.setEmail("two");
@@ -109,7 +109,7 @@ public class SponsorServiceTest extends AbstractTest {
 	//	}
 
 	@Test
-	public void SaveEditGoodTest() {
+	public void saveEditGoodTest() {
 		final Collection<Sponsor> acs = this.sponsorService.findAll();
 		final Sponsor ac = acs.iterator().next();
 		super.authenticate(ac.getAccount().getUsername());
@@ -120,7 +120,7 @@ public class SponsorServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void SaveEditBadTest() {
+	public void saveEditBadTest() {
 		final Collection<Sponsor> acs = this.sponsorService.findAll();
 		final Sponsor ac = acs.iterator().next();
 		super.authenticate("Sponsor2");

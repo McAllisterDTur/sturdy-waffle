@@ -31,7 +31,7 @@ public class FinderServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void createTestBad() {
+	public void createBadTest() {
 		try {
 			super.authenticate("handy1");
 			final Finder f = this.finderService.create();
@@ -46,21 +46,21 @@ public class FinderServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testSave() {
+	public void saveTest() {
 		super.authenticate("handy2");
 		final Finder f = this.finderService.create();
 		Assert.notNull(this.finderService.save(f).getFixUpTask());
 	}
 
 	@Test
-	public void testFindOne() {
+	public void findOneTest() {
 		super.authenticate("handy1");
 		final Finder f = this.finderService.findAll().iterator().next();
 		Assert.isTrue(this.finderService.findOne(f.getId()).equals(f));
 	}
 
 	@Test
-	public void testFindByLoggedHandyWorker() {
+	public void findByLoggedHandyWorkerTest() {
 		super.authenticate("handy1");
 		Assert.notNull(this.finderService.findByLoggedHandyWorker());
 	}

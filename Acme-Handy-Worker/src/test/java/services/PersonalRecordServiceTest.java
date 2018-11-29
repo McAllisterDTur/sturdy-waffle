@@ -27,26 +27,26 @@ public class PersonalRecordServiceTest extends AbstractTest {
 
 
 	@Test
-	public void testCreate() {
+	public void createTest() {
 		super.authenticate("handy2");
 		Assert.notNull(this.prRecord.create());
 	}
 
 	@Test
-	public void testFindAll() {
+	public void findAllTest() {
 		super.authenticate("handy1");
 		Assert.notEmpty(this.prRecord.findAll());
 	}
 
 	@Test
-	public void testFindOne() {
+	public void findOneTest() {
 		super.authenticate("handy1");
 		final PersonalRecord er = this.prRecord.findAll().iterator().next();
 		Assert.isTrue(this.prRecord.findOne(er.getId()).equals(er));
 	}
 
 	@Test
-	public void testSave() {
+	public void saveTest() {
 		super.authenticate("handy1");
 		final PersonalRecord pr = this.prRecord.findAll().iterator().next();
 		super.unauthenticate();
@@ -64,7 +64,7 @@ public class PersonalRecordServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindByCurricula() {
+	public void findByCurriculaTest() {
 		super.authenticate("handy1");
 		final Curricula c = this.cRecord.findFromLoggedHandyWorker();
 		Assert.notNull(this.prRecord.findByCurricula(c.getId()));

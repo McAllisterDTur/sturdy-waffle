@@ -33,7 +33,7 @@ public class BoxServiceTest extends AbstractTest {
 
 
 	@Test
-	public void testCreate() {
+	public void createTest() {
 		//We create a box
 		final Box box = this.boxService.create();
 		//Did we make it?
@@ -41,7 +41,7 @@ public class BoxServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindAll() {
+	public void findAllTest() {
 		//Let's find all the boxes
 		final Collection<Box> allBoxes = this.boxService.findAll();
 		//Is this working?
@@ -49,7 +49,7 @@ public class BoxServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testSave() {
+	public void saveTest() {
 		//First, we log as a customer (for example)
 		super.authenticate("Customer2");
 		//We get the actor that is logged with that user
@@ -67,7 +67,7 @@ public class BoxServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindOne() {
+	public void findOneTest() {
 		//First, we log as a customer (for example)
 		super.authenticate("Customer2");
 		//We get the actor that is logged with that user
@@ -85,7 +85,7 @@ public class BoxServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testDelete() {
+	public void deleteTest() {
 		//First, we log as a customer (for example)
 		super.authenticate("Customer2");
 		//We get the actor that is logged with that user
@@ -105,7 +105,7 @@ public class BoxServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindByOwner() {
+	public void findByOwnerTest() {
 		//First, we log as a customer (for example)
 		super.authenticate("Customer2");
 		//We get the actor that is logged with that user
@@ -123,7 +123,7 @@ public class BoxServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testInitializeDefaultBoxes() {
+	public void initializeDefaultBoxesTest() {
 		//First, we log as a customer (for example)
 		super.authenticate("Customer2");
 		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
@@ -135,7 +135,7 @@ public class BoxServiceTest extends AbstractTest {
 		Assert.isTrue(this.boxService.findByOwner(id).size() == 4);
 	}
 
-	public void testFindByName() {
+	public void findByNameTest() {
 		//First, we log as a customer (for example)
 		super.authenticate("Customer1");
 		//We get the actor that is logged with that user

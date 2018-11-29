@@ -32,7 +32,7 @@ public class SectionServiceTest extends AbstractTest {
 
 
 	@Test
-	public void CreateGoodTest() {
+	public void createGoodTest() {
 		final Tutorial tuto = this.tutorialService.findAll().iterator().next();
 		super.authenticate(tuto.getWorker().getAccount().getUsername());
 		final Section section = new Section();
@@ -43,7 +43,7 @@ public class SectionServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void CreateBadTest() {
+	public void createBadTest() {
 		final Tutorial tuto = this.tutorialService.findAll().iterator().next();
 		super.authenticate("Customer1");
 		final Section a = new Section();
@@ -58,7 +58,7 @@ public class SectionServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void FindSectionTutorialGoodTest() {
+	public void findSectionTutorialGoodTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial a = ac.iterator().next();
 		final Collection<Section> tu = this.sectionService.findAllFromTutorial(a.getId());
@@ -66,7 +66,7 @@ public class SectionServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void FindOneGoodTest() {
+	public void findOneGoodTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial a = ac.iterator().next();
 		final Section sec = a.getSections().iterator().next();
@@ -74,7 +74,7 @@ public class SectionServiceTest extends AbstractTest {
 		Assert.isTrue(tu.equals(sec));
 	}
 	@Test
-	public void FindSectionssByTutorialGoodTest() {
+	public void findSectionssByTutorialGoodTest() {
 		final Collection<Tutorial> ac = this.tutorialService.findAll();
 		final Tutorial a = ac.iterator().next();
 		final Collection<Section> tu = this.sectionService.findAllFromTutorial(a.getId());
@@ -82,7 +82,7 @@ public class SectionServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void SaveNewGoodTest() {
+	public void saveNewGoodTest() {
 		final Collection<Tutorial> tutorial = this.tutorialService.findAll();
 		final Tutorial tuto = tutorial.iterator().next();
 		super.authenticate(tuto.getWorker().getAccount().getUsername());
@@ -98,7 +98,7 @@ public class SectionServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void SaveNewBadTest() {
+	public void saveNewBadTest() {
 		final Collection<Tutorial> tutorial = this.tutorialService.findAll();
 		final Tutorial tuto = tutorial.iterator().next();
 		super.authenticate("Customer1");

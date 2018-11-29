@@ -46,7 +46,7 @@ public class ActorServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testBan() {
+	public void banTest() {
 		super.authenticate("admin");
 		final Actor a = this.actorService.findAll().iterator().next();
 		this.actorService.ban(a);
@@ -54,7 +54,7 @@ public class ActorServiceTest extends AbstractTest {
 		Assert.isTrue(this.actorService.findOne(as.getId()).getBanned());
 	}
 	@Test
-	public void testUnBan() {
+	public void unBanTest() {
 		super.authenticate("admin");
 		final Actor a = this.actorService.findAll().iterator().next();
 		this.actorService.ban(a);

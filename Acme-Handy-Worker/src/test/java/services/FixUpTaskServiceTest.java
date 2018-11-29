@@ -41,7 +41,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 
 
 	@Test
-	public void saveAndFindOneGood() {
+	public void saveAndFindOneGoodTest() {
 		final FixUpTask f = this.fixUpTaskService.create();
 
 		super.authenticate("Customer1");
@@ -68,7 +68,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void saveAndFindOneBad() {
+	public void saveAndFindOneBadTest() {
 		super.authenticate(null);
 		final FixUpTask f = this.fixUpTaskService.create();
 		FixUpTask f3 = null;
@@ -87,7 +87,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void saveAndFindOneBad2() {
+	public void saveAndFindOneBad2Test() {
 		final FixUpTask f = this.fixUpTaskService.create();
 
 		super.authenticate("Customer1");
@@ -115,7 +115,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void deleteGood1() {
+	public void deleteGood1Test() {
 		final FixUpTask f = this.fixUpTaskService.create();
 
 		super.authenticate("Customer1");
@@ -143,7 +143,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 
 	}
 	@Test
-	public void deleteGood2() {
+	public void deleteGood2Test() {
 		final FixUpTask f = this.fixUpTaskService.create();
 
 		super.authenticate("Customer1");
@@ -169,7 +169,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		Assert.isTrue(f3 == null);
 	}
 	@Test
-	public void deleteBad() {
+	public void deleteBadTest() {
 		final FixUpTask f = this.fixUpTaskService.create();
 
 		super.authenticate(null);
@@ -191,7 +191,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void findAsHandyWorkerGood() {
+	public void findAsHandyWorkerGoodTest() {
 		super.authenticate("handy1");
 		final Collection<FixUpTask> f = this.fixUpTaskService.findAsHandyWorker();
 		Assert.isTrue(f != null);
@@ -211,19 +211,17 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void findFromCustomerGood1() {
+	public void findFromCustomerGood1Test() {
 		super.authenticate("Customer1");
-		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService
-			.getPrincipal().getId());
+		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final Collection<FixUpTask> f = this.fixUpTaskService.findFromCustomer(c.getId());
 		Assert.isTrue(f != null);
 		super.unauthenticate();
 	}
 	@Test
-	public void findFromCustomerGood2() {
+	public void findFromCustomerGood2Test() {
 		super.authenticate("Customer1");
-		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService
-			.getPrincipal().getId());
+		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		super.unauthenticate();
 		super.authenticate("handy1");
 		final Collection<FixUpTask> f = this.fixUpTaskService.findFromCustomer(c.getId());
@@ -232,10 +230,9 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findFromCustomerBad() {
+	public void findFromCustomerBadTest() {
 		super.authenticate("Customer1");
-		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService
-			.getPrincipal().getId());
+		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		Collection<FixUpTask> f = null;
 		try {
 			super.unauthenticate();
@@ -249,11 +246,9 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findByFilterTest() {
+	public void findByFilterTestTest() {
 		super.authenticate("handy1");
-		final Collection<FixUpTask> f = this.fixUpTaskService.findByFilter("niño", null, null,
-			null, null, new GregorianCalendar(2018, 2, 11, 19, 0, 0).getTime(),
-			new GregorianCalendar(2018, 2, 11, 20, 0, 0).getTime());
+		final Collection<FixUpTask> f = this.fixUpTaskService.findByFilter("niño", null, null, null, null, new GregorianCalendar(2018, 2, 11, 19, 0, 0).getTime(), new GregorianCalendar(2018, 2, 11, 20, 0, 0).getTime());
 		for (final FixUpTask a : f) {
 			System.out.println("==========FIX UP TASK Test 0===========");
 			System.out.println("Ticker: " + a.getTicker());
@@ -268,10 +263,9 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findByFilterTest1() {
+	public void findByFilter1Test() {
 		super.authenticate("handy1");
-		final Collection<FixUpTask> f = this.fixUpTaskService.findByFilter("niño", null, null,
-			null, null, null, null);
+		final Collection<FixUpTask> f = this.fixUpTaskService.findByFilter("niño", null, null, null, null, null, null);
 		for (final FixUpTask a : f) {
 			System.out.println("==========FIX UP TASK Test 1===========");
 			System.out.println("Ticker: " + a.getTicker());

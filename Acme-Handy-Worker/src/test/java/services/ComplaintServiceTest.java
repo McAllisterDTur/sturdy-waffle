@@ -32,7 +32,7 @@ public class ComplaintServiceTest extends AbstractTest {
 
 
 	@Test
-	public void saveGood() {
+	public void saveGoodTest() {
 		super.authenticate("Customer1");
 		final Complaint c = this.cService.create();
 		c.setAttachments(Arrays.asList("Attachment 1", "Attachment 2"));
@@ -44,7 +44,7 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void saveBad() {
+	public void saveBadTest() {
 		super.authenticate("handy1");
 		final Complaint c = this.cService.create();
 		Complaint c1 = null;
@@ -57,7 +57,7 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findOneGood() {
+	public void findOneGoodTest() {
 		super.authenticate("Customer1");
 		final Complaint c = this.cService.findFromLoggedCustomer().iterator().next();
 		final Complaint c1 = this.cService.findOne(c.getId());
@@ -66,7 +66,7 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findOneBad() {
+	public void findOneBadTest() {
 		super.authenticate("Customer1");
 		final Complaint c = this.cService.create();
 		c.setAttachments(Arrays.asList("Attachment 1", "Attachment 2"));
@@ -86,7 +86,7 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findFromLoggedCustomerGood() {
+	public void findFromLoggedCustomerGoodTest() {
 		super.authenticate("Customer2");
 		final Collection<Complaint> c = this.cService.findFromLoggedCustomer();
 		Assert.notNull(c);
@@ -94,7 +94,7 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findFromLoggedCustomerBad() {
+	public void findFromLoggedCustomerBadTest() {
 		super.authenticate("handy1");
 		Collection<Complaint> c = null;
 		try {
@@ -105,7 +105,7 @@ public class ComplaintServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void findUnassignedGood() {
+	public void findUnassignedGoodTest() {
 		super.authenticate("referee1");
 		final Collection<Complaint> c = this.cService.findUnassigned();
 		for (final Complaint co : c)
@@ -115,7 +115,7 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findUnassignedBad() {
+	public void findUnassignedBadTest() {
 		super.authenticate("Customer1");
 		Collection<Complaint> c = null;
 		try {
@@ -128,14 +128,14 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findSelfassignedGood() {
+	public void findSelfassignedGoodTest() {
 		super.authenticate("referee1");
 		final Collection<Complaint> c = this.cService.findSelfassigned();
 		Assert.notNull(c);
 		super.unauthenticate();
 	}
 	@Test
-	public void findSelfassignedBad() {
+	public void findSelfassignedBadTest() {
 		super.authenticate("Customer1");
 		Collection<Complaint> c = null;
 		try {
@@ -147,7 +147,7 @@ public class ComplaintServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	@Test
-	public void findFromLoggedHandyWorkerGood() {
+	public void findFromLoggedHandyWorkerGoodTest() {
 		super.authenticate("handy1");
 		final Collection<Complaint> c = this.cService.findFromLoggedHandyWorker();
 		Assert.notNull(c);
@@ -155,7 +155,7 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findFromLoggedHandyWorkerBad() {
+	public void findFromLoggedHandyWorkerBadTest() {
 		super.authenticate("Customer1");
 		Collection<Complaint> c = null;
 		try {

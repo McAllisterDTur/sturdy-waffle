@@ -30,7 +30,7 @@ public class CategoryServiceTest extends AbstractTest {
 
 
 	@Test
-	public void saveGood() {
+	public void saveGoodTest() {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
@@ -40,7 +40,7 @@ public class CategoryServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void saveBad() {
+	public void saveBadTest() {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
@@ -56,7 +56,7 @@ public class CategoryServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void updateGood() {
+	public void updateGoodTest() {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
@@ -64,15 +64,14 @@ public class CategoryServiceTest extends AbstractTest {
 		final Category c1 = this.catService.save(c);
 		c1.setName("Cocina");
 		this.catService.save(c1);
-		System.out
-			.println("=======Just checking categories, shouldn't have one named 'Ornitología'=======");
+		System.out.println("=======Just checking categories, shouldn't have one named 'Ornitología'=======");
 		for (final Category cat : this.catService.findAll())
 			System.out.println(cat.getName());
 		super.unauthenticate();
 	}
 
 	@Test
-	public void updateBad() {
+	public void updateBadTest() {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
@@ -89,7 +88,7 @@ public class CategoryServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findAllGood() {
+	public void findAllGoodTest() {
 		super.authenticate("admin");
 		final Collection<Category> col = this.catService.findAll();
 		Assert.notNull(col);
@@ -97,7 +96,7 @@ public class CategoryServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findAllBad() {
+	public void findAllBadTest() {
 		super.authenticate("Customer1");
 		Collection<Category> col = null;
 		try {
@@ -109,7 +108,7 @@ public class CategoryServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findOneGood() {
+	public void findOneGoodTest() {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
@@ -121,7 +120,7 @@ public class CategoryServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findOneBad() {
+	public void findOneBadTest() {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
@@ -137,7 +136,7 @@ public class CategoryServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void deleteGood() {
+	public void deleteGoodTest() {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
@@ -150,7 +149,7 @@ public class CategoryServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void deleteBad() {
+	public void deleteBadTest() {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
