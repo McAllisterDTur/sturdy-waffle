@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -27,6 +28,10 @@ public class ComplaintService {
 	private ComplaintRepository	complaintRepository;
 	@Autowired
 	private ActorService		actorService;
+	@Autowired
+	private TickerService		tickerService;
+	@Autowired
+	private SpamService			spamService;
 
 
 	public Complaint create() {
@@ -46,7 +51,11 @@ public class ComplaintService {
 
 		// We can't update
 		Assert.isTrue(complaint.getId() == 0);
-
+		complaint.setTicker(this.tickerService.getTicker());
+		complaint.setComplaintTime(new Date());
+		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal()
+			.getId());
+		this.spamService.isSpam(actor, complaint.getDescription());
 		return this.complaintRepository.save(complaint);
 	}
 	/**
