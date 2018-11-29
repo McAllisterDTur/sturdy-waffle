@@ -66,6 +66,26 @@ public class ComplaintServiceTest extends AbstractTest {
 	}
 
 	@Test
+	public void minMaxAvgDevComplaintsPerFixUpTaskGood() {
+		super.authenticate("admin");
+		final Collection<Double> c = this.cService.minMaxAvgDevComplaintsPerFixUpTask();
+		Assert.notNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void minMaxAvgDevComplaintsPerFixUpTaskBad() {
+		super.authenticate("Customer1");
+		Collection<Double> c = null;
+		try {
+			c = this.cService.minMaxAvgDevComplaintsPerFixUpTask();
+		} catch (final Exception e) {
+		}
+		Assert.isNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
 	public void findOneBad() {
 		super.authenticate("Customer1");
 		final Complaint c = this.cService.create();
@@ -109,8 +129,6 @@ public class ComplaintServiceTest extends AbstractTest {
 		super.authenticate("referee1");
 		final Collection<Complaint> c = this.cService.findUnassigned();
 		// TODO: Los tickers deben estar en mayúscula
-		for (final Complaint co : c)
-			System.out.println(co.getTicker());
 		Assert.notNull(c);
 		super.unauthenticate();
 	}

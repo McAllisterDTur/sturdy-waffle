@@ -57,6 +57,11 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		w.setTerms("Términos");
 		w.setTitle("La ley de la selva");
 		f.setWarranty(this.warrantyService.save(w));
+		f.setAddress("Godric's Hollow");
+		f.setDescription("Por favor maten a Voldemort. Gracias.");
+		f.setMaxPrice(50d);
+		f.setPeriodStart(new GregorianCalendar(2020, 0, 1).getTime());
+		f.setPeriodEnd(new GregorianCalendar(2021, 0, 1).getTime());
 		super.unauthenticate();
 		super.authenticate("Customer1");
 		final FixUpTask f2 = this.fixUpTaskService.save(f);
@@ -83,6 +88,66 @@ public class FixUpTaskServiceTest extends AbstractTest {
 			f3 = null;
 		}
 		Assert.isTrue(f3 == null);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void avgMinMaxDevFixUpTaskCountGood() {
+		super.authenticate("admin");
+		final Collection<Double> c = this.fixUpTaskService.avgMinMaxDevFixUpTaskCount();
+		Assert.notNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void avgMinMaxDevFixUpTaskPriceGood() {
+		super.authenticate("admin");
+		final Collection<Double> c = this.fixUpTaskService.avgMinMaxDevFixUpTaskPrice();
+		Assert.notNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void ratioFixUpTaskComplaintGood() {
+		super.authenticate("admin");
+		final Double c = this.fixUpTaskService.ratioFixUpTaskComplaint();
+		Assert.notNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void avgMinMaxDevFixUpTaskCountBad() {
+		super.authenticate("Customer1");
+		Collection<Double> c = null;
+		try {
+			c = this.fixUpTaskService.avgMinMaxDevFixUpTaskCount();
+		} catch (final Exception e) {
+		}
+		Assert.isNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void avgMinMaxDevFixUpTaskPriceBad() {
+		super.authenticate("Customer1");
+		Collection<Double> c = null;
+		try {
+			c = this.fixUpTaskService.avgMinMaxDevFixUpTaskPrice();
+		} catch (final Exception e) {
+		}
+		Assert.isNull(c);
+		super.unauthenticate();
+	}
+
+	@Test
+	public void ratioFixUpTaskComplaintBad() {
+		super.authenticate("Customer1");
+		Double c = null;
+		try {
+			c = this.fixUpTaskService.ratioFixUpTaskComplaint();
+		} catch (final Exception e) {
+		}
+		Assert.isNull(c);
 		super.unauthenticate();
 	}
 
@@ -131,6 +196,11 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		w.setTerms("Términos");
 		w.setTitle("La ley de la selva");
 		f.setWarranty(this.warrantyService.save(w));
+		f.setAddress("Godric's Hollow");
+		f.setDescription("Por favor maten a Voldemort. Gracias.");
+		f.setMaxPrice(50d);
+		f.setPeriodStart(new GregorianCalendar(2020, 0, 1).getTime());
+		f.setPeriodEnd(new GregorianCalendar(2021, 0, 1).getTime());
 		super.unauthenticate();
 
 		super.authenticate("Customer1");
@@ -158,6 +228,11 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		w.setTerms("Términos");
 		w.setTitle("La ley de la selva");
 		f.setWarranty(this.warrantyService.save(w));
+		f.setAddress("Godric's Hollow");
+		f.setDescription("Por favor maten a Voldemort. Gracias.");
+		f.setMaxPrice(50d);
+		f.setPeriodStart(new GregorianCalendar(2020, 0, 1).getTime());
+		f.setPeriodEnd(new GregorianCalendar(2021, 0, 1).getTime());
 		super.unauthenticate();
 		super.authenticate("Customer1");
 		final FixUpTask f2 = this.fixUpTaskService.save(f);

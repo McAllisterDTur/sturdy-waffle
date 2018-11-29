@@ -31,11 +31,9 @@ public class ConfigurationService {
 	public Configuration create() {
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
-		System.out.println(userAccount.getAuthorities());
 		// Only the admin can save a configuration	
 		final Authority a = new Authority();
 		a.setAuthority(Authority.ADMIN);
-		System.out.println(userAccount.getAuthorities().contains(a));
 		Assert.isTrue(userAccount.getAuthorities().contains(a));
 		final Configuration configuration = new Configuration();
 		return configuration;
@@ -49,11 +47,9 @@ public class ConfigurationService {
 	public Collection<Configuration> findAll() {
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
-		System.out.println(userAccount.getAuthorities());
 		// Only the admin can save a configuration	
 		final Authority a = new Authority();
 		a.setAuthority(Authority.ADMIN);
-		System.out.println(userAccount.getAuthorities().contains(a));
 		final Collection<Configuration> result = this.configurationRepository.findAll();
 		return result;
 	}
@@ -68,11 +64,9 @@ public class ConfigurationService {
 	public Configuration findOne(final int id) {
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
-		System.out.println(userAccount.getAuthorities());
 		// Only the admin can save a configuration	
 		final Authority a = new Authority();
 		a.setAuthority(Authority.ADMIN);
-		System.out.println(userAccount.getAuthorities().contains(a));
 		Assert.isTrue(userAccount.getAuthorities().contains(a));
 		final Configuration result = this.configurationRepository.findOne(id);
 		return result;
@@ -87,11 +81,9 @@ public class ConfigurationService {
 	public Configuration save(final Configuration configuration) {
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
-		System.out.println(userAccount.getAuthorities());
 		// Only the admin can save a configuration	
 		final Authority a = new Authority();
 		a.setAuthority(Authority.ADMIN);
-		System.out.println(userAccount.getAuthorities().contains(a));
 		Assert.isTrue(userAccount.getAuthorities().contains(a));
 		Assert.notNull(configuration);
 		final Configuration result = this.configurationRepository.save(configuration);
@@ -107,11 +99,9 @@ public class ConfigurationService {
 	public void delete(final Configuration configuration) {
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
-		System.out.println(userAccount.getAuthorities());
 		// Only the admin can save a configuration	
 		final Authority a = new Authority();
 		a.setAuthority(Authority.ADMIN);
-		System.out.println(userAccount.getAuthorities().contains(a));
 		Assert.isTrue(userAccount.getAuthorities().contains(a));
 		this.configurationRepository.delete(configuration);
 	}
