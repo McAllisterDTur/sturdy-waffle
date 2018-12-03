@@ -32,6 +32,9 @@ public class SectionService {
 	@Autowired
 	private ActorService		actorService;
 
+	@Autowired
+	private TutorialService		tutorialRepository;
+
 
 	/**
 	 * HandyWorker creates a empty section
@@ -92,6 +95,12 @@ public class SectionService {
 			this.spamService.isSpam(worker, section.getText());
 			this.spamService.isSpam(worker, section.getTitle());
 			result = this.sectionRepository.save(section);
+			final Tutorial tutorial = this.tutorialRepository.findOne(section.getTutorial().getId());
+			final Collection<Section> newSect = new ArrayList<>(tutorial.getSections());
+			newSect.add(section);
+			tutorial.setSections(newSect);
+			final Tutorial res = this.tutorialRepository.save(tutorial);
+			Assert.notNull(res);
 		} else {
 			this.spamService.isSpam(worker, section.getText());
 			this.spamService.isSpam(worker, section.getTitle());
