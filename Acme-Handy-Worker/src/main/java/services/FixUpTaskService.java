@@ -65,10 +65,10 @@ public class FixUpTaskService {
 
 		FixUpTask res;
 
-		//comprobamos que la warranty NO esté en draft mode
+		//comprobamos que la warranty NO estï¿½ en draft mode
 		Assert.isTrue(!fixUpTask.getWarranty().isDraft());
 		if (fixUpTask.getId() != 0) {
-			// Ya está en base de datos
+			// Ya estï¿½ en base de datos
 			final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTask.getId());
 			Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
 			Assert.isTrue(fixUpTask.getCustomer().getAccount()
@@ -283,4 +283,35 @@ public class FixUpTaskService {
 		return this.fixUpTaskRepository.getFixUpTasksByCategory(categoryId);
 	}
 
+	/**
+	 * Checks handy worker authority (Req 11.1)
+	 * 
+	 * @param handyWorkerId
+	 * @return Collection of all the fix up tasks
+	 */
+	public Collection<FixUpTask> findAsHandyWorker() {
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+
+		final Authority au = new Authority();
+		au.setAuthority(Authority.HANDYWORKER);
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
+		final Collection<FixUpTask> res = this.fixUpTaskRepository.findAll();
+		return res;
+	}
+
+	/**
+	 * Updates a fix up task if it is in the database.
+	 * THIS METHOD SHOULD NEVER BE CALLED FROM CLIENT.
+	 * 
+	 * @param f
+	 */
+	public void saveInternal(final FixUpTask f) {
+		final FixUpTask f1 = this.fixUpTaskRepository.findOne(f.getId());
+		Assert.notNull(f1);
+		this.fixUpTaskRepository.save(f);
+	}
 }

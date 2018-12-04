@@ -51,8 +51,7 @@ public class CurriculaService {
 			Assert.isTrue(c.getId() == curricula.getId());
 		}
 		curricula.setTicker(this.tickerService.getTicker());
-		curricula.setHandyWorker((HandyWorker) this.actorService.findByUserAccountId(LoginService
-			.getPrincipal().getId()));
+		curricula.setHandyWorker((HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()));
 		return this.curriculaRepository.save(curricula);
 	}
 
@@ -61,8 +60,7 @@ public class CurriculaService {
 	}
 
 	public Curricula findFromLoggedHandyWorker() {
-		final HandyWorker h = (HandyWorker) this.actorService.findByUserAccountId(LoginService
-			.getPrincipal().getId());
+		final HandyWorker h = (HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		return this.curriculaRepository.getFromHandyWorker(h.getId());
 	}
 

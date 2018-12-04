@@ -34,6 +34,8 @@ public class ComplaintService {
 	private TickerService		tickerService;
 	@Autowired
 	private SpamService			spamService;
+	@Autowired
+	private FixUpTaskService	taskService;
 
 
 	public Complaint create() {
@@ -61,6 +63,9 @@ public class ComplaintService {
 		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal()
 			.getId());
 		this.spamService.isSpam(actor, complaint.getDescription());
+		final FixUpTask f = complaint.getFixUpTask();
+		f.getComplaints().add(complaint);
+		this.taskService.saveInternal(f);
 		return this.complaintRepository.save(complaint);
 	}
 	/**

@@ -66,11 +66,9 @@ public class TickerService {
 
 			int randomLimitedInt = 0;
 			if (random.nextFloat() < 0.5)
-				randomLimitedInt = leftNumberLimit
-					+ (int) (random.nextFloat() * (rightNumberLimit - leftNumberLimit + 1));
+				randomLimitedInt = leftNumberLimit + (int) (random.nextFloat() * (rightNumberLimit - leftNumberLimit + 1));
 			else
-				randomLimitedInt = leftCharLimit
-					+ (int) (random.nextFloat() * (rightCharLimit - leftCharLimit + 1));
+				randomLimitedInt = leftCharLimit + (int) (random.nextFloat() * (rightCharLimit - leftCharLimit + 1));
 
 			buffer.append((char) randomLimitedInt);
 		}

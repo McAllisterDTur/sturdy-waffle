@@ -31,7 +31,7 @@ public class SpamServiceTest extends AbstractTest {
 
 
 	@Test
-	public void spamGood() {
+	public void spamGoodTest() {
 		super.authenticate("Customer2");
 		final Actor tester = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final String s = "sex viagra";
@@ -41,7 +41,7 @@ public class SpamServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void spamBad() {
+	public void spamBadTest() {
 		super.authenticate("Customer2");
 		final Actor tester = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final String s = "Tryig to recognize myself when I feel I've been replaced";

@@ -27,26 +27,26 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 
 
 	@Test
-	public void testCreate() {
+	public void createTest() {
 		super.authenticate("handy1");
 		Assert.notNull(this.mRecord.create());
 	}
 
 	@Test
-	public void testFindAll() {
+	public void findAllTest() {
 		super.authenticate("handy1");
 		Assert.notEmpty(this.mRecord.findAll());
 	}
 
 	@Test
-	public void testFindOne() {
+	public void findOneTest() {
 		super.authenticate("handy1");
 		final MiscellaneousRecord mr = this.mRecord.findAll().iterator().next();
 		Assert.isTrue(this.mRecord.findOne(mr.getId()).equals(mr));
 	}
 
 	@Test
-	public void testSave() {
+	public void saveTest() {
 		super.authenticate("handy1");
 		final MiscellaneousRecord mr = this.mRecord.findAll().iterator().next();
 		final MiscellaneousRecord mrn = this.mRecord.create();
@@ -57,7 +57,7 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindByCurricula() {
+	public void findByCurriculaTest() {
 		super.authenticate("handy1");
 		final Curricula c = this.cRecord.findFromLoggedHandyWorker();
 		Assert.notNull(this.mRecord.findByCurricula(c.getId()));

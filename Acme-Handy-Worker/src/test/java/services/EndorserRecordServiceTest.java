@@ -27,26 +27,26 @@ public class EndorserRecordServiceTest extends AbstractTest {
 
 
 	@Test
-	public void testCreate() {
+	public void createTest() {
 		super.authenticate("handy1");
 		Assert.notNull(this.erRecord.create());
 	}
 
 	@Test
-	public void testFindAll() {
+	public void findAllTest() {
 		super.authenticate("handy1");
 		Assert.notEmpty(this.erRecord.findAll());
 	}
 
 	@Test
-	public void testFindOne() {
+	public void findOneTest() {
 		super.authenticate("handy1");
 		final EndorserRecord er = this.erRecord.findAll().iterator().next();
 		Assert.isTrue(this.erRecord.findOne(er.getId()).equals(er));
 	}
 
 	@Test
-	public void testSave() {
+	public void saveTest() {
 		super.authenticate("handy1");
 		final EndorserRecord er = this.erRecord.findAll().iterator().next();
 		final EndorserRecord ern = this.erRecord.create();
@@ -59,7 +59,7 @@ public class EndorserRecordServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindByCurricula() {
+	public void findByCurriculaTest() {
 		super.authenticate("handy1");
 		final Curricula c = this.cRecord.findFromLoggedHandyWorker();
 		Assert.notNull(this.erRecord.findByCurricula(c.getId()));

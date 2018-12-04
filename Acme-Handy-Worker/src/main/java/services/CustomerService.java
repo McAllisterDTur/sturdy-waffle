@@ -14,6 +14,7 @@ import repositories.CustomerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import utilities.AuthenticationUtility;
 import domain.Customer;
 import domain.FixUpTask;
 
@@ -23,6 +24,8 @@ public class CustomerService {
 
 	@Autowired
 	private CustomerRepository	customerRepo;
+	@Autowired
+	private UserAccountService	userAccountService;
 
 	private UserAccount			account;
 
@@ -30,7 +33,12 @@ public class CustomerService {
 	public Customer create() {
 
 		final Customer res = new Customer();
+		final UserAccount a = this.userAccountService.create();
 
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.CUSTOMER);
+		a.addAuthority(auth);
+		res.setAccount(a);
 		res.setFixUpTasks(new ArrayList<FixUpTask>());
 
 		return res;
@@ -58,6 +66,25 @@ public class CustomerService {
 
 		return this.customerRepo.findCustomerMaxAverage();
 
+	}
+
+	public Collection<Customer> findCustomerMaxComplaintsTop3() {
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
+
+		final Collection<Customer> customers = this.customerRepo.findCustomerMaxComplaints();
+		final Collection<Customer> res = new ArrayList<>();
+		int i = 0;
+		for (final Customer c : customers) {
+			if (i > 2)
+				break;
+			res.add(c);
+			i++;
+		}
+		return res;
+	}
+
+	public Collection<Customer> findAll() {
+		return this.customerRepo.findAll();
 	}
 
 }

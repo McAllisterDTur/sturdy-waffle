@@ -10,12 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.SponsorshipRepository;
-import repositories.TutorialRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import utilities.AuthenticationUtility;
+import domain.CreditCard;
+import domain.Sponsor;
 import domain.Sponsorship;
+import domain.Tutorial;
 
 @Service
 @Transactional
@@ -25,7 +27,10 @@ public class SponsorshipService {
 	private SponsorshipRepository	sponsorshipRepository;
 
 	@Autowired
-	private TutorialRepository		tutorialRepository;
+	private TutorialService			tutorialService;
+
+	@Autowired
+	private ActorService			actorService;
 
 
 	/**
@@ -33,9 +38,12 @@ public class SponsorshipService {
 	 * 
 	 * @return section
 	 */
-	public Sponsorship create() {
+	public Sponsorship create(final Tutorial tutorial) {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.SPONSOR));
 		final Sponsorship sponsorship = new Sponsorship();
+		final CreditCard credit = new CreditCard();
+		sponsorship.setCreditCard(credit);
+		sponsorship.setTutorials(tutorial);
 		return sponsorship;
 	}
 
@@ -69,23 +77,26 @@ public class SponsorshipService {
 	 * @return Sponsorship
 	 */
 	public Sponsorship save(final Sponsorship sponsorship) {
+		//The sponsorship has a tutorial, when enter here
 		Assert.notNull(sponsorship);
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.SPONSOR));
 		final UserAccount ua = LoginService.getPrincipal();
-		Assert.isTrue(sponsorship.getSponsor().getAccount().equals(ua));
+		final Sponsor newSpon = (Sponsor) this.actorService.findByUserAccountId(ua.getId());
 		Sponsorship result = null;
-		//TODO suponemos que las Sponsorship son creadas con una llamada en el controller
-		// y se insertan en el tutorial dentro del controller
 		if (sponsorship.getId() != 0) {
 			final Sponsorship ac = this.findOne(sponsorship.getId());
+			Assert.isTrue(sponsorship.getSponsor().getAccount().equals(ua));
 			Assert.isTrue(ac.getSponsor().getAccount().equals(sponsorship.getSponsor().getAccount()));
 			result = this.sponsorshipRepository.save(sponsorship);
-
-		} else
+		} else {
+			sponsorship.setSponsor(newSpon);
 			result = this.sponsorshipRepository.save(sponsorship);
+			Assert.notNull(result);
+			final Tutorial tutorial = this.tutorialService.sponsorshipToTutorial(result);
+			Assert.notNull(tutorial);
+		}
 		return result;
 	}
-
 	/**
 	 * Sponsor deletes a Sponsorship from DB
 	 * 

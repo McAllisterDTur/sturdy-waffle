@@ -33,7 +33,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 
 
 	@Test
-	public void testCreate() {
+	public void createTest() {
 		//First, we create a new SocialProfile
 		final SocialProfile sp = this.spService.create();
 		//But, did we?
@@ -41,7 +41,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindAll() {
+	public void findAllTest() {
 		//Let's find all the Social Profiles
 		final Collection<SocialProfile> allsp = this.spService.findAll();
 		//Did it work?
@@ -49,7 +49,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testSave() {
+	public void saveTest() {
 		//Let's log as a HandyWorker (just because)
 		super.authenticate("handy1");
 		//Now we get the actual Actor
@@ -67,7 +67,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindOne() {
+	public void findOneTest() {
 		//Let's log as a HandyWorker (just because)
 		super.authenticate("handy1");
 		//Now we get the actual Actor
@@ -85,7 +85,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testUpdate() {
+	public void updateTest() {
 		//First, let's authenticate
 		super.authenticate("handy1");
 		//We take one arbitrary SocialProfile
@@ -100,7 +100,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testDelete() {
+	public void deleteTest() {
 		//Let's log as a HandyWorker (just because)
 		super.authenticate("handy1");
 		//Now we get the actual Actor
@@ -120,7 +120,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindByActor() {
+	public void findByActorTest() {
 		//Let's log as a HandyWorker (just because)
 		super.authenticate("handy1");
 		//Now we get the actual Actor

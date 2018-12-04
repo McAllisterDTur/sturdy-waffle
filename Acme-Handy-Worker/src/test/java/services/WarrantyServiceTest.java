@@ -15,9 +15,9 @@ import org.springframework.util.Assert;
 import utilities.AbstractTest;
 import domain.Warranty;
 
-// Indica que se tiene que ejecutar a través de Spring
+// Indica que se tiene que ejecutar a travï¿½s de Spring
 @RunWith(SpringJUnit4ClassRunner.class)
-//Indica los ficheros de configuración
+//Indica los ficheros de configuraciï¿½n
 @ContextConfiguration(locations = {
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
@@ -35,7 +35,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		this.wService.save(w);
 		super.unauthenticate();
@@ -48,7 +48,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		// Saving in final mode
 		w.setDraft(false);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		this.wService.save(w);
 		super.unauthenticate();
@@ -60,7 +60,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		Warranty w1 = null;
 		try {
@@ -78,7 +78,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		final Warranty w = this.wService.create();
 		w.setDraft(false);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		final Warranty w1 = this.wService.save(w);
 		Warranty w2 = null;
@@ -99,10 +99,10 @@ public class WarrantyServiceTest extends AbstractTest {
 		// Saving in draft mode
 		w.setDraft(true);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		final Warranty w1 = this.wService.save(w);
-		w1.setDraft(false); // TODO: Esto me modifica la 'caché' y luego si hago save peta ????????????
+		w1.setDraft(false);
 		super.unauthenticate();
 	}
 	@Test
@@ -112,7 +112,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		// Saving in final mode
 		w.setDraft(false);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		final Warranty w1 = this.wService.save(w);
 		Warranty w2 = null;
@@ -131,7 +131,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		final Warranty w1 = this.wService.save(w);
 		Assert.notNull(w1);
@@ -144,7 +144,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		Warranty w1 = null;
 		try {
@@ -162,7 +162,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		final Warranty w1 = this.wService.save(w);
 		final Warranty w2 = this.wService.findOne(w1.getId());
@@ -176,7 +176,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		Warranty w2 = null;
 		try {
@@ -196,7 +196,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		final Warranty w1 = this.wService.save(w);
 		this.wService.delete(w1.getId());
@@ -211,7 +211,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		final Warranty w1 = this.wService.save(w);
 		this.wService.delete(w1);
@@ -227,7 +227,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		final Warranty w = this.wService.create();
 		w.setDraft(true);
 		w.setLaw(Arrays.asList("Ley 1", "Ley 2"));
-		w.setTerms("Términos");
+		w.setTerms("Tï¿½rminos");
 		w.setTitle("La ley de la selva");
 		final Warranty w1 = this.wService.save(w);
 		super.unauthenticate();

@@ -33,7 +33,7 @@ public class AdministratorServiceTest extends AbstractTest {
 
 
 	@Test
-	public void testCreate() {
+	public void createTest() {
 		//Login as Administrator
 		super.authenticate("admin");
 		//Creating the administrator
@@ -43,13 +43,13 @@ public class AdministratorServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindAll() {
+	public void findAllTest() {
 		//This one is a bit self explanatory
 		Assert.notEmpty(this.administratorService.findAll());
 	}
 
 	@Test
-	public void testSave() {
+	public void saveTest() {
 		//Login as an administrator
 		super.authenticate("admin");
 
@@ -83,7 +83,7 @@ public class AdministratorServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testFindOne() {
+	public void findOneTest() {
 		//Creating a new Administrator
 		////First, we login as an administrator to create a new one
 		super.authenticate("admin");

@@ -15,9 +15,9 @@ import org.springframework.util.Assert;
 import utilities.AbstractTest;
 import domain.Category;
 
-// Indica que se tiene que ejecutar a través de Spring
+// Indica que se tiene que ejecutar a travï¿½s de Spring
 @RunWith(SpringJUnit4ClassRunner.class)
-//Indica los ficheros de configuración
+//Indica los ficheros de configuraciï¿½n
 @ContextConfiguration(locations = {
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
@@ -34,7 +34,7 @@ public class CategoryServiceTest extends AbstractTest {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
-		c.setName("Ornitología");
+		c.setName("Ornitologï¿½a");
 		this.catService.save(c);
 		super.unauthenticate();
 	}
@@ -44,7 +44,7 @@ public class CategoryServiceTest extends AbstractTest {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
-		c.setName("Ornitología");
+		c.setName("Ornitologï¿½a");
 		super.unauthenticate();
 		Category c2 = null;
 		try {
@@ -60,12 +60,11 @@ public class CategoryServiceTest extends AbstractTest {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
-		c.setName("Ornitología");
+		c.setName("Ornitologï¿½a");
 		final Category c1 = this.catService.save(c);
 		c1.setName("Cocina");
 		this.catService.save(c1);
-		System.out
-			.println("=======Just checking categories, shouldn't have one named 'Ornitología'=======");
+		System.out.println("=======Just checking categories, shouldn't have one named 'Ornitologï¿½a'=======");
 		for (final Category cat : this.catService.findAll())
 			System.out.println(cat.getName());
 		super.unauthenticate();
@@ -76,7 +75,7 @@ public class CategoryServiceTest extends AbstractTest {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
-		c.setName("Ornitología");
+		c.setName("Ornitologï¿½a");
 		final Category c1 = this.catService.save(c);
 		c1.setName("Cocina");
 		super.unauthenticate();
@@ -113,7 +112,7 @@ public class CategoryServiceTest extends AbstractTest {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
-		c.setName("Ornitología");
+		c.setName("Ornitologï¿½a");
 		final Category c1 = this.catService.save(c);
 		final Category c2 = this.catService.findOne(c1.getId());
 		Assert.notNull(c2);
@@ -133,7 +132,7 @@ public class CategoryServiceTest extends AbstractTest {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
-		c.setName("Ornitología");
+		c.setName("Ornitologï¿½a");
 		final Category c1 = this.catService.save(c);
 		super.unauthenticate();
 		Category c2 = null;
@@ -149,7 +148,7 @@ public class CategoryServiceTest extends AbstractTest {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
-		c.setName("Ornitología");
+		c.setName("Ornitologï¿½a");
 		final Category c1 = this.catService.save(c);
 		this.catService.delete(c1);
 		final Category c2 = this.catService.findOne(c1.getId());
@@ -162,7 +161,7 @@ public class CategoryServiceTest extends AbstractTest {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
-		c.setName("Ornitología");
+		c.setName("Ornitologï¿½a");
 		final Category c1 = this.catService.save(c);
 		super.unauthenticate();
 		try {

@@ -46,12 +46,22 @@ public class ConfigurationServiceTest extends AbstractTest {
 		} catch (final Exception e) {
 			ac = null;
 		}
-		Assert.isNull(!(a.equals(ac)));
+		Assert.isTrue(!(a.equals(ac)));
 		super.unauthenticate();
 	}
 
 	@Test
 	public void SaveGoodTest() {
+		final Configuration config = (this.configurationService.findAll()).iterator().next();
+		super.authenticate("admin");
+		config.setCacheTime(2);
+		final Configuration ac = this.configurationService.save(config);
+		Assert.isTrue(config.equals(ac));
+
+	}
+
+	@Test
+	public void SaveBadTest() {
 		super.authenticate("admin");
 		final Configuration a = new Configuration();
 		a.setBannerURL("www.us.es");
@@ -69,14 +79,17 @@ public class ConfigurationServiceTest extends AbstractTest {
 		a.setNegativeWords(negativeWords);
 		a.setPositiveWords(positiveWords);
 		a.setSpamWords(spamWords);
-		final Configuration ac = this.configurationService.save(a);
-		a.setId(ac.getId());
-		a.setVersion(ac.getVersion());
-		Assert.isTrue(a.equals(ac));
+		Configuration ac = a;
+		try {
+			ac = this.configurationService.save(a);
+		} catch (final Exception e) {
+			ac = null;
+		}
+		Assert.isNull(ac);
 		super.unauthenticate();
 	}
 	@Test
-	public void SavebBadTest() {
+	public void SaveBad2Test() {
 		super.authenticate("Customer1");
 		final Configuration a = new Configuration();
 		a.setBannerURL("www.us.es");
@@ -84,7 +97,7 @@ public class ConfigurationServiceTest extends AbstractTest {
 		a.setWelcomeEN("haha");
 		a.setWelcomeSP("jaja");
 		a.setFinderResults(10);
-		Configuration ac = null;
+		Configuration ac = a;
 		try {
 			ac = this.configurationService.save(a);
 		} catch (final Exception e) {
@@ -96,103 +109,31 @@ public class ConfigurationServiceTest extends AbstractTest {
 
 	@Test
 	public void FindAllGoodTest() {
-		super.authenticate("admin");
 		final Collection<Configuration> ac = this.configurationService.findAll();
 		Assert.isTrue(!(ac.isEmpty()));
-		super.unauthenticate();
-	}
-
-	@Test
-	public void FindAllBadTest() {
-		super.authenticate("Customer1");
-		Collection<Configuration> ac = null;
-		try {
-			ac = this.configurationService.findAll();
-		} catch (final Exception e) {
-			ac = null;
-		}
-		Assert.isNull(ac);
-		super.unauthenticate();
-
-	}
-
-	@Test
-	public void FindOneGoodTest() {
-		super.authenticate("admin");
-		final Configuration a = new Configuration();
-		a.setBannerURL("www.us.es");
-		a.setCacheTime(1);
-		a.setWelcomeEN("haha");
-		a.setWelcomeSP("jaja");
-		a.setFinderResults(10);
-		final Configuration ac = this.configurationService.save(a);
-		final int id = ac.getId();
-		final Configuration ab = this.configurationService.findOne(id);
-		Assert.isTrue(ac.equals(ab));
-		super.unauthenticate();
-
-	}
-
-	@Test
-	public void FindOneBadTest() {
-		super.authenticate("admin");
-		final Configuration a = new Configuration();
-		a.setBannerURL("www.us.es");
-		a.setCacheTime(1);
-		a.setWelcomeEN("haha");
-		a.setWelcomeSP("jaja");
-		a.setFinderResults(10);
-		final Configuration ac = this.configurationService.save(a);
-		final int id = ac.getId();
-		super.unauthenticate();
-		super.authenticate("Customer1");
-		Configuration ab = null;
-		try {
-			ab = this.configurationService.findOne(id);
-		} catch (final Exception e) {
-			ab = null;
-		}
-		Assert.isNull(ab);
-		super.unauthenticate();
-
 	}
 
 	@Test
 	public void DeleteGoodTest() {
 		super.authenticate("admin");
-		final Configuration a = new Configuration();
-		a.setBannerURL("www.us.es");
-		a.setCacheTime(1);
-		a.setWelcomeEN("haha");
-		a.setWelcomeSP("jaja");
-		a.setFinderResults(10);
-		final Configuration ac = this.configurationService.save(a);
-		this.configurationService.delete(ac);
-		Assert.isNull(this.configurationService.findOne(ac.getId()));
+		final Configuration config = (this.configurationService.findAll()).iterator().next();
+		this.configurationService.delete(config);
+		Assert.isTrue(this.configurationService.findAll().isEmpty());
 		super.unauthenticate();
 	}
 
 	@Test
 	public void DeleteBadTest() {
-		super.authenticate("admin");
-		Configuration a = new Configuration();
-		a.setBannerURL("www.us.es");
-		a.setCacheTime(1);
-		a.setWelcomeEN("haha");
-		a.setWelcomeSP("jaja");
-		a.setFinderResults(10);
-		final Configuration ac = this.configurationService.save(a);
-		super.unauthenticate();
+		final Configuration config = (this.configurationService.findAll()).iterator().next();
 		super.authenticate("Customer1");
+		Boolean a = null;
 		try {
-			this.configurationService.delete(ac);
+			this.configurationService.delete(config);
+			a = false;
 		} catch (final Exception e) {
-			a = null;
+			a = true;
 		}
-		Assert.isNull(a);
-		super.unauthenticate();
-		super.authenticate("admin");
-		Assert.isTrue((this.configurationService.findOne(ac.getId()).equals(ac)));
+		Assert.isTrue(a);
 		super.unauthenticate();
 	}
 

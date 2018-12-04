@@ -28,6 +28,5 @@ public interface ComplaintRepository extends JpaRepository<Complaint, Integer> {
 	public Collection<Complaint> findSelfassigned(int id);
 
 	@Query("select max(f.complaints.size), min(f.complaints.size), avg(f.complaints.size), sqrt(sum(f.complaints.size * f.complaints.size) / count(f.complaints.size) - avg(f.complaints.size) * avg(f.complaints.size)) from FixUpTask f")
-	public
-		Collection<Double> minMaxAvgDevComplaintsPerFixUpTask();
+	public Collection<Double> minMaxAvgDevComplaintsPerFixUpTask();
 }

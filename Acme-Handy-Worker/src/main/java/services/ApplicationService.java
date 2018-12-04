@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -14,6 +15,7 @@ import repositories.ApplicationRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import utilities.AuthenticationUtility;
 import domain.Application;
 import domain.Customer;
 import domain.HandyWorker;
@@ -29,6 +31,10 @@ public class ApplicationService {
 	private CustomerService			customerService;
 	@Autowired
 	private HandyWorkerService		workerService;
+	@Autowired
+	private FixUpTaskService		taskService;
+	@Autowired
+	private ActorService			actorService;
 	private UserAccount				account;
 
 
@@ -44,9 +50,54 @@ public class ApplicationService {
 
 	public Application save(final Application application) {
 		Assert.notNull(application);
-		Assert.isTrue(application.getOfferedPrice() != 0);
 
-		return this.applicationRepo.save(application);
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER) || AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
+		Application a;
+		if (application.getId() == 0) {//creacciï¿½n port parte del handyWorker
+			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
+			Assert.isTrue(application.getOfferedPrice() != 0);
+
+			application.setRegisterTime(new Date());
+			application.setStatus("PENDING");
+			a = this.applicationRepo.save(application);
+
+			//			final FixUpTask task = a.getFixUpTask();
+			//			task.getApplications().add(a);
+			//
+			//			this.taskService.save(task);
+		} else {//Actualizacion del status por parte del customer dueï¿½o de la fixUpTask
+			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
+			Assert.isTrue(application.getFixUpTask().getCustomer().getAccount().equals(this.account));//customer loggeado dueï¿½o de la task
+			if (application.getStatus().equals("ACCEPTED"))
+				Assert.notNull(application.getFixUpTask().getCreditCard());
+			a = this.applicationRepo.save(application);
+		}
+		return a;
+	}
+
+	public Application saveComment(final int applicationId, final String comment) {
+
+		Assert.isTrue(applicationId > 0);
+		Assert.notNull(comment);
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER) || AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
+		this.account = LoginService.getPrincipal();
+		final Application application = this.findOne(applicationId);
+		Application res;
+		if (AuthenticationUtility.checkAuthority(Authority.CUSTOMER)) {
+			final Customer c = (Customer) this.actorService.findByUserAccountId(this.account.getId());
+			Assert.isTrue(c.getFixUpTasks().contains(application));
+
+			application.getCustomerComments().add(comment);
+		} else {
+			final HandyWorker h = (HandyWorker) this.actorService.findByUserAccountId(this.account.getId());
+			Assert.isTrue(h.getApplications().contains(application));
+
+			application.getHandyComments().add(comment);
+		}
+
+		res = this.applicationRepo.save(application);
+
+		return res;
 	}
 
 	public Collection<Application> findAllCustomer(final int customerId) {
@@ -54,7 +105,7 @@ public class ApplicationService {
 		final Customer c = this.customerService.findOne(customerId);
 		Assert.isTrue(this.account.getId() == c.getAccount().getId());
 
-		//Al comprobar el id, como no pueden exixtir dos usuarios con el mismo id, te certificas que ya es Worker, aun así
+		//Al comprobar el id, como no pueden exixtir dos usuarios con el mismo id, te certificas que ya es Worker, aun asï¿½
 		Assert.isTrue(c.getAccount().getAuthorities().iterator().next().getAuthority().equals(Authority.CUSTOMER));
 
 		return this.applicationRepo.findAllCustomer(customerId);
@@ -65,7 +116,7 @@ public class ApplicationService {
 		final HandyWorker w = this.workerService.findOne(workerId);
 		Assert.isTrue(w.getAccount().getId() == this.account.getId());
 
-		//Al comprobar el id, como no pueden exixtir dos usuarios con el mismo id, te certificas que ya es Worker, aun así
+		//Al comprobar el id, como no pueden exixtir dos usuarios con el mismo id, te certificas que ya es Worker, aun asï¿½
 		Assert.isTrue(w.getAccount().getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER));
 
 		return this.applicationRepo.findAllCustomer(workerId);
