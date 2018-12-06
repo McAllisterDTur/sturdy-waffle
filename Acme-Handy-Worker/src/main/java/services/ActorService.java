@@ -75,9 +75,6 @@ public class ActorService {
 	 * @return actors
 	 */
 	public Collection<Actor> findAll() {
-		//TODO Posee más lógica de negocio?
-		final UserAccount ua = LoginService.getPrincipal();
-		Assert.notNull(ua);
 		final Collection<Actor> result = this.actorRepository.findAll();
 		return result;
 	}
@@ -89,9 +86,6 @@ public class ActorService {
 	 * @return actor
 	 */
 	public Actor findOne(final int actorId) {
-		//TODO Posee más lógica de negocio?
-		final UserAccount ua = LoginService.getPrincipal();
-		Assert.notNull(ua);
 		final Actor result = this.actorRepository.findOne(actorId);
 		return result;
 	}
@@ -105,5 +99,22 @@ public class ActorService {
 	public Actor findByUserAccountId(final int accountId) {
 
 		return this.actorRepository.findByUserAccountId(accountId);
+	}
+
+	public Collection<Actor> findBySuspicious() {
+		return this.actorRepository.findSuspiciousActors();
+	}
+
+	//B
+	public void ban(final Actor end) {
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
+		end.setBanned(true);
+		this.actorRepository.save(end);
+	}
+	//B
+	public void unban(final Actor end) {
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
+		end.setBanned(false);
+		this.actorRepository.save(end);
 	}
 }

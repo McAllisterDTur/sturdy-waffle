@@ -9,7 +9,11 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -88,6 +92,8 @@ public class Finder extends DomainEntity {
 		this.maxPrice = maxPrice;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getEndDate() {
 		return this.endDate;
 	}
@@ -96,6 +102,8 @@ public class Finder extends DomainEntity {
 		this.endDate = endDate;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getStartDate() {
 		return this.startDate;
 	}

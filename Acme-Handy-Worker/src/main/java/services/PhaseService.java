@@ -12,6 +12,7 @@ import repositories.PhaseRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Application;
 import domain.HandyWorker;
 import domain.Phase;
 
@@ -20,23 +21,36 @@ import domain.Phase;
 public class PhaseService {
 
 	@Autowired
-	private PhaseRepository	repo;
+	private PhaseRepository		repo;
 
-	private UserAccount		account;
+	private UserAccount			account;
+
+	@Autowired
+	private ApplicationService	applicationService;
 
 
 	public Phase create() {
 		return new Phase();
+
 	}
 
 	public Phase save(final Phase phase) {
 		this.account = LoginService.getPrincipal();
 		//Verificamos que el creador de la phase sea un HANDYWORKER
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER));
-		//Verificamos que el creador de la phase sea el dueño de la application
+		//Verificamos que el creador de la phase sea el dueï¿½o de la application
 		Assert.isTrue(phase.getApplication().getHandyWorker().getAccount().getId() == this.account.getId());
 
-		return this.repo.save(phase);
+		final Phase p = this.repo.save(phase);
+
+		final int applicationId = p.getApplication().getId();
+
+		final Application a = this.applicationService.findOne(applicationId);
+		Assert.notNull(a);
+		a.getPhases().add(p);
+		this.applicationService.save(a);
+
+		return p;
 	}
 
 	public Phase findOne(final int id) {

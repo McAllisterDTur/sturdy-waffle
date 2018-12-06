@@ -1913,4 +1913,22 @@
 		<property name="writeTime" value="11/25/2018 05:00"/>
 		<property name="comment" value="Vino, trabajó, cobró y se fué. Ok." />
 	</bean>
+	
+	<!-- Finder -->
+	<bean id="Finder1" class="domain.Finder">
+		<property name="warranty" value="estándar" />
+		<property name="keyWord" value="Cabezas" />
+		<property name="category" value="Fontanería" />
+		<property name="minPrice" value="4.0" />
+		<property name="fixUpTask">
+			<list>
+				<null/>
+			</list>
+		</property>
+		<property name="endDate" value="11/04/2018"/>
+		<property name="startDate" value="12/06/2018"/>
+		<property name="cacheUpdate" value="11/01/2018 12:31"/>
+		<property name="worker" ref="Worker1"/>
+	</bean>
+	
 </beans>

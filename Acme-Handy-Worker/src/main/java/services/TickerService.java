@@ -38,15 +38,14 @@ public class TickerService {
 		String ticker = "";
 		Integer t = 1;
 		while (t != 0) {
-
 			final String s = this.randomAlphaNumeric();
 			ticker = tickerBase + "-" + s;
 
+			t = 0;
 			t += this.curriculaService.getNumberOfTickers(ticker);
 			t += this.fixUpTaskService.getNumberOfTickers(ticker);
 			t += this.complaintService.getNumberOfTickers(ticker);
 
-			t = 0;
 		}
 		return ticker;
 	}

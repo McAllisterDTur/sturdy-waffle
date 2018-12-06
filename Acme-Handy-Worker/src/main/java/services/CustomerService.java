@@ -83,4 +83,8 @@ public class CustomerService {
 		return res;
 	}
 
+	public Collection<Customer> findAll() {
+		return this.customerRepo.findAll();
+	}
+
 }

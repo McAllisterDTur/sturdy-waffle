@@ -90,4 +90,13 @@ public class EndorsementService {
 		this.endorsementRepository.delete(endorsement);
 
 	}
+
+	public Collection<Endorsement> findAllEndorsable(final int endorId) {
+		Assert.isTrue(endorId > 0);
+
+		this.account = LoginService.getPrincipal();
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER) || AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
+
+		return this.endorsementRepository.findAllEndorsable(endorId);
+	}
 }
