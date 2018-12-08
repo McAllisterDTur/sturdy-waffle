@@ -9,8 +9,7 @@
 <h1>All complaints</h1>
 <div>
 	<a href="complaint/referee/listAll"><spring:message code="complaint.back" /></a>
-	<h1><spring:message code="complaint.sein"/> <jstl:out value="${complaint.ticker}"/></h1>
-	
+	<h1><spring:message code="complaint.sein"/> <jstl:out value="${complaint.ticker}"/></h1>	
 	<p>
 		<b><spring:message code="complaint.auth"/></b>
 		<a href="customer/profile.do?cusId=<jstl:out value="${complaint.authId}"/>">
@@ -36,8 +35,6 @@
 			<tr>
 				<td><jstl:out value="${attachment}" /></td>
 			</tr>
-		</jstl:forEach>
-		
-	</table>
-	
+		</jstl:forEach>		
+	</table>	
 </div>

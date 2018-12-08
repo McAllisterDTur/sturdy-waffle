@@ -9,7 +9,6 @@
 <security:authorize access="hasRole(CUSTOMER)">
 <div>
 	<a href="complaint/customer/findAll?cusId=<jstl:out value="${customerid}" />"><spring:message code="customer.back" /></a>
-	
 	<table>
 			<tr>
 				<th><spring:message code="customer.desc" /></th>
@@ -35,8 +34,7 @@
 					</a>
 				</td>
 			</tr>
-		</jstl:forEach>
-		
+		</jstl:forEach>		
 	</table>
 </div>
 </security:authorize>

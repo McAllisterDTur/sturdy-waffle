@@ -8,9 +8,7 @@
 
 <security:authorize access="hasRole(HANDYWORKER)">
 <div>
-
 	<a href="messages/all.do"><spring:message code="handy.mssg" /></a>
-	
 	<table>
 			<tr>
 				<th><spring:message code="handy.desc" /></th>
@@ -28,9 +26,14 @@
 				<jstl:if test="${not empty complaint.reportid}">
     				<td>
 					<a href="report/see.do?id=<jstl:out value="${complaint.reportid}"/>">
-						<button type="button"><spring:message code="customer.rprt" /></button>
+						<button type="button"><spring:message code="handy.rprt" /></button>
 					</a>
 				</td>
+				</jstl:if>
+				<jstl:if test="${empty complaint.reportid}">
+    				<td>
+						<button type="button"><spring:message code="handy.nrpt" /></button>
+					</td>
 				</jstl:if>
 			</tr>
 		</jstl:forEach>

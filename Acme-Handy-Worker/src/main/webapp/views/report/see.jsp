@@ -9,17 +9,27 @@
 <div>
 	<h2><spring:message code="report.rfvd" /></h2>
 	<p><jstl:out value="${report.veredict }"/></p>
-	<div>
-		<jstl:forEach items="${report.messages}" var="msg">
-			<p>
-				<b><jstl:out value="${msg.authorType}"/> comment #<jstl:out value="${msg.number}"/>:</b> 
-				<jstl:out value="${msg.text}"/></p>
-		</jstl:forEach>
-	</div>
-	<div>
-		<form:form modelAttribute="comment" action="report/sendComment.do">
-			<form:input path="comment" placeholder="<spring:message code="report.wthr" />"/>
-			<input type="submit" name="submit" value="<spring:message code="report.send"/>"/>
-		</form:form>
-	</div>
+	<p>
+		<spring:message code="report.cplr" />: 
+		<a href="customer/profile.do?id=<jstl:out value="${report.complainerId}"/>">
+			<jstl:out value="${report.complainer}"/>
+		</a>
+	</p>
+	<p>
+		<spring:message code="report.hand" />: 
+		<a href="handyworker/profile.do?id=<jstl:out value="${report.handyId}"/>">
+			<jstl:out value="${report.handy}"/>
+		</a>
+	</p>
+	<p>
+		<spring:message code="report.comp" />: 
+		<a href="complaint/moreInfo?id=<jstl:out value="${report.complaintId}"/>">
+			<jstl:out value="${report.complaintTicker}"/>
+		</a>
+	</p>
+	<p>
+		<a href="notes/see?id=<jstl:out value="${report.id}"/>">
+			<spring:message code="report.nots" /> 	
+		</a>
+	</p>
 </div>

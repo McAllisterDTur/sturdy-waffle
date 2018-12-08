@@ -35,8 +35,7 @@
 					</a>
 				</td>
 			</tr>
-		</jstl:forEach>
-		
+		</jstl:forEach>	
 	</table>
 </div>
 </security:authorize>

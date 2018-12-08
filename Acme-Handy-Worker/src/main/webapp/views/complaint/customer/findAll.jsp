@@ -31,6 +31,11 @@
 					</a>
 				</td>
 				</jstl:if>
+				<jstl:if test="${empty complaint.reportid}">
+    				<td>
+						<button type="button"><spring:message code="customer.nrpt" /></button>
+					</td>
+				</jstl:if>
 				<td>
 					<a href="complaint/moreInfo.do?comId=<jstl:out value="${complaint.id}"/>">
 						<button type="button"><spring:message code="customer.more" /></button>
