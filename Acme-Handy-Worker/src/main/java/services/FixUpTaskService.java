@@ -71,15 +71,18 @@ public class FixUpTaskService {
 			// Ya est� en base de datos
 			final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTask.getId());
 			Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
-			Assert.isTrue(fixUpTask.getCustomer().getAccount().equals(aux.getCustomer().getAccount()));
+			Assert.isTrue(fixUpTask.getCustomer().getAccount()
+				.equals(aux.getCustomer().getAccount()));
 			res = this.fixUpTaskRepository.save(fixUpTask);
 		} else {
 			fixUpTask.setTicker(this.tickerService.getTicker());
 			fixUpTask.setPublishTime(new Date());
-			fixUpTask.setCustomer((Customer) this.actorService.findByUserAccountId(userAccount.getId()));
+			fixUpTask.setCustomer((Customer) this.actorService.findByUserAccountId(userAccount
+				.getId()));
 			res = this.fixUpTaskRepository.save(fixUpTask);
 		}
-		this.spamService.isSpam(this.actorService.findByUserAccountId(userAccount.getId()), res.getDescription());
+		this.spamService.isSpam(this.actorService.findByUserAccountId(userAccount.getId()),
+			res.getDescription());
 		return res;
 	}
 
@@ -153,7 +156,8 @@ public class FixUpTaskService {
 
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
-		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService
+			.getPrincipal().getId());
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.findFromCustomer(c.getId());
 		return res;
 	}
@@ -243,7 +247,8 @@ public class FixUpTaskService {
 	 * @param close
 	 * @return a collection of fix up tasks filtered by the parameters given
 	 */
-	public Collection<FixUpTask> findByFilter(String keyWord, String category, String warranty, Double minPrice, Double maxPrice, Date open, Date close) {
+	public Collection<FixUpTask> findByFilter(String keyWord, String category, String warranty,
+		Double minPrice, Double maxPrice, Date open, Date close) {
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
@@ -264,7 +269,8 @@ public class FixUpTaskService {
 		open = open == null ? d1 : open;
 		close = close == null ? d2 : close;
 
-		final Collection<FixUpTask> res = this.fixUpTaskRepository.findByFilter(keyWord, category, warranty, minPrice, maxPrice, open, close);
+		final Collection<FixUpTask> res = this.fixUpTaskRepository.findByFilter(keyWord, category,
+			warranty, minPrice, maxPrice, open, close);
 
 		return res;
 	}
@@ -297,4 +303,15 @@ public class FixUpTaskService {
 		return res;
 	}
 
+	/**
+	 * Updates a fix up task if it is in the database.
+	 * THIS METHOD SHOULD NEVER BE CALLED FROM CLIENT.
+	 * 
+	 * @param f
+	 */
+	public void saveInternal(final FixUpTask f) {
+		final FixUpTask f1 = this.fixUpTaskRepository.findOne(f.getId());
+		Assert.notNull(f1);
+		this.fixUpTaskRepository.save(f);
+	}
 }

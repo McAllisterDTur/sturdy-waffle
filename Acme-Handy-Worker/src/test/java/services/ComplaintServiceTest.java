@@ -42,6 +42,8 @@ public class ComplaintServiceTest extends AbstractTest {
 		c.setComplaintTime(new Date());
 		c.setDescription("Escucha la historia de como mi vida cambi� mi movida");
 		c.setIsFinal(false);
+		final FixUpTask f = this.fService.findFromLoggedCustomer().iterator().next();
+		c.setFixUpTask(f);
 		this.cService.save(c);
 		super.unauthenticate();
 	}
