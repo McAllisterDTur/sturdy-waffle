@@ -30,11 +30,7 @@
 		<b><spring:message code="complaint.crtd"/></b>
 		<jstl:out value="${complaint.dateCreated}"/>
 	</p>
-	<table>
-		<jstl:forEach items="${complaint.attachments}" var="attachment">
-			<tr>
-				<td><jstl:out value="${attachment}" /></td>
-			</tr>
-		</jstl:forEach>		
-	</table>	
+	<display:table name="attachments" id="attachment" requestURI="${requestURI}" pagesize="10">
+		<display:column property="attachment" titleKey="attachment" />
+	</display:table>
 </div>

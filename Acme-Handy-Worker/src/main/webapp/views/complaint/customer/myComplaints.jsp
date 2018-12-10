@@ -9,32 +9,20 @@
 <security:authorize access="hasRole(CUSTOMER)">
 <div>
 	<a href="complaint/customer/findAll?cusId=<jstl:out value="${customerid}" />"><spring:message code="customer.back" /></a>
-	<table>
-			<tr>
-				<th><spring:message code="customer.desc" /></th>
-				<th><spring:message code="customer.hand" /></th>
-				<th><spring:message code="customer.date" /></th>
-			</tr>
-		<jstl:forEach items="${list}" var="complaint">
-			<tr>
-				<td><jstl:out value="${complaint.description}" /></td>
-				<td><a href="handyworker/profile.do?handyId=<jstl:out value="${complaint.handyId}"/>">
-					<jstl:out value="${complaint.handy}"/>
-					</a>
-				</td>
-				<td><jstl:out value="${complaint.date}" /></td>
-				<td>
-					<a href="complaint/edit.do?comId=<jstl:out value="${complaint.id}"/>">
-						<button type="button"><spring:message code="customer.edit" /></button>
-					</a>
-				</td>
-				<td>
-					<a href="complaint/delete.do?comId=<jstl:out value="${complaint.id}"/>">
-						<button type="button"><spring:message code="customer.dlte" /></button>
-					</a>
-				</td>
-			</tr>
-		</jstl:forEach>		
-	</table>
+	<display:table name="complaints" id="complaint" requestURI="${requestURI}" pagesize="10">
+			<display:column property="description" titleKey="complaint.description" />
+			<display:column property="handyworker" titleKey="complaint.handyWorker" />
+			<display:column property="date" titleKey="complaint.date" sortable=true />
+			<display:column>
+				<a href="complaint/edit.do?comId=${complaint.id}">
+					<button type="button"><spring:message code="customer.edit" /></button>
+				</a>
+			</display:column>
+			<display:column>
+				<a href="complaint/moreInfo.do?comId=${complaint.id}">
+					<button type="button"><spring:message code="referee.more" /></button>
+				</a>
+			</display:column>
+	</display:table>
 </div>
 </security:authorize>

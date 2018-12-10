@@ -10,32 +10,20 @@
 <div>
 	<a href="complaint/referee/listAll"><spring:message code="referee.allc" /></a>
 	<a href="complaint/referee/myComplaints.do?refId=<jstl:out value="${refereeid}" />"><spring:message code="referee.myco" /></a>
-	<table>
-			<tr>
-				<th><spring:message code="referee.desc" /></th>
-				<th><spring:message code="referee.autr" /></th>
-				<th><spring:message code="referee.date" /></th>
-			</tr>
-		<jstl:forEach items="${list}" var="complaint">
-			<tr>
-				<td><jstl:out value="${complaint.description}" /></td>
-				<td><a href="customer/profile.do?cusId=<jstl:out value="${complaint.authorId}"/>">
-					<jstl:out value="${complaint.author}"/>
-					</a>
-				</td>
-				<td><jstl:out value="${complaint.date}" /></td>
-				<td>
-					<a href="complaint/referee/selfAssign.do?id=<jstl:out value="${complaint.id}"/>">
-						<button type="button"><spring:message code="referee.self" /></button>
-					</a>
-				</td>
-				<td>
-					<a href="complaint/moreInfo.do?comId=<jstl:out value="${complaint.id}"/>">
-						<button type="button"><spring:message code="referee.more" /></button>
-					</a>
-				</td>
-			</tr>
-		</jstl:forEach>	
-	</table>
+	<display:table name="complaints" id="complaint" requestURI="${requestURI}" pagesize="10">
+			<display:column property="description" titleKey="complaint.description" />
+			<display:column property="author" titleKey="complaint.author" />
+			<display:column property="date" titleKey="complaint.date" sortable=true />
+			<display:column>
+				<a href="complaint/referee/selfAssign.do?id=${complaint.id}">
+					<button type="button"><spring:message code="referee.self" /></button>
+				</a>
+			</display:column>
+			<display:column>
+				<a href="complaint/moreInfo.do?comId=${complaint.id}">
+					<button type="button"><spring:message code="referee.more" /></button>
+				</a>
+			</display:column>
+	</display:table>
 </div>
 </security:authorize>
