@@ -6,16 +6,12 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<jstl:set var="principalId" value="<%= request.getUserPrincipal().getName() %>"/>
+
 <security:authorize access="hasRole('HANDYWORKER')">
-	<form action="tutorial/all.do" style="Display: inline">
-	  		<input type="submit" value="All tutorials" />
-	</form>
-	<form action="tutorial/myTutorials.do" style="Display: inline">
-	  		<input type="submit" value="My tutorials" />
-	</form>
-	<form action="tutorial/create.do" style="Display: inline">
-	  		<input type="submit" value="New tutorial" />
-	</form>
+	<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/all.do'"><spring:message code="tutorial.all"/></button>
+	<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/myTutorials.do'"><spring:message code="tutorial.myTutorials"/></button>
+	<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/new.do'"><spring:message code="tutorial.new"/></button>
 </security:authorize>
 <display:table pagesize="5" name="tutorials" id="row" requestURI="tutorial/${test}.do">
 	
@@ -24,28 +20,27 @@
 	<display:column titleKey="tutorial.handyworker"><a href="profile/handyWorker.do?id=${row.worker.id}"><jstl:out value='${row.worker.make}'></jstl:out></a></display:column>
 	<display:column property="summary" titleKey="tutorial.summary"></display:column>
 	<display:column property="lastTimeUpdated" titleKey="tutorial.lastupdate"></display:column>
+	
 	<display:column>
-		<form action="tutorial/see.do?tutoId=${row.id}">
-	    	<input type="submit" value="See more" />
-		</form>
+		<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/see.do?id=${row.id}'"><spring:message code="tutorial.see"/></button>
+		
 	</display:column>
 	
 	<security:authorize access="hasRole('HANDYWORKER')">
 		<display:column>
-			<form action="tutorial/update.do?tutoId=${row.id}">
-	    		<input type="submit" value="Update" />
-			</form>
-		</display:column>	
+		<jstl:if test="${row.worker.account.username == principalId}">
+			<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/update.do?id=${row.id}'"><spring:message code="tutorial.edit"/></button>
+		</jstl:if>
+		</display:column>
 		<display:column>
-			<form action="tutorial/delete.do?tutoId=${row.id}">
-	    		<input type="submit" value="Delete" />
-			</form>
-		</display:column>	
+		<jstl:if test="${row.worker.account.username == principalId}">
+			<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/delete.do?id=${row.id}'"><spring:message code="tutorial.delete"/></button>
+		</jstl:if>
+		</display:column>
 	</security:authorize>
-	
 	<display:column>
-		<form action="tutorial/picture.do?tutoId=${row.id}">
-	    	<input type="submit" value="Pictures" />
-		</form>
+		<display:column>
+			<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/pictures.do?id=${row.id}'"><spring:message code="tutorial.pictures"/></button>
+		</display:column>
 	</display:column>
 </display:table>

@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
@@ -46,7 +48,7 @@ public class TutorialController extends AbstractController {
 
 	// La url es la que se va a ver en la página
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public ModelAndView all() {
+	public ModelAndView allTutorials() {
 		final Collection<Tutorial> tutorials = this.tutorialService.findAll();
 		//Result
 		ModelAndView result;
@@ -68,6 +70,17 @@ public class TutorialController extends AbstractController {
 		result = new ModelAndView("tutorial/list");
 		result.addObject("tutorials", tutorials);
 		result.addObject("url", "myTutorials");
+		return result;
+	}
+
+	@RequestMapping(value = "/see", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView seeTutorial(@RequestParam("id") final int id) {
+		final Tutorial tutorial = this.tutorialService.findOne(id);
+		//Result
+		ModelAndView result;
+		result = new ModelAndView("tutorial/see");
+		result.addObject("tutorial", tutorial);
 		return result;
 	}
 

@@ -1,0 +1,33 @@
+<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+
+<%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+
+<jstl:set var="principalId" value="<%= request.getUserPrincipal().getName() %>"/>
+
+<p style="font-size: 2em"><strong></b><spring:message	code="tutorial.title" />:</strong> <jstl:out value='${tutorial.title}'></jstl:out></p>
+<p style="font-size: 1.5em"><strong><spring:message	code="tutorial.summary" />:</strong> <jstl:out value='${tutorial.summary}'></jstl:out></p>
+
+<display:table pagesize="5" name="tutorial.sections" id="row" requestURI="tutorial/see.do">
+
+	<display:column property="number" titleKey="tutorial.section.number"></display:column>
+	<display:column property="title" titleKey="tutorial.section.title"></display:column>
+	<display:column property="text" titleKey="tutorial.section.text"></display:column>
+	<security:authorize access="hasRole('HANDYWORKER')">
+		<jstl:if test="${tutorial.worker.account.username == principalId}">
+		<display:column>
+			<button onClick="window.location.href='/Acme-Handy-Worker/section/edit.do?id=${row.id}'"><spring:message code="tutorial.section.edit"/></button>
+		</display:column>
+		<display:column>
+			<button onClick="window.location.href='/Acme-Handy-Worker/section/delete.do?id=${row.id}'"><spring:message code="tutorial.section.delete"/></button>
+		</display:column>
+		</jstl:if>
+	</security:authorize>
+	<display:column>
+		<button onClick="window.location.href='/Acme-Handy-Worker/section/pictures.do?id=${row.id}'"><spring:message code="tutorial.section.pictures"/></button>
+	</display:column>
+	
+</display:table>
