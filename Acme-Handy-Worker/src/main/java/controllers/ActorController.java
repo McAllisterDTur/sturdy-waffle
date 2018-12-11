@@ -39,7 +39,7 @@ public class ActorController extends AbstractController {
 
 	@RequestMapping("/register")
 	public ModelAndView test1() {
-		final Collection<Authority> authorities = Authority.listAuthorities();
+		final Collection<Authority> authorities = this.actorService.listAuthorities();
 		final Actor a = this.actorService.create();
 		ModelAndView result;
 		result = new ModelAndView("actor/register");
