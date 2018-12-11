@@ -15,14 +15,14 @@
 			<display:column property="author" titleKey="complaint.author" />
 			<display:column property="date" titleKey="complaint.date" sortable=true />
 			<display:column>
-				<a href="complaint/referee/writeReport.do?comId=${complaint.id}">
-					<button type="button"><spring:message code="referee.wrte" /></button>
-				</a>
+				<form:form action="complaint/referee/writeReport.do?comId=${row.complaint.id}">
+					<input type="submit" value="<spring:message code="referee.wrte" />"/>
+				</form:form>
 			</display:column>
 			<display:column>
-				<a href="complaint/moreInfo.do?comId=${complaint.id}">
-					<button type="button"><spring:message code="referee.more" /></button>
-				</a>
+				<form:form action="complaint/moreInfo.do?comId=${row.complaint.id}">
+					<input type="submit" value="<spring:message code="referee.more" />"/>
+				</form:form>
 			</display:column>
 	</display:table>
 </div>

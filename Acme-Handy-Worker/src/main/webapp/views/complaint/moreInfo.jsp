@@ -6,9 +6,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<h1>All complaints</h1>
 <div>
-	<a href="complaint/referee/listAll"><spring:message code="complaint.back" /></a>
 	<h1><spring:message code="complaint.sein"/> <jstl:out value="${complaint.ticker}"/></h1>	
 	<p>
 		<b><spring:message code="complaint.auth"/></b>

@@ -10,14 +10,14 @@
 <a href="messages/new.do"><spring:message code="messages.newm" /></a>
 <div>
 	<display:table name="messages" id="message" requestURI="${requestURI}" pagesize="10">
-			<display:column property="subject" titleKey="messages.subject" />
-			<display:column property="createdBy" titleKey="messages.author" />
-			<display:column property="createdWhen" titleKey="messages.date" />
-			<display:column property="tags" titleKey="messages.tags" />
-			<display:column>
-			<a href="messages/see.do?msgId=${message.id}">
-				<spring:message code="messages.read" /> 
-			</a>
+		<display:column property="subject" titleKey="messages.subject" />
+		<display:column property="createdBy" titleKey="messages.author" />
+		<display:column property="createdWhen" titleKey="messages.date" />
+		<display:column property="tags" titleKey="messages.tags" />
+		<display:column>
+			<form:form action="messages/see.do?msgId=${row.message.id}">
+				<input type="submit" value="<spring:message code="messages.read" />"/>
+			</form:form>
 		</display:column>
 	</display:table>
 </div>

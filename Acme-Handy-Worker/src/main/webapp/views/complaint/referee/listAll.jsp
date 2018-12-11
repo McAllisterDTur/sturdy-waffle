@@ -8,21 +8,21 @@
 
 <security:authorize access="hasRole(REFEREE)">
 <div>
-	<a href="complaint/referee/listAll"><spring:message code="referee.allc" /></a>
+	<a href="complaint/referee/listAll.do"><spring:message code="referee.allc" /></a>
 	<a href="complaint/referee/myComplaints.do?refId=<jstl:out value="${refereeid}" />"><spring:message code="referee.myco" /></a>
 	<display:table name="complaints" id="complaint" requestURI="${requestURI}" pagesize="10">
 			<display:column property="description" titleKey="complaint.description" />
 			<display:column property="author" titleKey="complaint.author" />
 			<display:column property="date" titleKey="complaint.date" sortable=true />
 			<display:column>
-				<a href="complaint/referee/selfAssign.do?id=${complaint.id}">
-					<button type="button"><spring:message code="referee.self" /></button>
-				</a>
+				<form:form action="complaint/referee/selfAssign.do?id=${row.complaint.id}">
+					<input type="submit" value="<spring:message code="referee.self" />"/>
+				</form:form>
 			</display:column>
 			<display:column>
-				<a href="complaint/moreInfo.do?comId=${complaint.id}">
-					<button type="button"><spring:message code="referee.more" /></button>
-				</a>
+				<form:form action="complaint/moreInfo.do?id=${row.complaint.id}">
+					<input type="submit" value="<spring:message code="referee.more" />"/>
+				</form:form>
 			</display:column>
 	</display:table>
 </div>

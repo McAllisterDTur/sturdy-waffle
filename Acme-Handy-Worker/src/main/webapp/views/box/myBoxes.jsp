@@ -10,10 +10,10 @@
 <div>
 	<display:table name="boxes" id="box" requestURI="${requestURI}" pagesize="10">
 			<display:column property="name" titleKey="boxes.name" />
-			<display:column>
-			<a href="messages/all.do?boxId=${box.id}">
-				<spring:message code="box.seeM" /> 
-			</a>
+			<display:column titleKey="boxes.name">
+				<a href="messages/all.do?id=${row.box.id}">
+					<spring:message code="box.seeM" /> 
+				</a>
 		</display:column>
 	</display:table>
 </div>

@@ -14,15 +14,13 @@
 		<display:column property="author" titleKey="complaint.author" />
 		<display:column property="date" titleKey="complaint.date" sortable=true />
 		<display:column>
-			<jstl:if test="${not empty complaint.reportid}">
-				<a href="report/see.do?id=<jstl:out value="${complaint.reportid}"/>">
-					<button type="button"><spring:message code="handy.rprt" /></button>
-				</a>
+			<jstl:if test="${not empty row.complaint.reportid}">
+				<form:form action="report/see.do?id=${row.complaint.reportid}">
+					<input type="submit" value="<spring:message code="handy.rprt" />"/>
+				</form:form>
 			</jstl:if>
-			<jstl:if test="${empty complaint.reportid}">
-   				<p>
-					<button type="button"><spring:message code="handy.nrpt" /></button>
-				</p>
+			<jstl:if test="${empty row.complaint.reportid}">
+   				<p><spring:message code="handy.nrpt" /></p>
 			</jstl:if>
 		</display:column>
 	</display:table>
