@@ -15,35 +15,36 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.TutorialService;
-import domain.Tutorial;
+import security.Authority;
+import services.ActorService;
+import domain.Actor;
 
 @Controller
-@RequestMapping("/tutorial")
-public class TutorialController extends AbstractController {
+@RequestMapping("/actor")
+public class ActorController extends AbstractController {
 
 	@Autowired
-	private TutorialService	tutorialService;
+	private ActorService	actorService;
 
 
 	// Constructors -----------------------------------------------------------
 
-	public TutorialController() {
+	public ActorController() {
 		super();
 	}
 
 	// Tutorials ---------------------------------------------------------------		
 
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	@RequestMapping("/register")
 	public ModelAndView test1() {
-		final Collection<Tutorial> tutorials = this.tutorialService.findAll();
-		//Result
+		final Collection<Authority> authorities = Authority.listAuthorities();
+		final Actor a = this.actorService.create();
 		ModelAndView result;
-		result = new ModelAndView("tutorial/all");
-		result.addObject("tutorials", tutorials);
+		result = new ModelAndView("actor/register");
+		result.addObject("actor", a);
+		result.addObject("authorities", authorities);
 		return result;
 	}
 }

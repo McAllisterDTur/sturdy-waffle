@@ -42,7 +42,8 @@
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
-			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>	
+			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
+			<li><a class="fNiv" href="actor/register.do">Registro</a></li>	
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
@@ -60,7 +61,7 @@
 				</ul>
 			</li>
 		</security:authorize>
-		<li><a class="fNiv" href="tutorial/test-1.do">Tutoriales</a></li>
+		<li><a class="fNiv" href="tutorial/all.do">Tutoriales</a></li>
 		
 	</ul>
 </div>
