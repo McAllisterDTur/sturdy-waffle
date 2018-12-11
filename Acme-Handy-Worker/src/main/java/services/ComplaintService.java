@@ -34,6 +34,8 @@ public class ComplaintService {
 	private TickerService		tickerService;
 	@Autowired
 	private SpamService			spamService;
+	@Autowired
+	private FixUpTaskService	taskService;
 
 
 	public Complaint create() {
@@ -58,8 +60,12 @@ public class ComplaintService {
 		Assert.isTrue(complaint.getId() == 0);
 		complaint.setTicker(this.tickerService.getTicker());
 		complaint.setComplaintTime(new Date());
-		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal()
+			.getId());
 		this.spamService.isSpam(actor, complaint.getDescription());
+		final FixUpTask f = complaint.getFixUpTask();
+		f.getComplaints().add(complaint);
+		this.taskService.saveInternal(f);
 		return this.complaintRepository.save(complaint);
 	}
 	/**
@@ -70,7 +76,8 @@ public class ComplaintService {
 	public Collection<Complaint> findFromLoggedCustomer() {
 		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.CUSTOMER);
 		Assert.isTrue(hasAu);
-		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService
+			.getPrincipal().getId());
 		return this.complaintRepository.findFromCustomer(c.getId());
 	}
 
@@ -104,7 +111,8 @@ public class ComplaintService {
 	public Collection<Complaint> findSelfassigned() {
 		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.REFEREE);
 		Assert.isTrue(hasAu);
-		final Referee referee = (Referee) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final Referee referee = (Referee) this.actorService.findByUserAccountId(LoginService
+			.getPrincipal().getId());
 		return this.complaintRepository.findSelfassigned(referee.getId());
 	}
 
@@ -118,9 +126,11 @@ public class ComplaintService {
 		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.REFEREE);
 		final boolean hasAu1 = AuthenticationUtility.checkAuthority(Authority.CUSTOMER);
 		Assert.isTrue(hasAu || hasAu1);
-		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal()
+			.getId());
 		final Complaint c1 = this.complaintRepository.findOne(complaintId);
-		Assert.isTrue(c1.getReferee() != null && c1.getReferee().equals(actor) || c1.getFixUpTask().getCustomer().equals(actor));
+		Assert.isTrue(c1.getReferee() != null && c1.getReferee().equals(actor)
+			|| c1.getFixUpTask().getCustomer().equals(actor));
 		return c1;
 	}
 
@@ -133,7 +143,8 @@ public class ComplaintService {
 	public Collection<Complaint> findFromLoggedHandyWorker() {
 		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.HANDYWORKER);
 		Assert.isTrue(hasAu);
-		final HandyWorker h = (HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final HandyWorker h = (HandyWorker) this.actorService.findByUserAccountId(LoginService
+			.getPrincipal().getId());
 		return this.complaintRepository.findFromHandyWorker(h.getId());
 	}
 
