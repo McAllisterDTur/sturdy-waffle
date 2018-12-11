@@ -35,6 +35,7 @@
 		<security:intercept-url pattern="/styles/**" access="permitAll" /> 
 
 		<security:intercept-url pattern="/tutorial/all.do" access="permitAll" /> 
+		<security:intercept-url pattern="/tutorial/myTutorials.do" access="hasRole('HANDYWORKER')" /> 
 
 		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" /> 
 

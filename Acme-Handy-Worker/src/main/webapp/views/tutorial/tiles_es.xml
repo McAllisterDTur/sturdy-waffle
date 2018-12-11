@@ -16,9 +16,9 @@
       
 <tiles-definitions>
 
-	<definition name="tutorial/all" extends="master.page">	
+	<definition name="tutorial/list" extends="master.page">	
 		<put-attribute name="title" value="Todos los tutoriales" />
-		<put-attribute name="body" value="/views/tutorial/all.jsp" />
+		<put-attribute name="body" value="/views/tutorial/list.jsp" />
 	</definition>
 	
 </tiles-definitions>

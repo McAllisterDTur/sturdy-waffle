@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
+import security.UserAccount;
+import services.ActorService;
 import services.TutorialService;
+import domain.HandyWorker;
 import domain.Tutorial;
 
 @Controller
@@ -27,6 +31,9 @@ public class TutorialController extends AbstractController {
 
 	@Autowired
 	private TutorialService	tutorialService;
+
+	@Autowired
+	private ActorService	actorService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -37,13 +44,31 @@ public class TutorialController extends AbstractController {
 
 	// Tutorials ---------------------------------------------------------------		
 
+	// La url es la que se va a ver en la página
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public ModelAndView test1() {
+	public ModelAndView all() {
 		final Collection<Tutorial> tutorials = this.tutorialService.findAll();
 		//Result
 		ModelAndView result;
-		result = new ModelAndView("tutorial/all");
+		// Esta url es la de la vista
+		result = new ModelAndView("tutorial/list");
 		result.addObject("tutorials", tutorials);
+		// TODO: Test. Este atributo es la especificación de la url de la vista para la paginación (Creo)
+		result.addObject("url", "all");
 		return result;
 	}
+
+	@RequestMapping(value = "/myTutorials", method = RequestMethod.GET)
+	public ModelAndView myTutorials() {
+		final UserAccount account = LoginService.getPrincipal();
+		final HandyWorker h = (HandyWorker) this.actorService.findByUserAccountId(account.getId());
+		final Collection<Tutorial> tutorials = this.tutorialService.findAllFromHandyworker(h.getId());
+		//Result
+		ModelAndView result;
+		result = new ModelAndView("tutorial/list");
+		result.addObject("tutorials", tutorials);
+		result.addObject("url", "myTutorials");
+		return result;
+	}
+
 }
