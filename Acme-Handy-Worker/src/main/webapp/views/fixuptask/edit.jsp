@@ -89,7 +89,7 @@
 	</form:select>
 	<form:errors path="warranty" cssClass="error" />
 	<br />
-	<!-- Falta Credit card -->
+	
 	<form:label path="creditCard.holderName"><spring:message code="creditCard.holderName"/></form:label>
 	<form:input path="creditCard.holderName"/>
 	<form:errors path="creditCard.holderName" cssClass="error"/>
@@ -120,8 +120,6 @@
 	<form:errors path="creditCard.codeCVV" cssClass="error"/>
 	<br/>
 
-
-
 	<input type="submit" name="save"
 		value="<spring:message code="fixuptask.save"/>" />
 	&nbsp;
@@ -132,11 +130,6 @@
 	</jstl:if>
 	<input type="button" name="cancel"
 		value="<spring:message code="fixuptask.cancel" />"
-		onclick="javascript: relativeRedir('fixuptask/customer/list.do');" />
+		onclick="javascript: relativeRedir('fixuptask/list.do');" />
 	&nbsp;
-	<jstl:if test="${fixuptask.id != 0}">
-		<input type="submit" name="cancel"
-			value="<spring:message code="fixuptask.cancel" />" />
-		&nbsp;
-	</jstl:if>
 </form:form>
