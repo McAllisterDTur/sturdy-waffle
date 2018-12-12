@@ -15,7 +15,8 @@
 		<display:column property="createdWhen" titleKey="messages.date" />
 		<display:column property="tags" titleKey="messages.tags" />
 		<display:column>
-			<form:form action="messages/see.do?msgId=${row.message.id}">
+			<form:form action="messages/see.do">
+				<form:hidden path="id" />
 				<input type="submit" value="<spring:message code="messages.read" />"/>
 			</form:form>
 		</display:column>
