@@ -43,7 +43,7 @@
 	<form:errors path="endDate" cssClass="error"/>
 	<br/>
 	
-	<b><form:label path="category"><spring:message code="category"/>:&nbsp;</form:label></b>
+	<b><form:label path="category"><spring:message code="finder.category"/>:&nbsp;</form:label></b>
 	<form:select path="category">
 		<form:option label="----" value="0"/>
 		<form:options items="${categories}" itemLabel="name" itemValue="id"/>
@@ -60,25 +60,26 @@
 
 <jstl:if test="${!fixuptask.isEmpty()}">
 <display:table name="fixuptask" id="row" pagesize="5" class="displaytag" requestURI="${requestURI}">
-	
+
+	<spring:message var="tickerH" code="fixuptask.ticker" />
+	<display:column property="fixuptask.ticker" titleKey="fixuptask.ticker"/>
+
+	<spring:message var="categoryH" code="fixuptask.category" />
+	<display:column property="category.name" titleKey="fixuptask.category.name" />
+
+	<spring:message var="periodStartH" code="fixuptask.periodStart" />
+	<display:column property="fixuptask.periodStart" titleKey="fixuptask.periodStart"  />
+
+	<spring:message var="periodEndH" code="fixuptask.periodEnd" />
+	<display:column property="fixuptask.periodStart" titleKey="fixuptask.periodStart" />
+
+	<spring:message var="maxPriceH" code="fixuptask.maxPrice" />
+	<display:column property="fixuptask.maxPrice" titleKey="fixuptask.maxPrice" />
 	<display:column>
-		<a href="finder/display.do?fixuptaskId=${row.id}"><spring:message code="fixuptask.display"/></a>
+		<button
+			onClick="window.location.href='/Acme-Handy-Worker/fixuptask/display.do?id=${row.id}'">
+			<spring:message code="fixuptask.display" />
+		</button>
 	</display:column>
-	
-	<spring:message var="tickerH" code="fixuptask.ticker"/>
-	<display:column property="ticker" title="${tickerH}"/>
-	
-	<spring:message var="categoryH" code="fixuptask.category"/>
-	<display:column property="category.name" title="${categoryH}"/>
-	
-	<spring:message var="periodStartH" code="fixuptask.periodStart"/>
-	<display:column property="periodStart" title="${periodStartH}"/>
-	
-	<spring:message var="periodEndH" code="fixuptask.periodEnd"/>
-	<display:column property="periodStart" title="${periodStartH}"/>
-	
-	<spring:message var="maxPriceH" code="fixuptask.maxPrice"/>
-	<display:column property="maxPrice" title="${maxPriceH}"/>
-	
 </display:table>
 </jstl:if>
