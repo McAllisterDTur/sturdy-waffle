@@ -11,7 +11,7 @@
 
 <form:form modelAttribute="actor">
 	<form:hidden path="id" />
-	<form:hidden path="version" />
+	<form:hidden path="version" action="actor/save.do"/>
 
 	<!-- Account Atributtes -->
 	<form:label path="account.username">
