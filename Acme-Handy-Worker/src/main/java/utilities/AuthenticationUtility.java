@@ -8,14 +8,15 @@ import security.UserAccount;
 public class AuthenticationUtility {
 
 	public static Boolean checkAuthority(final String authority) {
-		final UserAccount ua = LoginService.getPrincipal();
-		if (ua == null)
-			return false;
-		else {
+		UserAccount ua;
+		try {
+			ua = LoginService.getPrincipal();
 			final Authority a = new Authority();
 			a.setAuthority(authority);
 			return (ua.getAuthorities().contains(a));
-		}
+		} catch (final Exception e) {
+			return false;
 
+		}
 	}
 }

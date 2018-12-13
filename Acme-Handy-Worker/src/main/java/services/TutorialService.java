@@ -115,7 +115,6 @@ public class TutorialService {
 			final Date lastTimeUpdated = new Date();
 			this.spamService.isSpam(worker, tutorial.getSummary());
 			this.spamService.isSpam(worker, tutorial.getTitle());
-
 			tutorial.setLastTimeUpdated(lastTimeUpdated);
 			tutorial.setWorker(worker);
 			result = this.tutorialRepository.save(tutorial);

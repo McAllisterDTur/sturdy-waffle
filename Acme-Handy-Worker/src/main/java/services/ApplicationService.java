@@ -18,7 +18,6 @@ import security.UserAccount;
 import utilities.AuthenticationUtility;
 import domain.Application;
 import domain.Customer;
-import domain.FixUpTask;
 import domain.HandyWorker;
 import domain.Phase;
 
@@ -31,20 +30,17 @@ public class ApplicationService {
 	@Autowired
 	private CustomerService			customerService;
 	@Autowired
-	private FixUpTaskService		fixUpTaskService;
-	@Autowired
 	private HandyWorkerService		workerService;
+	@Autowired
+	private FixUpTaskService		taskService;
 	@Autowired
 	private ActorService			actorService;
 	private UserAccount				account;
 
 
-	public Application create(final int taskId) {
+	public Application create() {
 		final Application res = new Application();
 
-		final FixUpTask task = this.fixUpTaskService.findOne(taskId);
-
-		res.setFixUpTask(task);
 		res.setCustomerComments(new ArrayList<String>());
 		res.setHandyComments(new ArrayList<String>());
 		res.setPhases(new ArrayList<Phase>());
@@ -58,14 +54,17 @@ public class ApplicationService {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER) || AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
 		Application a;
 		if (application.getId() == 0) {//creacci�n port parte del handyWorker
-			this.account = LoginService.getPrincipal();
 			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
 			Assert.isTrue(application.getOfferedPrice() != 0);
-			application.setHandyWorker((HandyWorker) this.actorService.findByUserAccountId(this.account.getId()));
+
 			application.setRegisterTime(new Date());
 			application.setStatus("PENDING");
 			a = this.applicationRepo.save(application);
 
+			//			final FixUpTask task = a.getFixUpTask();
+			//			task.getApplications().add(a);
+			//
+			//			this.taskService.save(task);
 		} else {//Actualizacion del status por parte del customer due�o de la fixUpTask
 			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
 			Assert.isTrue(application.getFixUpTask().getCustomer().getAccount().equals(this.account));//customer loggeado due�o de la task

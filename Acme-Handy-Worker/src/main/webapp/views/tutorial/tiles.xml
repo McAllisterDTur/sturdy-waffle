@@ -16,9 +16,19 @@
        
 <tiles-definitions>
 
-	<definition name="tutorial/all" extends="master.page">	
-		<put-attribute name="title" value="All tutorials" />
-		<put-attribute name="body" value="/views/tutorial/all.jsp" />
+	<definition name="tutorial/list" extends="master.page">	
+		<put-attribute name="title" value="Tutorials" />
+		<put-attribute name="body" value="/views/tutorial/list.jsp" />
+	</definition>
+
+	<definition name="tutorial/see" extends="master.page">	
+		<put-attribute name="title" value="Tutorial view" />
+		<put-attribute name="body" value="/views/tutorial/see.jsp" />
+	</definition>
+
+	<definition name="tutorial/form" extends="master.page">	
+		<put-attribute name="title" value="Formulario de tutorial" />
+		<put-attribute name="body" value="/views/tutorial/form.jsp" />
 	</definition>
 
 </tiles-definitions>

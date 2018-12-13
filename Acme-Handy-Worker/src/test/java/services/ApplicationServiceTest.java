@@ -42,15 +42,16 @@ public class ApplicationServiceTest extends AbstractTest {
 	@Rollback
 	public void createAndSave() {
 
-		final FixUpTask task = (FixUpTask) this.taskService.findAsHandyWorker().toArray()[0];
 		//Creamos una application vac�a
-		final Application a = this.applicationService.create(task.getId());
+		final Application a = this.applicationService.create();
 
 		Assert.notNull(a);
 
 		//Creamos el worker due�o de la aplicacion
 		super.authenticate("handy3");
 		final HandyWorker worker = (HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+
+		final FixUpTask task = (FixUpTask) this.taskService.findAsHandyWorker().toArray()[0];
 
 		a.setHandyWorker(worker);
 		a.setFixUpTask(task);

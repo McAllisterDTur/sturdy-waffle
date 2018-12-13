@@ -36,11 +36,20 @@
 	<form:label path="account.authorities">
 		<spring:message code="actor.authority" />
 	</form:label>
-	<form:select path="account.authorities">
-		<form:option value="0" label="---" />
-		<form:options items="${authorities}" itemLabel="authority"
-			itemValue="authority" />
+
+	<security:authorize access="hasRole('ADMIN')">
+		<form:select path="account.authorities" multiple="false" size="2">
+			<form:option value="authority" label="ADMIN" />
+			<form:option value="authority" label="REFEREE"/>
+		</form:select>
+	</security:authorize>
+	<security:authorize access="isAnonymous()">
+	<form:select path="account.authorities" multiple="false" size="3">
+		<form:option value="authority" label="CUSTOMER" />
+		<form:option value="authority" label="HANDYWORKER"/>
+		<form:option value="authority" label="SPONSOR"/>
 	</form:select>
+	</security:authorize>
 
 	<br />
 	<form:label path="name">

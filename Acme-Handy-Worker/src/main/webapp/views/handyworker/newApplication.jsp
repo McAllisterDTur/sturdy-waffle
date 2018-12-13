@@ -8,7 +8,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <div class="formulario">
-<form:form modelAtribute="application">
+<form:form modelAtribute="application" action="application/handyworker/create.do">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	
