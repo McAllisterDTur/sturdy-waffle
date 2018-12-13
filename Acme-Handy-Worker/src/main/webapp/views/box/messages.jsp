@@ -6,8 +6,8 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<h1><spring:message code="messages.titl"/></h1>
-<a href="messages/new.do"><spring:message code="messages.newm" /></a>
+<h1><spring:message code="box.titm"/></h1>
+<a href="messages/new.do"><spring:message code="box.newm" /></a>
 <div>
 	<display:table name="messages" id="message" requestURI="${requestURI}" pagesize="10">
 		<display:column property="subject" titleKey="messages.subject" />
@@ -17,7 +17,7 @@
 		<display:column>
 			<form:form action="messages/see.do">
 				<form:hidden path="id" />
-				<input type="submit" value="<spring:message code="messages.read" />"/>
+				<input type="submit" value="<spring:message code="box.read" />"/>
 			</form:form>
 		</display:column>
 	</display:table>

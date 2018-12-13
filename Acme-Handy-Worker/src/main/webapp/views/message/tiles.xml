@@ -16,14 +16,11 @@
        
 <tiles-definitions>
 
-	<definition name="message/myMessages" extends="master.page">	
-		<put-attribute name="title" value="My messages" />
-		<put-attribute name="body" value="/views/message/myMessages.jsp" />
-	</definition>
 	<definition name="message/new" extends="master.page">	
 		<put-attribute name="title" value="New message" />
 		<put-attribute name="body" value="/views/message/new.jsp" />
 	</definition>
+	
 	<definition name="message/see" extends="master.page">	
 		<put-attribute name="title" value="Seeing message" />
 		<put-attribute name="body" value="/views/message/see.jsp" />

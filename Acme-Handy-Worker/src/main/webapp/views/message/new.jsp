@@ -13,6 +13,12 @@
 		<p><spring:message code="messages.sbjc"/>: <form:input path="subject"/></p>
 		<p><spring:message code="messages.msgt"/></p>
 		<form:textarea path="messageText" placeholder="<spring:message code="messages.wrth"/>"/>
+		<p><spring:message code="messages.prio"/>
+			<form:select path="priority">
+			<form:option label="<spring:message code="messages.neut"/>" value="NEUTRAL"></form:option>
+			<form:option label="<spring:message code="messages.lowp"/>" value="LOW"></form:option>
+			<form:option label="<spring:message code="messages.high"/>" value="HIGH"></form:option>
+		</form:select></p>
 		<p><spring:message code="messages.tags"/>: <form:input path="tags"/></p>
 		<input type="submit" name="send" value="<spring:message code="messages.send"/>"/>
 	</form:form>
