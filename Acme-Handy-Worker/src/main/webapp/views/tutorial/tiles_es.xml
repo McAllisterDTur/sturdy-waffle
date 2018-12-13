@@ -26,8 +26,8 @@
 		<put-attribute name="body" value="/views/tutorial/see.jsp" />
 	</definition>
 	
-	<definition name="tutorial/form" extends="master.page">	
+	<definition name="tutorial/edit" extends="master.page">	
 		<put-attribute name="title" value="Formulario de tutorial" />
-		<put-attribute name="body" value="/views/tutorial/form.jsp" />
+		<put-attribute name="body" value="/views/tutorial/edit.jsp" />
 	</definition>
 </tiles-definitions>

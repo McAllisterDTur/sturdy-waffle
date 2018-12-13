@@ -22,11 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.LoginService;
-import security.UserAccount;
 import services.ActorService;
 import services.TutorialService;
-import domain.HandyWorker;
 import domain.Tutorial;
 
 @Controller
@@ -49,7 +46,7 @@ public class TutorialController extends AbstractController {
 	// Tutorials ---------------------------------------------------------------		
 
 	// La url es la que se va a ver en la página
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView allTutorials() {
 		final Collection<Tutorial> tutorials = this.tutorialService.findAll();
 		//Result
@@ -62,19 +59,6 @@ public class TutorialController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/myTutorials", method = RequestMethod.GET)
-	public ModelAndView myTutorials() {
-		final UserAccount account = LoginService.getPrincipal();
-		final HandyWorker h = (HandyWorker) this.actorService.findByUserAccountId(account.getId());
-		final Collection<Tutorial> tutorials = this.tutorialService.findAllFromHandyworker(h.getId());
-		//Result
-		ModelAndView result;
-		result = new ModelAndView("tutorial/list");
-		result.addObject("tutorials", tutorials);
-		result.addObject("url", "myTutorials");
-		return result;
-	}
-
 	@RequestMapping(value = "/see", method = RequestMethod.GET)
 	public ModelAndView seeTutorial(@RequestParam("id") final int id) {
 		final Tutorial tutorial = this.tutorialService.findOne(id);
@@ -84,8 +68,8 @@ public class TutorialController extends AbstractController {
 		result.addObject("tutorial", tutorial);
 		return result;
 	}
-
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
+	// TODO: Mirar como poner parámetros opcionales
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView newTutorial() {
 		final Tutorial tutorial = this.tutorialService.create();
 		//Result
@@ -95,24 +79,13 @@ public class TutorialController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/new", method = RequestMethod.POST)
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public ModelAndView saveTutorial(@Valid final Tutorial tutorial, final BindingResult binding) {
 		//Result
 		System.out.println(binding.getFieldErrors());
 		ModelAndView result;
 		this.tutorialService.save(tutorial);
 		result = new ModelAndView("redirect:all.do");
-		return result;
-	}
-
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView editTutorial(@RequestParam("id") final int id) {
-		final Tutorial tutorial = this.tutorialService.findOne(id);
-		//Result
-		ModelAndView result;
-		result = new ModelAndView("tutorial/form");
-		result.addObject("tutorial", tutorial);
-		result.addObject("pictures", tutorial.getPhotoURL());
 		return result;
 	}
 

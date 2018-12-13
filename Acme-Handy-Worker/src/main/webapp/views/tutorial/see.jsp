@@ -7,7 +7,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <% String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() :""; %>
-<jstl:set var="principalId" value="<%= s %>"/>
+<jstl:set var="principal" value="<%= s %>"/>
 
 <p style="font-size: 2em"><strong></b><spring:message	code="tutorial.title" />:</strong> <jstl:out value='${tutorial.title}'></jstl:out></p>
 <p style="font-size: 1.5em"><strong><spring:message	code="tutorial.summary" />:</strong> <jstl:out value='${tutorial.summary}'></jstl:out></p>
@@ -18,7 +18,7 @@
 	<display:column property="title" titleKey="tutorial.section.title"></display:column>
 	<display:column property="text" titleKey="tutorial.section.text"></display:column>
 	<security:authorize access="hasRole('HANDYWORKER')">
-		<jstl:if test="${tutorial.worker.account.username == principalId}">
+		<jstl:if test="${tutorial.worker.account.username == principal}">
 		<display:column>
 			<button onClick="window.location.href='/Acme-Handy-Worker/section/edit.do?id=${row.id}'"><spring:message code="tutorial.section.edit"/></button>
 		</display:column>
@@ -30,5 +30,5 @@
 	<display:column>
 		<button onClick="window.location.href='/Acme-Handy-Worker/section/pictures.do?id=${row.id}'"><spring:message code="tutorial.section.pictures"/></button>
 	</display:column>
-	
+
 </display:table>
