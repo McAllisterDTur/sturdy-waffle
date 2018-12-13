@@ -25,5 +25,20 @@
  
  </div>
  <div class="taskToAplly">
- <!-- TODO -->
+ <!-- TODO:  -->
+	<spring:message code="handy.application.applicationTo" />
+	<br />
+
+	<spring:message code="handy.application.startDate" /><jstl:out value="${ task.periodStart}" />
+	<br />
+	
+	<spring:message code="handy.application.endDate" /><jstl:out value="${ task.periodEnd}" />
+	<br />
+	
+	<spring:message code="handy.application.maxPrice" /><jstl:out value="${ task.maxPrice}" />
+	<br />
+	
+	<spring:message code="handy.application.description" /><jstl:out value="${ task.description}" />
+	<br />
+	
  </div>

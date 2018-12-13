@@ -17,7 +17,7 @@
 		<a href="applications/handy-worker/show.do?id=" ><spring:message code="handy.application.show"/></a>
 	</display:column>
 	<display:column>
-		<jstl:if test="${ application.status.equals('ACCEPTED')}">
+		<jstl:if test="${ row.application.status == 'ACCEPTED'}">
 			<a href="applications/handy-worker/edit.do?id=" ><spring:message code="handy.application.edit"/></a>
 		</jstl:if>
 		<jstl:otherwise>
