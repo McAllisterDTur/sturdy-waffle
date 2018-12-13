@@ -37,11 +37,14 @@
 		<security:intercept-url pattern="/tutorial/all.do" access="permitAll" /> 
 		<security:intercept-url pattern="/tutorial/see.do" access="permitAll" /> 
 		<security:intercept-url pattern="/tutorial/myTutorials.do" access="hasRole('HANDYWORKER')" /> 
+		<security:intercept-url pattern="/tutorial/new.do" access="hasRole('HANDYWORKER')" /> 
+		<security:intercept-url pattern="/tutorial/edit.do" access="hasRole('HANDYWORKER')" /> 
 		
 		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" /> 
 
 		<security:intercept-url pattern="/security/login.do" access="permitAll" /> 
 		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" /> 
+		<security:intercept-url pattern="/actor/register.do" access="permitAll" />
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
 		
@@ -55,7 +58,6 @@
 		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
 	
-		<security:intercept-url pattern="/actor/register.do" access="isAnonymous()" />
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 		
 		<security:form-login 

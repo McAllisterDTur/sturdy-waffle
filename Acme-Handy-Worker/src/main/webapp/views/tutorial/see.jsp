@@ -6,7 +6,8 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<jstl:set var="principalId" value="<%= request.getUserPrincipal().getName() %>"/>
+<% String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() :""; %>
+<jstl:set var="principalId" value="<%= s %>"/>
 
 <p style="font-size: 2em"><strong></b><spring:message	code="tutorial.title" />:</strong> <jstl:out value='${tutorial.title}'></jstl:out></p>
 <p style="font-size: 1.5em"><strong><spring:message	code="tutorial.summary" />:</strong> <jstl:out value='${tutorial.summary}'></jstl:out></p>

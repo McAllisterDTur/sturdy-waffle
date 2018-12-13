@@ -12,12 +12,14 @@ package controllers;
 
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
@@ -74,13 +76,43 @@ public class TutorialController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/see", method = RequestMethod.GET)
-	@ResponseBody
 	public ModelAndView seeTutorial(@RequestParam("id") final int id) {
 		final Tutorial tutorial = this.tutorialService.findOne(id);
 		//Result
 		ModelAndView result;
 		result = new ModelAndView("tutorial/see");
 		result.addObject("tutorial", tutorial);
+		return result;
+	}
+
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
+	public ModelAndView newTutorial() {
+		final Tutorial tutorial = this.tutorialService.create();
+		//Result
+		ModelAndView result;
+		result = new ModelAndView("tutorial/form");
+		result.addObject("tutorial", tutorial);
+		return result;
+	}
+
+	@RequestMapping(value = "/new", method = RequestMethod.POST)
+	public ModelAndView saveTutorial(@Valid final Tutorial tutorial, final BindingResult binding) {
+		//Result
+		System.out.println(binding.getFieldErrors());
+		ModelAndView result;
+		this.tutorialService.save(tutorial);
+		result = new ModelAndView("redirect:all.do");
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView editTutorial(@RequestParam("id") final int id) {
+		final Tutorial tutorial = this.tutorialService.findOne(id);
+		//Result
+		ModelAndView result;
+		result = new ModelAndView("tutorial/form");
+		result.addObject("tutorial", tutorial);
+		result.addObject("pictures", tutorial.getPhotoURL());
 		return result;
 	}
 

@@ -25,9 +25,10 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="administrator/action-1.do"><spring:message code="master.page.administrator.action.1" /></a></li>
-					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>					
+					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>				
 				</ul>
 			</li>
+			<li><a class="fNiv" href="actor/register.do"><spring:message code="actor.submit"/></a></li>				
 		</security:authorize>
 		
 		<security:authorize access="hasRole('CUSTOMER')">
@@ -43,7 +44,7 @@
 		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
-			<li><a class="fNiv" href="actor/register.do"><spring:message code="actor.register"/></a></li>	
+			<li><a class="fNiv" href="actor/register.do"><spring:message code="actor.submit"/></a></li>	
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">

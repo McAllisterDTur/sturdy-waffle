@@ -23,6 +23,8 @@ public class ActorService {
 	@Autowired
 	private ActorRepository	actorRepository;
 
+	private UserAccount		account;
+
 
 	/**
 	 * Creates a new empty actor
@@ -116,5 +118,28 @@ public class ActorService {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
 		end.setBanned(false);
 		this.actorRepository.save(end);
+	}
+
+	//
+	public Collection<Authority> listAuthorities() {
+		final Collection<Authority> res = Authority.listAuthorities();
+		final int i = 0;
+		if (AuthenticationUtility.checkAuthority(Authority.ADMIN))
+			while (res.iterator().hasNext()) {
+				if (res.iterator().next().equals(Authority.CUSTOMER))
+					res.remove(res.toArray()[i]);
+				else if (res.iterator().next().equals(Authority.HANDYWORKER))
+					res.remove(res.toArray()[i]);
+				else if (res.iterator().next().equals(Authority.SPONSOR))
+					res.remove(res.toArray()[i]);
+			}
+		else
+			while (res.iterator().hasNext())
+				if (res.iterator().next().equals(Authority.ADMIN))
+					res.remove(res.toArray()[i]);
+				else if (res.iterator().next().equals(Authority.REFEREE))
+					res.remove(res.toArray()[i]);
+
+		return res;
 	}
 }
