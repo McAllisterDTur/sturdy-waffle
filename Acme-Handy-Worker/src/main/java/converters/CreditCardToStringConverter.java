@@ -43,9 +43,6 @@ public class CreditCardToStringConverter implements Converter<CreditCard, String
 				// CodeCVV
 				builder.append(this.encodeUTF8(Integer.toString(creditCard.getCodeCVV())));
 				builder.append("|");
-				// Maker
-				builder.append(this.encodeUTF8(creditCard.getMaker()));
-				result = builder.toString();
 			} catch (final Throwable oops) {
 				throw new RuntimeException(oops);
 			}

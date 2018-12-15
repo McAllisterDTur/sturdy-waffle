@@ -38,8 +38,6 @@ public class StringToCreditCardConverter implements Converter<String, CreditCard
 				result.setExpirationYear(Integer.valueOf(this.decodeUTF8(parts[4])));
 				// CodeCVV
 				result.setCodeCVV(Integer.valueOf(this.decodeUTF8(parts[5])));
-				// Maker
-				result.setMaker(this.decodeUTF8(parts[6]));
 			} catch (final Throwable oops) {
 				throw new RuntimeException(oops);
 			}
