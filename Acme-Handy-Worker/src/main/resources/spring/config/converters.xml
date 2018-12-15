@@ -22,6 +22,15 @@
 			Add your own converters using entries of the following form: 
 			<bean class="converters.Class1ToClass2" /> 
 		-->
+		<!-- Entity to String -->
+		<bean class="converters.ComplaintToStringConverter" />
+		<bean class="converters.CustomerToStringConverter" />
+		<bean class="converters.HandyWorkerToStringConverter" />
+		
+		<!-- String to Entity -->
+		<bean class="converters.StringToComplaintConverter" />
+		<bean class="converters.StringToCustomerConverter" />
+		<bean class="converters.StringToHandyWorkerConverter" />
 	</util:list>
 	
 </beans>
