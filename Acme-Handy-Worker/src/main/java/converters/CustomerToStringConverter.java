@@ -10,7 +10,7 @@ import domain.Customer;
 
 @Component
 @Transactional
-public class CustomerToStrinConverter implements Converter<Customer, String> {
+public class CustomerToStringConverter implements Converter<Customer, String> {
 
 	@Override
 	public String convert(final Customer customer) {
