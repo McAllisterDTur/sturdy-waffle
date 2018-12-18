@@ -7,11 +7,11 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<form:form action="fixuptask/customer/edit.do"
-	modelAttribute="fixuptask">
-	
+
 <% String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() :""; %>
 <jstl:set var="principal" value="<%= s %>"/>
+
+<form:form action="fixuptask/customer/edit.do" modelAttribute="fixuptask">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
