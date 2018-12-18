@@ -75,7 +75,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="fixuptask/customer/list.do"><spring:message code="master.page.customer.myfuts" /></a></li>
-					<li><a href="fixuptask/customer/create.do"><spring:message code="master.page.customer.newfuts" /></a></li>
+					<li><a href="fixuptask/new.do"><spring:message code="master.page.customer.newfuts" /></a></li>
 					<li><a href="complaint/customer/listAll.do"><spring:message code="master.page.customer.mycomps" /></a></li>
 					<li><a href="complaint/customer/new.do"><spring:message code="master.page.customer.newcomp" /></a></li>				
 				</ul>

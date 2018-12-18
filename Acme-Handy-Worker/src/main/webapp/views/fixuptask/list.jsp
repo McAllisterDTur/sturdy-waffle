@@ -43,14 +43,14 @@
 		<display:column>
 			<jstl:if test="${row.customer.account.username == principal}">
 				<button
-					onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer/edit.do?fixuptaskId=${row.id}'">
+					onClick="window.location.href='/Acme-Handy-Worker/fixuptask/edit.do?id=${row.id}'">
 					<spring:message code="fixuptask.edit" />
 				</button>
 			</jstl:if>
 		</display:column>
 		<display:column>
 			<jstl:if test="${row.customer.account.username == principal}">
-				<button onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer/delete.do?fixuptaskId=${row.id}'">
+				<button onClick="window.location.href='/Acme-Handy-Worker/fixuptask/delete.do?id=${row.id}'">
 					<spring:message code="fixuptask.delete" />
 				</button>
 			</jstl:if>

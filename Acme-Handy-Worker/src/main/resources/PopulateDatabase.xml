@@ -26,7 +26,7 @@
 
 	<bean id="userAccountAdmin2" class="security.UserAccount">
 		<property name="username" value="admin2" />
-		<property name="password" value="c84258e9c39059a89ab77d846ddab909" />
+		<property name="password" value="cf451a6416c2e156b08dccd810d1acf6" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -98,7 +98,7 @@
 
 	<bean id="userAccountCustomer2" class="security.UserAccount">
 		<property name="username" value="Customer2" />
-		<property name="password" value="5ce4d191fd14ac85a1469fb8c29b7a7b" />
+		<property name="password" value="5CE4D191FD14AC85A1469FB8C29B7A7B" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -110,7 +110,7 @@
 
 	<bean id="userAccountCustomer3" class="security.UserAccount">
 		<property name="username" value="Customer3" />
-		<property name="password" value="033f7f6121501ae98285ad77f216d5e7" />
+		<property name="password" value="033F7F6121501AE98285AD77F216D5E7" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -122,7 +122,7 @@
 
 	<bean id="userAccountCustomer4" class="security.UserAccount">
 		<property name="username" value="Customer4" />
-		<property name="password" value="55feb130be438e686ad6a80d12dd8f44" />
+		<property name="password" value="55FEB130BE438E686AD6A80D12DD8F44" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -134,7 +134,7 @@
 
 	<bean id="userAccountCustomer5" class="security.UserAccount">
 		<property name="username" value="customer5" />
-		<property name="password" value="9e8486cdd435beda9a60806dd334d964" />
+		<property name="password" value="9E8486CDD435BEDA9A60806DD334D964" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -146,7 +146,7 @@
 
 	<bean id="userAccountCustomer6" class="security.UserAccount">
 		<property name="username" value="customer6" />
-		<property name="password" value="dbaa8bd25e06cc641f5406027c026e8b" />
+		<property name="password" value="DBAA8BD25E06CC641F5406027C026E8B" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -158,7 +158,7 @@
 
 	<bean id="userAccountCustomer7" class="security.UserAccount">
 		<property name="username" value="customer7" />
-		<property name="password" value="81162e1ef3d93f96b36d3712ca52bca5" />
+		<property name="password" value="81162E1EF3D93F96B36D3712CA52BCA5" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -170,7 +170,7 @@
 
 	<bean id="userAccountCustomer8" class="security.UserAccount">
 		<property name="username" value="customer8" />
-		<property name="password" value="3079e3991f94d1b3b21b894f329d369d" />
+		<property name="password" value="3079E3991F94D1B3B21B894F329D369D" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -182,7 +182,7 @@
 
 	<bean id="userAccountCustomer9" class="security.UserAccount">
 		<property name="username" value="customer9" />
-		<property name="password" value="2f72319caec5d639aead26fc77b5ef67" />
+		<property name="password" value="2F72319CAEC5D639AEAD26FC77B5EF67" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -194,7 +194,7 @@
 
 	<bean id="userAccountCustomer10" class="security.UserAccount">
 		<property name="username" value="customer10" />
-		<property name="password" value="a2b14389d02e3cd6e4e115d40742e55f" />
+		<property name="password" value="A2B14389D02E3CD6E4E115D40742E55F" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -206,7 +206,7 @@
 
 	<bean id="userAccountHandy1" class="security.UserAccount">
 		<property name="username" value="handy1" />
-		<property name="password" value="3b6c343a81c39cad30afdeea96c677c0" />
+		<property name="password" value="3B6C343A81C39CAD30AFDEEA96C677C0" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -219,7 +219,7 @@
 
 	<bean id="userAccountHandy2" class="security.UserAccount">
 		<property name="username" value="handy2" />
-		<property name="password" value="63f19f866943da7a621905c7518a8ba9" />
+		<property name="password" value="63F19F866943DA7A621905C7518A8BA9" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -231,7 +231,7 @@
 
 	<bean id="userAccountHandy3" class="security.UserAccount">
 		<property name="username" value="handy3" />
-		<property name="password" value="01db0988c8b468ab612f2bc2b1db0358" />
+		<property name="password" value="01DB0988C8B468AB612F2BC2B1DB0358" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -243,7 +243,7 @@
 
 	<bean id="userAccountHandy4" class="security.UserAccount">
 		<property name="username" value="handy4" />
-		<property name="password" value="7240bef745775f312a4fcd23d67aff6f" />
+		<property name="password" value="7240BEF745775F312A4FCD23D67AFF6F" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -255,7 +255,7 @@
 
 	<bean id="userAccountHandy5" class="security.UserAccount">
 		<property name="username" value="handy5" />
-		<property name="password" value="899712ab8f66fd39e9651cd4e7de92e7" />
+		<property name="password" value="899712AB8F66FD39E9651CD4E7DE92E7" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -267,7 +267,7 @@
 
 	<bean id="userAccountHandy6" class="security.UserAccount">
 		<property name="username" value="handy6" />
-		<property name="password" value="1dda519ac6518cec1c5293368fd74187" />
+		<property name="password" value="1DDA519AC6518CEC1C5293368FD74187" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -1313,11 +1313,6 @@
 		<property name="isFinal" value="True" />
 		<property name="fixUpTask" ref="FixUpTask1"/>
 		<property name="referee" ref="Referee1"/>
-		<property name="reports">
-			<list>
-				<ref bean="Report1"/>
-			</list>
-		</property>
 	</bean>
 	
 	<bean id="Complaint2" class="domain.Complaint">
@@ -1332,11 +1327,6 @@
 		<property name="isFinal" value="False" />
 		<property name="fixUpTask" ref="FixUpTask1"/>
 		<property name="referee"><null/></property>
-		<property name="reports">
-			<list>
-				<ref bean="Report2"/>
-			</list>
-		</property>
 	</bean>
 	
 	<bean id="Complaint3" class="domain.Complaint">
@@ -1351,11 +1341,6 @@
 		<property name="isFinal" value="True" />
 		<property name="fixUpTask" ref="FixUpTask6"/>
 		<property name="referee" ref="Referee2"/>
-		<property name="reports">
-			<list>
-				<ref bean="Report3"/>
-			</list>
-		</property>
 	</bean>
 	
 	<bean id="Complaint4" class="domain.Complaint">
