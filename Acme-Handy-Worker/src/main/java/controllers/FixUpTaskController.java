@@ -126,4 +126,17 @@ public class FixUpTaskController extends AbstractController {
 
 		return result;
 	}
+
+	@RequestMapping(value = "/customer,handyworker/display", method = RequestMethod.GET)
+	public ModelAndView displayFixUpTask(@RequestParam final int fixuptaskId) {
+		final ModelAndView result;
+		FixUpTask task;
+
+		task = this.taskService.findOne(fixuptaskId);
+		Assert.notNull(task);
+		result = new ModelAndView("fixuptask/display");
+		result.addObject("fixuptask", task);
+
+		return result;
+	}
 }

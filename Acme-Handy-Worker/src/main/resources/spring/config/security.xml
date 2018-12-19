@@ -46,6 +46,7 @@
 		<security:intercept-url pattern="/fixuptask/customer/create.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/fixuptask/customer/edit.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/fixuptask/customer/delete.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer,handyworker/display.do" access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

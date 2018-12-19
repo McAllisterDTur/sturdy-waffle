@@ -34,7 +34,7 @@
 	<display:column property="maxPrice" titleKey="fixuptask.maxPrice" />
 	
 	<display:column>
-		<button onClick="window.location.href='Acme-Handy-Worker/fixuptask/customer,handyworker/display.do?fixuptaskId=${row.id}'">
+		<button onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer,handyworker/display.do?fixuptaskId=${row.id}'">
 			<spring:message code="fixuptask.display"/>
 		</button>
 	</display:column>
