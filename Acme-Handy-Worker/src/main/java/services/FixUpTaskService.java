@@ -39,13 +39,20 @@ public class FixUpTaskService {
 
 	/**
 	 * Creates a new fix up task(Req 10.1)
+	 * n
 	 * 
 	 * @return a new empty fix up task
 	 */
 	public FixUpTask create() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+
 		final FixUpTask res = new FixUpTask();
 		res.setComplaints(new HashSet<Complaint>());
 		res.setApplications(new HashSet<Application>());
+		res.setTicker(this.tickerService.getTicker());
+		res.setPublishTime(new Date());
+		res.setCustomer((Customer) this.actorService.findByUserAccountId(userAccount.getId()));
 		return res;
 	}
 
@@ -73,12 +80,8 @@ public class FixUpTaskService {
 			Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
 			Assert.isTrue(fixUpTask.getCustomer().getAccount().equals(aux.getCustomer().getAccount()));
 			res = this.fixUpTaskRepository.save(fixUpTask);
-		} else {
-			fixUpTask.setTicker(this.tickerService.getTicker());
-			fixUpTask.setPublishTime(new Date());
-			fixUpTask.setCustomer((Customer) this.actorService.findByUserAccountId(userAccount.getId()));
+		} else
 			res = this.fixUpTaskRepository.save(fixUpTask);
-		}
 		this.spamService.isSpam(this.actorService.findByUserAccountId(userAccount.getId()), res.getDescription());
 		return res;
 	}
@@ -116,6 +119,13 @@ public class FixUpTaskService {
 
 		Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
 
+		// Removing application from handy worker
+		//		for (final Application a : aux.getApplications())
+		//			a.getHandyWorker().getApplications().remove(a);
+
+		// Removing fix up task from customer
+		aux.getCustomer().getFixUpTasks().remove(aux);
+
 		this.fixUpTaskRepository.delete(aux);
 	}
 
@@ -134,7 +144,7 @@ public class FixUpTaskService {
 
 		Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
 
-		this.fixUpTaskRepository.delete(aux);
+		this.fixUpTaskRepository.delete(aux.getId());
 	}
 
 	/**

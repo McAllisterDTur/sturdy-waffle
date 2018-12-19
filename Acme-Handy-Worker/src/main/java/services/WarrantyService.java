@@ -65,9 +65,6 @@ public class WarrantyService {
 	 * @return Collection of all the warranties
 	 */
 	public Collection<Warranty> findAll() {
-		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.ADMIN);
-		// Check authority
-		Assert.isTrue(hasAu);
 		return this.wRepo.findAll();
 	}
 
