@@ -25,6 +25,11 @@
 		<put-attribute name="title" value="Warranties" />
 		<put-attribute name="body" value="/views/warranty/edit.jsp" />
 	</definition>
+	
+	<definition name="warranty/see" extends="master.page">	
+		<put-attribute name="title" value="Seeing warranty" />
+		<put-attribute name="body" value="/views/warranty/see.jsp" />
+	</definition>
 
 
 

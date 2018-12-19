@@ -35,6 +35,10 @@
 		<p>
 			<spring:message code="warranty.edit.law"/>: 
 			<form:input path="law" />
+			<form:input path="law" />
+			<form:input path="law" />
+			<form:input path="law" />
+			<form:input path="law" />
 			<form:errors path="law" cssClass="error"/>
 		</p>
 		<form:hidden path="draft" value="false" />

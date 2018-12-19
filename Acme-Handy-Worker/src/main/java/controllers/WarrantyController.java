@@ -104,4 +104,19 @@ public class WarrantyController {
 		}
 		return result;
 	}
+
+	@RequestMapping(value = "/administrator/see", method = RequestMethod.GET)
+	public ModelAndView seeWarranty(@RequestParam final Integer id) {
+		ModelAndView result;
+		try {
+			final Warranty w = this.wService.findOne(id);
+			result = new ModelAndView("warranty/see");
+			result.addObject("warranty", w);
+		} catch (final Throwable oops) {
+			oops.printStackTrace();
+			result = new ModelAndView("redirect:list.do");
+			result.addObject("success", false);
+		}
+		return result;
+	}
 }

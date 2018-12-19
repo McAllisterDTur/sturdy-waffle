@@ -16,18 +16,18 @@
       
 <tiles-definitions>
 
-	<definition name="tutorial/list" extends="master.page">	
-		<put-attribute name="title" value="Tutoriales" />
-		<put-attribute name="body" value="/views/tutorial/list.jsp" />
+	<definition name="warranty/list" extends="master.page">	
+		<put-attribute name="title" value="Garantías" />
+		<put-attribute name="body" value="/views/warranty/list.jsp" />
 	</definition>
 	
-	<definition name="tutorial/see" extends="master.page">	
-		<put-attribute name="title" value="Vista de un tutorial" />
-		<put-attribute name="body" value="/views/tutorial/see.jsp" />
+	<definition name="warranty/edit" extends="master.page">	
+		<put-attribute name="title" value="Garantías" />
+		<put-attribute name="body" value="/views/warranty/edit.jsp" />
 	</definition>
 	
-	<definition name="tutorial/edit" extends="master.page">	
-		<put-attribute name="title" value="Formulario de tutorial" />
-		<put-attribute name="body" value="/views/tutorial/edit.jsp" />
+	<definition name="warranty/see" extends="master.page">	
+		<put-attribute name="title" value="Viendo garantía" />
+		<put-attribute name="body" value="/views/warranty/see.jsp" />
 	</definition>
 </tiles-definitions>
