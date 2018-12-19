@@ -29,6 +29,8 @@
 		<bean class="converters.FixUpTaskToStringConverter" />
 		<bean class="converters.ApplicationToStringConverter" />
 		<bean class="converters.CreditCardToStringConverter" />
+		<bean class="converters.WarrantyToStringConverter" />
+		<bean class="converters.CategoryToStringConverter" />
 		
 		<!-- String to Entity -->
 		<bean class="converters.StringToComplaintConverter" />
@@ -37,6 +39,9 @@
 		<bean class="converters.StringToFixUpTaskConverter" />
 		<bean class="converters.StringToApplicationConverter" />
 		<bean class="converters.StringToCreditCardConverter" />
+		<bean class="converters.StringToWarrantyConverter" />
+		<bean class="converters.StringToCategoryConverter" />
+		
 	</util:list>
 	
 </beans>

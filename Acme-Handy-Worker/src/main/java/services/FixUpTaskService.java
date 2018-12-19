@@ -120,8 +120,8 @@ public class FixUpTaskService {
 		Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
 
 		// Removing application from handy worker
-		//		for (final Application a : aux.getApplications())
-		//			a.getHandyWorker().getApplications().remove(a);
+		for (final Application a : aux.getApplications())
+			a.getHandyWorker().getApplications().remove(a);
 
 		// Removing fix up task from customer
 		aux.getCustomer().getFixUpTasks().remove(aux);

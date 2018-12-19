@@ -18,6 +18,8 @@
 	<form:hidden path="publishTime"/>
 	<form:hidden path="customer" />
 	
+	<h3><spring:message code="fixuptask.header"/> </h3>
+	
 	<form:label path="description"><spring:message code="fixuptask.description" />:</form:label>
 	<form:input path="description" />
 	<form:errors path="description" />
@@ -40,14 +42,17 @@
 	<br/>
 	<form:label path="category"><spring:message code="fixuptask.category" />:</form:label>
 	<form:select path="category">
-		<form:options path="category" items="${categories}"/>
+		<form:options items="${categories}" itemLabel="name" itemValue="id"/>
 	</form:select>
 	<br/>
 	<form:label path="warranty"><spring:message code="fixuptask.warranty" />:</form:label>
 	<form:select path="warranty">
-		<form:options path="warranty" items="${warranties}"/>
+		<form:options items="${warranties}" itemLabel="title" itemValue="id"/>
 	</form:select>
 	<br />
+	
+	<h3><spring:message code="creditCard.header"/> </h3>
+	
 	<form:label path="creditCard.holderName">
 		<spring:message code="creditCard.holderName" />
 	</form:label>
@@ -89,11 +94,11 @@
 	<form:errors path="creditCard.codeCVV"/>
 	<br />
 	
-	<b><form:label path="creditCard.maker"><spring:message code="configuration.cardMaker" />:</form:label></b>
+	<form:label path="creditCard.maker"><spring:message code="configuration.cardMaker" />:</form:label>
 	<form:select path="creditCard.maker">
 		<form:options path="creditCard.maker" items="${configuration.cardMaker}"/>
 	</form:select>
-	<form:errors path="warranty"/>
+	<form:errors path="creditCard.maker"/>
 	<br />
 	
 	<input type="submit" name="save" value="<spring:message code="fixuptask.save"/>" />
