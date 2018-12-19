@@ -16,9 +16,9 @@
        
 <tiles-definitions>
 
-	<definition name="profile/action-1" extends="master.page">	
-		<put-attribute name="title" value="Profile: Action 1" />
-		<put-attribute name="body" value="/views/profile/action-1.jsp" />
+	<definition name="profile/edit" extends="master.page">	
+		<put-attribute name="title" value="Editing your profile" />
+		<put-attribute name="body" value="/views/profile/edit.jsp" />
 	</definition>
 	
 	<definition name="profile/action-2" extends="master.page">	

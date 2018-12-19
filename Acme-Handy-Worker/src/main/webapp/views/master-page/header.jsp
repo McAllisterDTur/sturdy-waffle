@@ -20,7 +20,7 @@
 <div>
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
-		<li><a class="fNiv" href="index"><spring:message code="master.page.home" /></a></li>
+		<li><a class="fNiv" href="/Acme-Handy-Worker/"><spring:message code="master.page.home" /></a></li>
 		<li>
 			<a class="fNiv" href="tutorial/all.do"><spring:message code="master.page.tutorial" /></a>
 			<security:authorize access="hasRole('HANDYWORKER')">
@@ -64,7 +64,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="application/myApps.do"><spring:message code="master.page.handy.myApps" /></a></li>
-					<li><a href="application/new.do"><spring:message code="master.page.handy.newApp" /></a></li>
+					<li><a href="fixuptask/handyworker/list.do"><spring:message code="master.page.handy.list" /></a></li>
 					<li><a href="finder/update.do"><spring:message code="master.page.handy.finder" /></a></li>					
 				</ul>
 			</li>
@@ -74,8 +74,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.customer.futsandcomp" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="fixuptask/mine.do"><spring:message code="master.page.customer.myfuts" /></a></li>
-					<li><a href="fixuptask/new.do"><spring:message code="master.page.customer.newfuts" /></a></li>
+					<li><a href="fixuptask/customer/list.do"><spring:message code="master.page.customer.myfuts" /></a></li>
+					<li><a href="fixuptask/customer/create.do"><spring:message code="master.page.customer.newfuts" /></a></li>
 					<li><a href="complaint/customer/listAll.do"><spring:message code="master.page.customer.mycomps" /></a></li>
 					<li><a href="complaint/customer/new.do"><spring:message code="master.page.customer.newcomp" /></a></li>				
 				</ul>
@@ -116,7 +116,7 @@
 				</ul>
 			</li>
 			<li>
-				<a class="fNiv" href="profile.do"><spring:message code="master.page.profile" /> 
+				<a class="fNiv" href="profile/edit.do"><spring:message code="master.page.profile" /> 
 			        (<security:authentication property="principal.username" />)</a>
 			</li>
 			<li><a class="fNiv" href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>

@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -39,7 +40,7 @@ public class FixUpTask extends DomainEntity {
 	private Collection<Complaint>	complaints;
 
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Complaint> getComplaints() {
 		return this.complaints;
 	}
