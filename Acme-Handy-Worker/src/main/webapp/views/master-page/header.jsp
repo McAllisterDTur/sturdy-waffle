@@ -44,7 +44,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="administrator/register.do"><spring:message code="master.page.administrator.register" /></a></li>
-					<li><a href="administrator/warranties.do"><spring:message code="master.page.administrator.warrant" /></a></li>
+					<li><a href="warranty/administrator/list.do"><spring:message code="master.page.administrator.warrant" /></a></li>
 					<li><a href="administrator/categories.do"><spring:message code="master.page.administrator.categor" /></a></li>					
 				</ul>
 			</li>

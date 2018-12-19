@@ -66,7 +66,7 @@ public class FixUpTaskService {
 		FixUpTask res;
 
 		//comprobamos que la warranty NO est� en draft mode
-		Assert.isTrue(!fixUpTask.getWarranty().isDraft());
+		Assert.isTrue(!fixUpTask.getWarranty().getDraft());
 		if (fixUpTask.getId() != 0) {
 			// Ya est� en base de datos
 			final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTask.getId());

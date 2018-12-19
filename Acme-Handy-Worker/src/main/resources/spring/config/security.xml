@@ -36,6 +36,8 @@
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 
 		<security:intercept-url pattern="/scripts/**" access="permitAll" /> 
 		<security:intercept-url pattern="/styles/**" access="permitAll" /> 
+		
+		<security:intercept-url pattern="/warranty/administrator/**" access="hasRole('ADMIN')" />
 
 		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" /> 
 
