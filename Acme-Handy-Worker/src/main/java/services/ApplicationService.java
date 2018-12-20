@@ -33,9 +33,8 @@ public class ApplicationService {
 	@Autowired
 	private HandyWorkerService		workerService;
 	@Autowired
-	private FixUpTaskService		taskService;
-	@Autowired
 	private ActorService			actorService;
+
 	private UserAccount				account;
 
 

@@ -17,7 +17,7 @@ public class CreditCardToStringConverter implements Converter<CreditCard, String
 
 	@Override
 	public String convert(final CreditCard creditCard) {
-		String result = "";
+		String result = null;
 		final StringBuilder builder;
 
 		if (creditCard == null)
@@ -43,6 +43,7 @@ public class CreditCardToStringConverter implements Converter<CreditCard, String
 				// CodeCVV
 				builder.append(this.encodeUTF8(Integer.toString(creditCard.getCodeCVV())));
 				builder.append("|");
+				result = builder.toString();
 			} catch (final Throwable oops) {
 				throw new RuntimeException(oops);
 			}

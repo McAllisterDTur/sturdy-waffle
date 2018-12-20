@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * converters.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd		
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd		
+	">
+
+	<util:list id="converters">
+		<!-- 
+			Add your own converters using entries of the following form: 
+			<bean class="converters.Class1ToClass2" /> 
+		-->
+		<!-- Entity to String -->
+		<bean class="converters.ComplaintToStringConverter" />
+		<bean class="converters.CustomerToStringConverter" />
+		<bean class="converters.HandyWorkerToStringConverter" />
+		<bean class="converters.FixUpTaskToStringConverter" />
+		<bean class="converters.ApplicationToStringConverter" />
+		<bean class="converters.CreditCardToStringConverter" />
+		<bean class="converters.WarrantyToStringConverter" />
+		<bean class="converters.CategoryToStringConverter" />
+		
+		<!-- String to Entity -->
+		<bean class="converters.StringToComplaintConverter" />
+		<bean class="converters.StringToCustomerConverter" />
+		<bean class="converters.StringToHandyWorkerConverter" />
+		<bean class="converters.StringToFixUpTaskConverter" />
+		<bean class="converters.StringToApplicationConverter" />
+		<bean class="converters.StringToCreditCardConverter" />
+		<bean class="converters.StringToWarrantyConverter" />
+		<bean class="converters.StringToCategoryConverter" />
+		
+	</util:list>
+	
+</beans>
