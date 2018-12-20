@@ -14,7 +14,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <div>
-	<img src="${configuration.banner}" alt="Smiley face" height="200">
+	<img src="${configuration.bannerURL}" alt="Smiley face" height="200">
 </div>
 
 <div>
@@ -64,7 +64,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="application/myApps.do"><spring:message code="master.page.handy.myApps" /></a></li>
-					<li><a href="application/new.do"><spring:message code="master.page.handy.newApp" /></a></li>
+					<li><a href="fixuptask/handyworker/list.do"><spring:message code="master.page.handy.list" /></a></li>
 					<li><a href="finder/update.do"><spring:message code="master.page.handy.finder" /></a></li>					
 				</ul>
 			</li>
@@ -74,8 +74,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.customer.futsandcomp" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="fixuptask/mine.do"><spring:message code="master.page.customer.myfuts" /></a></li>
-					<li><a href="fixuptask/new.do"><spring:message code="master.page.customer.newfuts" /></a></li>
+					<li><a href="fixuptask/customer/list.do"><spring:message code="master.page.customer.myfuts" /></a></li>
+					<li><a href="fixuptask/customer/create.do"><spring:message code="master.page.customer.newfuts" /></a></li>
 					<li><a href="complaint/customer/listAll.do"><spring:message code="master.page.customer.mycomps" /></a></li>
 					<li><a href="complaint/customer/new.do"><spring:message code="master.page.customer.newcomp" /></a></li>				
 				</ul>

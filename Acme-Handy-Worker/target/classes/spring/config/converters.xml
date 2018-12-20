@@ -22,6 +22,26 @@
 			Add your own converters using entries of the following form: 
 			<bean class="converters.Class1ToClass2" /> 
 		-->
+		<!-- Entity to String -->
+		<bean class="converters.ComplaintToStringConverter" />
+		<bean class="converters.CustomerToStringConverter" />
+		<bean class="converters.HandyWorkerToStringConverter" />
+		<bean class="converters.FixUpTaskToStringConverter" />
+		<bean class="converters.ApplicationToStringConverter" />
+		<bean class="converters.CreditCardToStringConverter" />
+		<bean class="converters.WarrantyToStringConverter" />
+		<bean class="converters.CategoryToStringConverter" />
+		
+		<!-- String to Entity -->
+		<bean class="converters.StringToComplaintConverter" />
+		<bean class="converters.StringToCustomerConverter" />
+		<bean class="converters.StringToHandyWorkerConverter" />
+		<bean class="converters.StringToFixUpTaskConverter" />
+		<bean class="converters.StringToApplicationConverter" />
+		<bean class="converters.StringToCreditCardConverter" />
+		<bean class="converters.StringToWarrantyConverter" />
+		<bean class="converters.StringToCategoryConverter" />
+		
 	</util:list>
 	
 </beans>

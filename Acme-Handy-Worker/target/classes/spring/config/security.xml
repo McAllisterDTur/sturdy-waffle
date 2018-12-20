@@ -41,16 +41,13 @@
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
 
-		<security:intercept-url pattern="/administrator/action-1.do" access="hasRole('ADMIN')" /> 
-		<security:intercept-url pattern="/administrator/action-2.do" access="hasRole('ADMIN')" /> 
-
-		<security:intercept-url pattern="/customer/action-1.do" access="hasRole('CUSTOMER')" /> 
-		<security:intercept-url pattern="/customer/action-2.do" access="hasRole('CUSTOMER')" /> 
-
-		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
-		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
-		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
-	
+		<security:intercept-url pattern="/fixuptask/handyworker/list.do" access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/fixuptask/customer/list.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer/create.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer/edit.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer/delete.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer,handyworker/display.do" access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
+		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
 		<security:form-login 

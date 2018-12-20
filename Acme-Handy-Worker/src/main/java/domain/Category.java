@@ -37,7 +37,7 @@ public class Category extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "Category [name=" + this.name + ", father=" + this.father + "]";
+		return this.name;
 	}
 
 }
