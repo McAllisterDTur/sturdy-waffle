@@ -116,8 +116,12 @@
 				</ul>
 			</li>
 			<li>
-				<a class="fNiv" href="profile/edit.do"><spring:message code="master.page.profile" /> 
+				<a class="fNiv" href="profile/see.do"><spring:message code="master.page.profile" /> 
 			        (<security:authentication property="principal.username" />)</a>
+			    <ul>
+					<li class="arrow"></li>
+					<li><a href="profile/edit.do"><spring:message code="master.page.profile.edit" /></a></li>
+				</ul>
 			</li>
 			<li><a class="fNiv" href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 		</security:authorize>

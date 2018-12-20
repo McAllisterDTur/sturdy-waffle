@@ -8,6 +8,18 @@
 
 <security:authorize access="hasRole('ADMIN')">
 
+	<script type='text/javascript'>
+        function addFields(){
+	        // Container <div> where dynamic content will be placed
+	        var container = document.getElementById("container");
+	        // Create an <input> element, set its type and name attributes
+	        var input = document.createElement("input");
+	        input.type = "text";
+	        input.name = "law";
+	        container.appendChild(input);       
+        }
+    </script>
+
 	<button onClick="window.location.href='warranty/administrator/list.do'">
 		<spring:message code="warranty.back"/>
 	</button>
@@ -20,7 +32,7 @@
 			</jstl:if>
 		</fieldset>
 	</jstl:if>
-	
+		
 	<form:form modelAttribute="warranty" action="warranty/administrator/save.do">
 		<p>
 			<spring:message code="warranty.edit.title"/>: 
@@ -33,12 +45,16 @@
 			<form:errors path="terms" cssClass="error"/>
 		</p>
 		<p>
-			<spring:message code="warranty.edit.law"/>: 
-			<form:input path="law" />
-			<form:input path="law" />
-			<form:input path="law" />
-			<form:input path="law" />
-			<form:input path="law" />
+			<spring:message code="warranty.edit.law"/>:
+			<a href="warranty/administrator/new.do" id="filldetails" onclick="addFields()">Fill Details</a>
+			<button type="button" onClick="addFields()">
+				<spring:message code="warranty.edit.newLaw"/>
+			</button>
+    		<div id="container"></div>
+    		
+			<jstl:forEach items="${warranty.law }" var="lawItem">
+				<input name="law" value="${lawItem }"/>
+			</jstl:forEach>
 			<form:errors path="law" cssClass="error"/>
 		</p>
 		<form:hidden path="draft" value="false" />
