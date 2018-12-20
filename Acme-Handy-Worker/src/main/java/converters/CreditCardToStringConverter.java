@@ -17,7 +17,7 @@ public class CreditCardToStringConverter implements Converter<CreditCard, String
 
 	@Override
 	public String convert(final CreditCard creditCard) {
-		final String result;
+		String result = "";
 		final StringBuilder builder;
 
 		if (creditCard == null)

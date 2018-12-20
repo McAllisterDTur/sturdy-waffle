@@ -26,8 +26,8 @@
 			<security:authorize access="hasRole('HANDYWORKER')">
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="handyworker/myTutorials.do"><spring:message code="master.page.handy.myTutorials" /></a></li>
-					<li><a href="tutorial/all.do"><spring:message code="master.page.handy.allTutorials" /></a></li>
+					<li><a href="tutorial/myTutorials.do"><spring:message code="master.page.handy.myTutorials" /></a></li>
+					<li><a href="tutorial/allTutorials.do"><spring:message code="master.page.handy.allTutorials" /></a></li>
 					<li><a href="tutorial/create.do"><spring:message code="master.page.handy.createTut" /></a></li>					
 				</ul>
 			</security:authorize>
@@ -63,7 +63,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.handy.futandapp" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="application/myApps.do"><spring:message code="master.page.handy.myApps" /></a></li>
+					<li><a href="application/handyworker/list.do"><spring:message code="master.page.handy.myApps" /></a></li>
 					<li><a href="application/new.do"><spring:message code="master.page.handy.newApp" /></a></li>
 					<li><a href="finder/update.do"><spring:message code="master.page.handy.finder" /></a></li>					
 				</ul>
