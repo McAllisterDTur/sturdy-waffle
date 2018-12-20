@@ -41,7 +41,7 @@ public class HandyWorker extends Endorsable {
 
 	@Override
 	public String toString() {
-		return "HandyWorker [" + super.toString() + "make=" + this.make + "]";
+		return this.getName() + " " + this.getMiddleName() + " " + this.getSurname();
 	}
 
 }

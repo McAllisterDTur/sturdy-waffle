@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -172,7 +173,7 @@ public class FixUpTaskService {
 	 * 
 	 * @return Collection of fix up task count statistics
 	 */
-	public Collection<Double> avgMinMaxDevFixUpTaskCount() {
+	public List<Object[]> avgMinMaxDevFixUpTaskCount() {
 		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
 		Assert.isTrue(au);
 
@@ -196,7 +197,7 @@ public class FixUpTaskService {
 	 * 
 	 * @return Collection of fix up task price statistics
 	 */
-	public Collection<Double> avgMinMaxDevFixUpTaskPrice() {
+	public List<Object[]> avgMinMaxDevFixUpTaskPrice() {
 		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
 		Assert.isTrue(au);
 

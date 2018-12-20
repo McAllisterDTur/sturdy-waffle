@@ -4,6 +4,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -121,7 +122,7 @@ public class ApplicationService {
 		return this.applicationRepo.findAllCustomer(workerId);
 	}
 
-	public Collection<Double> statictisApplications() {
+	public List<Object[]> statictisApplications() {
 
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
