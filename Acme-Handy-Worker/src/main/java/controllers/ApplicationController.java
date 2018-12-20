@@ -39,6 +39,8 @@ public class ApplicationController extends AbstractController {
 
 		applications = this.applicationService.findAllWorker(this.actorService.findByUserAccountId(this.account.getId()).getId());
 
+		System.out.println(applications);
+
 		result = new ModelAndView("application/handyworker/list");
 		result.addObject("applications", applications);
 		result.addObject("requestURI", "applications/handyworker/list.do");

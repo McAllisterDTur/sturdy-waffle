@@ -18,7 +18,6 @@ import security.UserAccount;
 import utilities.AuthenticationUtility;
 import domain.Application;
 import domain.Customer;
-import domain.FixUpTask;
 import domain.HandyWorker;
 import domain.Phase;
 
@@ -34,18 +33,20 @@ public class ApplicationService {
 	private HandyWorkerService		workerService;
 	@Autowired
 	private ActorService			actorService;
+	@Autowired
+	private FixUpTaskService		taskService;
 
 	private UserAccount				account;
 
 
 	public Application create(final int fixuptaskId) {
+		this.account = LoginService.getPrincipal();
+		Assert.isTrue(this.account.getAuthorities().contains(Authority.HANDYWORKER));
 		final Application res = new Application();
 
-		final HandyWorker w = (HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
-		res.setHandyWorker(w);
+		res.setFixUpTask(this.taskService.findOne(fixuptaskId));
 
-		final FixUpTask f = this.taskService.findOne(fixuptaskId);
-		res.setFixUpTask(f);
+		res.setHandyWorker((HandyWorker) this.actorService.findByUserAccountId(this.account.getId()));
 
 		res.setCustomerComments(new ArrayList<String>());
 		res.setHandyComments(new ArrayList<String>());
@@ -53,6 +54,7 @@ public class ApplicationService {
 
 		return res;
 	}
+
 	public Application save(final Application application) {
 		Assert.notNull(application);
 
@@ -66,10 +68,10 @@ public class ApplicationService {
 			application.setStatus("PENDING");
 			a = this.applicationRepo.save(application);
 
-			final FixUpTask task = a.getFixUpTask();
-			task.getApplications().add(a);
-
-			this.taskService.save(task);
+			//			final FixUpTask task = a.getFixUpTask();
+			//			task.getApplications().add(a);
+			//
+			//			this.taskService.save(task);
 		} else {//Actualizacion del status por parte del customer due�o de la fixUpTask
 			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
 			Assert.isTrue(application.getFixUpTask().getCustomer().getAccount().equals(this.account));//customer loggeado due�o de la task
@@ -122,7 +124,7 @@ public class ApplicationService {
 		Assert.isTrue(w.getAccount().getId() == this.account.getId());
 
 		//Al comprobar el id, como no pueden exixtir dos usuarios con el mismo id, te certificas que ya es Worker, aun as�
-		//Assert.isTrue(w.getAccount().getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER));
+		Assert.isTrue(w.getAccount().getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER));
 
 		return this.applicationRepo.findAllWorker(workerId);
 	}

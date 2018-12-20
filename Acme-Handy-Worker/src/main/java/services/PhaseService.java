@@ -13,7 +13,6 @@ import repositories.PhaseRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Application;
 import domain.HandyWorker;
 import domain.Phase;
 
@@ -30,14 +29,19 @@ public class PhaseService {
 
 
 	public Phase create(final int applicationId) {
-		final Phase p = new Phase();
-		final Application a = this.applicationService.findOne(applicationId);
-		p.setApplication(a);
-		p.setDescription("");
-		p.setTitle("");
-		p.setStartTime(new Date());
-		p.setEndTime(new Date());
-		return p;
+		this.account = LoginService.getPrincipal();
+		Assert.isTrue(this.account.getAuthorities().contains(Authority.HANDYWORKER));
+
+		final Phase phase = new Phase();
+
+		phase.setTitle("");
+		phase.setDescription("");
+		phase.setStartTime(new Date());
+		phase.setEndTime(new Date());
+
+		phase.setApplication(this.applicationService.findOne(applicationId));
+
+		return phase;
 	}
 
 	public Phase save(final Phase phase) {
