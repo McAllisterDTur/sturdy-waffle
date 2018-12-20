@@ -114,4 +114,7 @@ public class WarrantyService {
 
 	}
 
+	public Collection<Warranty> findNotDraft() {
+		return this.wRepo.findNotDraft();
+	}
 }

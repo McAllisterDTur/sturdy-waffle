@@ -71,10 +71,7 @@ public class FixUpTaskController extends AbstractController {
 		final FixUpTask task = this.taskService.create();
 
 		result = new ModelAndView("fixuptask/edit");
-		result.addObject("categories", this.catService.findAll());
-		result.addObject("configuration", this.confService.findAll().iterator().next());
-		// TODO: Encontrar solo las que no están en draft mode
-		result.addObject("warranties", this.warrantyService.findAll());
+		result = this.addCategoriesWarrantiesConfiguration(result);
 		result.addObject("fixuptask", task);
 
 		return result;
@@ -83,12 +80,13 @@ public class FixUpTaskController extends AbstractController {
 
 	@RequestMapping(value = "/customer/edit", method = RequestMethod.GET)
 	public ModelAndView editFixUpTask(@RequestParam final int fixuptaskId) {
-		final ModelAndView result;
+		ModelAndView result;
 		FixUpTask task;
 
 		task = this.taskService.findOne(fixuptaskId);
 		Assert.notNull(task);
 		result = new ModelAndView("fixuptask/edit");
+		result = this.addCategoriesWarrantiesConfiguration(result);
 		result.addObject("fixuptask", task);
 
 		return result;
@@ -102,6 +100,7 @@ public class FixUpTaskController extends AbstractController {
 			System.out.println(binding.getFieldErrors());
 			result = new ModelAndView("fixuptask/edit");
 			result.addObject("fixuptask", fixuptask);
+			result = this.addCategoriesWarrantiesConfiguration(result);
 		} else
 			try {
 				this.taskService.save(fixuptask);
@@ -138,5 +137,12 @@ public class FixUpTaskController extends AbstractController {
 		result.addObject("fixuptask", task);
 
 		return result;
+	}
+
+	private ModelAndView addCategoriesWarrantiesConfiguration(final ModelAndView model) {
+		model.addObject("categories", this.catService.findAll());
+		model.addObject("configuration", this.confService.findAll().iterator().next());
+		model.addObject("warranties", this.warrantyService.findNotDraft());
+		return model;
 	}
 }

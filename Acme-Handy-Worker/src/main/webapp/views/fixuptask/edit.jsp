@@ -18,6 +18,15 @@
 	<form:hidden path="publishTime"/>
 	<form:hidden path="customer" />
 	
+	<jstl:forEach var="application" items="${fixuptask.applications}">
+		<form:hidden path = "applications" value = "${application.id}" />
+	</jstl:forEach>
+	
+	<jstl:forEach var="complaint" items="${fixuptask.complaints}">
+		<form:hidden path = "complaints" value = "${complaint.id}" />
+	</jstl:forEach>
+	
+	
 	<h3><spring:message code="fixuptask.header"/> </h3>
 	
 	<form:label path="description"><spring:message code="fixuptask.description" />:</form:label>
@@ -47,7 +56,9 @@
 	<br/>
 	<form:label path="warranty"><spring:message code="fixuptask.warranty" />:</form:label>
 	<form:select path="warranty">
-		<form:options items="${warranties}" itemLabel="title" itemValue="id"/>
+		<jstl:forEach var="warranty" items="${warranties}">
+			<form:option value="${warranty.id}" label="${warranty.title}: ${warranty.terms} ${warranty.law}"/>		
+		</jstl:forEach>
 	</form:select>
 	<br />
 	

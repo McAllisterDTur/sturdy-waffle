@@ -49,19 +49,19 @@
 <br />
 
 <b><spring:message code="fixuptask.warranty" />:&nbsp;</b>
-<jstl:out value="${fixuptask.title}" />
+<jstl:out value="${fixuptask.warranty.title}" />
 <br />
 
 <security:authorize access="hasRole('CUSTOMER')">
-		<jstl:if test="${fixuptask.customer.account.username == principalId}">
+		<jstl:if test="${fixuptask.customer.account.username == principal}">
 			<button
-				onClick="window.location.href='/Acme-Handy-Worker/fixuptask/edit.do?id=${row.id}'">
+				onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer/edit.do?fixuptaskId=${fixuptask.id}'">
 				<spring:message code="fixuptask.edit" />
 			</button>
 		</jstl:if>
-		<jstl:if test="${fixuptask.worker.account.username == principalId}">
+		<jstl:if test="${fixuptask.customer.account.username == principal}">
 			<button
-				onClick="window.location.href='/Acme-Handy-Worker/fixuptask/delete.do?id=${row.id}'">
+				onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer/delete.do?fixuptaskId=${fixuptask.id}'">
 				<spring:message code="fixuptask.delete" />
 			</button>
 		</jstl:if>
