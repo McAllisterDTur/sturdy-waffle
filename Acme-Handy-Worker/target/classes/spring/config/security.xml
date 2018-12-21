@@ -66,6 +66,8 @@
 			access="hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/phase/handyworker/create.do"
 			access="hasRole('HANDYWORKER')" />
+			<security:intercept-url pattern="/phase/handyworker/save.do"
+			access="hasRole('HANDYWORKER')" />
 
 		<security:intercept-url pattern="/**"
 			access="hasRole('NONE')" />

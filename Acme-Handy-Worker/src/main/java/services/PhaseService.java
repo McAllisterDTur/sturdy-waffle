@@ -29,8 +29,6 @@ public class PhaseService {
 
 
 	public Phase create(final int applicationId) {
-		this.account = LoginService.getPrincipal();
-		Assert.isTrue(this.account.getAuthorities().contains(Authority.HANDYWORKER));
 
 		final Phase phase = new Phase();
 
@@ -50,8 +48,9 @@ public class PhaseService {
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER));
 		//Verificamos que el creador de la phase sea el due�o de la application
 		Assert.isTrue(phase.getApplication().getHandyWorker().getAccount().getId() == this.account.getId());
-
-		return this.repo.save(phase);
+		final Phase res = this.repo.save(phase);
+		this.applicationService.findOne(res.getApplication().getId()).getPhases().add(res);
+		return res;
 	}
 
 	public Phase findOne(final int id) {

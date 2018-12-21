@@ -50,13 +50,13 @@ public class PhaseController extends AbstractController {
 	@RequestMapping(value = "/handyworker/save", method = RequestMethod.POST)
 	public ModelAndView save(@Valid final Phase phase, final BindingResult bind) {
 		ModelAndView res;
-
+		System.out.println("Errors: " + phase);
 		if (bind.hasErrors())
 			res = this.createMAV(phase);
 		else
 			try {
-				this.phaseService.save(phase);
-				res = new ModelAndView("redirect:display.do");
+				final Phase p = this.phaseService.save(phase);
+				res = new ModelAndView("redirect:display.do?phaseId=" + p.getId());
 			} catch (final Throwable oops) {
 				oops.printStackTrace();
 				res = this.createMAV(phase);
