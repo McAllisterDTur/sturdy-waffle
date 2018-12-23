@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
@@ -164,6 +165,57 @@ public class ProfileController extends AbstractController {
 			return result;
 		}
 
+		return result;
+	}
+
+	@RequestMapping(value = "see", method = RequestMethod.GET)
+	public ModelAndView seeProfile() {
+		final ModelAndView result = new ModelAndView("profile/see");
+		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final String role = actor.getAccount().getAuthorities().iterator().next().toString();
+		result.addObject("actor", actor);
+		result.addObject("username", actor.getAccount().getUsername());
+		result.addObject("logged", true);
+		if (role.equals("CUSTOMER")) {
+			result.addObject("endorsable", true);
+			result.addObject("score", this.cService.findOne(actor.getId()).getScore());
+			result.addObject("handy", false);
+		} else if (role.equals("HANDYWORKER")) {
+			result.addObject("handy", true);
+			result.addObject("make", this.hwService.findOne(actor.getId()).getMake());
+			result.addObject("endorsable", true);
+			result.addObject("score", this.hwService.findOne(actor.getId()).getScore());
+		} else {
+			result.addObject("endorsable", false);
+			result.addObject("handy", false);
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "seeId", method = RequestMethod.GET)
+	public ModelAndView seeProfile(@RequestParam final Integer id) {
+		final ModelAndView result = new ModelAndView("profile/see");
+		final Actor actor = this.actorService.findOne(id);
+		final String role = actor.getAccount().getAuthorities().iterator().next().toString();
+		result.addObject("actor", actor);
+		result.addObject("username", actor.getAccount().getUsername());
+		if (LoginService.getPrincipal().equals(actor.getAccount()))
+			result.addObject("logged", true);
+		else
+			result.addObject("logged", false);
+		if (role.equals("CUSTOMER")) {
+			result.addObject("endorsable", true);
+			result.addObject("score", this.cService.findOne(id).getScore());
+			result.addObject("handy", false);
+		} else if (role.equals("HANDYWORKER")) {
+			result.addObject("handy", true);
+			result.addObject("make", this.hwService.findOne(id).getMake());
+			result.addObject("endorsable", true);
+			result.addObject("score", this.hwService.findOne(id).getScore());
+		} else {
+			result.addObject("endorsable", false);
+			result.addObject("handy", false);
+		}
 		return result;
 	}
 	// Action-1 ---------------------------------------------------------------		

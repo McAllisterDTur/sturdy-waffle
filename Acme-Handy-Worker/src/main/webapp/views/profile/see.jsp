@@ -16,7 +16,38 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<h2><spring:message code="profile.seeing" /></h2>
+<jstl:if test="${logged }">
+	<button onClick="window.location.href='profile/edit.do'">
+		<spring:message code="profile.edit"/>
+	</button>
+</jstl:if>
 
-<b><spring:message code="profile.name" /></b>: 
+<h2><spring:message code="profile.seeing" /> <jstl:out value="${username }"/></h2>
+
+<img src="${actor.photoURL }" alt="<spring:message code="profile.photo" /> <jstl:out value="${username }"/>"/>
+<p>
+	<b><spring:message code="profile.name" /></b>: 
 	<jstl:out value="${actor.surname }"/>, <jstl:out value="${actor.name }"/> <jstl:out value="${actor.middleName }"/>
+</p>
+<jstl:if test="${endorsable }"><p>
+	<b><spring:message code="profile.score" /></b>: 
+	<jstl:out value="${score }"/>
+</p></jstl:if>
+<jstl:if test="${handy }"><p>
+	<b><spring:message code="profile.make" /></b>: 
+	<jstl:out value="${make }"/>
+</p></jstl:if>
+<p>
+	<b><spring:message code="profile.email" /></b>: 
+	<jstl:out value="${actor.email }"/>
+</p>
+<p>
+	<b><spring:message code="profile.phone" /></b>: 
+	<jstl:out value="${actor.phone }"/>
+</p>
+<p>
+	<b><spring:message code="profile.address" /></b>: 
+	<jstl:out value="${actor.address }"/>
+</p>
+	
+	
