@@ -28,6 +28,7 @@
 		<value>/views/profile/messages</value>
 		<value>/views/fixuptask/messages</value>
 		<value>/views/warranty/messages</value>
+		<value>/views/category/messages</value>
 	</util:list>
 
 </beans>

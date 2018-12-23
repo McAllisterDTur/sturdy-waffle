@@ -29,14 +29,10 @@
 	<security:http auto-config="true" use-expressions="true">
 		<security:intercept-url pattern="/" access="permitAll" /> 
 		
-		<security:intercept-url pattern="/profile/**" access="isAuthenticated()" /> 
-		
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 
 		<security:intercept-url pattern="/scripts/**" access="permitAll" /> 
 		<security:intercept-url pattern="/styles/**" access="permitAll" /> 
-		
-		<security:intercept-url pattern="/warranty/administrator/**" access="hasRole('ADMIN')" />
 
 		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" /> 
 
@@ -45,6 +41,11 @@
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
 
+		<!-- Added gonza6 -->
+		<security:intercept-url pattern="/warranty/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/category/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/profile/**" access="isAuthenticated()" /> 
+
 		<security:intercept-url pattern="/fixuptask/handyworker/list.do" access="hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/fixuptask/customer/list.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/fixuptask/customer/create.do" access="hasRole('CUSTOMER')" />
@@ -52,6 +53,8 @@
 		<security:intercept-url pattern="/fixuptask/customer/delete.do" access="hasRole('CUSTOMER')" />
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
+		
+		
 
 		<security:form-login 
 			login-page="/security/login.do"
