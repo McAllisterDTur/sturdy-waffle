@@ -1237,6 +1237,7 @@
 
 	<bean id="CategoryBase" class="domain.Category">
 		<property name="name" value="CATEGORY" />
+		<property name="nameEn" value="CATEGORY" />
 		<property name="father">
 			<null />
 		</property>
@@ -1244,21 +1245,25 @@
 
 	<bean id="Category1" class="domain.Category">
 		<property name="name" value="Fontanería" />
+		<property name="nameEn" value="Plumbing" />
 		<property name="father" ref="CategoryBase" />
 	</bean>
 
 	<bean id="Category2" class="domain.Category">
 		<property name="name" value="Carpintería" />
+		<property name="nameEn" value="Carpentry" />
 		<property name="father" ref="CategoryBase" />
 	</bean>
 
 	<bean id="Category3" class="domain.Category">
 		<property name="name" value="Servicios de cuidado" />
+		<property name="nameEn" value="Caring services" />
 		<property name="father" ref="CategoryBase" />
 	</bean>
 
 	<bean id="Category4" class="domain.Category">
 		<property name="name" value="Cuidado de niños" />
+		<property name="nameEn" value="Childcare" />
 		<property name="father" ref="Category3" />
 	</bean>
 

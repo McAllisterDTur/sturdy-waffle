@@ -28,6 +28,11 @@
 			<form:errors path="name" cssClass="error"/>
 		</p>
 		<p>
+			<spring:message code="category.nameEn"/>: 
+			<form:input path="nameEn"/>
+			<form:errors path="nameEn" cssClass="error"/>
+		</p>
+		<p>
 			<spring:message code="category.father"/>: 
 			<form:select path="father">
 				<form:option value="0" label="-------"/>

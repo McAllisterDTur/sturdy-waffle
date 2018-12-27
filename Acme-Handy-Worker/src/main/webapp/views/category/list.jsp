@@ -23,10 +23,17 @@
 			</jstl:if>
 		</fieldset>
 	</jstl:if>
+	
 
 	<display:table pagesize="5" name="categories" id="category" requestURI="category/administrator/list.do">
-		<display:column property="name" titleKey="category.name"/>
-		<display:column property="father.name" titleKey="category.father"/>
+		<jstl:if test="${lang == 'es' }">
+			<display:column property="name" titleKey="category.list.name"/>
+			<display:column property="father.name" titleKey="category.father"/>
+		</jstl:if>
+		<jstl:if test="${lang == 'en' }">
+			<display:column property="nameEn" titleKey="category.list.name"/>
+			<display:column property="father.nameEn" titleKey="category.father"/>
+		</jstl:if>
 		<display:column>
 			<button onClick="window.location.href='category/administrator/see.do?id=${category.id }'">
 				<spring:message code="category.seeMore"/>

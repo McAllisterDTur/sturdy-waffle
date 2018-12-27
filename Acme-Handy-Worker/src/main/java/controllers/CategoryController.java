@@ -2,10 +2,12 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,8 @@ public class CategoryController {
 		final Collection<Category> all = this.cService.findAll();
 		final ModelAndView result = new ModelAndView("category/list");
 		result.addObject("categories", all);
+		final Locale locale = LocaleContextHolder.getLocale();
+		result.addObject("lang", locale.getLanguage());
 		return result;
 	}
 

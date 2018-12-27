@@ -16,10 +16,28 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+
+
 <jstl:if test="${logged }">
 	<button onClick="window.location.href='profile/edit.do'">
 		<spring:message code="profile.edit"/>
 	</button>
+</jstl:if>
+
+<jstl:if test="${!logged }">
+	<security:authorize access="hasRole('ADMIN')">
+		<jstl:if test="${actor.banned }">
+			<button onClick="window.location.href='profile/administrator/unban.do?id=${actor.id }'">
+				<spring:message code="profile.unban"/>
+			</button>
+		</jstl:if>
+		<jstl:if test="${!actor.banned }">
+			<button onClick="window.location.href='profile/administrator/ban.do?id=${actor.id }'">
+				<spring:message code="profile.ban"/>
+			</button>
+		</jstl:if>
+	</security:authorize>
+	
 </jstl:if>
 
 <h2><spring:message code="profile.seeing" /> <jstl:out value="${username }"/></h2>
