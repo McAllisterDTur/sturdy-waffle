@@ -198,6 +198,7 @@ public class ProfileController extends AbstractController {
 		final Actor actor = this.actorService.findOne(id);
 		final String role = actor.getAccount().getAuthorities().iterator().next().toString();
 		result.addObject("actor", actor);
+		result.addObject("banned", actor.getBanned());
 		result.addObject("username", actor.getAccount().getUsername());
 		if (LoginService.getPrincipal().equals(actor.getAccount()))
 			result.addObject("logged", true);
@@ -224,7 +225,7 @@ public class ProfileController extends AbstractController {
 	@RequestMapping(value = "administrator/ban", method = RequestMethod.GET)
 	public ModelAndView banProfile(@RequestParam final Integer id) {
 		final ModelAndView result = new ModelAndView("redirect:/profile/seeId.do?id=" + id);
-		final Actor a = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final Actor a = this.actorService.findOne(id);
 		//if (!a.getBanned())
 		this.actorService.ban(a);
 		return result;
@@ -233,7 +234,7 @@ public class ProfileController extends AbstractController {
 	@RequestMapping(value = "administrator/unban", method = RequestMethod.GET)
 	public ModelAndView unbanProfile(@RequestParam final Integer id) {
 		final ModelAndView result = new ModelAndView("redirect:/profile/seeId.do?id=" + id);
-		final Actor a = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final Actor a = this.actorService.findOne(id);
 		if (a.getBanned())
 			this.actorService.unban(a);
 		return result;

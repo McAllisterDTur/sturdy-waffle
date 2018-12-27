@@ -131,7 +131,6 @@ public class ActorService {
 			final HandyWorker hw = this.hwService.findOne(id);
 			hw.setBanned(true);
 			this.hwService.save(hw);
-			System.out.println(hw.getBanned());
 			break;
 		case "CUSTOMER":
 			final Customer c = this.cService.findOne(id);
@@ -187,6 +186,7 @@ public class ActorService {
 			final Referee r = this.rService.findOne(id);
 			r.setBanned(false);
 			this.rService.save(r);
+			System.out.println(r.getBanned());
 			break;
 		default:
 			throw new NullPointerException();

@@ -26,12 +26,12 @@
 
 <jstl:if test="${!logged }">
 	<security:authorize access="hasRole('ADMIN')">
-		<jstl:if test="${actor.banned }">
+		<jstl:if test="${banned }">
 			<button onClick="window.location.href='profile/administrator/unban.do?id=${actor.id }'">
 				<spring:message code="profile.unban"/>
 			</button>
 		</jstl:if>
-		<jstl:if test="${!actor.banned }">
+		<jstl:if test="${!banned}">
 			<button onClick="window.location.href='profile/administrator/ban.do?id=${actor.id }'">
 				<spring:message code="profile.ban"/>
 			</button>
