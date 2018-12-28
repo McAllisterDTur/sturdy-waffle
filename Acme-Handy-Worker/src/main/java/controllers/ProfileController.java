@@ -224,8 +224,8 @@ public class ProfileController extends AbstractController {
 	public ModelAndView banProfile(@RequestParam final Integer id) {
 		final ModelAndView result = new ModelAndView("redirect:/profile/seeId.do?id=" + id);
 		final Actor a = this.actorService.findOne(id);
-		//if (!a.getBanned())
-		this.actorService.ban(a);
+		if (!a.getBanned())
+			this.actorService.ban(a);
 		return result;
 	}
 

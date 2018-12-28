@@ -18,17 +18,17 @@
 
 	<definition name="complaint/list" extends="master.page">	
 		<put-attribute name="title" value="Listing complaints" />
-		<put-attribute name="body" value="/views/complaints/list.jsp" />
+		<put-attribute name="body" value="/views/complaint/list.jsp" />
 	</definition>
 	
 	<definition name="complaint/edit" extends="master.page">	
 		<put-attribute name="title" value="Creating complaint" />
-		<put-attribute name="body" value="/views/complaints/edit.jsp" />
+		<put-attribute name="body" value="/views/complaint/edit.jsp" />
 	</definition>
 	
-	<definition name="complaint/seeMore" extends="master.page">	
+	<definition name="complaint/see" extends="master.page">	
 		<put-attribute name="title" value="More Info" />
-		<put-attribute name="body" value="/views/complaints/seeMore.jsp" />
+		<put-attribute name="body" value="/views/complaint/seeMore.jsp" />
 	</definition>
 
 	

@@ -51,11 +51,12 @@ public class ComplaintService {
 	 * @return the complaint saved in the database
 	 */
 	public Complaint save(final Complaint complaint) {
-		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.CUSTOMER);
-		Assert.isTrue(hasAu);
+		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.REFEREE);
+		final boolean hasAu1 = AuthenticationUtility.checkAuthority(Authority.CUSTOMER);
+		Assert.isTrue(hasAu || hasAu1);
 
 		// We can't update
-		Assert.isTrue(complaint.getId() == 0);
+
 		complaint.setTicker(this.tickerService.getTicker());
 		complaint.setComplaintTime(new Date());
 		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
@@ -141,10 +142,11 @@ public class ComplaintService {
 	public Complaint findOne(final int complaintId) {
 		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.REFEREE);
 		final boolean hasAu1 = AuthenticationUtility.checkAuthority(Authority.CUSTOMER);
-		Assert.isTrue(hasAu || hasAu1);
+		final boolean hasAu2 = AuthenticationUtility.checkAuthority(Authority.HANDYWORKER);
+		Assert.isTrue(hasAu || hasAu1 || hasAu2);
 		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final Complaint c1 = this.complaintRepository.findOne(complaintId);
-		Assert.isTrue(c1.getReferee() != null && c1.getReferee().equals(actor) || c1.getFixUpTask().getCustomer().equals(actor));
+		//Assert.isTrue(c1.getReferee() != null && c1.getReferee().equals(actor) || c1.getFixUpTask().getCustomer().equals(actor));
 		return c1;
 	}
 

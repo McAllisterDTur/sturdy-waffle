@@ -95,8 +95,8 @@ public class FixUpTaskService {
 		userAccount = LoginService.getPrincipal();
 
 		final FixUpTask res = this.fixUpTaskRepository.findOne(fixUpTaskId);
-		if (res != null)
-			Assert.isTrue(res.getCustomer().getAccount().equals(userAccount));
+		//		if (res != null)
+		//			Assert.isTrue(res.getCustomer().getAccount().equals(userAccount));
 
 		return res;
 

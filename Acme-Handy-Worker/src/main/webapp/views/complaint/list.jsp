@@ -7,62 +7,82 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <security:authorize access="hasRole('REFEREE')">
-	<button onClick="window.location.href='complaint/referee/listAll.do'">
-		<spring:message code="complaint.referee.seeAll" />
-	</button>
-	<button onClick="window.location.href='complaint/referee/myComplaints.do?refId=${refereeid}'">
-		<spring:message code="complaint.referee.myComplaints" />
-	</button>
+	<jstl:if test="${mine }">
+		<button onClick="window.location.href='complaint/referee/unassignedComplaints.do'">
+			<spring:message code="complaint.referee.seeAll" />
+		</button>
+	</jstl:if>
+	<jstl:if test="${!mine }">
+		<button onClick="window.location.href='complaint/referee/myAssignedComplaints.do'">
+			<spring:message code="complaint.referee.myComplaints" />
+		</button>
+	</jstl:if>
 </security:authorize>
 <security:authorize access="hasRole('CUSTOMER')">
-	<button onClick="window.location.href='complaint/customer/drafted.do?id=${customerid}'">
-		<spring:message code="complaint.customer.drafted" />
-	</button>
+	<jstl:if test="${!draft }">
+		<button onClick="window.location.href='complaint/customer/draftedComplaints.do'">
+			<spring:message code="complaint.customer.drafted" />
+		</button>
+	</jstl:if>
+	<jstl:if test="${draft }">
+		<button onClick="window.location.href='complaint/customer/finalComplaints.do'">
+			<spring:message code="complaint.customer.published" />
+		</button>
+	</jstl:if>
 	<button onClick="window.location.href='complaint/customer/new.do'">
 		<spring:message code="complaint.customer.newComplaint" />
 	</button>
 </security:authorize>
 
-<display:table name="complaints" id="complaint" requestURI="${requestURI}" pagesize="10">
+<display:table name="complaints" id="complaint" requestURI="${requestURI}" pagesize="5">
 		<display:column property="description" titleKey="complaint.description" />
-		<display:column property="date" titleKey="complaint.complaintTime" sortable=true />
+		<display:column property="complaintTime" titleKey="complaint.complaintTime" />
 		<security:authorize access="hasRole('REFEREE')">
-			<display:column property="fixUpTask.customer.userAccount.username" titleKey="complaint.referee.author" />
+			<display:column property="fixUpTask.customer.account.username" titleKey="complaint.referee.author" />
 		</security:authorize>
-		<display:column>
-			<jstl:if test="${not empty complaint.report.id}">
-				<form:form action="report/see.do?id=${row.complaint.reportid}">
-					<input type="submit" value="<spring:message code="complaint.seeRep" />"/>
-				</form:form>
-			</jstl:if>
-			<jstl:if test="${empty complaint.report.id}">
-				<security:authorize access="hasRole('REFEREE')">
-					<jstl:if test="${not empty complaint.referee }">
-						<form:form action="report/referee/new.do?id=${complaint.id}">
-							<input type="submit" value="<spring:message code="complaint.referee.newReport" />"/>
-						</form:form>
+		<security:authorize access="hasRole('CUSTOMER')">
+			<display:column>
+				<jstl:if test="${complaint.isFinal}">
+					<jstl:if test="${not empty complaint.reports}">
+						<button onClick="window.location.href='report/see.do?id=${complaint.id}'">
+							<spring:message code="complaint.seeRep" />
+						</button>
 					</jstl:if>
-					<jstl:if test="${empty complaint.referee }">
-						<form:form action="complaint/referee/assign.do?id=${complaint.id}">
-							<input type="submit" value="<spring:message code="complaint.referee.assign" />"/>
-						</form:form>
-					</jstl:if>
-				</security:authorize>
-				<security:authorize access="hasRole('CUSTOMER')">
-					<jstl:if test=${final }>
+					<jstl:if test="${empty complaint.reports }">
 						<p><spring:message code="complaint.customer.noReport" /></p>
 					</jstl:if>
-					<jstl:if test=${!final }>
-						<form:form action="complaint/customer/edit.do?id=${complaint.id}">
-							<input type="submit" value="<spring:message code="complaint.customer.edit" />"/>
-						</form:form>
+				</jstl:if>
+				<jstl:if test="${!complaint.isFinal}">
+					<button onClick="window.location.href='complaint/customer/edit.do?id=${complaint.id}'">
+						<spring:message code="complaint.customer.edit" />
+					</button>
+				</jstl:if>
+			</display:column>
+		</security:authorize>
+		<security:authorize access="hasRole('REFEREE')">
+			<display:column>
+				<jstl:if test="${not empty complaint.reports}">
+					<button onClick="window.location.href='report/see.do?id=${complaint.id}'">
+						<spring:message code="complaint.seeRep" />
+					</button>
+				</jstl:if>
+				<jstl:if test="${empty complaint.reports}">
+					<jstl:if test="${not empty complaint.referee }">
+						<button onClick="window.location.href='report/referee/new.do?id=${complaint.id}'">
+							<spring:message code="complaint.referee.newReport" />
+						</button>
 					</jstl:if>
-				</security:authorize>		
-			</jstl:if>
-		</display:column>
+					<jstl:if test="${empty complaint.referee }">
+						<button onClick="window.location.href='complaint/referee/assign.do?id=${complaint.id}'">
+							<spring:message code="complaint.referee.assign" />
+						</button>
+					</jstl:if>		
+				</jstl:if>
+			</display:column>
+		</security:authorize>
 		<display:column>
-			<form:form action="complaint/seeMore.do?id=${row.complaint.id}">
-				<input type="submit" value="<spring:message code="referee.more" />"/>
-			</form:form>
+			<button onClick="window.location.href='complaint/see.do?id=${complaint.id}'">
+				<spring:message code="complaint.more" />
+			</button>
 		</display:column>
 </display:table>

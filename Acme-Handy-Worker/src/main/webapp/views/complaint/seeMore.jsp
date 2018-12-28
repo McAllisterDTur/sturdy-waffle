@@ -11,18 +11,24 @@
 	<p>
 		<b><spring:message code="complaint.more.author"/></b>: 
 		<a href="profile/seeId.do?id=${authorId}">
-			<jstl:out value="${authorUser}"/>
+			<jstl:out value="${author.account.username}"/>
 		</a>
 	</p>
 	<p>
 		<b><spring:message code="complaint.more.handy"/></b>: 
-		<a href="profile/seeId.do?id='${handyId}'">
-			<jstl:out value="${handyUser}"/>
+		<a href="profile/seeId.do?id=${handyId}">
+			<jstl:out value="${handy.account.username}"/>
 		</a>
 	</p>
 	<p>
 		<b><spring:message code="complaint.more.description"/></b>: 
 		<jstl:out value="${complaint.description}"/>
+	</p>
+	<p>
+		<b><spring:message code="complaint.more.notes"/></b>:
+		<a href="notes/see.do?id=${complaintId}">
+			<spring:message code="complaint.more.notes"/>
+		</a>
 	</p>
 	<p>
 		<b><spring:message code="complaint.more.timeCreated"/></b>: 
@@ -36,7 +42,7 @@
 		<b><spring:message code="complaint.more.referee"/></b>: 
 		<jstl:if test="${not empty complaint.referee }">
 			<a href="profile/seeId.do?id=${refereeId}">
-				<jstl:out value="${refereeUser}"/>
+				<jstl:out value="${complaint.referee.account.username}"/>
 			</a>
 		</jstl:if>
 		<jstl:if test="${empty complaint.referee }">

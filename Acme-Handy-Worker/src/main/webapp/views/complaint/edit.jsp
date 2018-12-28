@@ -6,8 +6,8 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<input type="hidden" id="message" value="<spring:message code="complaint.edit.confirm"/>"/>
-<input type="hidden" id="msgAlert" value="<spring:message code="complaint.edit.asDraft"/>"/>
+<jstl:set var="msg"><spring:message code='complaint.edit.confirm'/></jstl:set>
+<jstl:set var="msgAlert"><spring:message code='complaint.edit.asDraft'/></jstl:set>
 
 <script type='text/javascript'>
 	function addFields(){
@@ -19,19 +19,33 @@
 		input.name = "law";
 		container.appendChild(input);       
 	}
-	
-	function sendForm(){
-		var msg = document.getElementById("message");
-		var msgAlert = document.getElementById("msgAlert");
-		if(confirm(msg)){
-			document.getElementById("complaintForm").submit();
-		} else {
-			alert(msgAlert);
-			document.getElementById("complaintForm").action = "complaint/customer/saveDraft.do";
-			document.getElementById("complaintForm").submit();
-		}
-	}
 </script>
+<jstl:if test="${lang == 'en' }">
+	<script type='text/javascript'>	
+		function sendForm(){
+			if(confirm("Do you want to send this complaint?\nThis action can't be undone.")){
+				document.getElementById("complaintForm").submit();
+			} else {
+				alert("The complaint was saved as a draft, and it's not public.\nYou can edit it when you want");
+				document.getElementById("complaintForm").action = "complaint/customer/saveDrafted.do";
+				document.getElementById("complaintForm").submit();
+			}
+		}
+	</script>
+</jstl:if>
+<jstl:if test="${lang == 'es' }">
+	<script type='text/javascript'>	
+		function sendForm(){
+			if(confirm("¿Quieres enviar esta queja?\nEsta acción no se puede deshacer.")){
+				document.getElementById("complaintForm").submit();
+			} else {
+				alert("La queja se guardó como borrador y no es pública.\nPuedes editarla cuando quieras.");
+				document.getElementById("complaintForm").action = "complaint/customer/saveDrafted.do";
+				document.getElementById("complaintForm").submit();
+			}
+		}
+	</script>
+</jstl:if>
 
 <form:form id="complaintForm" modelAttribute="complaint" action="complaint/customer/saveFinal.do" method="POST">
 	<p>

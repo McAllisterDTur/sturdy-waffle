@@ -2,10 +2,10 @@
 package controllers;
 
 import java.util.Collection;
-
-import javax.validation.Valid;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
+import services.ActorService;
 import services.ComplaintService;
 import services.FixUpTaskService;
 import services.HandyWorkerService;
+import services.RefereeService;
 import domain.Complaint;
-import domain.Warranty;
 
 @Controller
 @RequestMapping("complaint")
@@ -29,17 +31,24 @@ public class ComplaintController {
 	FixUpTaskService	futService;
 	@Autowired
 	HandyWorkerService	hwService;
+	@Autowired
+	RefereeService		rService;
+	@Autowired
+	ActorService		aService;
 
 
-	//TODO: ¿Qué pasa con los reports?
+	//TODO: En el populate, una complaint drafted tiene report
+	//TODO: No salen los mensajes en los dialog boxes
+	//TODO: Probar como referee
+	//TODO: Probar como handy
 
 	@RequestMapping(value = "/customer/finalComplaints", method = RequestMethod.GET)
 	public ModelAndView listFinalComplaints() {
 		final Collection<Complaint> all = this.complaintService.findFinalFromLoggedCustomer();
 		final ModelAndView result = new ModelAndView("complaint/list");
 		result.addObject("complaints", all);
-		result.addObject("requestURI", "/customer/finalComplaints.do");
-		result.addObject("final", true);
+		result.addObject("requestURI", "complaint/customer/finalComplaints.do");
+		result.addObject("draft", false);
 		return result;
 	}
 
@@ -48,8 +57,8 @@ public class ComplaintController {
 		final Collection<Complaint> all = this.complaintService.findDraftedFromLoggedCustomer();
 		final ModelAndView result = new ModelAndView("complaint/list");
 		result.addObject("complaints", all);
-		result.addObject("requestURI", "/customer/draftedComplaints.do");
-		result.addObject("final", false);
+		result.addObject("requestURI", "complaint/customer/draftedComplaints.do");
+		result.addObject("draft", true);
 		return result;
 	}
 
@@ -58,7 +67,8 @@ public class ComplaintController {
 		final Collection<Complaint> all = this.complaintService.findUnassigned();
 		final ModelAndView result = new ModelAndView("complaint/list");
 		result.addObject("complaints", all);
-		result.addObject("requestURI", "/referee/unassignedComplaints.do");
+		result.addObject("requestURI", "complaint/referee/unassignedComplaints.do");
+		result.addObject("mine", false);
 		return result;
 	}
 
@@ -67,7 +77,17 @@ public class ComplaintController {
 		final Collection<Complaint> all = this.complaintService.findSelfassigned();
 		final ModelAndView result = new ModelAndView("complaint/list");
 		result.addObject("complaints", all);
-		result.addObject("requestURI", "/referee/myAssignedComplaints.do");
+		result.addObject("requestURI", "complaint/referee/myAssignedComplaints.do");
+		result.addObject("mine", true);
+		return result;
+	}
+
+	@RequestMapping(value = "/handyworker/myComplaints", method = RequestMethod.GET)
+	public ModelAndView listInvolvedComplaints() {
+		final Collection<Complaint> all = this.complaintService.findFromLoggedHandyWorker();
+		final ModelAndView result = new ModelAndView("complaint/list");
+		result.addObject("complaints", all);
+		result.addObject("requestURI", "complaint/handyworker/myComplaints.do");
 		return result;
 	}
 
@@ -77,11 +97,13 @@ public class ComplaintController {
 		final ModelAndView result = new ModelAndView("complaint/edit");
 		result.addObject("complaint", c);
 		result.addObject("futs", this.futService.findFromLoggedCustomer());
+		final Locale locale = LocaleContextHolder.getLocale();
+		result.addObject("lang", locale.getLanguage());
 		return result;
 	}
 
 	@RequestMapping(value = "/customer/edit", method = RequestMethod.GET)
-	public ModelAndView editWarranty(@RequestParam final Integer id) {
+	public ModelAndView editComplaint(@RequestParam final Integer id) {
 		ModelAndView result;
 		final Complaint c = this.complaintService.findOne(id);
 		if (c == null || c.getIsFinal())
@@ -90,10 +112,23 @@ public class ComplaintController {
 			result = new ModelAndView("complaint/edit");
 			result.addObject("complaint", c);
 			result.addObject("futs", this.futService.findFromLoggedCustomer());
+			final Locale locale = LocaleContextHolder.getLocale();
+			result.addObject("lang", locale.getLanguage());
 		}
 		return result;
 	}
 
+	@RequestMapping(value = "/referee/assign", method = RequestMethod.GET)
+	public ModelAndView assignComplaint(@RequestParam final Integer id) {
+		final ModelAndView result = new ModelAndView("redirect:unassignedComplaints.do");
+		final Complaint c = this.complaintService.findOne(id);
+		if (!(c == null || !c.getIsFinal() || c.getReferee() != null)) {
+			c.setReferee(this.rService.findOne(this.aService.findByUserAccountId(LoginService.getPrincipal().getId()).getId()));
+			this.complaintService.save(c);
+		}
+
+		return result;
+	}
 	@RequestMapping(value = "/customer/saveFinal", method = RequestMethod.POST)
 	public ModelAndView saveFinalComplaint(final Complaint c, final BindingResult br) {
 		ModelAndView result;
@@ -130,51 +165,23 @@ public class ComplaintController {
 		return result;
 	}
 
-	//TODO: see more
-
-	@RequestMapping(value = "/administrator/save", method = RequestMethod.POST, params = "saveDraft")
-	public ModelAndView saveDraftWarranty(@Valid final Warranty w, final BindingResult br) {
-		ModelAndView result;
-		w.setDraft(true);
-		if (br.hasErrors())
-			result = new ModelAndView("warranty/edit");
-		else
-			try {
-				this.wService.save(w);
-				result = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				oops.printStackTrace();
-				result = new ModelAndView("warranty/edit");
-				result.addObject("success", false);
-			}
-		return result;
-	}
-
-	@RequestMapping(value = "/administrator/delete", method = RequestMethod.GET)
-	public ModelAndView deleteWarranty(@RequestParam final Integer id) {
+	@RequestMapping(value = "/see", method = RequestMethod.GET)
+	public ModelAndView seeComplaint(@RequestParam final Integer id) {
 		ModelAndView result;
 		try {
-			this.wService.delete(id);
-			result = new ModelAndView("redirect:list.do");
-			result.addObject("success", true);
+			final Complaint c = this.complaintService.findOne(id);
+			result = new ModelAndView("complaint/see");
+			result.addObject("complaint", c);
+			result.addObject("author", c.getFixUpTask().getCustomer());
+			result.addObject("handy", this.hwService.findHandyWorkerFromFixUpTask(c.getFixUpTask().getId()));
+			result.addObject("authorId", c.getFixUpTask().getCustomer().getId());
+			result.addObject("handyId", this.hwService.findHandyWorkerFromFixUpTask(c.getFixUpTask().getId()).getId());
+			result.addObject("complaintId", c.getId());
+			if (c.getReferee() != null)
+				result.addObject("refereeId", c.getReferee().getId());
 		} catch (final Throwable oops) {
 			oops.printStackTrace();
-			result = new ModelAndView("redirect:list.do");
-			result.addObject("success", false);
-		}
-		return result;
-	}
-
-	@RequestMapping(value = "/administrator/see", method = RequestMethod.GET)
-	public ModelAndView seeWarranty(@RequestParam final Integer id) {
-		ModelAndView result;
-		try {
-			final Warranty w = this.wService.findOne(id);
-			result = new ModelAndView("warranty/see");
-			result.addObject("warranty", w);
-		} catch (final Throwable oops) {
-			oops.printStackTrace();
-			result = new ModelAndView("redirect:list.do");
+			result = new ModelAndView("redirect:#");
 			result.addObject("success", false);
 		}
 		return result;

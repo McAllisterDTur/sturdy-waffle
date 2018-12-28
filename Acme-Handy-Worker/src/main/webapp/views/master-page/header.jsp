@@ -76,7 +76,7 @@
 					<li class="arrow"></li>
 					<li><a href="fixuptask/customer/list.do"><spring:message code="master.page.customer.myfuts" /></a></li>
 					<li><a href="fixuptask/customer/create.do"><spring:message code="master.page.customer.newfuts" /></a></li>
-					<li><a href="complaint/customer/listAll.do"><spring:message code="master.page.customer.mycomps" /></a></li>
+					<li><a href="complaint/customer/finalComplaints.do"><spring:message code="master.page.customer.mycomps" /></a></li>
 					<li><a href="complaint/customer/new.do"><spring:message code="master.page.customer.newcomp" /></a></li>				
 				</ul>
 			</li>
@@ -86,8 +86,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.referee.compandreps" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="complaint/referee/listAll.do"><spring:message code="master.page.referee.allComps" /></a></li>
-					<li><a href="complaint/referee/myComplaints.do"><spring:message code="master.page.referee.myComps" /></a></li>
+					<li><a href="complaint/referee/unassignedComplaints.do"><spring:message code="master.page.referee.allComps" /></a></li>
+					<li><a href="complaint/referee/myAssignedComplaints.do"><spring:message code="master.page.referee.myComps" /></a></li>
 					<li><a href="report/referee/listAll.do"><spring:message code="master.page.referee.myReports" /></a></li>		
 				</ul>
 			</li>
@@ -111,7 +111,7 @@
 					<li><a href="box/myBoxes.do"><spring:message code="master.page.messages.myBoxes" /></a></li>
 					<li><a href="message/new.do"><spring:message code="master.page.messages.new" /></a></li>
 					<security:authorize access="hasRole('HANDYWORKER')">
-						<li><a href="handyworker/myReports.do"><spring:message code="master.page.handy.myReports" /></a></li>
+						<li><a href="complaint/handyworker/myComplaints.do"><spring:message code="master.page.handy.myComplaints" /></a></li>
 					</security:authorize>
 				</ul>
 			</li>
