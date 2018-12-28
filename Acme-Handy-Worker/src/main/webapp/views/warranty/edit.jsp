@@ -46,7 +46,6 @@
 		</p>
 		<p>
 			<spring:message code="warranty.edit.law"/>:
-			<a href="warranty/administrator/new.do" id="filldetails" onclick="addFields()">Fill Details</a>
 			<button type="button" onClick="addFields()">
 				<spring:message code="warranty.edit.newLaw"/>
 			</button>

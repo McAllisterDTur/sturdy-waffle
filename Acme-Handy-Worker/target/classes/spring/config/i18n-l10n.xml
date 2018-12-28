@@ -29,6 +29,7 @@
 		<value>/views/fixuptask/messages</value>
 		<value>/views/warranty/messages</value>
 		<value>/views/category/messages</value>
+		<value>/views/complaint/messages</value>
 	</util:list>
 
 </beans>

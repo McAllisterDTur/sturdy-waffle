@@ -220,8 +220,6 @@ public class ProfileController extends AbstractController {
 		return result;
 	}
 
-	//TODO: ESTO NO BANEA
-
 	@RequestMapping(value = "administrator/ban", method = RequestMethod.GET)
 	public ModelAndView banProfile(@RequestParam final Integer id) {
 		final ModelAndView result = new ModelAndView("redirect:/profile/seeId.do?id=" + id);

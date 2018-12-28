@@ -31,6 +31,8 @@
 		<bean class="converters.CreditCardToStringConverter" />
 		<bean class="converters.UserAccountToStringConverter" />
 		<bean class="converters.CategoryToStringConverter" />
+		<bean class="converters.RefereeToStringConverter" />
+		<bean class="converters.ReportToStringConverter" />
 		
 		<!-- String to Entity -->
 		<bean class="converters.StringToComplaintConverter" />
@@ -41,6 +43,8 @@
 		<bean class="converters.StringToCreditCardConverter" />
 		<bean class="converters.StringToUserAccountConverter" />
 		<bean class="converters.StringToCategoryConverter" />
+		<bean class="converters.StringToRefereeConverter" />
+		<bean class="converters.StringToReportConverter" />
 	</util:list>
 	
 </beans>

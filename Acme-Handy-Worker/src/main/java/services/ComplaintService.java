@@ -75,6 +75,30 @@ public class ComplaintService {
 	}
 
 	/**
+	 * Checks customer authority (Req 35.1)
+	 * 
+	 * @return Collection of the final complaints related to the logged customer
+	 */
+	public Collection<Complaint> findFinalFromLoggedCustomer() {
+		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.CUSTOMER);
+		Assert.isTrue(hasAu);
+		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		return this.complaintRepository.findFinalFromCustomer(c.getId());
+	}
+
+	/**
+	 * Checks customer authority (Req 35.1)
+	 * 
+	 * @return Collection of the drafted complaints related to the logged customer
+	 */
+	public Collection<Complaint> findDraftedFromLoggedCustomer() {
+		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.CUSTOMER);
+		Assert.isTrue(hasAu);
+		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		return this.complaintRepository.findDraftedFromCustomer(c.getId());
+	}
+
+	/**
 	 * Checks admin authority (Req 38.5.1)
 	 * 
 	 * @return Collection of complaints per fix up task statistics
