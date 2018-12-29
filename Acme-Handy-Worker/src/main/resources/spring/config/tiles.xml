@@ -26,6 +26,10 @@
 		<value>/views/administrator/tiles.xml</value>
 		<value>/views/customer/tiles.xml</value>
 		<value>/views/profile/tiles.xml</value>
+		<value>/views/fixuptask/tiles.xml</value>
+		<value>/views/box/tiles.xml</value>
+		<value>/views/message/tiles.xml</value>
+		
 	</util:list>
 
 </beans>
