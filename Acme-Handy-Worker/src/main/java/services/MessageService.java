@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.util.Assert;
 
 import repositories.MessageRepository;
 import security.LoginService;
+import security.UserAccount;
 import domain.Actor;
 import domain.Box;
 import domain.Message;
@@ -21,24 +23,33 @@ public class MessageService {
 
 	//The repository that we are managing
 	@Autowired
-	MessageRepository		msgRepository;
+	private MessageRepository	msgRepository;
 
 	//Auxiliary repositories
 	@Autowired
-	ActorService			aService;
+	private ActorService		aService;
 	@Autowired
-	BoxService				bService;
+	private BoxService			bService;
+
 	@Autowired
-	ConfigurationService	cService;
+	private SpamService			sService;
+
 	@Autowired
-	SpamService				sService;
+	private SpamService			spamService;
 
 
 	//CRUDs
-	public Message create() {
-		return new Message();
-	}
+	public Message create(final Actor sender) {
+		final Message m = new Message();
+		final Collection<Box> boxes = new ArrayList<>();
+		final Date d = new Date();
+		m.setSendTime(d);
+		m.setBoxes(boxes);
+		m.setReciever(sender);
+		m.setSender(sender);
+		return m;
 
+	}
 	public Collection<Message> findAll() {
 		final Collection<Message> all = this.msgRepository.findAll();
 		final Collection<Message> res = new ArrayList<>();
@@ -100,8 +111,37 @@ public class MessageService {
 		if (deleted.getBoxes().isEmpty())
 			this.msgRepository.delete(deleted);
 	}
-
 	public Message send(final Message msg, final Actor receiver) {
+		Assert.notNull(msg);
+		final UserAccount ua = LoginService.getPrincipal();
+		Message result = null;
+		final Actor sender = this.aService.findByUserAccountId(ua.getId());
+		if (msg.getId() != 0) {
+			final Message ac = this.findOne(msg.getId());
+			Assert.isTrue(msg.getSender().getAccount().equals(ua) || ac.getSender().getAccount().equals(msg.getSender().getAccount()) || msg.getReciever().getAccount().equals(ua) || ac.getReciever().getAccount().equals(ua));
+			ac.setBoxes(msg.getBoxes());
+			result = this.msgRepository.save(ac);
+		} else {
+			final Date lastTimeUpdated = new Date();
+			this.spamService.isSpam(sender, msg.getBody());
+			this.spamService.isSpam(sender, msg.getSubject());
+			msg.setReciever(receiver);
+			msg.setSender(sender);
+			msg.setSendTime(lastTimeUpdated);
+			final Collection<Box> boxes = new ArrayList<>();
+			final Box in = this.bService.findByName(sender.getId(), "OUT");
+			boxes.add(in);
+			msg.setBoxes(boxes);
+			result = this.msgRepository.save(msg);
+			final Collection<Message> messages = in.getMessages();
+			messages.add(result);
+			in.setMessages(messages);
+			this.bService.save(in);
+		}
+		return result;
+
+	}
+	public Message sends(final Message msg, final Actor receiver) {
 		final Actor sender = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		if (msg.getSender() != null)
 			Assert.isTrue(sender.equals(msg.getSender()));
