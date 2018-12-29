@@ -163,6 +163,16 @@ public class ComplaintService {
 		return this.complaintRepository.findFromHandyWorker(h.getId());
 	}
 
+	//======List complaints of a FixUpTask
+	/**
+	 * Lists all the complaints from a fixup task (Req 37.3)
+	 * 
+	 * @return Collection of the complaints related to a given FixUp Task
+	 */
+	public Collection<Complaint> findFromFixUpTask(final Integer id) {
+		Assert.isTrue(!LoginService.getPrincipal().getAuthorities().isEmpty());
+		return this.complaintRepository.findFromFixUpTask(id);
+	}
 	public int getNumberOfTickers(final String ticker) {
 		return this.complaintRepository.getNumberOfTickers(ticker);
 	}

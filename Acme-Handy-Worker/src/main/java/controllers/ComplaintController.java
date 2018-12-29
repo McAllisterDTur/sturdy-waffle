@@ -37,11 +37,6 @@ public class ComplaintController {
 	ActorService		aService;
 
 
-	//TODO: En el populate, una complaint drafted tiene report
-	//TODO: No salen los mensajes en los dialog boxes
-	//TODO: Probar como referee
-	//TODO: Probar como handy
-
 	@RequestMapping(value = "/customer/finalComplaints", method = RequestMethod.GET)
 	public ModelAndView listFinalComplaints() {
 		final Collection<Complaint> all = this.complaintService.findFinalFromLoggedCustomer();
@@ -79,6 +74,15 @@ public class ComplaintController {
 		result.addObject("complaints", all);
 		result.addObject("requestURI", "complaint/referee/myAssignedComplaints.do");
 		result.addObject("mine", true);
+		return result;
+	}
+
+	@RequestMapping(value = "/fromFixUpTask", method = RequestMethod.GET)
+	public ModelAndView listFromFixUpTask(@RequestParam final Integer id) {
+		final Collection<Complaint> all = this.complaintService.findFromFixUpTask(id);
+		final ModelAndView result = new ModelAndView("complaint/list");
+		result.addObject("complaints", all);
+		result.addObject("requestURI", "complaint/fromFixUpTask.do");
 		return result;
 	}
 
