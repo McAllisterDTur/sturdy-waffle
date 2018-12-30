@@ -12,7 +12,7 @@
 	<display:column property="fixUpTask.id" titleKey="application.task" />
 	<display:column property="registerTime" titleKey="application.registerTime" />
 	<display:column property="offeredPrice" titleKey="application.offeredPrice" />
-	<display:column property="status" titleKey="application.status" />
+	<display:column property="status" titleKey="application.status" class="${ row.status }"/>
 	<display:column>
 		<a href="application/handyworker/display.do?applicationId=${row.id}" ><spring:message code="application.see"/></a>
 	</display:column>

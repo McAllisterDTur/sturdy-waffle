@@ -1,0 +1,12 @@
+
+.ACCEPTED{
+	color: green;
+}
+
+.REJECTED{
+	color: red;
+}
+
+.PENDING{
+	color: goldenrod;
+}
