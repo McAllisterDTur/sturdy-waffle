@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +21,25 @@ import domain.Phase;
 public class PhaseService {
 
 	@Autowired
-	private PhaseRepository	repo;
+	private PhaseRepository		repo;
+	@Autowired
+	private ApplicationService	applicationService;
 
-	private UserAccount		account;
+	private UserAccount			account;
 
 
-	public Phase create() {
-		return new Phase();
+	public Phase create(final int applicationId) {
+
+		final Phase phase = new Phase();
+
+		phase.setTitle("");
+		phase.setDescription("");
+		phase.setStartTime(new Date());
+		phase.setEndTime(new Date());
+
+		phase.setApplication(this.applicationService.findOne(applicationId));
+
+		return phase;
 	}
 
 	public Phase save(final Phase phase) {
@@ -35,8 +48,9 @@ public class PhaseService {
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER));
 		//Verificamos que el creador de la phase sea el due�o de la application
 		Assert.isTrue(phase.getApplication().getHandyWorker().getAccount().getId() == this.account.getId());
-
-		return this.repo.save(phase);
+		final Phase res = this.repo.save(phase);
+		this.applicationService.findOne(res.getApplication().getId()).getPhases().add(res);
+		return res;
 	}
 
 	public Phase findOne(final int id) {

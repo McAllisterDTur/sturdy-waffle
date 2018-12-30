@@ -6,6 +6,20 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<security:authorize access="hasRole('HANDYWORKER')">
+<script type="text/javascript">
+	function search(){
+		var keyword = document.getElementById('keyword').value;
+		console.log(keyword);
+		window.location.href='/Acme-Handy-Worker/fixuptask/handyworker/list.do?keyword=' + keyword;
+	}
+</script>
+<input type="text" id="keyword" placeholder="Keyword"/>
+<button name="keyword" onClick="search()">
+	<spring:message code="fixuptask.search" />
+</button>
+</security:authorize>
+
 <% String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() :""; %>
 <jstl:set var="principal" value="<%= s %>"/>
 

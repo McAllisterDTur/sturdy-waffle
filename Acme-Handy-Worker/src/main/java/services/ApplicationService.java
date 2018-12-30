@@ -34,12 +34,20 @@ public class ApplicationService {
 	private HandyWorkerService		workerService;
 	@Autowired
 	private ActorService			actorService;
+	@Autowired
+	private FixUpTaskService		taskService;
 
 	private UserAccount				account;
 
 
-	public Application create() {
+	public Application create(final int fixuptaskId) {
+		this.account = LoginService.getPrincipal();
+		Assert.isTrue(this.account.getAuthorities().contains(Authority.HANDYWORKER));
 		final Application res = new Application();
+
+		res.setFixUpTask(this.taskService.findOne(fixuptaskId));
+
+		res.setHandyWorker((HandyWorker) this.actorService.findByUserAccountId(this.account.getId()));
 
 		res.setCustomerComments(new ArrayList<String>());
 		res.setHandyComments(new ArrayList<String>());
@@ -119,7 +127,7 @@ public class ApplicationService {
 		//Al comprobar el id, como no pueden exixtir dos usuarios con el mismo id, te certificas que ya es Worker, aun as�
 		Assert.isTrue(w.getAccount().getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER));
 
-		return this.applicationRepo.findAllCustomer(workerId);
+		return this.applicationRepo.findAllWorker(workerId);
 	}
 
 	public List<Object[]> statictisApplications() {

@@ -1,6 +1,8 @@
 
 package controllers;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -62,6 +64,25 @@ public class FixUpTaskController extends AbstractController {
 		result.addObject("requestURI", "/fixuptask/customer/list.do");
 		return result;
 
+	}
+
+	@RequestMapping(value = "/handyworker/list", method = RequestMethod.GET, params = "keyword")
+	public ModelAndView listHandySearch(@RequestParam final String keyword) {
+		ModelAndView result;
+		result = new ModelAndView("fixuptask/list");
+		Collection<FixUpTask> tasks;
+		try {
+			final String decodedKeyword = URLDecoder.decode(keyword, "UTF-8");
+			tasks = this.taskService.findByFilter(decodedKeyword);
+			result.addObject("requestURI", "/fixuptask/handyworker/list.do?keyword=" + keyword);
+			System.out.println("Decoded Keyword:" + decodedKeyword);
+		} catch (final UnsupportedEncodingException e) {
+			tasks = this.taskService.findAll();
+			result.addObject("requestURI", "/fixuptask/handyworker/list.do");
+		}
+		System.out.println("Tasks: " + tasks);
+		result.addObject("fixuptasks", tasks);
+		return result;
 	}
 
 	@RequestMapping(value = "/customer/create", method = RequestMethod.GET)
