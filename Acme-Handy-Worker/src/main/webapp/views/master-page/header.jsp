@@ -110,6 +110,9 @@
 					<li class="arrow"></li>
 					<li><a href="box/myBoxes.do"><spring:message code="master.page.messages.myBoxes" /></a></li>
 					<li><a href="message/new.do"><spring:message code="master.page.messages.new" /></a></li>
+					<security:authorize access="hasAnyRole('HANDYWORKER', 'CUSTOMER')">
+						<li><a href="endorsement/handyworker,customer/receivedEndorsements.do"><spring:message code="master.page.handyCus.myEndorsements" /></a></li>
+					</security:authorize>
 					<security:authorize access="hasRole('HANDYWORKER')">
 						<li><a href="complaint/handyworker/myComplaints.do"><spring:message code="master.page.handy.myComplaints" /></a></li>
 					</security:authorize>

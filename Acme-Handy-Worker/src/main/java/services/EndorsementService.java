@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,9 @@ public class EndorsementService {
 
 
 	public Endorsement create() {
-		return new Endorsement();
+		final Endorsement e = new Endorsement();
+		e.setWriteTime(new Date());
+		return e;
 	}
 
 	public Endorsement save(final Endorsement e) {
@@ -36,21 +39,20 @@ public class EndorsementService {
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue((AuthenticationUtility.checkAuthority(Authority.CUSTOMER)) || (AuthenticationUtility.checkAuthority(Authority.HANDYWORKER)));
 
-		if (e.getId() == 0)
-			if (AuthenticationUtility.checkAuthority(Authority.CUSTOMER)) {
-				final Customer sender = (Customer) e.getSender();
-				final HandyWorker reciever = (HandyWorker) e.getReciever();
+		if (AuthenticationUtility.checkAuthority(Authority.CUSTOMER)) {
+			final Customer sender = (Customer) e.getSender();
+			final HandyWorker reciever = (HandyWorker) e.getReciever();
 
-				final Collection<HandyWorker> res = this.endorsementRepository.getWorkerFromTask(sender.getId());
-				Assert.isTrue(res.contains(reciever));
+			final Collection<HandyWorker> res = this.endorsementRepository.getWorkerFromTask(sender.getId());
+			Assert.isTrue(res.contains(reciever));
 
-			} else if (AuthenticationUtility.checkAuthority(Authority.HANDYWORKER)) {
-				final Customer reciever = (Customer) e.getReciever();
-				final HandyWorker sender = (HandyWorker) e.getSender();
+		} else if (AuthenticationUtility.checkAuthority(Authority.HANDYWORKER)) {
+			final Customer reciever = (Customer) e.getReciever();
+			final HandyWorker sender = (HandyWorker) e.getSender();
 
-				final Collection<Customer> res = this.endorsementRepository.getCustomerFromTask(sender.getId());
-				Assert.isTrue(res.contains(reciever));
-			}
+			final Collection<Customer> res = this.endorsementRepository.getCustomerFromTask(sender.getId());
+			Assert.isTrue(res.contains(reciever));
+		}
 		return this.endorsementRepository.save(e);
 	}
 	public Endorsement findOne(final int endorsementId) {
@@ -98,5 +100,23 @@ public class EndorsementService {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER) || AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
 
 		return this.endorsementRepository.findAllEndorsable(endorId);
+	}
+
+	public Collection<Endorsement> findAllReceivedByEndorsable(final int endorId) {
+		Assert.isTrue(endorId > 0);
+
+		this.account = LoginService.getPrincipal();
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER) || AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
+
+		return this.endorsementRepository.findAllReceivedByEndorsable(endorId);
+	}
+
+	public Collection<Endorsement> findAllSentByEndorsable(final int endorId) {
+		Assert.isTrue(endorId > 0);
+
+		this.account = LoginService.getPrincipal();
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER) || AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
+
+		return this.endorsementRepository.findAllSentByEndorsable(endorId);
 	}
 }

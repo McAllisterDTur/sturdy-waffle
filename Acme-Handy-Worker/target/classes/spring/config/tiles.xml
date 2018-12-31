@@ -30,6 +30,7 @@
 		<value>/views/warranty/tiles.xml</value>
 		<value>/views/category/tiles.xml</value>
 		<value>/views/complaint/tiles.xml</value>
+		<value>/views/endorsement/tiles.xml</value>
 	</util:list>
 
 </beans>
