@@ -62,7 +62,7 @@ public class BoxService {
 		Assert.isTrue(LoginService.getPrincipal().equals(box.getOwner().getAccount()));
 		Assert.isTrue(box.getDeleteable());
 		for (final Message m : box.getMessages())
-			this.messageService.delete(m);
+			this.messageService.deleteMessages(m);
 		this.boxRepository.delete(box);
 	}
 
