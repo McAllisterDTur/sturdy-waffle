@@ -32,9 +32,6 @@ public class MessageService {
 	private BoxService			bService;
 
 	@Autowired
-	private SpamService			sService;
-
-	@Autowired
 	private SpamService			spamService;
 
 
@@ -42,6 +39,8 @@ public class MessageService {
 	public Message create(final Actor sender) {
 		final Message m = new Message();
 		final Collection<Box> boxes = new ArrayList<>();
+		final Collection<String> tags = new ArrayList<>();
+		m.setTags(tags);
 		final Date d = new Date();
 		m.setSendTime(d);
 		m.setBoxes(boxes);
@@ -67,33 +66,55 @@ public class MessageService {
 		return res;
 	}
 
-	public void delete(final Message msg) {
-		final Actor logged = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
-		Assert.isTrue(msg.getSender().equals(logged) || msg.getReciever().equals(logged));
-		final Collection<Box> boxesDeletor = this.bService.findByOwner(logged.getId());
-		final Collection<Box> boxesMsg = msg.getBoxes();
-		final Box trash = this.bService.findByName(logged.getId(), "TRASH");
-		final Collection<Message> trashMsg = this.findByBox(trash);
-		for (final Box b : boxesDeletor) {
-			final Collection<Message> msgs = this.findByBox(b);
-			if (msgs.contains(msg)) {
-				msgs.remove(msg);
-				b.setMessages(msgs);
+	public void delete(final Message msg, final Box box) {
+		Assert.notNull(msg);
+		Collection<Box> boxes;
+		Collection<Message> messages;
+		final UserAccount ua = LoginService.getPrincipal();
+		final Actor act = this.aService.findByUserAccountId(ua.getId());
+		final Message message = this.findOne(msg.getId());
+		final Box trashBox = this.bService.findByName(act.getId(), "TRASH");
+		final Box boxdelete = this.bService.findOne(box.getId());
+		Assert.isTrue(msg.getSender().getAccount().equals(ua) || message.getSender().getAccount().equals(msg.getSender().getAccount()) || msg.getReciever().getAccount().equals(ua) || message.getReciever().getAccount().equals(ua));
+		if (!(box.getName().equals("TRASH"))) {
+			//Tratamos el mensaje
+			boxes = message.getBoxes();
+			boxes.remove(boxdelete);
+			boxes.add(trashBox);
+			message.setBoxes(boxes);
+			this.msgRepository.save(message);
+			//Tratamos los buzones
+			messages = boxdelete.getMessages();
+			messages.remove(message);
+			boxdelete.setMessages(messages);
+			this.bService.save(boxdelete);
+			messages = trashBox.getMessages();
+			messages.add(message);
+			trashBox.setMessages(messages);
+			this.bService.save(trashBox);
+		} else {
+			//Tratamos los mensajes y buzones
+			boxes = message.getBoxes();
+			final Collection<Box> boxesAct = this.bService.findByOwner(act.getId());
+			boxes.removeAll(boxesAct);
+			for (final Box b : boxesAct) {
+				final Collection<Message> mensajes = b.getMessages();
+				mensajes.remove(message);
+				b.setMessages(mensajes);
 				this.bService.save(b);
-				boxesMsg.remove(msg);
+			}
+			if (boxes.isEmpty())
+				this.msgRepository.delete(message.getId());
+			else {
+				message.setBoxes(boxes);
+				this.msgRepository.save(message);
 			}
 		}
-		boxesMsg.add(trash);
-		msg.setBoxes(boxesMsg);
-		trashMsg.add(msg);
-		trash.setMessages(trashMsg);
-		this.msgRepository.save(msg);
-		this.bService.save(trash);
 
 	}
 	//Other methods
 
-	public void deleteFromTrash(final Message msg) {
+	public void deleteMessages(final Message msg) {
 		final Actor logged = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.isTrue(msg.getSender().equals(logged) || msg.getReciever().equals(logged));
 		final Message tosupr = this.findOne(msg.getId());
@@ -111,6 +132,7 @@ public class MessageService {
 		if (deleted.getBoxes().isEmpty())
 			this.msgRepository.delete(deleted);
 	}
+
 	public Message send(final Message msg, final Actor receiver) {
 		Assert.notNull(msg);
 		final UserAccount ua = LoginService.getPrincipal();
@@ -141,38 +163,52 @@ public class MessageService {
 		return result;
 
 	}
-	public Message sends(final Message msg, final Actor receiver) {
-		final Actor sender = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
-		if (msg.getSender() != null)
-			Assert.isTrue(sender.equals(msg.getSender()));
-		else
-			msg.setSender(sender);
-		msg.setReciever(receiver);
-		final Message saved = this.msgRepository.save(msg);
 
-		final Box in = this.bService.findByName(receiver.getId(), "IN");
-		Collection<Message> inMsg = in.getMessages();
-		if (inMsg == null)
-			inMsg = new ArrayList<>();
-		inMsg.add(saved);
-		in.setMessages(inMsg);
-		this.bService.save(in);
+	//	public Message copy(final Message msg) {
+	//		//Comprobaciones de seguridad
+	//		Assert.notNull(msg);
+	//		final UserAccount ua = LoginService.getPrincipal();
+	//		Message result = null;
+	//		final Message ac = this.findOne(msg.getId());
+	//		final Collection<Box> originalBoxes = ac.getBoxes();
+	//		Assert.isTrue(msg.getSender().getAccount().equals(ua) || ac.getSender().getAccount().equals(msg.getSender().getAccount()) || msg.getReciever().getAccount().equals(ua) || ac.getReciever().getAccount().equals(ua));
+	//		final Actor actor = this.aService.findByUserAccountId(ua.getId());
+	//		//Comprobamos que el box agregado pertenezca al usuario
+	//		final Collection<Box> autoBox = this.bService.findByOwner(actor.getId());
+	//		final Collection<Box> newBox = msg.getBoxes();
+	//		newBox.removeAll(originalBoxes);
+	//		Assert.isTrue(autoBox.contains(newBox.iterator().next()));
+	//		ac.getBoxes().addAll(msg.getBoxes());
+	//		final Collection<Box> boxes = msg.getBoxes();
+	//		boxes.add(newBox.iterator().next());
+	//		msg.setBoxes(boxes);
+	//		result = this.msgRepository.save(msg);
+	//		final Collection<Message> messages = newBox.iterator().next().getMessages();
+	//		messages.add(msg);
+	//		newBox.iterator().next().setMessages(messages);
+	//		this.bService.save(newBox.iterator().next());
+	//		return result;
+	//	}
 
-		final Boolean spam = this.sService.isSpam(msg.getSender(), msg.getBody());
-		Box send;
-		if (spam)
-			send = this.bService.findByName(sender.getId(), "SPAM");
-		else
-			send = this.bService.findByName(sender.getId(), "OUT");
-		Collection<Message> outMsg = send.getMessages();
-		if (outMsg == null)
-			outMsg = new ArrayList<>();
-		outMsg.add(saved);
-		send.setMessages(outMsg);
-		this.bService.save(send);
-
-		return saved;
+	public Message copy(final Message msg) {
+		Assert.notNull(msg);
+		final UserAccount ua = LoginService.getPrincipal();
+		Message result = null;
+		final Message ac = this.findOne(msg.getId());
+		Assert.isTrue(msg.getSender().getAccount().equals(ua) || ac.getSender().getAccount().equals(msg.getSender().getAccount()) || msg.getReciever().getAccount().equals(ua) || ac.getReciever().getAccount().equals(ua));
+		final Actor actor = this.aService.findByUserAccountId(ua.getId());
+		//Comprobamos que el box agregado pertenezca al usuario
+		final Collection<Box> autoBox = this.bService.findByOwner(actor.getId());
+		final Collection<Box> newBox = msg.getBoxes();
+		Assert.isTrue(autoBox.containsAll(newBox));
+		//Editamos el mensaje con solo los buzones
+		final Collection<Box> nuevosBuzones = ac.getBoxes();
+		nuevosBuzones.addAll(newBox);
+		ac.setBoxes(nuevosBuzones);
+		result = this.msgRepository.save(ac);
+		return result;
 	}
+
 	public Collection<Message> findByBox(final Box b) {
 		try {
 			return this.msgRepository.findByBox(b.getId());

@@ -42,11 +42,6 @@
 <jstl:out value="${messageO.body}" />
 <br />
 
-<button
-	onClick="window.location.href='/Acme-Handy-Worker/message/delete.do?messageId=${messageO.id}'">
-	<spring:message code="message.delete" />
-</button>
-
 <button onClick="window.location.href='/Acme-Handy-Worker/box/list.do'">
 	<spring:message code="message.cancel" />
 </button>

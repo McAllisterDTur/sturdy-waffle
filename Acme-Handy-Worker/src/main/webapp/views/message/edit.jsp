@@ -8,21 +8,31 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<script type='text/javascript'>
+	function addFields() {
+		// Container <div> where dynamic content will be placed
+		var container = document.getElementById("container");
+		// Create an <input> element, set its type and name attributes
+		var input = document.createElement("input");
+		input.type = "text";
+		input.name = "law";
+		container.appendChild(input);
+	}
+</script>
+
 <%
 	String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() : "";
 %>
 <jstl:set var="principal" value="<%=s%>" />
 
-<form:form action="message/edit.do" modelAttribute="messageO">
+
+<form:form action="message/save.do" modelAttribute="messageO">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="sender" />
 	<form:hidden path="sendTime" />
-
-	<jstl:forEach var="box" items="${message.boxes}">
-		<form:hidden path="boxes" value="${box.id}" />
-	</jstl:forEach>
+	<form:hidden path="boxes" value="${box}" />
 
 	<h3>
 		<spring:message code="message.create" />
@@ -34,12 +44,14 @@
 	<form:errors path="subject" />
 	<br />
 
-	<b><form:label path="reciever">
-			<spring:message code="message.actor.reciever" />:&nbsp;</form:label></b>
+	<form:label path="reciever">
+		<spring:message code="message.actor.reciever" />:&nbsp;</form:label>
 	<form:select path="reciever">
 		<form:option label="----" value="0" />
 		<jstl:forEach var="act" items="${actors}">
-			<form:option value="${act.id}"  label="${act.account.username}"/>
+			<jstl:if test="${act.account.username != principal}">
+				<form:option value="${act.id}" label="${act.account.username}" />
+			</jstl:if>
 		</jstl:forEach>
 	</form:select>
 	<form:errors path="reciever" />
@@ -55,26 +67,34 @@
 	<form:errors path="priority" />
 	<br />
 
-	<form:label path="tags">
+	<%-- 	<form:label path="tags">
 		<spring:message code="message.tags" />:</form:label>
 	<form:input path="tags" />
 	<form:errors path="tags" />
-	<br />
+	<br /> --%>
+
+	<spring:message code="message.tags" />
+		:
+		<button type="button" onClick="addFields()">
+		<spring:message code="message.tags" />
+	</button>
+	<div id="container"></div>
+	<jstl:forEach items="${messageO.tags}" var="tag">
+		<input name=tags value="${tag}" />
+	</jstl:forEach>
+	<form:errors path="tags" cssClass="error" />
 
 	<form:label path="body">
 		<spring:message code="message.body" />:</form:label>
-	<form:input path="body" />
+	<form:textarea path="body" />
 	<form:errors path="body" />
 	<br />
 
-	<jstl:if test="${messageO.sender.account.username == principal}">
-		<button
-			onClick="window.location.href='/Acme-Handy-Worker/message/save.do?id=${messageO.id}'">
-			<spring:message code="message.save" />
-		</button>
-	</jstl:if>
+	<input type="submit" name="save"
+		value="<spring:message code="message.save"/>" />
 
-	<jstl:if test="${message.sender.account.username == principal}">
+
+	<jstl:if test="${messageO.sender.account.username == principal}">
 		<button
 			onClick="window.location.href='/Acme-Handy-Worker/box/list.do'">
 			<spring:message code="message.cancel" />

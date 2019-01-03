@@ -33,9 +33,15 @@
 			<spring:message code="message.display" />
 		</button>
 	</display:column>
+		<display:column>
+		<button
+			onClick="window.location.href='/Acme-Handy-Worker/message/copy.do?messageId=${row.id}'">
+			<spring:message code="message.edit" />
+		</button>
+	</display:column>
 	<display:column>
 		<button
-			onClick="window.location.href='/Acme-Handy-Worker/message/delete.do?messageId=${row.id}'">
+			onClick="window.location.href='/Acme-Handy-Worker/message/delete.do?messageId=${row.id}&boxId=${box.id}'">
 			<spring:message code="message.delete" />
 		</button>
 	</display:column>

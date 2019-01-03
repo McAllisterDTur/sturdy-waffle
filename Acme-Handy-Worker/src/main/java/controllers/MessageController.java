@@ -48,42 +48,48 @@ public class MessageController extends AbstractController {
 		final Collection<Message> messages = this.messageService.findByBox(b);
 		result = new ModelAndView("message/list");
 		result.addObject("messages", messages);
+		result.addObject("box", b);
 		result.addObject("requestURI", "/message/list.do");
 		return result;
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView deleteBox(@RequestParam final int messId) {
+	public ModelAndView deleteBox(@RequestParam final int messageId, @RequestParam final int boxId) {
 		ModelAndView result;
 		try {
-			final Message message = this.messageService.findOne(messId);
-			this.messageService.delete(message);
-			result = new ModelAndView("redirect:list.do");
+			final Message message = this.messageService.findOne(messageId);
+			final Box box = this.boxService.findOne(boxId);
+			this.messageService.delete(message, box);
+			result = new ModelAndView("redirect:list.do?boxId=" + boxId);
 		} catch (final Throwable opps) {
-			result = new ModelAndView("box/list");
+			result = new ModelAndView("redirect:list.do?boxId=" + boxId);
 			result.addObject("messageCode", "box.commit.error");
 		}
 		return result;
 	}
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public ModelAndView saveMessage(@Valid final Message message, final BindingResult binding) {
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public ModelAndView saveMessage(@Valid final Message messageO, final BindingResult binding) {
+		System.out.println("El mensaje es -> " + messageO);
 		ModelAndView result;
 		if (binding.hasErrors()) {
 			System.out.println(binding.getFieldErrors());
 			result = new ModelAndView("message/edit");
-			result.addObject("messageO", message);
+			result.addObject("messageO", messageO);
 			final Collection<Actor> actores = this.actorService.findAll();
 			result.addObject("actors", actores);
 		} else
 			try {
-				final String username = message.getReciever().getAccount().getUsername();
+				final String username = messageO.getReciever().getAccount().getUsername();
 				final UserAccount accountId = this.userAccountService.findByName(username);
 				final Actor actor = this.actorService.findByUserAccountId(accountId.getId());
-				this.messageService.send(message, actor);
-				final Box bout = this.boxService.findByName(actor.getId(), "OUT");
+				this.messageService.send(messageO, actor);
+				final UserAccount account = LoginService.getPrincipal();
+				final Actor sender = this.actorService.findByUserAccountId(account.getId());
+				final Box bout = this.boxService.findByName(sender.getId(), "OUT");
 				result = new ModelAndView("redirect:list.do?boxId=" + bout.getId());
 			} catch (final Throwable opps) {
 				result = new ModelAndView("message/edit");
+				result.addObject("messageO", messageO);
 				result.addObject("messageCode", "message.commit.error");
 			}
 		return result;
@@ -96,8 +102,36 @@ public class MessageController extends AbstractController {
 
 		message = this.messageService.findOne(messageId);
 		Assert.notNull(message);
-		result = new ModelAndView("box/edit");
+		result = new ModelAndView("message/edit");
 		result.addObject("messageO", message);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/copy", method = RequestMethod.POST)
+	public ModelAndView copyMessage(final Message message) {
+		ModelAndView result;
+		try {
+			this.messageService.copy(message);
+			result = new ModelAndView("redirect:box/list.do");
+		} catch (final Throwable opps) {
+			result = new ModelAndView("message/copy");
+			result.addObject("messageCode", "message.commit.error");
+		}
+		return result;
+	}
+	@RequestMapping(value = "/copy", method = RequestMethod.GET)
+	public ModelAndView displayCopy(@RequestParam final int messageId) {
+		final ModelAndView result;
+		Message message;
+		message = this.messageService.findOne(messageId);
+		Assert.notNull(message);
+		final UserAccount account = LoginService.getPrincipal();
+		final Actor actor = this.actorService.findByUserAccountId(account.getId());
+		final Collection<Box> boxes = this.boxService.findByOwner(actor.getId());
+		result = new ModelAndView("message/copy");
+		result.addObject("messageO", message);
+		result.addObject("boxes", boxes);
 
 		return result;
 	}
@@ -106,12 +140,10 @@ public class MessageController extends AbstractController {
 	public ModelAndView displayMessage(@RequestParam final int messageId) {
 		final ModelAndView result;
 		Message message;
-
 		message = this.messageService.findOne(messageId);
 		Assert.notNull(message);
 		result = new ModelAndView("message/display");
 		result.addObject("messageO", message);
-
 		return result;
 	}
 
