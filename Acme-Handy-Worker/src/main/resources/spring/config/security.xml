@@ -50,6 +50,7 @@
 		<security:intercept-url pattern="/complaint/referee/**" access="hasRole('REFEREE')" />
 		<security:intercept-url pattern="/complaint/handyworker/**" access="hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/endorsement/handyworker,customer/**" access="hasAnyRole('HANDYWORKER', 'CUSTOMER')" />
+		<security:intercept-url pattern="/etc/**" access="permitAll" />
 
 		<security:intercept-url pattern="/fixuptask/handyworker/list.do" access="hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/fixuptask/customer/list.do" access="hasRole('CUSTOMER')" />

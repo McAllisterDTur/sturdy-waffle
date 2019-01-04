@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import services.ActorService;
+import services.ConfigurationService;
 import services.EndorsableService;
 import services.EndorsementService;
 import domain.Actor;
@@ -23,14 +24,14 @@ import domain.Endorsement;
 public class EndorsementController {
 
 	@Autowired
-	EndorsementService	endoService;
+	EndorsementService		endoService;
 	@Autowired
-	EndorsableService	endorsableService;
+	EndorsableService		endorsableService;
 	@Autowired
-	ActorService		aService;
+	ActorService			aService;
+	@Autowired
+	ConfigurationService	cService;
 
-
-	//TODO: No recoge bien los customers de un handyworker
 
 	@RequestMapping(value = "/handyworker,customer/receivedEndorsements", method = RequestMethod.GET)
 	public ModelAndView listReceivedEndorsements() {
@@ -40,6 +41,7 @@ public class EndorsementController {
 		result.addObject("endorsements", all);
 		result.addObject("forMe", true);
 		result.addObject("requestURI", "endorsement/handyworker,customer/receivedEndorsements.do");
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -51,6 +53,7 @@ public class EndorsementController {
 		result.addObject("endorsements", all);
 		result.addObject("forMe", false);
 		result.addObject("requestURI", "endorsement/handyworker,customer/sentEndorsements.do");
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -62,6 +65,7 @@ public class EndorsementController {
 		e.setSender(this.endorsableService.findOne(a.getId()));
 		result.addObject("endorsement", e);
 		result.addObject("users", this.endorsableService.findAllWorkedWith(a.getId()));
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -77,6 +81,7 @@ public class EndorsementController {
 			result.addObject("endorsement", e);
 			result.addObject("users", this.endorsableService.findAllWorkedWith(ida));
 		}
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 	@RequestMapping(value = "/handyworker,customer/save", method = RequestMethod.POST, params = "save")
@@ -93,6 +98,7 @@ public class EndorsementController {
 				result = new ModelAndView("endorsement/edit");
 				result.addObject("success", false);
 			}
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -112,6 +118,7 @@ public class EndorsementController {
 			result = new ModelAndView("redirect:receivedEndorsements.do");
 			result.addObject("success", false);
 		}
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -130,6 +137,7 @@ public class EndorsementController {
 			result = new ModelAndView("redirect:sentEndorsements.do");
 			result.addObject("success", false);
 		}
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 

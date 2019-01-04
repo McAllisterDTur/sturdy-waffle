@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.CategoryService;
+import services.ConfigurationService;
 import domain.Category;
 
 @Controller
@@ -23,7 +24,9 @@ import domain.Category;
 public class CategoryController {
 
 	@Autowired
-	CategoryService	cService;
+	CategoryService			cService;
+	@Autowired
+	ConfigurationService	conService;
 
 
 	@RequestMapping(value = "/administrator/list", method = RequestMethod.GET)
@@ -33,6 +36,7 @@ public class CategoryController {
 		result.addObject("categories", all);
 		final Locale locale = LocaleContextHolder.getLocale();
 		result.addObject("lang", locale.getLanguage());
+		result.addObject("bannerURL", this.conService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -42,6 +46,7 @@ public class CategoryController {
 		final ModelAndView result = new ModelAndView("category/edit");
 		result.addObject("category", c);
 		result.addObject("categories", this.cService.findAll());
+		result.addObject("bannerURL", this.conService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -59,6 +64,7 @@ public class CategoryController {
 				result = new ModelAndView("category/edit");
 				result.addObject("success", false);
 			}
+		result.addObject("bannerURL", this.conService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -73,6 +79,7 @@ public class CategoryController {
 			result.addObject("category", c);
 			result.addObject("categories", this.cService.findAll());
 		}
+		result.addObject("bannerURL", this.conService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -88,6 +95,7 @@ public class CategoryController {
 			result = new ModelAndView("redirect:list.do");
 			result.addObject("success", false);
 		}
+		result.addObject("bannerURL", this.conService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -103,6 +111,7 @@ public class CategoryController {
 			result = new ModelAndView("redirect:list.do");
 			result.addObject("success", false);
 		}
+		result.addObject("bannerURL", this.conService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 

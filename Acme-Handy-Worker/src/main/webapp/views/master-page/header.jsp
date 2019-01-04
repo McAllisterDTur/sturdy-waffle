@@ -14,7 +14,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <div>
-	<img src="${configuration.banner}" alt="Smiley face" height="200">
+	<img src="${bannerURL}" alt="Welcome to ACME Handy-Worker" height="200">
 </div>
 
 <div>

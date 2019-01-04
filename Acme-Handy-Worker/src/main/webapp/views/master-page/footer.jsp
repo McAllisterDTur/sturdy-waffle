@@ -17,9 +17,9 @@
 
 <hr />
 <p>
-	<a href="license"><spring:message code="master.page.footer.license"/></a> |
-	<a href="about"><spring:message code="master.page.footer.about"/></a> |
+	<a href="etc/license.do"><spring:message code="master.page.footer.license"/></a> |
+	<a href="etc/about.do"><spring:message code="master.page.footer.about"/></a> |
 	<a href="http://www.us.es"><spring:message code="master.page.footer.us"/></a> |
 	<a href="mailto:contact.hw@acme.co"><spring:message code="master.page.footer.contact"/></a>
 </p>
-<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme Handy-Worker Co.</b>
+<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> ACME Co.</b>

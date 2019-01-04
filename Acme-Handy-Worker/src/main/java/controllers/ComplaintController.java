@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import services.ActorService;
 import services.ComplaintService;
+import services.ConfigurationService;
 import services.FixUpTaskService;
 import services.HandyWorkerService;
 import services.RefereeService;
@@ -26,15 +27,17 @@ import domain.Complaint;
 public class ComplaintController {
 
 	@Autowired
-	ComplaintService	complaintService;
+	ComplaintService		complaintService;
 	@Autowired
-	FixUpTaskService	futService;
+	FixUpTaskService		futService;
 	@Autowired
-	HandyWorkerService	hwService;
+	HandyWorkerService		hwService;
 	@Autowired
-	RefereeService		rService;
+	RefereeService			rService;
 	@Autowired
-	ActorService		aService;
+	ActorService			aService;
+	@Autowired
+	ConfigurationService	cService;
 
 
 	@RequestMapping(value = "/customer/finalComplaints", method = RequestMethod.GET)
@@ -44,6 +47,7 @@ public class ComplaintController {
 		result.addObject("complaints", all);
 		result.addObject("requestURI", "complaint/customer/finalComplaints.do");
 		result.addObject("draft", false);
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -54,6 +58,7 @@ public class ComplaintController {
 		result.addObject("complaints", all);
 		result.addObject("requestURI", "complaint/customer/draftedComplaints.do");
 		result.addObject("draft", true);
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -64,6 +69,7 @@ public class ComplaintController {
 		result.addObject("complaints", all);
 		result.addObject("requestURI", "complaint/referee/unassignedComplaints.do");
 		result.addObject("mine", false);
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -74,6 +80,7 @@ public class ComplaintController {
 		result.addObject("complaints", all);
 		result.addObject("requestURI", "complaint/referee/myAssignedComplaints.do");
 		result.addObject("mine", true);
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -83,6 +90,7 @@ public class ComplaintController {
 		final ModelAndView result = new ModelAndView("complaint/list");
 		result.addObject("complaints", all);
 		result.addObject("requestURI", "complaint/fromFixUpTask.do");
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -92,6 +100,7 @@ public class ComplaintController {
 		final ModelAndView result = new ModelAndView("complaint/list");
 		result.addObject("complaints", all);
 		result.addObject("requestURI", "complaint/handyworker/myComplaints.do");
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -103,6 +112,7 @@ public class ComplaintController {
 		result.addObject("futs", this.futService.findFromLoggedCustomer());
 		final Locale locale = LocaleContextHolder.getLocale();
 		result.addObject("lang", locale.getLanguage());
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -119,6 +129,7 @@ public class ComplaintController {
 			final Locale locale = LocaleContextHolder.getLocale();
 			result.addObject("lang", locale.getLanguage());
 		}
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -130,7 +141,7 @@ public class ComplaintController {
 			c.setReferee(this.rService.findOne(this.aService.findByUserAccountId(LoginService.getPrincipal().getId()).getId()));
 			this.complaintService.save(c);
 		}
-
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 	@RequestMapping(value = "/customer/saveFinal", method = RequestMethod.POST)
@@ -148,6 +159,7 @@ public class ComplaintController {
 				result = new ModelAndView("warranty/edit");
 				result.addObject("success", false);
 			}
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -166,6 +178,7 @@ public class ComplaintController {
 				result = new ModelAndView("warranty/edit");
 				result.addObject("success", false);
 			}
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -188,6 +201,7 @@ public class ComplaintController {
 			result = new ModelAndView("redirect:#");
 			result.addObject("success", false);
 		}
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 }

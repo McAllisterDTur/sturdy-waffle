@@ -14,18 +14,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.LoginService;
-import security.UserAccount;
 import services.ActorService;
 import services.ConfigurationService;
 
 @Controller
-@RequestMapping("/welcome")
-public class WelcomeController extends AbstractController {
+@RequestMapping("/etc")
+public class EtcController extends AbstractController {
 
 	@Autowired
 	ActorService			aService;
@@ -35,36 +34,36 @@ public class WelcomeController extends AbstractController {
 
 	// Constructors -----------------------------------------------------------
 
-	public WelcomeController() {
+	public EtcController() {
 		super();
 	}
 
-	// Index ------------------------------------------------------------------		
-
-	@RequestMapping(value = "/index")
-	public ModelAndView index() {
+	@RequestMapping(value = "/license")
+	public ModelAndView license() {
 		ModelAndView result;
 		SimpleDateFormat formatter;
-		String moment;
-		String name;
+		String year;
 
-		try {
-			final UserAccount logged = LoginService.getPrincipal();
-			if (logged == null)
-				name = "";
-			else
-				name = " " + this.aService.findByUserAccountId(logged.getId()).getName();
-		} catch (final Throwable oops) {
-			name = "";
-		}
+		result = new ModelAndView("etc/license");
+		formatter = new SimpleDateFormat("yyyy");
+		year = formatter.format(new Date());
 
-		formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		moment = formatter.format(new Date());
-
-		result = new ModelAndView("welcome/index");
-		result.addObject("name", name);
-		result.addObject("moment", moment);
+		result.addObject("year", year);
+		result.addObject("locale", LocaleContextHolder.getLocale().getLanguage());
 		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+
+		return result;
+	}
+
+	@RequestMapping(value = "/about")
+	public ModelAndView about() {
+		ModelAndView result;
+
+		result = new ModelAndView("etc/about");
+
+		result.addObject("locale", LocaleContextHolder.getLocale().getLanguage());
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+
 		return result;
 	}
 }

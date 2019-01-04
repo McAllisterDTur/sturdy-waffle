@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import services.ActorService;
 import services.AdministratorService;
+import services.ConfigurationService;
 import services.CustomerService;
 import services.HandyWorkerService;
 import services.RefereeService;
@@ -40,13 +41,15 @@ public class ProfileController extends AbstractController {
 	@Autowired
 	HandyWorkerService		hwService;
 	@Autowired
-	CustomerService			cService;
+	CustomerService			custoService;
 	@Autowired
 	RefereeService			rService;
 	@Autowired
 	SponsorService			sService;
 	@Autowired
 	AdministratorService	adminService;
+	@Autowired
+	ConfigurationService	cService;
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -66,6 +69,7 @@ public class ProfileController extends AbstractController {
 			res.addObject("actor", actor);
 			res.addObject("handy", false);
 		}
+		res.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return res;
 	}
 
@@ -80,7 +84,7 @@ public class ProfileController extends AbstractController {
 		try {
 			switch (role) {
 			case "CUSTOMER":
-				final Customer c = this.cService.findOne(id);
+				final Customer c = this.custoService.findOne(id);
 				c.setAddress(actor.getAddress());
 				c.setEmail(actor.getEmail());
 				c.setMiddleName(actor.getMiddleName());
@@ -88,7 +92,7 @@ public class ProfileController extends AbstractController {
 				c.setPhone(actor.getPhone());
 				c.setPhotoURL(actor.getPhotoURL());
 				c.setSurname(actor.getSurname());
-				this.cService.save(c);
+				this.custoService.save(c);
 				break;
 			case "ADMIN":
 				final Administrator admin = this.adminService.findOne(id);
@@ -133,6 +137,7 @@ public class ProfileController extends AbstractController {
 			return result;
 		}
 		result.addObject("success", true);
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -162,9 +167,10 @@ public class ProfileController extends AbstractController {
 		} catch (final Throwable oops) {
 			result.addObject("success", false);
 			oops.printStackTrace();
+			result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 			return result;
 		}
-
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -178,7 +184,7 @@ public class ProfileController extends AbstractController {
 		result.addObject("logged", true);
 		if (role.equals("CUSTOMER")) {
 			result.addObject("endorsable", true);
-			result.addObject("score", this.cService.findOne(actor.getId()).getScore());
+			result.addObject("score", this.custoService.findOne(actor.getId()).getScore());
 			result.addObject("handy", false);
 		} else if (role.equals("HANDYWORKER")) {
 			result.addObject("handy", true);
@@ -189,6 +195,7 @@ public class ProfileController extends AbstractController {
 			result.addObject("endorsable", false);
 			result.addObject("handy", false);
 		}
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -206,7 +213,7 @@ public class ProfileController extends AbstractController {
 			result.addObject("logged", false);
 		if (role.equals("CUSTOMER")) {
 			result.addObject("endorsable", true);
-			result.addObject("score", this.cService.findOne(id).getScore());
+			result.addObject("score", this.custoService.findOne(id).getScore());
 			result.addObject("handy", false);
 		} else if (role.equals("HANDYWORKER")) {
 			result.addObject("handy", true);
@@ -217,6 +224,7 @@ public class ProfileController extends AbstractController {
 			result.addObject("endorsable", false);
 			result.addObject("handy", false);
 		}
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -226,6 +234,7 @@ public class ProfileController extends AbstractController {
 		final Actor a = this.actorService.findOne(id);
 		if (!a.getBanned())
 			this.actorService.ban(a);
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -235,6 +244,7 @@ public class ProfileController extends AbstractController {
 		final Actor a = this.actorService.findOne(id);
 		if (a.getBanned())
 			this.actorService.unban(a);
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 

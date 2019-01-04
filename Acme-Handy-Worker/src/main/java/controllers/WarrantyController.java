@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ConfigurationService;
 import services.WarrantyService;
 import domain.Warranty;
 
@@ -21,7 +22,9 @@ import domain.Warranty;
 public class WarrantyController {
 
 	@Autowired
-	WarrantyService	wService;
+	WarrantyService			wService;
+	@Autowired
+	ConfigurationService	cService;
 
 
 	@RequestMapping(value = "/administrator/list", method = RequestMethod.GET)
@@ -29,6 +32,7 @@ public class WarrantyController {
 		final Collection<Warranty> all = this.wService.findAll();
 		final ModelAndView result = new ModelAndView("warranty/list");
 		result.addObject("warranties", all);
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 
 	}
@@ -38,6 +42,7 @@ public class WarrantyController {
 		final Warranty w = this.wService.create();
 		final ModelAndView result = new ModelAndView("warranty/edit");
 		result.addObject("warranty", w);
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 
 	}
@@ -56,6 +61,7 @@ public class WarrantyController {
 				result = new ModelAndView("warranty/edit");
 				result.addObject("success", false);
 			}
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -74,6 +80,7 @@ public class WarrantyController {
 				result = new ModelAndView("warranty/edit");
 				result.addObject("success", false);
 			}
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -87,6 +94,7 @@ public class WarrantyController {
 			result = new ModelAndView("warranty/edit");
 			result.addObject("warranty", w);
 		}
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -102,6 +110,7 @@ public class WarrantyController {
 			result = new ModelAndView("redirect:list.do");
 			result.addObject("success", false);
 		}
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -117,6 +126,7 @@ public class WarrantyController {
 			result = new ModelAndView("redirect:list.do");
 			result.addObject("success", false);
 		}
+		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 }
