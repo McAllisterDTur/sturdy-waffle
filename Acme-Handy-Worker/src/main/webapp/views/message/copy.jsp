@@ -24,7 +24,6 @@
 	<form:hidden path="body" />
 	<form:hidden path="priority" />
 	<form:hidden path="tags" />
-	<form:hidden path="boxes" />
 	
 	<form:label path="boxes">
 		<spring:message code="message.list.boxes" />:&nbsp;</form:label>

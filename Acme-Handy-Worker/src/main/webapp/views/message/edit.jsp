@@ -15,7 +15,7 @@
 		// Create an <input> element, set its type and name attributes
 		var input = document.createElement("input");
 		input.type = "text";
-		input.name = "law";
+		input.name = "tags";
 		container.appendChild(input);
 	}
 </script>

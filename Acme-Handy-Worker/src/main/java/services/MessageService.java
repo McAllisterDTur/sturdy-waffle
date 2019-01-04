@@ -4,6 +4,8 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -144,26 +146,37 @@ public class MessageService {
 			ac.setBoxes(msg.getBoxes());
 			result = this.msgRepository.save(ac);
 		} else {
+			Box out;
 			final Date lastTimeUpdated = new Date();
-			this.spamService.isSpam(sender, msg.getBody());
-			this.spamService.isSpam(sender, msg.getSubject());
+			if (this.spamService.isSpam(sender, msg.getBody()) || this.spamService.isSpam(sender, msg.getSubject())) {
+				out = null;
+				out = this.bService.findByName(receiver.getId(), "SPAM");
+			} else
+				out = this.bService.findByName(receiver.getId(), "OUT");
+			//Modificamos el mensaje
 			msg.setReciever(receiver);
 			msg.setSender(sender);
 			msg.setSendTime(lastTimeUpdated);
 			final Collection<Box> boxes = new ArrayList<>();
 			final Box in = this.bService.findByName(sender.getId(), "OUT");
 			boxes.add(in);
+			boxes.add(out);
 			msg.setBoxes(boxes);
 			result = this.msgRepository.save(msg);
-			final Collection<Message> messages = in.getMessages();
-			messages.add(result);
-			in.setMessages(messages);
+			//Modificamos el buzon out
+			final Collection<Message> messagesIn = in.getMessages();
+			messagesIn.add(result);
+			in.setMessages(messagesIn);
 			this.bService.save(in);
+			//Modificamos el buzon in
+			final Collection<Message> messagesOut = out.getMessages();
+			messagesOut.add(result);
+			out.setMessages(messagesOut);
+			this.bService.save(out);
 		}
 		return result;
 
 	}
-
 	//	public Message copy(final Message msg) {
 	//		//Comprobaciones de seguridad
 	//		Assert.notNull(msg);
@@ -199,16 +212,17 @@ public class MessageService {
 		final Actor actor = this.aService.findByUserAccountId(ua.getId());
 		//Comprobamos que el box agregado pertenezca al usuario
 		final Collection<Box> autoBox = this.bService.findByOwner(actor.getId());
-		final Collection<Box> newBox = msg.getBoxes();
-		Assert.isTrue(autoBox.containsAll(newBox));
-		//Editamos el mensaje con solo los buzones
-		final Collection<Box> nuevosBuzones = ac.getBoxes();
-		nuevosBuzones.addAll(newBox);
-		ac.setBoxes(nuevosBuzones);
+		Collection<Box> newBox = msg.getBoxes();
+		final Set<Box> unique = new HashSet<>(newBox);
+		newBox = unique;
+		final Collection<Box> compr = ac.getBoxes();
+		compr.removeAll(newBox);
+		Assert.isTrue(autoBox.containsAll(compr));
+		ac.setBoxes(newBox);
 		result = this.msgRepository.save(ac);
+		//Editamos los buzones
 		return result;
 	}
-
 	public Collection<Message> findByBox(final Box b) {
 		try {
 			return this.msgRepository.findByBox(b.getId());

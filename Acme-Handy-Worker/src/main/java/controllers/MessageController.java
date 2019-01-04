@@ -18,6 +18,7 @@ import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
 import services.BoxService;
+import services.ConfigurationService;
 import services.MessageService;
 import services.UserAccountService;
 import domain.Actor;
@@ -29,16 +30,18 @@ import domain.Message;
 public class MessageController extends AbstractController {
 
 	@Autowired
-	private MessageService		messageService;
+	private MessageService			messageService;
 
 	@Autowired
-	private BoxService			boxService;
+	private BoxService				boxService;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private UserAccountService	userAccountService;
+	private UserAccountService		userAccountService;
+	@Autowired
+	private ConfigurationService	configService;
 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -50,6 +53,7 @@ public class MessageController extends AbstractController {
 		result.addObject("messages", messages);
 		result.addObject("box", b);
 		result.addObject("requestURI", "/message/list.do");
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
@@ -61,10 +65,13 @@ public class MessageController extends AbstractController {
 			final Box box = this.boxService.findOne(boxId);
 			this.messageService.delete(message, box);
 			result = new ModelAndView("redirect:list.do?boxId=" + boxId);
+
 		} catch (final Throwable opps) {
 			result = new ModelAndView("redirect:list.do?boxId=" + boxId);
 			result.addObject("messageCode", "box.commit.error");
 		}
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
+
 		return result;
 	}
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -92,6 +99,8 @@ public class MessageController extends AbstractController {
 				result.addObject("messageO", messageO);
 				result.addObject("messageCode", "message.commit.error");
 			}
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
+
 		return result;
 	}
 
@@ -99,11 +108,11 @@ public class MessageController extends AbstractController {
 	public ModelAndView editMessage(@RequestParam final int messageId) {
 		ModelAndView result;
 		Message message;
-
 		message = this.messageService.findOne(messageId);
 		Assert.notNull(message);
 		result = new ModelAndView("message/edit");
 		result.addObject("messageO", message);
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
 
 		return result;
 	}
@@ -111,13 +120,16 @@ public class MessageController extends AbstractController {
 	@RequestMapping(value = "/copy", method = RequestMethod.POST)
 	public ModelAndView copyMessage(final Message message) {
 		ModelAndView result;
+		System.out.println(message);
 		try {
 			this.messageService.copy(message);
-			result = new ModelAndView("redirect:box/list.do");
+			result = new ModelAndView("redirect:/box/list.do");
 		} catch (final Throwable opps) {
 			result = new ModelAndView("message/copy");
 			result.addObject("messageCode", "message.commit.error");
 		}
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
+
 		return result;
 	}
 	@RequestMapping(value = "/copy", method = RequestMethod.GET)
@@ -132,6 +144,7 @@ public class MessageController extends AbstractController {
 		result = new ModelAndView("message/copy");
 		result.addObject("messageO", message);
 		result.addObject("boxes", boxes);
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
 
 		return result;
 	}
@@ -144,6 +157,8 @@ public class MessageController extends AbstractController {
 		Assert.notNull(message);
 		result = new ModelAndView("message/display");
 		result.addObject("messageO", message);
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
+
 		return result;
 	}
 
@@ -157,6 +172,8 @@ public class MessageController extends AbstractController {
 		result = new ModelAndView("message/edit");
 		result.addObject("messageO", message);
 		result.addObject("actors", actores);
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
+
 		return result;
 	}
 }
