@@ -21,7 +21,11 @@ import domain.Actor;
 public class ActorService {
 
 	@Autowired
-	private ActorRepository	actorRepository;
+	private ActorRepository		actorRepository;
+	@Autowired
+	private BoxService			boxService;
+	@Autowired
+	private UserAccountService	accountService;
 
 
 	/**
@@ -31,6 +35,7 @@ public class ActorService {
 	 */
 	public Actor create() {
 		final Actor a = new Actor();
+		a.setBanned(false);
 		return a;
 	}
 
@@ -63,8 +68,11 @@ public class ActorService {
 		} else {
 			//TODO Por ahora, por decisión de grupo, la useracount se agrega
 			//en el controller
-			actor.setBanned(false);
+			final UserAccount account = actor.getAccount();
+			final UserAccount savedAccount = this.accountService.save(account);
+			actor.setAccount(savedAccount);
 			result = this.actorRepository.save(actor);
+			this.boxService.initializeDefaultBoxes(result);
 		}
 		return result;
 	}

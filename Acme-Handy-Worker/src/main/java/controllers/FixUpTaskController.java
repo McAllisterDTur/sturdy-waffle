@@ -74,7 +74,7 @@ public class FixUpTaskController extends AbstractController {
 		try {
 			final String decodedKeyword = URLDecoder.decode(keyword, "UTF-8");
 			tasks = this.taskService.findByFilter(decodedKeyword);
-			result.addObject("requestURI", "/fixuptask/handyworker/list.do?keyword=" + keyword);
+			result.addObject("requestURI", "/fixuptask/handyworker/list.do");
 			System.out.println("Decoded Keyword:" + decodedKeyword);
 		} catch (final UnsupportedEncodingException e) {
 			tasks = this.taskService.findAll();

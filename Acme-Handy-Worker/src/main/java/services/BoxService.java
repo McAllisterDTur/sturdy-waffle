@@ -38,9 +38,14 @@ public class BoxService {
 		return b;
 	}
 	public Box save(final Box box) {
-		final List<String> names = this.allBoxNames();
-		if (box.getId() == 0)
-			Assert.isTrue(names == null || !names.contains(box.getName()));
+		// We search boxes from logged actor
+		try {
+			final List<String> names = this.allBoxNames();
+			if (box.getId() == 0)
+				Assert.isTrue(names == null || !names.contains(box.getName()));
+		} catch (final Throwable oops) {
+			// If we can't find a logged actor, it's because is the first time we are calling this
+		}
 		final Box saved = this.boxRepository.save(box);
 		return saved;
 	}
@@ -64,6 +69,33 @@ public class BoxService {
 	public void initializeDefaultBoxes() {
 		final UserAccount ownerAccount = LoginService.getPrincipal();
 		final Actor owner = this.actorService.findByUserAccountId(ownerAccount.getId());
+		final Box in = this.create();
+		in.setDeleteable(false);
+		in.setName("IN");
+		in.setOwner(owner);
+		this.save(in);
+
+		final Box trash = this.create();
+		trash.setDeleteable(false);
+		trash.setName("TRASH");
+		trash.setOwner(owner);
+		this.save(trash);
+
+		final Box out = this.create();
+		out.setDeleteable(false);
+		out.setName("OUT");
+		out.setOwner(owner);
+		this.save(out);
+
+		final Box spam = this.create();
+		spam.setDeleteable(false);
+		spam.setName("SPAM");
+		spam.setOwner(owner);
+		this.save(spam);
+	}
+
+	public void initializeDefaultBoxes(final Actor a) {
+		final Actor owner = a;
 		final Box in = this.create();
 		in.setDeleteable(false);
 		in.setName("IN");

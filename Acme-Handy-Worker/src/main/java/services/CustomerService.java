@@ -15,6 +15,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import utilities.AuthenticationUtility;
+import domain.Actor;
 import domain.Customer;
 import domain.FixUpTask;
 
@@ -26,6 +27,8 @@ public class CustomerService {
 	private CustomerRepository	customerRepo;
 	@Autowired
 	private UserAccountService	userAccountService;
+	@Autowired
+	private BoxService			boxService;
 
 	private UserAccount			account;
 
@@ -45,10 +48,17 @@ public class CustomerService {
 	}
 
 	public Customer save(final Customer c) {
-
 		Assert.notNull(c);
-
-		return this.customerRepo.save(c);
+		Customer result;
+		if (c.getId() == 0) {
+			final UserAccount account = c.getAccount();
+			final UserAccount savedAccount = this.userAccountService.save(account);
+			c.setAccount(savedAccount);
+			result = this.customerRepo.save(c);
+			this.boxService.initializeDefaultBoxes(result);
+		} else
+			result = this.customerRepo.save(c);
+		return result;
 	}
 
 	public Customer findOne(final int id) {
@@ -87,4 +97,23 @@ public class CustomerService {
 		return this.customerRepo.findAll();
 	}
 
+	public Customer actorToCustomer(final Actor a) {
+		final Customer res = new Customer();
+		res.setAccount(a.getAccount());
+		res.setAddress(a.getAddress());
+		res.setFixUpTasks(new ArrayList<FixUpTask>());
+		res.setBanned(a.getBanned());
+		res.setEmail(a.getEmail());
+		res.setId(a.getId());
+		res.setIsSuspicious(a.getIsSuspicious());
+		res.setMiddleName(a.getMiddleName());
+		res.setName(a.getName());
+		res.setPhone(a.getPhone());
+		res.setPhotoURL(a.getPhotoURL());
+		res.setScore(0d);
+		res.setSurname(a.getSurname());
+		res.setVersion(a.getVersion());
+		res.setIsSuspicious(false);
+		return res;
+	}
 }

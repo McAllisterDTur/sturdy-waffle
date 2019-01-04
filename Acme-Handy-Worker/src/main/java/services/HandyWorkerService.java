@@ -15,6 +15,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import utilities.AuthenticationUtility;
+import domain.Actor;
 import domain.Application;
 import domain.HandyWorker;
 
@@ -26,6 +27,9 @@ public class HandyWorkerService {
 	private HandyWorkerRepository	repo;
 	@Autowired
 	private UserAccountService		userAccountService;
+	@Autowired
+	private BoxService				boxService;
+
 	private UserAccount				account;
 
 
@@ -44,9 +48,16 @@ public class HandyWorkerService {
 
 	public HandyWorker save(final HandyWorker worker) {
 		Assert.notNull(worker);
-
-		return this.repo.save(worker);
-
+		HandyWorker result;
+		if (worker.getId() == 0) {
+			final UserAccount account = worker.getAccount();
+			final UserAccount savedAccount = this.userAccountService.save(account);
+			worker.setAccount(savedAccount);
+			result = this.repo.save(worker);
+			this.boxService.initializeDefaultBoxes(result);
+		} else
+			result = this.repo.save(worker);
+		return result;
 	}
 
 	public HandyWorker findOne(final int id) {
@@ -78,6 +89,27 @@ public class HandyWorkerService {
 			i++;
 		}
 
+		return res;
+	}
+
+	public HandyWorker actorToHandy(final Actor a) {
+		final HandyWorker res = new HandyWorker();
+		res.setAccount(a.getAccount());
+		res.setAddress(a.getAddress());
+		res.setApplications(new ArrayList<Application>());
+		res.setBanned(a.getBanned());
+		res.setEmail(a.getEmail());
+		res.setId(a.getId());
+		res.setIsSuspicious(a.getIsSuspicious());
+		res.setMake(a.getName() + " " + a.getSurname());
+		res.setMiddleName(a.getMiddleName());
+		res.setName(a.getName());
+		res.setPhone(a.getPhone());
+		res.setPhotoURL(a.getPhotoURL());
+		res.setScore(0d);
+		res.setSurname(a.getSurname());
+		res.setVersion(a.getVersion());
+		res.setIsSuspicious(false);
 		return res;
 	}
 }
