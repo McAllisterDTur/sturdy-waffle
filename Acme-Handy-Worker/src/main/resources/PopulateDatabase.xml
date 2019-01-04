@@ -1585,6 +1585,727 @@
 		</property>
 	</bean>
 	
+	<bean id="Box6" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box7" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box8" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box9" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box10" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer3" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box11" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer3" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box12" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer3" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box13" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer3" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box14" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer4" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box15" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer4" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box16" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer4" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box17" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer4" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box18" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer5" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box19" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer5" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box20" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer5" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box21" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer5" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box22" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer6" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box23" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer6" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box24" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer6" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box25" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer6" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box26" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer7" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box27" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer7" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box28" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer7" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box29" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer7" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box30" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer8" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box31" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer8" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box32" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer8" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box33" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer8" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box34" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer9" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box35" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer9" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box36" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer9" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box37" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer9" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box38" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer10" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box39" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer10" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box40" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer10" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box41" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Customer10" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box42" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box43" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box44" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box45" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box46" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box47" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box48" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box49" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box50" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker3" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box51" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker3" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box52" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker3" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box53" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker3" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box54" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker4" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box55" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker5" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box56" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker5" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box57" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker5" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box58" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker6" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box59" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker6" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box60" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker6" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box61" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Worker6" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box62" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Referee1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box63" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Referee1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box64" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Referee1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box65" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Referee1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+		
+	<bean id="Box66" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Referee2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box67" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Referee2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box68" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Referee2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box69" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Referee2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box70" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Admin1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box71" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Admin1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box72" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Admin1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box73" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Admin1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>	
+		
+	<bean id="Box74" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Admin2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box75" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Admin2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box76" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Admin2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box77" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Admin2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>	
+	
+	<bean id="Box78" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Sponsor1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box79" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Sponsor1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box80" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Sponsor1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box81" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Sponsor1" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box82" class="domain.Box">
+		<property name="name" value="IN" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Sponsor2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box83" class="domain.Box">
+		<property name="name" value="OUT" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Sponsor2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box84" class="domain.Box">
+		<property name="name" value="SPAM" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Sponsor2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	<bean id="Box85" class="domain.Box">
+		<property name="name" value="TRASH" />
+		<property name="deleteable" value="false" />
+		<property name="owner" ref="Sponsor2" />
+		<property name="messages">
+			<list><null/></list>
+		</property>
+	</bean>
+	
+	
 	<!-- Messages -->
 	<bean id="Msg1" class="domain.Message">
 		<property name="sender" ref="Customer1" />
