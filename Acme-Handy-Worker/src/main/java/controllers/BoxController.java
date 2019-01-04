@@ -18,6 +18,7 @@ import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
 import services.BoxService;
+import services.ConfigurationService;
 import domain.Actor;
 import domain.Box;
 
@@ -26,10 +27,13 @@ import domain.Box;
 public class BoxController extends AbstractController {
 
 	@Autowired
-	private BoxService		boxService;
+	private BoxService				boxService;
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService			actorService;
+
+	@Autowired
+	private ConfigurationService	configService;
 
 
 	public BoxController() {
@@ -45,6 +49,8 @@ public class BoxController extends AbstractController {
 		result = new ModelAndView("box/list");
 		result.addObject("boxes", boxes);
 		result.addObject("requestURI", "/box/list.do");
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
+
 		return result;
 	}
 
@@ -59,6 +65,8 @@ public class BoxController extends AbstractController {
 			result = new ModelAndView("box/list");
 			result.addObject("messageCode", "box.commit.error.delete");
 		}
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
+
 		return result;
 	}
 
@@ -77,6 +85,7 @@ public class BoxController extends AbstractController {
 				result = new ModelAndView("box/edit");
 				result.addObject("messageCode", "box.commit.error.edit");
 			}
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
 
 		return result;
 	}
@@ -90,6 +99,7 @@ public class BoxController extends AbstractController {
 		Assert.notNull(box);
 		result = new ModelAndView("box/edit");
 		result.addObject("box", box);
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
 
 		return result;
 	}
@@ -103,6 +113,7 @@ public class BoxController extends AbstractController {
 
 		result = new ModelAndView("box/edit");
 		result.addObject("box", box);
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
 
 		return result;
 
