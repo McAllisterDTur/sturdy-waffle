@@ -105,7 +105,7 @@ public class TutorialController extends AbstractController {
 			result.addObject("tutorial", tutorial);
 		} else {
 			this.tutorialService.save(tutorial);
-			result = new ModelAndView("redirect:../list.do");
+			result = new ModelAndView("redirect:myTutorials.do");
 
 		}
 		return result;

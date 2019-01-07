@@ -34,6 +34,7 @@
 		<bean class="converters.AuthorityToStringConverter" />
 		<bean class="converters.SponsorshipToStringConverter" />
 		<bean class="converters.SectionToStringConverter" />
+		<bean class="converters.TutorialToStringConverter" />
 		
 		<!-- String to Entity -->
 		<bean class="converters.StringToComplaintConverter" />
@@ -47,6 +48,7 @@
 		<bean class="converters.StringToAuthorityConverter" />
 		<bean class="converters.StringToSponsorshipConverter" />
 		<bean class="converters.StringToSectionConverter" />
+		<bean class="converters.StringToTutorialConverter" />
 		
 	</util:list>
 	
