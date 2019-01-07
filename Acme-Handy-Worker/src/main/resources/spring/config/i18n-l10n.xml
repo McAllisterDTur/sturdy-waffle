@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- * i18n-l10n.xml * * Copyright (C) 2018 Universidad de Sevilla * * The 
-	use of this project is hereby constrained to the conditions of the * TDG 
-	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
+<!--
+ * i18n-l10n.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ *
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
+ * http://www.tdg-seville.info/License.html
+ -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd 
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
 	">
 
 	<util:list id="messages">
@@ -21,14 +27,15 @@
 		<value>/views/customer/messages</value>
 		<value>/views/profile/messages</value>
 		<value>/views/fixuptask/messages</value>
+		<value>/views/warranty/messages</value>
+		<value>/views/category/messages</value>
+		<value>/views/complaint/messages</value>
+		<value>/views/endorsement/messages</value>
 		<value>/views/configuration/messages</value>
-
-		<value>/views/box/messages</value>
-
-		<value>/views/message/messages</value>
+		<value>/views/application/messages</value>
+		<value>/views/phase/messages</value>
+		<value>/views/report/messages</value>
 		<value>/views/notes/messages</value>
-		<value>/views/finder/messages</value>
-
 
 	</util:list>
 

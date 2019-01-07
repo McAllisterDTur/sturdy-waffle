@@ -7,7 +7,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd		
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
     ">
 
@@ -43,6 +43,44 @@
 		<security:intercept-url pattern="/welcome/index.do"
 			access="permitAll" />
 
+		<security:intercept-url pattern="/application/customer,handyworker/display.do"
+			access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
+		<security:intercept-url pattern="/application/handyworker/edit.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/application/handyworker/create.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/application/handyworker/save.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/application/customer,handyworker/list.do"
+			access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
+
+
+		<security:intercept-url pattern="/phase/handyworker/display.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/phase/handyworker/create.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/phase/handyworker/save.do"
+			access="hasRole('HANDYWORKER')" />
+
+		<security:intercept-url pattern="/warranty/administrator/**"
+			access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/category/administrator/**"
+			access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/profile/**"
+			access="isAuthenticated()" />
+		<security:intercept-url pattern="/complaint/**"
+			access="isAuthenticated()" />
+		<security:intercept-url pattern="/complaint/customer/**"
+			access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/complaint/referee/**"
+			access="hasRole('REFEREE')" />
+		<security:intercept-url pattern="/complaint/handyworker/**"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/endorsement/handyworker,customer/**"
+			access="hasAnyRole('HANDYWORKER', 'CUSTOMER')" />
+		<security:intercept-url pattern="/etc/**"
+			access="permitAll" />
+
 		<security:intercept-url pattern="/fixuptask/handyworker/list.do"
 			access="hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/fixuptask/customer/list.do"
@@ -56,21 +94,19 @@
 		<security:intercept-url pattern="/fixuptask/customer,handyworker/display.do"
 			access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
 
-		<security:intercept-url pattern="/box/**"
-			access="isAuthenticated()" />
-			
-		<security:intercept-url pattern="/finder/**"
-			access="hasAnyRole('HANDYWORKER')" />
-			
-		<security:intercept-url pattern="/message/**"
-			access="isAuthenticated()" />
+		<security:intercept-url pattern="/administrator/dashboard.do"
+			access="hasRole('ADMIN')" />
+
+		<security:intercept-url pattern="/report/handyworker,referee/list.do"
+			access="hasAnyRole('HANDYWORKER','REFEREE')" />
+		<security:intercept-url pattern="/report/handyworker,referee/see.do"
+			access="hasAnyRole('HANDYWORKER','REFEREE')" />
+
+		<security:intercept-url pattern="/notes/**"
+			access="hasAnyRole('HANDYWORKER','REFEREE','CUSTOMER')" />
 
 		<security:intercept-url pattern="/**"
 			access="hasRole('NONE')" />
-		<security:intercept-url pattern="/notes/**"
-			access="hasAnyRole('CUSTOMER','HANDYWORKER','REFEREE')" />
-
-
 		<security:form-login login-page="/security/login.do"
 			password-parameter="password" username-parameter="username"
 			authentication-failure-url="/security/loginFailure.do" />

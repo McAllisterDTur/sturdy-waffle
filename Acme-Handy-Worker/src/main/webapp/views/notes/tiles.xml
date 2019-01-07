@@ -16,9 +16,17 @@
        
 <tiles-definitions>
 
-	<definition name="notes/see" extends="master.page">	
-		<put-attribute name="title" value="See notes" />
-		<put-attribute name="body" value="/views/notes/see.jsp" />
+	<definition name="notes/list" extends="master.page">	
+		<put-attribute name="title" value="List notes" />
+		<put-attribute name="body" value="/views/notes/list.jsp" />
+	</definition>
+		<definition name="notes/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit note" />
+		<put-attribute name="body" value="/views/notes/edit.jsp" />
+	</definition>
+		<definition name="notes/display" extends="master.page">	
+		<put-attribute name="title" value="See a note" />
+		<put-attribute name="body" value="/views/notes/display.jsp" />
 	</definition>
 	
 		
