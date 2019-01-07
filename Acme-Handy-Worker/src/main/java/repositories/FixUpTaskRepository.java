@@ -28,10 +28,10 @@ public interface FixUpTaskRepository extends JpaRepository<FixUpTask, Integer> {
 	public Collection<FixUpTask> getFixUpTasksByCategory(int catId);
 
 	@Query("select avg(c.fixUpTasks.size), min(c.fixUpTasks.size), max(c.fixUpTasks.size), sqrt(sum(c.fixUpTasks.size * c.fixUpTasks.size) / count(c.fixUpTasks.size) - avg(c.fixUpTasks.size) * avg(c.fixUpTasks.size)) from Customer c")
-	public Collection<Double> avgMinMaxDevFixUpTaskCount();
+	public List<Object[]> avgMinMaxDevFixUpTaskCount();
 
 	@Query("select avg(f.maxPrice), min(f.maxPrice), max(f.maxPrice), sqrt(sum(f.maxPrice * f.maxPrice) / count(f) - avg(f.maxPrice) * avg(f.maxPrice)) from FixUpTask f")
-	public Collection<Double> avgMinMaxDevFixUpTaskPrice();
+	public List<Object[]> avgMinMaxDevFixUpTaskPrice();
 
 	@Query("select ((select count(distinct c.fixUpTask) from Complaint c) * 1.0 * 100 / (count(f))) from FixUpTask f")
 	public Double ratioFixUpTaskComplaint();

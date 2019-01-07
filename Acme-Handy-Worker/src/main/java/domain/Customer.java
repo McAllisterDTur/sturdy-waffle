@@ -26,7 +26,7 @@ public class Customer extends Endorsable {
 
 	@Override
 	public String toString() {
-		return "Customer [getId()=" + this.getId() + "]";
+		return this.getName() + " " + this.getMiddleName() + " " + this.getSurname();
 	}
 
 }

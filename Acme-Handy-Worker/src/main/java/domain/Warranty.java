@@ -61,7 +61,7 @@ public class Warranty extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "Warranty [title=" + this.title + ", terms=" + this.terms + ", law=" + this.law.toString() + ", draft=" + this.draft + "]";
+		return this.title + ": " + this.terms + ". " + this.law.toString();
 	}
 
 }

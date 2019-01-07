@@ -70,8 +70,6 @@ public class CategoryService {
 	 */
 	public Collection<Category> findAll() {
 		//Admin authority
-		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
-		Assert.isTrue(au);
 		return this.catRepo.findAll();
 	}
 	/**
