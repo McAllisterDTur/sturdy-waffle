@@ -67,11 +67,13 @@
 		<security:intercept-url pattern="/tutorial/list.do" access="permitAll" />
 		<security:intercept-url pattern="/tutorial/display.do" access="permitAll" />
 		<security:intercept-url pattern="/tutorial/pictures/list.do" access="permitAll" />
-		<security:intercept-url pattern="/tutorial/pictures/delete.do" access="permitAll" />
-		<security:intercept-url pattern="/tutorial/pictures/add.do" access="permitAll" />
-		<security:intercept-url pattern="/tutorial/new.do" access="hasRole('HANDYWORKER')" />
-		<security:intercept-url pattern="/tutorial/edit.do" access="hasRole('HANDYWORKER')" />
-		<security:intercept-url pattern="/tutorial/delete.do" access="hasRole('HANDYWORKER')" />
+		
+		<security:intercept-url pattern="/tutorial/pictures/handyworker/delete.do" access="permitAll" />
+		<security:intercept-url pattern="/tutorial/pictures/handyworker/add.do" access="permitAll" />
+		<security:intercept-url pattern="/tutorial/handyworker/new.do" access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/tutorial/handyworker/edit.do" access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/tutorial/handyworker/delete.do" access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/tutorial/handyworker/myTutorials.do" access="hasRole('HANDYWORKER')" />
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 		<security:form-login

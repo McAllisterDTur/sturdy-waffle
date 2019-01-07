@@ -25,12 +25,12 @@
 	<security:authorize access="hasRole('HANDYWORKER')">
 		<display:column>
 		<jstl:if test="${row.worker.account.username == principal}">
-			<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/edit.do?id=${row.id}'"><spring:message code="tutorial.edit"/></button>
+			<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/handyworker/edit.do?id=${row.id}'"><spring:message code="tutorial.edit"/></button>
 		</jstl:if>
 		</display:column>
 		<display:column>
 		<jstl:if test="${row.worker.account.username == principal}">
-			<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/delete.do?id=${row.id}'"><spring:message code="tutorial.delete"/></button>
+			<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/handyworker/delete.do?id=${row.id}'"><spring:message code="tutorial.delete"/></button>
 		</jstl:if>
 		</display:column>
 	</security:authorize>

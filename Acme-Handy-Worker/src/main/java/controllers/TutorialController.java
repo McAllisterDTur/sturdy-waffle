@@ -22,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
+import services.ActorService;
 import services.TutorialService;
+import domain.HandyWorker;
 import domain.Tutorial;
 
 @Controller
@@ -31,6 +34,8 @@ public class TutorialController extends AbstractController {
 
 	@Autowired
 	private TutorialService	tutorialService;
+	@Autowired
+	private ActorService	actorService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -52,6 +57,16 @@ public class TutorialController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/handyworker/myTutorials", method = RequestMethod.GET)
+	public ModelAndView loggedWorkerTutorials() {
+		final HandyWorker handyWorker = (HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final Collection<Tutorial> tutorials = this.tutorialService.findAllFromHandyworker(handyWorker.getId());
+		ModelAndView result;
+		result = new ModelAndView("tutorial/list");
+		result.addObject("tutorials", tutorials);
+		result.addObject("requestURI", "/tutorial/myTutorials.do");
+		return result;
+	}
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView seeTutorial(@RequestParam("id") final int id) {
 		final Tutorial tutorial = this.tutorialService.findOne(id);
@@ -62,7 +77,7 @@ public class TutorialController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
+	@RequestMapping(value = "/handyworker/new", method = RequestMethod.GET)
 	public ModelAndView newTutorial() {
 		final Tutorial tutorial = this.tutorialService.create();
 		ModelAndView result;
@@ -71,7 +86,7 @@ public class TutorialController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/handyworker/edit", method = RequestMethod.GET)
 	public ModelAndView editTutorial(@RequestParam("id") final int id) {
 		final Tutorial tutorial = this.tutorialService.findOne(id);
 		ModelAndView result;
@@ -80,7 +95,7 @@ public class TutorialController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	@RequestMapping(value = "/handyworker/edit", method = RequestMethod.POST)
 	public ModelAndView saveTutorial(@Valid final Tutorial tutorial, final BindingResult binding) {
 		ModelAndView result;
 
@@ -90,17 +105,17 @@ public class TutorialController extends AbstractController {
 			result.addObject("tutorial", tutorial);
 		} else {
 			this.tutorialService.save(tutorial);
-			result = new ModelAndView("redirect:list.do");
+			result = new ModelAndView("redirect:../list.do");
 
 		}
 		return result;
 	}
 
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/handyworker/delete", method = RequestMethod.GET)
 	public ModelAndView deleteTutorial(@RequestParam("id") final int id) {
 		this.tutorialService.delete(id);
 		ModelAndView result;
-		result = new ModelAndView("redirect:list.do");
+		result = new ModelAndView("redirect:myTutorials.do");
 		return result;
 	}
 
@@ -114,7 +129,7 @@ public class TutorialController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/pictures/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/pictures/handyworker/delete", method = RequestMethod.GET)
 	public ModelAndView tutorialDeletePicture(@RequestParam("id") final int id, @RequestParam("picture") final String picture) {
 		ModelAndView result = null;
 		Tutorial tutorial;
@@ -127,7 +142,7 @@ public class TutorialController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/pictures/add", method = RequestMethod.GET)
+	@RequestMapping(value = "/pictures/handyworker/add", method = RequestMethod.GET)
 	public ModelAndView tutorialAddPicture(@RequestParam("id") final int id, @RequestParam("picture") final String picture) {
 		ModelAndView result = null;
 		Tutorial tutorial;

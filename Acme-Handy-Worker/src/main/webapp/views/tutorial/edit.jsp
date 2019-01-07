@@ -6,7 +6,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form modelAttribute="tutorial" action="tutorial/edit.do" method="post">
+<form:form modelAttribute="tutorial" action="tutorial/handyworker/edit.do" method="post">
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
 	<form:hidden path="lastTimeUpdated"/>

@@ -27,8 +27,8 @@
 					<li class="arrow"></li>
 					<li><a href="tutorial/list.do"><spring:message code="master.page.handy.allTutorials" /></a></li>
 					<security:authorize access="hasRole('HANDYWORKER')">
-					<li><a href="handyworker/myTutorials.do"><spring:message code="master.page.handy.myTutorials" /></a></li>
-					<li><a href="tutorial/new.do"><spring:message code="master.page.handy.createTut" /></a></li>
+					<li><a href="tutorial/handyworker/myTutorials.do"><spring:message code="master.page.handy.myTutorials" /></a></li>
+					<li><a href="tutorial/handyworker/new.do"><spring:message code="master.page.handy.createTut" /></a></li>
 					</security:authorize>
 				</ul>
 			<security:authorize access="hasRole('SPONSOR')">
