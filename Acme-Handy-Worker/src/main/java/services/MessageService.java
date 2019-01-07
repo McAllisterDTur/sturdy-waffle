@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.MessageRepository;
 import security.LoginService;
+import utilities.AuthenticationUtility;
 import domain.Actor;
 import domain.Box;
 import domain.Message;
@@ -140,5 +141,12 @@ public class MessageService {
 			return null;
 		}
 
+	}
+
+	public void broadcastMessage(final Message msg) {
+		Assert.isTrue(AuthenticationUtility.checkAuthority("ADMIN"));
+		for (final Actor a : this.aService.findAll())
+			if (!this.aService.findByUserAccountId(LoginService.getPrincipal().getId()).equals(a))
+				this.send(msg, a);
 	}
 }

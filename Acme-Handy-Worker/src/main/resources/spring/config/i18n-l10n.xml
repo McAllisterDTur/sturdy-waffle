@@ -26,6 +26,11 @@
 		<value>/views/administrator/messages</value>
 		<value>/views/customer/messages</value>
 		<value>/views/profile/messages</value>
+		<value>/views/fixuptask/messages</value>
+		<value>/views/warranty/messages</value>
+		<value>/views/category/messages</value>
+		<value>/views/complaint/messages</value>
+		<value>/views/endorsement/messages</value>
 	</util:list>
 
 </beans>

@@ -12,4 +12,7 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
 	@Query("select c from Category c where c.name = ?1")
 	public Category findByName(String name);
+
+	@Query("select c from Category c where c.nameEn = ?1")
+	public Category findByNameEn(String name);
 }

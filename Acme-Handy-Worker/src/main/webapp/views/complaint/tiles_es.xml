@@ -16,9 +16,19 @@
       
 <tiles-definitions>
 
-	<definition name="complaint/moreInfo" extends="master.page">	
-		<put-attribute name="title" value="Viendo queja" />
-		<put-attribute name="body" value="/views/complaints/moreInfo.jsp" />
+		<definition name="complaint/list" extends="master.page">	
+		<put-attribute name="title" value="Listando quejas" />
+		<put-attribute name="body" value="/views/complaint/list.jsp" />
+	</definition>
+	
+	<definition name="complaint/edit" extends="master.page">	
+		<put-attribute name="title" value="Creando queja" />
+		<put-attribute name="body" value="/views/complaint/edit.jsp" />
+	</definition>
+	
+	<definition name="complaint/seeMore" extends="master.page">	
+		<put-attribute name="title" value="Más información" />
+		<put-attribute name="body" value="/views/complaint/seeMore.jsp" />
 	</definition>
 	
 	

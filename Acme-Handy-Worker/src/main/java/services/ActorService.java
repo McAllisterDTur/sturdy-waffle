@@ -15,6 +15,11 @@ import security.LoginService;
 import security.UserAccount;
 import utilities.AuthenticationUtility;
 import domain.Actor;
+import domain.Administrator;
+import domain.Customer;
+import domain.HandyWorker;
+import domain.Referee;
+import domain.Sponsor;
 
 @Service
 @Transactional
@@ -22,6 +27,16 @@ public class ActorService {
 
 	@Autowired
 	private ActorRepository	actorRepository;
+	@Autowired
+	HandyWorkerService		hwService;
+	@Autowired
+	CustomerService			cService;
+	@Autowired
+	RefereeService			rService;
+	@Autowired
+	SponsorService			sService;
+	@Autowired
+	AdministratorService	adminService;
 
 
 	/**
@@ -106,15 +121,75 @@ public class ActorService {
 	}
 
 	//B
-	public void ban(final Actor end) {
+	public void ban(final Actor actor) {
+		System.out.println("Vamo a banea");
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
-		end.setBanned(true);
-		this.actorRepository.save(end);
+		final Integer id = actor.getId();
+		final String role = actor.getAccount().getAuthorities().iterator().next().toString();
+		switch (role) {
+		case "HANDYWORKER":
+			final HandyWorker hw = this.hwService.findOne(id);
+			hw.setBanned(true);
+			this.hwService.save(hw);
+			break;
+		case "CUSTOMER":
+			final Customer c = this.cService.findOne(id);
+			c.setBanned(true);
+			this.cService.save(c);
+			break;
+		case "ADMIN":
+			final Administrator admin = this.adminService.findOne(id);
+			admin.setBanned(true);
+			this.adminService.save(admin);
+			break;
+		case "SPONSOR":
+			final Sponsor s = this.sService.findOne(id);
+			s.setBanned(true);
+			this.sService.save(s);
+			break;
+		case "REFEREE":
+			final Referee r = this.rService.findOne(id);
+			r.setBanned(true);
+			this.rService.save(r);
+			break;
+		default:
+			throw new NullPointerException();
+		}
 	}
 	//B
-	public void unban(final Actor end) {
+	public void unban(final Actor actor) {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
-		end.setBanned(false);
-		this.actorRepository.save(end);
+		final Integer id = actor.getId();
+		final String role = actor.getAccount().getAuthorities().iterator().next().toString();
+		switch (role) {
+		case "HANDYWORKER":
+			final HandyWorker hw = this.hwService.findOne(id);
+			hw.setBanned(false);
+			this.hwService.save(hw);
+			break;
+		case "CUSTOMER":
+			final Customer c = this.cService.findOne(id);
+			c.setBanned(false);
+			this.cService.save(c);
+			break;
+		case "ADMIN":
+			final Administrator admin = this.adminService.findOne(id);
+			admin.setBanned(false);
+			this.adminService.save(admin);
+			break;
+		case "SPONSOR":
+			final Sponsor s = this.sService.findOne(id);
+			s.setBanned(false);
+			this.sService.save(s);
+			break;
+		case "REFEREE":
+			final Referee r = this.rService.findOne(id);
+			r.setBanned(false);
+			this.rService.save(r);
+			System.out.println(r.getBanned());
+			break;
+		default:
+			throw new NullPointerException();
+		}
 	}
 }
