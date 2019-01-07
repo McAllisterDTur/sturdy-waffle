@@ -42,7 +42,7 @@
 
 <h2><spring:message code="profile.seeing" /> <jstl:out value="${username }"/></h2>
 
-<img src="${actor.photoURL }" alt="<spring:message code="profile.photo" /> <jstl:out value="${username }"/>"/>
+<img src="${actor.photoURL }" height="250" alt="<spring:message code="profile.photo" /> <jstl:out value="${username }"/>"/>
 <p>
 	<b><spring:message code="profile.name" /></b>: 
 	<jstl:out value="${actor.surname }"/>, <jstl:out value="${actor.name }"/> <jstl:out value="${actor.middleName }"/>
