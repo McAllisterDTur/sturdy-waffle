@@ -19,6 +19,9 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 	@Query("select a from Application a where a.handyWorker.id = ?1")
 	public Collection<Application> findAllWorker(int workerId);
 
+	@Query("select a from Application a where a.fixUpTask.id = ?1")
+	public Collection<Application> findAllTask(int taskId);
+
 	//average, min, max and standard deviation
 	@Query("select avg(a.offeredPrice), min(a.offeredPrice), max(a.offeredPrice),sqrt(sum(a.offeredPrice * a.offeredPrice) / count(a) - avg(a.offeredPrice) *avg(a.offeredPrice)) from Application a")
 	public List<Object[]> statictisApplication();

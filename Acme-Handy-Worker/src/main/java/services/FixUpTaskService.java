@@ -94,13 +94,7 @@ public class FixUpTaskService {
 	 * @return the fix up task whose id is the one passed as parameter
 	 */
 	public FixUpTask findOne(final int fixUpTaskId) {
-		UserAccount userAccount;
-
-		userAccount = LoginService.getPrincipal();
-
 		final FixUpTask res = this.fixUpTaskRepository.findOne(fixUpTaskId);
-		if (res != null)
-			Assert.isTrue(res.getCustomer().getAccount().equals(userAccount));
 
 		return res;
 

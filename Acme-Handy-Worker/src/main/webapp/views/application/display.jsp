@@ -16,7 +16,7 @@
 	<strong><spring:message code="application.status" />: </strong> <jstl:out value="${ application.status } "></jstl:out>
 	<br />
 	<jstl:if test="${application.status == 'ACCEPTED'}">
-		<display:table name="phases" id="row" class="dispalytag" pagesize="5" requestURI="${ requestURI}" >
+		<display:table name="application.phases" id="row" class="dispalytag" pagesize="5" requestURI="${ requestURI}" >
 			<display:column property="title" titleKey="application.phase.title" />
 			<display:column property="startTime" titleKey="application.phase.startTime" />
 			<display:column property="endTime" titleKey="application.phase.endTime"  />

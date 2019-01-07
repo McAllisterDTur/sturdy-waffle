@@ -39,6 +39,17 @@
 		</button>
 	</display:column>
 	
+	<security:authorize access="hasRole('HANDYWORKER')">
+	
+		<display:column>
+			<button
+					onClick="window.location.href='/Acme-Handy-Worker/application/handyworker/create.do?fixuptaskId=${row.id}'">
+					<spring:message code="fixuptask.apply" />
+				</button>
+		</display:column>
+	
+	</security:authorize>
+	
 	<security:authorize access="hasRole('CUSTOMER')">
 		<display:column>
 			<jstl:if test="${row.customer.account.username == principal}">
@@ -47,6 +58,13 @@
 					<spring:message code="fixuptask.edit" />
 				</button>
 			</jstl:if>
+		</display:column>
+		<display:column>
+		<jstl:if test="${row.customer.account.username == principal}">
+			<button onClick="window.location.href='/Acme-Handy-Worker/application/customer/list.do?fixuptaskId=${row.id}'">
+				<spring:message code="fixuptask.applications"/>
+			</button>
+		</jstl:if>
 		</display:column>
 		<display:column>
 			<jstl:if test="${row.customer.account.username == principal}">

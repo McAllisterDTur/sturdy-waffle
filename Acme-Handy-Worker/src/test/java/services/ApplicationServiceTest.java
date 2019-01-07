@@ -89,7 +89,7 @@ public class ApplicationServiceTest extends AbstractTest {
 
 		super.authenticate("Admin");
 
-		final Collection<Double> statictics = this.applicationService.statictisApplications();
+		final Collection<Object[]> statictics = this.applicationService.statictisApplications();
 		Assert.notNull(statictics);
 		Assert.notEmpty(statictics);
 

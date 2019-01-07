@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- * security.xml * * Copyright (C) 2018 Universidad de Sevilla * * The
-	use of this project is hereby constrained to the conditions of the * TDG
+<!-- * security.xml * * Copyright (C) 2018 Universidad de Sevilla * * The 
+	use of this project is hereby constrained to the conditions of the * TDG 
 	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -43,33 +43,48 @@
 		<security:intercept-url pattern="/welcome/index.do"
 			access="permitAll" />
 
-		<security:intercept-url pattern="/application/handyworker/list.do"
+		<security:intercept-url pattern="/application/customer,handyworker/display.do"
+			access="hasAnyRole('CUSTOMER','HANDYWORKER')" /> 
+		<security:intercept-url pattern="/application/handyworker/edit.do"
 			access="hasRole('HANDYWORKER')" />
-		<security:intercept-url pattern="/application/handyworker/display.do"
+			<security:intercept-url pattern="/application/handyworker/create.do"
 			access="hasRole('HANDYWORKER')" />
-		<security:intercept-url pattern="/application/handyworker/create.do"
+			<security:intercept-url pattern="/application/handyworker/save.do"
 			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/application/customer,handyworker/list.do"
+			access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
+			
+			
 		<security:intercept-url pattern="/phase/handyworker/display.do"
 			access="hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/phase/handyworker/create.do"
 			access="hasRole('HANDYWORKER')" />
-			<security:intercept-url pattern="/phase/handyworker/save.do"
+		<security:intercept-url pattern="/phase/handyworker/save.do"
 			access="hasRole('HANDYWORKER')" />
+		
 
-		<security:intercept-url pattern="/fixuptask/handyworker/list.do" access="hasRole('HANDYWORKER')" />
-		<security:intercept-url pattern="/fixuptask/customer/list.do" access="hasRole('CUSTOMER')" />
-		<security:intercept-url pattern="/fixuptask/customer/create.do" access="hasRole('CUSTOMER')" />
-		<security:intercept-url pattern="/fixuptask/customer/edit.do" access="hasRole('CUSTOMER')" />
-		<security:intercept-url pattern="/fixuptask/customer/delete.do" access="hasRole('CUSTOMER')" />
-		<security:intercept-url pattern="/fixuptask/customer,handyworker/display.do" access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
 
-		<security:intercept-url pattern="/administrator/dashboard.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/fixuptask/handyworker/list.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/fixuptask/customer/list.do"
+			access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer/create.do"
+			access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer/edit.do"
+			access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer/delete.do"
+			access="hasRole('CUSTOMER')" />
+		
+		<security:intercept-url pattern="/fixuptask/customer,handyworker/display.do"
+			access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
 
-		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
-		<security:form-login
-			login-page="/security/login.do"
-			password-parameter="password"
-			username-parameter="username"
+		<security:intercept-url pattern="/administrator/dashboard.do"
+			access="hasRole('ADMIN')" />
+
+		<security:intercept-url pattern="/**"
+			access="hasRole('NONE')" />
+		<security:form-login login-page="/security/login.do"
+			password-parameter="password" username-parameter="username"
 			authentication-failure-url="/security/loginFailure.do" />
 
 		<security:logout logout-success-url="/"

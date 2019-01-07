@@ -21,14 +21,19 @@
 		<put-attribute name="body" value="/views/application/allApplications.jsp" />
 	</definition>
 	
+	<definition name="application/customer/list" extends="master.page">	
+		<put-attribute name="title" value="Mis solicitudes" />
+		<put-attribute name="body" value="/views/application/allApplications.jsp" />
+	</definition>
+	
 	<definition name="application/handyworker/display" extends="master.page">	
 		<put-attribute name="title" value="Solicitud" />
 		<put-attribute name="body" value="/views/application/display.jsp" />
 	</definition>
 	
-	<definition name="application/handyworker/create" extends="master.page">	
+	<definition name="application/handyworker/edit" extends="master.page">	
 		<put-attribute name="title" value="Solicitar" />
-		<put-attribute name="body" value="/views/application/newApplication.jsp" />
+		<put-attribute name="body" value="/views/application/edit.jsp" />
 	</definition>
 
 </tiles-definitions>
