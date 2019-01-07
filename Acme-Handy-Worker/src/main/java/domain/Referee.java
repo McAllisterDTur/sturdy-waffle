@@ -11,8 +11,7 @@ public class Referee extends Actor {
 
 	@Override
 	public String toString() {
-		return "Referee [getId()=" + getId() + "]";
+		return this.getName() + " " + this.getSurname();
 	}
-	
 
 }

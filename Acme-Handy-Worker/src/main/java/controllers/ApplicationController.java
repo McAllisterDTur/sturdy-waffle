@@ -145,6 +145,7 @@ public class ApplicationController extends AbstractController {
 				this.applicationService.save(application);
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable opps) {
+				System.out.println(opps.getMessage());
 				result = new ModelAndView("application/handyworker/edit");
 				result.addObject("messageCode", "application.commit.error");
 			}

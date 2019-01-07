@@ -88,6 +88,12 @@ public class ApplicationService {
 		return a;
 	}
 
+	public Application getApplicationAcceptedForFixUpTask(final int fixuptaskId) {
+		Assert.notNull(fixuptaskId);
+
+		return this.applicationRepo.getAcepptedApplicationForFixUpTask(fixuptaskId);
+	}
+
 	public Application saveComment(final int applicationId, final String comment) {
 
 		Assert.isTrue(applicationId > 0);

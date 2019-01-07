@@ -16,12 +16,12 @@
        
 <tiles-definitions>
 
-	<definition name="report/handyworker,referee/see" extends="master.page">	
+	<definition name="report/customer,handyworker,referee/display" extends="master.page">	
 		<put-attribute name="title" value="Seeing report" />
 		<put-attribute name="body" value="/views/report/see.jsp" />
 	</definition>
 	
-	<definition name="report/handyworker,referee/list" extends="master.page">	
+	<definition name="report/customer,handyworker,referee/list" extends="master.page">	
 		<put-attribute name="title" value="List report" />
 		<put-attribute name="body" value="/views/report/list.jsp" />
 	</definition>

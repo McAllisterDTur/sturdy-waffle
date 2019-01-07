@@ -75,7 +75,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="complaint/**/list.do"><spring:message code="master.page.handy.myComplaints" /></a></li>
-					<li><a href="report/handyworker,referee/list.do"><spring:message code="master.page.handy.myReports" /></a></li>
+					<li><a href="report/customer,handyworker,referee/list.do"><spring:message code="master.page.handy.myReports" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -98,7 +98,7 @@
 					<li class="arrow"></li>
 					<li><a href="complaint/referee/unassignedComplaints.do"><spring:message code="master.page.referee.allComps" /></a></li>
 					<li><a href="complaint/referee/myAssignedComplaints.do"><spring:message code="master.page.referee.myComps" /></a></li>
-					<li><a href="report/handyworker,referee/list.do"><spring:message code="master.page.referee.myReports" /></a></li>
+					<li><a href="report/customer,handyworker,referee/list.do"><spring:message code="master.page.referee.myReports" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

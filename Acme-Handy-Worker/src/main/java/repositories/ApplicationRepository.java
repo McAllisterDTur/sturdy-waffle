@@ -30,6 +30,9 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 	@Query("select (select count(a) from Application a where a.status = 'PENDING') * 1.0 *100 / count(b) from Application b")
 	public double ratioPendingApplications();
 
+	@Query("select a from Application a where a.fixUpTask.id = ?1 and a.status = 'ACCEPTED'")
+	public Application getAcepptedApplicationForFixUpTask(final int fixuptaskId);
+
 	//ratio of accepted
 	@Query("select (select count(a) from Application a where a.status = 'ACCEPTED') * 1.0 *100 / count(b) from Application b")
 	public double ratioAcceptedApplications();
