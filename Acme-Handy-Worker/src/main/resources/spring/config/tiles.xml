@@ -34,6 +34,7 @@
 		<value>/views/complaint/tiles.xml</value>
 		<value>/views/endorsement/tiles.xml</value>
 		<value>/views/etc/tiles.xml</value>
+		<value>/views/report/tiles.xml</value>
 	</util:list>
 
 </beans>

@@ -27,13 +27,14 @@
 		<value>/views/customer/tiles.xml</value>
 		<value>/views/profile/tiles.xml</value>
 		<value>/views/fixuptask/tiles.xml</value>
+		<value>/views/phase/tiles.xml</value>
+		<value>/views/application/tiles.xml</value>
 		<value>/views/warranty/tiles.xml</value>
 		<value>/views/category/tiles.xml</value>
 		<value>/views/complaint/tiles.xml</value>
 		<value>/views/endorsement/tiles.xml</value>
 		<value>/views/etc/tiles.xml</value>
-		<value>/views/phase/tiles.xml</value>
-		<value>/views/application/tiles.xml</value>
+		<value>/views/report/tiles.xml</value>
 	</util:list>
 
 </beans>

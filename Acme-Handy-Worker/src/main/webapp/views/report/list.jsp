@@ -6,13 +6,13 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<security:authorize access="hasRole(HANDYWORKER)">
+<security:authorize access="hasRole('HANDYWORKER')">
 <div>
 	<a href="messages/all.do"><spring:message code="handy.mssg" /></a>
 	<display:table name="reports" id="report" requestURI="${requestURI}" pagesize="10">
 		<display:column property="description" titleKey="complaint.description" />
 		<display:column property="author" titleKey="complaint.author" />
-		<display:column property="date" titleKey="complaint.date" sortable=true />
+		<display:column property="date" titleKey="complaint.date" sortable="true" />
 		<display:column>
 			<jstl:if test="${not empty row.complaint.reportid}">
 				<form:form action="report/see.do?id=${row.complaint.reportid}">
@@ -24,6 +24,20 @@
 			</jstl:if>
 		</display:column>
 	</display:table>
-
 </div>
+</security:authorize>
+
+<security:authorize access="hasRole('REFEREE')">
+
+<display:table name="reports" id="report" requestURI="${requestURI}">
+
+	<display:column property="complaint.id" titleKey="report.complaintID" />
+	<display:column property="reportTime" titleKey="report.date" />
+	<display:column property="isFinal" titleKey="report.final" />
+	<display:column>
+		<a href="/see.do" > <spring:message code="report.seeMore" /> </a>
+	</display:column>
+
+</display:table>
+
 </security:authorize>

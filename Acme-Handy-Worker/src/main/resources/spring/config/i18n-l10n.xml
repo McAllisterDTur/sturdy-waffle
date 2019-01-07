@@ -34,6 +34,7 @@
 		<value>/views/configuration/messages</value>
 		<value>/views/application/messages</value>
 		<value>/views/phase/messages</value>
+		<value>/views/report/messages</value>
 
 	</util:list>
 

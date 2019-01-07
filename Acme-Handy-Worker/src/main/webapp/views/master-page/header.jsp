@@ -91,7 +91,7 @@
 					<li class="arrow"></li>
 					<li><a href="complaint/referee/unassignedComplaints.do"><spring:message code="master.page.referee.allComps" /></a></li>
 					<li><a href="complaint/referee/myAssignedComplaints.do"><spring:message code="master.page.referee.myComps" /></a></li>
-					<li><a href="report/referee/listAll.do"><spring:message code="master.page.referee.myReports" /></a></li>
+					<li><a href="report/handyworker,referee/list.do"><spring:message code="master.page.referee.myReports" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
