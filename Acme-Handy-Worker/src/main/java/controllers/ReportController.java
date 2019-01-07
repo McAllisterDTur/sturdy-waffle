@@ -8,11 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
 import services.ReportService;
-import domain.Referee;
+import domain.Actor;
 import domain.Report;
 
 @Controller
@@ -40,14 +41,18 @@ public class ReportController extends AbstractController {
 
 		this.account = LoginService.getPrincipal();
 
-		final Referee ref = (Referee) this.actorService.findByUserAccountId(this.account.getId());
+		Actor act = null;
 
-		final Collection<Report> reports = this.reportService.findReportsActor(ref.getId());
+		if (this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.REFEREE))
+			act = this.actorService.findByUserAccountId(this.account.getId());
+		else if (this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER))
+			act = this.actorService.findByUserAccountId(this.account.getId());
+
+		final Collection<Report> reports = this.reportService.findReportsActor(act.getId());
 
 		res.addObject("reports", reports);
 		res.addObject("requestURI", "report/handyworker,referee/list.do");
 
 		return res;
 	}
-
 }

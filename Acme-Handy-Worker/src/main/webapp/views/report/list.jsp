@@ -8,7 +8,6 @@
 
 <security:authorize access="hasRole('HANDYWORKER')">
 <div>
-	<a href="messages/all.do"><spring:message code="handy.mssg" /></a>
 	<display:table name="reports" id="report" requestURI="${requestURI}" pagesize="10">
 		<display:column property="description" titleKey="complaint.description" />
 		<display:column property="author" titleKey="complaint.author" />
