@@ -49,6 +49,12 @@ public class TutorialService {
 		final Collection<Section> sections = new ArrayList<>();
 		tutorial.setPhotoURL(photos);
 		tutorial.setSections(sections);
+
+		final Date lastTimeUpdated = new Date();
+		tutorial.setLastTimeUpdated(lastTimeUpdated);
+		final UserAccount ua = LoginService.getPrincipal();
+		final HandyWorker worker = (HandyWorker) this.actorService.findByUserAccountId(ua.getId());
+		tutorial.setWorker(worker);
 		return tutorial;
 	}
 
@@ -97,6 +103,7 @@ public class TutorialService {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
 		final UserAccount ua = LoginService.getPrincipal();
 		Tutorial result = null;
+		final Date lastTimeUpdated = new Date();
 		final HandyWorker worker = (HandyWorker) this.actorService.findByUserAccountId(ua.getId());
 		if (tutorial.getId() != 0) {
 			//If the tutorial isn't new, we look if the tutorial belong the 
@@ -104,22 +111,14 @@ public class TutorialService {
 			final Tutorial ac = this.findOne(tutorial.getId());
 			Assert.isTrue(tutorial.getWorker().getAccount().equals(ua));
 			Assert.isTrue(ac.getWorker().getAccount().equals(tutorial.getWorker().getAccount()));
-			//we set the date
-			final Date lastTimeUpdated = new Date();
-			tutorial.setLastTimeUpdated(lastTimeUpdated);
-			this.spamService.isSpam(worker, tutorial.getSummary());
-			this.spamService.isSpam(worker, tutorial.getTitle());
 			result = this.tutorialRepository.save(tutorial);
-		} else {
+		} else
 			//If the tutorial is new, we set the creator and the date
-			final Date lastTimeUpdated = new Date();
-			this.spamService.isSpam(worker, tutorial.getSummary());
-			this.spamService.isSpam(worker, tutorial.getTitle());
-
-			tutorial.setLastTimeUpdated(lastTimeUpdated);
 			tutorial.setWorker(worker);
-			result = this.tutorialRepository.save(tutorial);
-		}
+		this.spamService.isSpam(worker, tutorial.getSummary());
+		this.spamService.isSpam(worker, tutorial.getTitle());
+		tutorial.setLastTimeUpdated(lastTimeUpdated);
+		result = this.tutorialRepository.save(tutorial);
 		return result;
 	}
 
@@ -155,6 +154,19 @@ public class TutorialService {
 		Assert.isTrue(ac.getWorker().getAccount().equals(tutorial.getWorker().getAccount()));
 		Assert.isTrue(tutorial.getWorker().getAccount().equals(ua));
 		this.tutorialRepository.delete(tutorial);
+	}
+
+	/**
+	 * HandyWorker deletes a tutorial from DB
+	 * 
+	 * @param tutorial
+	 */
+	public void delete(final int id) {
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
+		final UserAccount ua = LoginService.getPrincipal();
+		final Tutorial ac = this.findOne(id);
+		Assert.isTrue(ac.getWorker().getAccount().equals(ua));
+		this.tutorialRepository.delete(id);
 	}
 
 }

@@ -45,17 +45,14 @@ public class TutorialController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView allTutorials() {
 		final Collection<Tutorial> tutorials = this.tutorialService.findAll();
-		//Result
 		ModelAndView result;
-		// Esta url es la de la vista
 		result = new ModelAndView("tutorial/list");
 		result.addObject("tutorials", tutorials);
-		// TODO: Test. Este atributo es la especificación de la url de la vista para la paginación (Creo)
-		result.addObject("url", "all");
+		result.addObject("requestURI", "/tutorial/list.do");
 		return result;
 	}
 
-	@RequestMapping(value = "/see", method = RequestMethod.GET)
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView seeTutorial(@RequestParam("id") final int id) {
 		final Tutorial tutorial = this.tutorialService.findOne(id);
 		//Result
@@ -64,25 +61,82 @@ public class TutorialController extends AbstractController {
 		result.addObject("tutorial", tutorial);
 		return result;
 	}
-	// TODO: Mirar como poner parámetros opcionales
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public ModelAndView newTutorial() {
 		final Tutorial tutorial = this.tutorialService.create();
-		//Result
 		ModelAndView result;
-		result = new ModelAndView("tutorial/form");
+		result = new ModelAndView("tutorial/edit");
+		result.addObject("tutorial", tutorial);
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView editTutorial(@RequestParam("id") final int id) {
+		final Tutorial tutorial = this.tutorialService.findOne(id);
+		ModelAndView result;
+		result = new ModelAndView("tutorial/edit");
 		result.addObject("tutorial", tutorial);
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public ModelAndView saveTutorial(@Valid final Tutorial tutorial, final BindingResult binding) {
-		//Result
-		System.out.println(binding.getFieldErrors());
 		ModelAndView result;
-		this.tutorialService.save(tutorial);
-		result = new ModelAndView("redirect:all.do");
+
+		if (binding.hasErrors()) {
+			System.out.println(binding.getFieldErrors());
+			result = new ModelAndView("tutorial/edit");
+			result.addObject("tutorial", tutorial);
+		} else {
+			this.tutorialService.save(tutorial);
+			result = new ModelAndView("redirect:list.do");
+
+		}
 		return result;
 	}
 
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView deleteTutorial(@RequestParam("id") final int id) {
+		this.tutorialService.delete(id);
+		ModelAndView result;
+		result = new ModelAndView("redirect:list.do");
+		return result;
+	}
+
+	@RequestMapping(value = "/pictures/list", method = RequestMethod.GET)
+	public ModelAndView tutorialPictures(@RequestParam("id") final int id) {
+		final Tutorial tutorial = this.tutorialService.findOne(id);
+		ModelAndView result;
+		result = new ModelAndView("tutorial/pictures");
+		result.addObject("tutorial", tutorial);
+		result.addObject("requestURI", "/tutorial/pictures/list.do");
+		return result;
+	}
+
+	@RequestMapping(value = "/pictures/delete", method = RequestMethod.GET)
+	public ModelAndView tutorialDeletePicture(@RequestParam("id") final int id, @RequestParam("picture") final String picture) {
+		ModelAndView result = null;
+		Tutorial tutorial;
+		tutorial = this.tutorialService.findOne(id);
+		tutorial.getPhotoURL().remove(picture);
+		tutorial = this.tutorialService.save(tutorial);
+		result = new ModelAndView("tutorial/pictures");
+		result.addObject("tutorial", tutorial);
+		result.addObject("requestURI", "/tutorial/pictures/list.do");
+		return result;
+	}
+
+	@RequestMapping(value = "/pictures/add", method = RequestMethod.GET)
+	public ModelAndView tutorialAddPicture(@RequestParam("id") final int id, @RequestParam("picture") final String picture) {
+		ModelAndView result = null;
+		Tutorial tutorial;
+		tutorial = this.tutorialService.findOne(id);
+		tutorial.getPhotoURL().add(picture);
+		tutorial = this.tutorialService.save(tutorial);
+		result = new ModelAndView("tutorial/pictures");
+		result.addObject("tutorial", tutorial);
+		result.addObject("requestURI", "/tutorial/pictures/list.do");
+		return result;
+	}
 }

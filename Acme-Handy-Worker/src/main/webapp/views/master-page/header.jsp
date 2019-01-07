@@ -22,15 +22,15 @@
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<li><a class="fNiv" href="index"><spring:message code="master.page.home" /></a></li>
 		<li>
-			<a class="fNiv" href="tutorial/all.do"><spring:message code="master.page.tutorial" /></a>
-			<security:authorize access="hasRole('HANDYWORKER')">
+			<a class="fNiv"><spring:message code="master.page.tutorial" /></a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="tutorial/list.do"><spring:message code="master.page.handy.allTutorials" /></a></li>
+					<security:authorize access="hasRole('HANDYWORKER')">
 					<li><a href="handyworker/myTutorials.do"><spring:message code="master.page.handy.myTutorials" /></a></li>
-					<li><a href="tutorial/all.do"><spring:message code="master.page.handy.allTutorials" /></a></li>
-					<li><a href="tutorial/create.do"><spring:message code="master.page.handy.createTut" /></a></li>
+					<li><a href="tutorial/new.do"><spring:message code="master.page.handy.createTut" /></a></li>
+					</security:authorize>
 				</ul>
-			</security:authorize>
 			<security:authorize access="hasRole('SPONSOR')">
 				<ul>
 					<li class="arrow"></li>

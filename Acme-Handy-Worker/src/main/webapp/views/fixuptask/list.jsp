@@ -10,7 +10,6 @@
 <script type="text/javascript">
 	function search(){
 		var keyword = document.getElementById('keyword').value;
-		console.log(keyword);
 		window.location.href='/Acme-Handy-Worker/fixuptask/handyworker/list.do?keyword=' + keyword;
 	}
 </script>

@@ -29,6 +29,7 @@
 		<value>/views/phase/tiles.xml</value>
 		<value>/views/application/tiles.xml</value>
 		<value>/views/actor/tiles.xml</value>
+		<value>/views/tutorial/tiles.xml</value>
 	</util:list>
 
 </beans>
