@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- 
-  * tiles.xml 
-  * 
-  * Copyright (C) 2018 Universidad de Sevilla 
-  * 
-  * The use of this project is hereby constrained to the conditions of the 
-  * TDG Licence, a copy of which you may download from 
-  * http://www.tdg-seville.info/License.html 
+<!--
+  * tiles.xml
+  *
+  * Copyright (C) 2018 Universidad de Sevilla
+  *
+  * The use of this project is hereby constrained to the conditions of the
+  * TDG Licence, a copy of which you may download from
+  * http://www.tdg-seville.info/License.html
 -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -18,15 +18,20 @@
 	">
 
 	<util:list id="tiles">
-		<value>/views/master-page/tiles.xml</value>		
-		<value>/views/misc/tiles.xml</value>		
+		<value>/views/master-page/tiles.xml</value>
+		<value>/views/misc/tiles.xml</value>
 		<value>/views/security/tiles.xml</value>
 		<value>/views/welcome/tiles.xml</value>
-		
+
 		<value>/views/administrator/tiles.xml</value>
 		<value>/views/customer/tiles.xml</value>
 		<value>/views/profile/tiles.xml</value>
 		<value>/views/fixuptask/tiles.xml</value>
+		<value>/views/warranty/tiles.xml</value>
+		<value>/views/category/tiles.xml</value>
+		<value>/views/complaint/tiles.xml</value>
+		<value>/views/endorsement/tiles.xml</value>
+		<value>/views/etc/tiles.xml</value>
 		<value>/views/phase/tiles.xml</value>
 		<value>/views/application/tiles.xml</value>
 	</util:list>

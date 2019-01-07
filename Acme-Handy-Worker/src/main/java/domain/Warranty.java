@@ -51,7 +51,7 @@ public class Warranty extends DomainEntity {
 	}
 
 	@NotNull
-	public Boolean isDraft() {
+	public Boolean getDraft() {
 		return this.draft;
 	}
 

@@ -16,6 +16,7 @@ import security.LoginService;
 import security.UserAccount;
 import utilities.AuthenticationUtility;
 import domain.Application;
+import domain.FixUpTask;
 import domain.HandyWorker;
 
 @Service
@@ -26,6 +27,8 @@ public class HandyWorkerService {
 	private HandyWorkerRepository	repo;
 	@Autowired
 	private UserAccountService		userAccountService;
+	@Autowired
+	private FixUpTaskService		futService;
 	private UserAccount				account;
 
 
@@ -78,6 +81,15 @@ public class HandyWorkerService {
 			i++;
 		}
 
+		return res;
+	}
+
+	public HandyWorker findHandyWorkerFromFixUpTask(final Integer id) {
+		final FixUpTask f = this.futService.findOne(id);
+		HandyWorker res = null;
+		for (final Application a : f.getApplications())
+			if (a.getStatus().equals("ACCEPTED"))
+				res = a.getHandyWorker();
 		return res;
 	}
 }
