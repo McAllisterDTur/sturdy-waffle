@@ -26,7 +26,6 @@
 			if(confirm("Do you want to send this complaint?\nThis action can't be undone.")){
 				document.getElementById("complaintForm").submit();
 			} else {
-				alert("The complaint was saved as a draft, and it's not public.\nYou can edit it when you want");
 				document.getElementById("complaintForm").action = "complaint/customer/saveDrafted.do";
 				document.getElementById("complaintForm").submit();
 			}
@@ -39,7 +38,6 @@
 			if(confirm("¿Quieres enviar esta queja?\nEsta acción no se puede deshacer.")){
 				document.getElementById("complaintForm").submit();
 			} else {
-				alert("La queja se guardó como borrador y no es pública.\nPuedes editarla cuando quieras.");
 				document.getElementById("complaintForm").action = "complaint/customer/saveDrafted.do";
 				document.getElementById("complaintForm").submit();
 			}

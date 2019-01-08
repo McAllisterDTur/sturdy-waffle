@@ -22,6 +22,7 @@ import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
 import services.ConfigurationService;
+import domain.Actor;
 
 @Controller
 @RequestMapping("/welcome")
@@ -52,8 +53,14 @@ public class WelcomeController extends AbstractController {
 			final UserAccount logged = LoginService.getPrincipal();
 			if (logged == null)
 				name = "";
-			else
-				name = " " + this.aService.findByUserAccountId(logged.getId()).getName();
+			else {
+				final Actor a = this.aService.findByUserAccountId(logged.getId());
+				if (a.getBanned()) {
+					result = new ModelAndView("security/banned");
+					return result;
+				}
+				name = " " + a.getName();
+			}
 		} catch (final Throwable oops) {
 			name = "";
 		}

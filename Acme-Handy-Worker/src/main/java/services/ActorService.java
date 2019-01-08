@@ -26,17 +26,21 @@ import domain.Sponsor;
 public class ActorService {
 
 	@Autowired
-	private ActorRepository	actorRepository;
+	private ActorRepository		actorRepository;
 	@Autowired
-	HandyWorkerService		hwService;
+	HandyWorkerService			hwService;
 	@Autowired
-	CustomerService			cService;
+	CustomerService				cService;
 	@Autowired
-	RefereeService			rService;
+	RefereeService				rService;
 	@Autowired
-	SponsorService			sService;
+	SponsorService				sService;
 	@Autowired
-	AdministratorService	adminService;
+	AdministratorService		adminService;
+	@Autowired
+	private UserAccountService	accountService;
+	@Autowired
+	private BoxService			boxService;
 
 
 	/**
@@ -46,6 +50,7 @@ public class ActorService {
 	 */
 	public Actor create() {
 		final Actor a = new Actor();
+		a.setBanned(false);
 		return a;
 	}
 
@@ -76,10 +81,13 @@ public class ActorService {
 				result = this.actorRepository.save(actor);
 			}
 		} else {
-			//TODO Por ahora, por decisión de grupo, la useracount se agrega
+			//TODO Por ahora, por decisiï¿½n de grupo, la useracount se agrega
 			//en el controller
-			actor.setBanned(false);
+			final UserAccount account = actor.getAccount();
+			final UserAccount savedAccount = this.accountService.save(account);
+			actor.setAccount(savedAccount);
 			result = this.actorRepository.save(actor);
+			this.boxService.initializeDefaultBoxes(result);
 		}
 		return result;
 	}

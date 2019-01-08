@@ -17,6 +17,9 @@
 			<legend><spring:message code="category.message"/></legend>
 			<jstl:if test="${not success }">
 				<spring:message code="category.error"/>
+				<jstl:if test="${father }">
+				. <spring:message code="category.errorFather"/>
+				</jstl:if>
 			</jstl:if>
 		</fieldset>
 	</jstl:if>

@@ -49,7 +49,7 @@ public class FixUpTask extends DomainEntity {
 		this.complaints = complaints;
 	}
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Application> getApplications() {
 		return this.applications;
 	}

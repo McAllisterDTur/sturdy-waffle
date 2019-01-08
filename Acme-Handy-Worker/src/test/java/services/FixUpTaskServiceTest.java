@@ -93,7 +93,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	@Test
 	public void avgMinMaxDevFixUpTaskCountGood() {
 		super.authenticate("admin");
-		final Collection<Double> c = this.fixUpTaskService.avgMinMaxDevFixUpTaskCount();
+		final Collection<Object[]> c = this.fixUpTaskService.avgMinMaxDevFixUpTaskCount();
 		Assert.notNull(c);
 		super.unauthenticate();
 	}
@@ -101,7 +101,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	@Test
 	public void avgMinMaxDevFixUpTaskPriceGood() {
 		super.authenticate("admin");
-		final Collection<Double> c = this.fixUpTaskService.avgMinMaxDevFixUpTaskPrice();
+		final Collection<Object[]> c = this.fixUpTaskService.avgMinMaxDevFixUpTaskPrice();
 		Assert.notNull(c);
 		super.unauthenticate();
 	}
@@ -117,7 +117,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	@Test
 	public void avgMinMaxDevFixUpTaskCountBad() {
 		super.authenticate("Customer1");
-		Collection<Double> c = null;
+		Collection<Object[]> c = null;
 		try {
 			c = this.fixUpTaskService.avgMinMaxDevFixUpTaskCount();
 		} catch (final Exception e) {
@@ -129,7 +129,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	@Test
 	public void avgMinMaxDevFixUpTaskPriceBad() {
 		super.authenticate("Customer1");
-		Collection<Double> c = null;
+		Collection<Object[]> c = null;
 		try {
 			c = this.fixUpTaskService.avgMinMaxDevFixUpTaskPrice();
 		} catch (final Exception e) {

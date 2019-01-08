@@ -14,6 +14,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import utilities.AuthenticationUtility;
+import domain.Actor;
 import domain.Sponsor;
 
 @Service
@@ -28,6 +29,10 @@ public class SponsorService {
 
 	@Autowired
 	private ConfigurationService	configurationService;
+	@Autowired
+	private UserAccountService		userAccountService;
+	@Autowired
+	private BoxService				boxService;
 
 
 	/**
@@ -63,19 +68,15 @@ public class SponsorService {
 			}
 			res = this.sponsorRepository.save(sponsor);
 		} else {
-			final UserAccount ua = sponsor.getAccount();
-			final Authority auth = new Authority();
-			auth.setAuthority(Authority.SPONSOR);
-			ua.addAuthority(auth);
-			final UserAccount nua = this.useraccountService.save(ua);
-			sponsor.setAccount(nua);
-			sponsor.setBanned(false);
-			sponsor.setIsSuspicious(false);
 			if (!(sponsor.getPhone().startsWith("+"))) {
 				final String cc = this.configurationService.findAll().iterator().next().getCountryCode();
 				sponsor.setPhone(cc + " " + sponsor.getPhone());
 			}
+			final UserAccount account = sponsor.getAccount();
+			final UserAccount savedAccount = this.userAccountService.save(account);
+			sponsor.setAccount(savedAccount);
 			res = this.sponsorRepository.save(sponsor);
+			this.boxService.initializeDefaultBoxes(res);
 		}
 		return res;
 	}
@@ -101,4 +102,21 @@ public class SponsorService {
 		return res;
 	}
 
+	public Sponsor actorToSponsor(final Actor a) {
+		final Sponsor res = new Sponsor();
+		res.setAccount(a.getAccount());
+		res.setAddress(a.getAddress());
+		res.setBanned(a.getBanned());
+		res.setEmail(a.getEmail());
+		res.setId(a.getId());
+		res.setIsSuspicious(a.getIsSuspicious());
+		res.setMiddleName(a.getMiddleName());
+		res.setName(a.getName());
+		res.setPhone(a.getPhone());
+		res.setPhotoURL(a.getPhotoURL());
+		res.setSurname(a.getSurname());
+		res.setVersion(a.getVersion());
+		res.setIsSuspicious(false);
+		return res;
+	}
 }

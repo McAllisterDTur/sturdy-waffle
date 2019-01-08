@@ -26,28 +26,28 @@
 	
 
 	<display:table pagesize="5" name="categories" id="category" requestURI="category/administrator/list.do">
-		<jstl:if test="${lang == 'es' }">
-			<display:column property="name" titleKey="category.list.name"/>
-			<display:column property="father.name" titleKey="category.father"/>
-		</jstl:if>
-		<jstl:if test="${lang == 'en' }">
-			<display:column property="nameEn" titleKey="category.list.name"/>
-			<display:column property="father.nameEn" titleKey="category.father"/>
-		</jstl:if>
-		<display:column>
-			<button onClick="window.location.href='category/administrator/see.do?id=${category.id }'">
-				<spring:message code="category.seeMore"/>
-			</button>
-		</display:column>
-		<display:column>
-			<button onClick="window.location.href='category/administrator/edit.do?id=${category.id }'">
-				<spring:message code="category.edit"/>
-			</button>
-		</display:column>
-		<display:column>
-			<button onClick="window.location.href='category/administrator/delete.do?id=${category.id }'">
-				<spring:message code="category.delete"/>
-			</button>
-		</display:column>
+			<jstl:if test="${lang == 'es' }">
+				<display:column property="name" titleKey="category.list.name"/>
+				<display:column property="father.name" titleKey="category.father"/>
+			</jstl:if>
+			<jstl:if test="${lang == 'en' }">
+				<display:column property="nameEn" titleKey="category.list.name"/>
+				<display:column property="father.nameEn" titleKey="category.father"/>
+			</jstl:if>
+			<display:column>
+				<button onClick="window.location.href='category/administrator/see.do?id=${category.id }'">
+					<spring:message code="category.seeMore"/>
+				</button>
+			</display:column>
+			<display:column>
+				<button onClick="window.location.href='category/administrator/edit.do?id=${category.id }'">
+					<spring:message code="category.edit"/>
+				</button>
+			</display:column>
+			<display:column>
+				<button onClick="window.location.href='category/administrator/delete.do?id=${category.id }'">
+					<spring:message code="category.delete"/>
+				</button>
+			</display:column>
 	</display:table>
 </security:authorize>

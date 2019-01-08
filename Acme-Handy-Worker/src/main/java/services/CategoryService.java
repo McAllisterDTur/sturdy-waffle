@@ -44,7 +44,9 @@ public class CategoryService {
 	public Category save(final Category category) {
 		//Admin authority
 		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
-		Assert.isTrue(au);
+		Assert.isTrue(au, "You are not an administrator");
+		Assert.notNull(category.getFather(), "This cannot be null");
+		Assert.isTrue(category.getFather().getName() != "", "This cannot be null");
 		return this.catRepo.save(category);
 	}
 
@@ -70,8 +72,6 @@ public class CategoryService {
 	 */
 	public Collection<Category> findAll() {
 		//Admin authority
-		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
-		Assert.isTrue(au);
 		return this.catRepo.findAll();
 	}
 	/**

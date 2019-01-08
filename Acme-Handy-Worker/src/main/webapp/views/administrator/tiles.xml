@@ -16,14 +16,12 @@
        
 <tiles-definitions>
 
-	<definition name="administrator/action-1" extends="master.page">	
-		<put-attribute name="title" value="Administrator: Action 1" />
-		<put-attribute name="body" value="/views/administrator/action-1.jsp" />
+	<definition name="administrator/dashboard" extends="master.page">	
+		<put-attribute name="title" value="Dashboard" />
+		<put-attribute name="body" value="/views/administrator/dashboard.jsp" />
 	</definition>
-	
-	<definition name="administrator/action-2" extends="master.page">	
-		<put-attribute name="title" value="Administrator: Action 2" />
-		<put-attribute name="body" value="/views/administrator/action-2.jsp" />
+	<definition name="administrator/suspiciousActors" extends="master.page">	
+		<put-attribute name="title" value="Suspicious users" />
+		<put-attribute name="body" value="/views/administrator/suspiciousActors.jsp" />
 	</definition>
-	
 </tiles-definitions>

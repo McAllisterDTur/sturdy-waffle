@@ -33,6 +33,8 @@ public class CategoryController {
 	public ModelAndView listAllCategories() {
 		final Collection<Category> all = this.cService.findAll();
 		final ModelAndView result = new ModelAndView("category/list");
+		final Category o = this.cService.findByName("CATEGORY");
+		all.remove(o);
 		result.addObject("categories", all);
 		final Locale locale = LocaleContextHolder.getLocale();
 		result.addObject("lang", locale.getLanguage());
@@ -53,9 +55,11 @@ public class CategoryController {
 	@RequestMapping(value = "/administrator/save", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveCategory(@Valid final Category c, final BindingResult br) {
 		ModelAndView result;
-		if (br.hasErrors())
+		if (br.hasErrors()) {
 			result = new ModelAndView("category/edit");
-		else
+			result.addObject("success", false);
+			result.addObject("categories", this.cService.findAll());
+		} else
 			try {
 				this.cService.save(c);
 				result = new ModelAndView("redirect:list.do");
@@ -63,6 +67,10 @@ public class CategoryController {
 				oops.printStackTrace();
 				result = new ModelAndView("category/edit");
 				result.addObject("success", false);
+				System.out.println(oops.getMessage());
+				if (oops.getMessage().equals("This cannot be null"))
+					result.addObject("father", true);
+				result.addObject("categories", this.cService.findAll());
 			}
 		result.addObject("bannerURL", this.conService.findAll().iterator().next().getBannerURL());
 		return result;

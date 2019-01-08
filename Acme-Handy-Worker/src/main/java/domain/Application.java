@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,8 +32,9 @@ public class Application extends DomainEntity {
 	private FixUpTask			fixUpTask;
 	private Collection<Phase>	phases;
 
+
 	@NotNull
-	@Past
+	//@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getRegisterTime() {
@@ -44,7 +44,7 @@ public class Application extends DomainEntity {
 	public void setRegisterTime(final Date registerTime) {
 		this.registerTime = registerTime;
 	}
-	
+
 	@NotNull
 	public Double getOfferedPrice() {
 		return this.offeredPrice;
@@ -56,13 +56,13 @@ public class Application extends DomainEntity {
 
 	@ElementCollection
 	public Collection<String> getCustomerComments() {
-		return customerComments;
+		return this.customerComments;
 	}
 
 	public void setCustomerComments(final Collection<String> customerComments) {
 		this.customerComments = customerComments;
 	}
-	
+
 	@ElementCollection
 	public Collection<String> getHandyComments() {
 		return this.handyComments;
@@ -81,7 +81,7 @@ public class Application extends DomainEntity {
 		this.status = status;
 	}
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, cascade = CascadeType.REFRESH)
 	public HandyWorker getHandyWorker() {
 		return this.handyWorker;
 	}
@@ -89,19 +89,19 @@ public class Application extends DomainEntity {
 	public void setHandyWorker(final HandyWorker handyWorker) {
 		this.handyWorker = handyWorker;
 	}
-	
+
 	@ManyToOne(optional = false)
 	public FixUpTask getFixUpTask() {
-		return fixUpTask;
+		return this.fixUpTask;
 	}
 
 	public void setFixUpTask(final FixUpTask fixUpTask) {
 		this.fixUpTask = fixUpTask;
 	}
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Phase> getPhases() {
-		return phases;
+		return this.phases;
 	}
 
 	public void setPhases(final Collection<Phase> phases) {

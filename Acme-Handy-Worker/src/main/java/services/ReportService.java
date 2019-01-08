@@ -29,13 +29,17 @@ public class ReportService {
 	private SpamService			spamService;
 	@Autowired
 	private ActorService		actorService;
+	@Autowired
+	private ComplaintService	complaintService;
 
 	private UserAccount			account;
 
 
-	public Report create() {
+	public Report create(final int complaintId) {
 		final Report res = new Report();
 
+		res.setComplaint(this.complaintService.findOne(complaintId));
+		res.setIsFinal(false);
 		res.setAttachment(new ArrayList<String>());
 		res.setNotes(new ArrayList<Notes>());
 
@@ -49,7 +53,7 @@ public class ReportService {
 
 		Assert.isTrue(report.getComplaint().getReferee().getAccount().equals(this.account));
 		if (report.getId() != 0)
-			Assert.isTrue(!report.getIsFinal());
+			Assert.isTrue(report.getIsFinal());//TODO: añadir un !
 		else if (report.getId() == 0)
 			report.setIsFinal(false);
 

@@ -31,13 +31,41 @@
 
 <jstl:if test="${not handy }">
 	<form:form modelAttribute="actor" action="profile/edit.do" method="POST">
-		<p><spring:message code="profile.edit.name"/>: <form:input path="name"/></p>
-		<p><spring:message code="profile.edit.middleName"/>: <form:input path="middleName"/></p>
-		<p><spring:message code="profile.edit.surname"/>: <form:input path="surname"/></p>
-		<p><spring:message code="profile.edit.photoURL"/>: <form:input path="photoURL"/></p>
-		<p><spring:message code="profile.edit.email"/>: <form:input path="email"/></p>
-		<p><spring:message code="profile.edit.phone"/>: <form:input path="phone"/></p>
-		<p><spring:message code="profile.edit.address"/>: <form:input path="address"/></p>
+		<p>
+			<spring:message code="profile.edit.name"/>: 
+			<form:input path="name"/>
+			<form:errors path="name" cssClass="error"/>
+		</p>
+		<p>
+			<spring:message code="profile.edit.middleName"/>: 
+			<form:input path="middleName"/>
+			<form:errors path="middleName" cssClass="error"/>
+		</p>
+		<p>
+			<spring:message code="profile.edit.surname"/>: 
+			<form:input path="surname"/>
+			<form:errors path="surname" cssClass="error"/>	
+		</p>
+		<p>
+			<spring:message code="profile.edit.photoURL"/>: 
+			<form:input path="photoURL"/>
+			<form:errors path="photoURL" cssClass="error"/>	
+		</p>
+		<p>
+			<spring:message code="profile.edit.email"/>: 
+			<form:input path="email"/>
+			<form:errors path="email" cssClass="error"/>	
+		</p>
+		<p>
+			<spring:message code="profile.edit.phone"/>: 
+			<form:input path="phone"/>
+			<form:errors path="phone" cssClass="error"/>
+		</p>
+		<p>
+			<spring:message code="profile.edit.address"/>: 
+			<form:input path="address"/>
+			<form:errors path="address" cssClass="error"/>
+		</p>
 		<form:hidden path="banned" />
 		<form:hidden path="account" />
 		<form:hidden path="isSuspicious" />
@@ -47,14 +75,46 @@
 
 <jstl:if test="${handy }">
 <form:form modelAttribute="worker" action="profile/edit.do" method="POST">
-	<p><spring:message code="profile.edit.name"/>: <form:input path="name"/></p>
-	<p><spring:message code="profile.edit.make"/>: <form:input path="make"/></p>
-	<p><spring:message code="profile.edit.middleName"/>: <form:input path="middleName"/></p>
-	<p><spring:message code="profile.edit.surname"/>: <form:input path="surname"/></p>
-	<p><spring:message code="profile.edit.photoURL"/>: <form:input path="photoURL"/></p>
-	<p><spring:message code="profile.edit.email"/>: <form:input path="email"/></p>
-	<p><spring:message code="profile.edit.phone"/>: <form:input path="phone"/></p>
-	<p><spring:message code="profile.edit.address"/>: <form:input path="address"/></p>
+		<p>
+			<spring:message code="profile.edit.name"/>: 
+			<form:input path="name"/>
+			<form:errors path="name" cssClass="error"/>
+		</p>
+		<p>
+			<spring:message code="profile.edit.make"/>: 
+			<form:input path="make"/>
+			<form:errors path="make" cssClass="error"/>
+		</p>
+		<p>
+			<spring:message code="profile.edit.middleName"/>: 
+			<form:input path="middleName"/>
+			<form:errors path="middleName" cssClass="error"/>
+		</p>
+		<p>
+			<spring:message code="profile.edit.surname"/>: 
+			<form:input path="surname"/>
+			<form:errors path="surname" cssClass="error"/>	
+		</p>
+		<p>
+			<spring:message code="profile.edit.photoURL"/>: 
+			<form:input path="photoURL"/>
+			<form:errors path="photoURL" cssClass="error"/>	
+		</p>
+		<p>
+			<spring:message code="profile.edit.email"/>: 
+			<form:input path="email"/>
+			<form:errors path="email" cssClass="error"/>	
+		</p>
+		<p>
+			<spring:message code="profile.edit.phone"/>: 
+			<form:input path="phone"/>
+			<form:errors path="phone" cssClass="error"/>
+		</p>
+		<p>
+			<spring:message code="profile.edit.address"/>: 
+			<form:input path="address"/>
+			<form:errors path="address" cssClass="error"/>
+		</p>
 	<form:hidden path="banned" />
 	<form:hidden path="account" />
 	<form:hidden path="isSuspicious" />

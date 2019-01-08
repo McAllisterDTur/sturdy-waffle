@@ -10,8 +10,11 @@
 
 package controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,106 +77,118 @@ public class ProfileController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(final Actor actor) {
-		final ModelAndView result = new ModelAndView("profile/edit");
-		result.addObject("actor", actor);
-		result.addObject("handy", false);
-		final String role = LoginService.getPrincipal().getAuthorities().toArray()[0].toString();
-		final Integer id = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+	public ModelAndView save(@Valid final Actor actor, final BindingResult br) {
+		final ModelAndView result;
+		if (br.hasErrors()) {
+			result = new ModelAndView("profile/edit");
+			result.addObject("actor", actor);
+			result.addObject("handy", false);
+		} else {
+			result = new ModelAndView("profile/edit");
+			result.addObject("actor", actor);
+			result.addObject("handy", false);
+			final String role = LoginService.getPrincipal().getAuthorities().toArray()[0].toString();
+			final Integer id = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
 
-		try {
-			switch (role) {
-			case "CUSTOMER":
-				final Customer c = this.custoService.findOne(id);
-				c.setAddress(actor.getAddress());
-				c.setEmail(actor.getEmail());
-				c.setMiddleName(actor.getMiddleName());
-				c.setName(actor.getName());
-				c.setPhone(actor.getPhone());
-				c.setPhotoURL(actor.getPhotoURL());
-				c.setSurname(actor.getSurname());
-				this.custoService.save(c);
-				break;
-			case "ADMIN":
-				final Administrator admin = this.adminService.findOne(id);
-				admin.setAddress(actor.getAddress());
-				admin.setEmail(actor.getEmail());
-				admin.setMiddleName(actor.getMiddleName());
-				admin.setName(actor.getName());
-				admin.setPhone(actor.getPhone());
-				admin.setPhotoURL(actor.getPhotoURL());
-				admin.setSurname(actor.getSurname());
-				this.adminService.save(admin);
-				break;
-			case "SPONSOR":
-				final Sponsor s = this.sService.findOne(id);
-				s.setAddress(actor.getAddress());
-				s.setEmail(actor.getEmail());
-				s.setMiddleName(actor.getMiddleName());
-				s.setName(actor.getName());
-				s.setPhone(actor.getPhone());
-				s.setPhotoURL(actor.getPhotoURL());
-				s.setSurname(actor.getSurname());
-				this.sService.save(s);
-				break;
-			case "REFEREE":
-				final Referee r = this.rService.findOne(id);
-				r.setAddress(actor.getAddress());
-				r.setEmail(actor.getEmail());
-				r.setMiddleName(actor.getMiddleName());
-				r.setName(actor.getName());
-				r.setPhone(actor.getPhone());
-				r.setPhotoURL(actor.getPhotoURL());
-				r.setSurname(actor.getSurname());
-				this.rService.save(r);
-				break;
-			default:
-				throw new NullPointerException();
+			try {
+				switch (role) {
+				case "CUSTOMER":
+					final Customer c = this.custoService.findOne(id);
+					c.setAddress(actor.getAddress());
+					c.setEmail(actor.getEmail());
+					c.setMiddleName(actor.getMiddleName());
+					c.setName(actor.getName());
+					c.setPhone(actor.getPhone());
+					c.setPhotoURL(actor.getPhotoURL());
+					c.setSurname(actor.getSurname());
+					this.custoService.save(c);
+					break;
+				case "ADMIN":
+					final Administrator admin = this.adminService.findOne(id);
+					admin.setAddress(actor.getAddress());
+					admin.setEmail(actor.getEmail());
+					admin.setMiddleName(actor.getMiddleName());
+					admin.setName(actor.getName());
+					admin.setPhone(actor.getPhone());
+					admin.setPhotoURL(actor.getPhotoURL());
+					admin.setSurname(actor.getSurname());
+					this.adminService.save(admin);
+					break;
+				case "SPONSOR":
+					final Sponsor s = this.sService.findOne(id);
+					s.setAddress(actor.getAddress());
+					s.setEmail(actor.getEmail());
+					s.setMiddleName(actor.getMiddleName());
+					s.setName(actor.getName());
+					s.setPhone(actor.getPhone());
+					s.setPhotoURL(actor.getPhotoURL());
+					s.setSurname(actor.getSurname());
+					this.sService.save(s);
+					break;
+				case "REFEREE":
+					final Referee r = this.rService.findOne(id);
+					r.setAddress(actor.getAddress());
+					r.setEmail(actor.getEmail());
+					r.setMiddleName(actor.getMiddleName());
+					r.setName(actor.getName());
+					r.setPhone(actor.getPhone());
+					r.setPhotoURL(actor.getPhotoURL());
+					r.setSurname(actor.getSurname());
+					this.rService.save(r);
+					break;
+				default:
+					throw new NullPointerException();
+				}
+
+			} catch (final Throwable oops) {
+				result.addObject("success", false);
+				oops.printStackTrace();
+				return result;
 			}
-
-		} catch (final Throwable oops) {
-			result.addObject("success", false);
-			oops.printStackTrace();
-			return result;
+			result.addObject("success", true);
 		}
-		result.addObject("success", true);
 		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveHandy")
-	public ModelAndView saveHandy(final HandyWorker worker) {
+	public ModelAndView saveHandy(@Valid final HandyWorker worker, final BindingResult br) {
 
-		final ModelAndView result = new ModelAndView("profile/edit");
-		result.addObject("worker", worker);
-		result.addObject("handy", true);
-		final String role = LoginService.getPrincipal().getAuthorities().toArray()[0].toString();
-		final Integer id = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
-		try {
-			if (role.equals("HANDYWORKER")) {
-				final HandyWorker hw = this.hwService.findOne(id);
-				hw.setAddress(worker.getAddress());
-				hw.setEmail(worker.getEmail());
-				hw.setMiddleName(worker.getMiddleName());
-				hw.setMake(worker.getMake());
-				hw.setName(worker.getName());
-				hw.setPhone(worker.getPhone());
-				hw.setPhotoURL(worker.getPhotoURL());
-				hw.setSurname(worker.getSurname());
-				this.hwService.save(hw);
-				result.addObject("success", true);
-			} else
-				throw new IllegalAccessError();
-		} catch (final Throwable oops) {
-			result.addObject("success", false);
-			oops.printStackTrace();
-			result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
-			return result;
+		final ModelAndView result;
+		if (br.hasErrors()) {
+
+			result = new ModelAndView("profile/edit");
+			result.addObject("worker", worker);
+			result.addObject("handy", true);
+		} else {
+			result = new ModelAndView("profile/edit");
+			result.addObject("worker", worker);
+			result.addObject("handy", true);
+			final String role = LoginService.getPrincipal().getAuthorities().toArray()[0].toString();
+			final Integer id = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+			try {
+				if (role.equals("HANDYWORKER")) {
+					final HandyWorker hw = this.hwService.findOne(id);
+					hw.setAddress(worker.getAddress());
+					hw.setEmail(worker.getEmail());
+					hw.setMiddleName(worker.getMiddleName());
+					hw.setMake(worker.getMake());
+					hw.setName(worker.getName());
+					hw.setPhone(worker.getPhone());
+					hw.setPhotoURL(worker.getPhotoURL());
+					hw.setSurname(worker.getSurname());
+					this.hwService.save(hw);
+					result.addObject("success", true);
+				} else
+					throw new IllegalAccessError();
+			} catch (final Throwable oops) {
+				result.addObject("success", false);
+				oops.printStackTrace();
+			}
 		}
 		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
-
 	@RequestMapping(value = "see", method = RequestMethod.GET)
 	public ModelAndView seeProfile() {
 		final ModelAndView result = new ModelAndView("profile/see");

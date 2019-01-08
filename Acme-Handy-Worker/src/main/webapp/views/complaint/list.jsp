@@ -19,16 +19,6 @@
 	</jstl:if>
 </security:authorize>
 <security:authorize access="hasRole('CUSTOMER')">
-	<jstl:if test="${!draft }">
-		<button onClick="window.location.href='complaint/customer/draftedComplaints.do'">
-			<spring:message code="complaint.customer.drafted" />
-		</button>
-	</jstl:if>
-	<jstl:if test="${draft }">
-		<button onClick="window.location.href='complaint/customer/finalComplaints.do'">
-			<spring:message code="complaint.customer.published" />
-		</button>
-	</jstl:if>
 	<button onClick="window.location.href='complaint/customer/new.do'">
 		<spring:message code="complaint.customer.newComplaint" />
 	</button>

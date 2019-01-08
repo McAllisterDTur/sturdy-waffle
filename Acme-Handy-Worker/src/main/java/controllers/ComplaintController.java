@@ -4,6 +4,8 @@ package controllers;
 import java.util.Collection;
 import java.util.Locale;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -50,17 +52,17 @@ public class ComplaintController {
 		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
-
-	@RequestMapping(value = "/customer/draftedComplaints", method = RequestMethod.GET)
-	public ModelAndView listDraftedComplaints() {
-		final Collection<Complaint> all = this.complaintService.findDraftedFromLoggedCustomer();
-		final ModelAndView result = new ModelAndView("complaint/list");
-		result.addObject("complaints", all);
-		result.addObject("requestURI", "complaint/customer/draftedComplaints.do");
-		result.addObject("draft", true);
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
-		return result;
-	}
+	//
+	//	@RequestMapping(value = "/customer/draftedComplaints", method = RequestMethod.GET)
+	//	public ModelAndView listDraftedComplaints() {
+	//		final Collection<Complaint> all = this.complaintService.findDraftedFromLoggedCustomer();
+	//		final ModelAndView result = new ModelAndView("complaint/list");
+	//		result.addObject("complaints", all);
+	//		result.addObject("requestURI", "complaint/customer/draftedComplaints.do");
+	//		result.addObject("draft", true);
+	//		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+	//		return result;
+	//	}
 
 	@RequestMapping(value = "/referee/unassignedComplaints", method = RequestMethod.GET)
 	public ModelAndView listUnassignedComplaints() {
@@ -145,40 +147,28 @@ public class ComplaintController {
 		return result;
 	}
 	@RequestMapping(value = "/customer/saveFinal", method = RequestMethod.POST)
-	public ModelAndView saveFinalComplaint(final Complaint c, final BindingResult br) {
+	public ModelAndView saveFinalComplaint(@Valid final Complaint c, final BindingResult br) {
 		ModelAndView result;
-		if (br.hasErrors())
+		if (br.hasErrors()) {
 			result = new ModelAndView("complaint/edit");
-		else
+			result.addObject("futs", this.futService.findFromLoggedCustomer());
+		} else
 			try {
 				c.setIsFinal(true);
 				this.complaintService.save(c);
 				result = new ModelAndView("redirect:finalComplaints.do");
 			} catch (final Throwable oops) {
 				oops.printStackTrace();
-				result = new ModelAndView("warranty/edit");
+				result = new ModelAndView("complaint/edit");
+				result.addObject("complaint", c);
 				result.addObject("success", false);
 			}
 		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
-
 	@RequestMapping(value = "/customer/saveDrafted", method = RequestMethod.POST)
 	public ModelAndView saveDraftedComplaint(final Complaint c, final BindingResult br) {
-		ModelAndView result;
-		if (br.hasErrors())
-			result = new ModelAndView("complaint/edit");
-		else
-			try {
-				c.setIsFinal(false);
-				this.complaintService.save(c);
-				result = new ModelAndView("redirect:draftedComplaints.do");
-			} catch (final Throwable oops) {
-				oops.printStackTrace();
-				result = new ModelAndView("warranty/edit");
-				result.addObject("success", false);
-			}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		final ModelAndView result = new ModelAndView("redirect:finalComplaints.do");
 		return result;
 	}
 

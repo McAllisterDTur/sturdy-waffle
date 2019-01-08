@@ -20,5 +20,9 @@
 		<put-attribute name="title" value="Entrada en el sistema" />
 		<put-attribute name="body" value="/views/security/login.jsp" />
 	</definition>
+	
+	<definition name="security/banned" extends="emptiness">
+		<put-attribute name="body" value="/views/security/banned.jsp" />
+	</definition>
 		
 </tiles-definitions>

@@ -42,7 +42,6 @@ public class Complaint extends DomainEntity {
 
 
 	@Column(unique = true)
-	@NotBlank
 	@Pattern(regexp = "^(\\d{2})(\\d{2})(\\d{2})\\-([0-9a-zA-Z]{6})$")
 	public String getTicker() {
 		return this.ticker;
@@ -52,8 +51,6 @@ public class Complaint extends DomainEntity {
 		this.ticker = ticker;
 	}
 
-	@NotNull
-	//@Past
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getComplaintTime() {
@@ -64,6 +61,7 @@ public class Complaint extends DomainEntity {
 		this.complaintTime = complaintTime;
 	}
 
+	@NotNull
 	@NotBlank
 	public String getDescription() {
 		return this.description;
@@ -81,7 +79,7 @@ public class Complaint extends DomainEntity {
 	public void setAttachments(final Collection<String> attachments) {
 		this.attachments = attachments;
 	}
-	@NotNull
+
 	public Boolean getIsFinal() {
 		return this.isFinal;
 	}

@@ -176,4 +176,8 @@ public class ComplaintService {
 	public int getNumberOfTickers(final String ticker) {
 		return this.complaintRepository.getNumberOfTickers(ticker);
 	}
+
+	public Collection<Complaint> findAll() {
+		return this.complaintRepository.findAll();
+	}
 }

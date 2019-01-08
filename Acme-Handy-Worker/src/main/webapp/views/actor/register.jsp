@@ -9,13 +9,14 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 
-<form:form modelAttribute="actor">
+<form:form modelAttribute="actor" action="${uri}">
 	<form:hidden path="id" />
-	<form:hidden path="version" action="actor/save.do"/>
-
+	<form:hidden path="version"/>
+	<form:hidden path="banned" />
+	
 	<!-- Account Atributtes -->
 	<form:label path="account.username">
-		<spring:message code="actor.userAccount.name" />
+		<spring:message code="actor.userAccount.name" />*
 	</form:label>
 
 	<form:input path="account.username" />
@@ -24,36 +25,28 @@
 	<br />
 
 	<form:label path="account.password">
-		<spring:message code="actor.userAccount.pass" />
+		<spring:message code="actor.userAccount.pass" />*
 	</form:label>
 
 
-	<form:input path="account.password" />
+	<form:input type="password" path="account.password" />
 	<form:errors cssClass="error" path="account.password" />
 
 	<br />
 	<!-- Account Authority -->
 	<form:label path="account.authorities">
-		<spring:message code="actor.authority" />
+		<spring:message code="actor.authority" />*
 	</form:label>
 
-	<security:authorize access="hasRole('ADMIN')">
-		<form:select path="account.authorities" multiple="false" size="2">
-			<form:option value="authority" label="ADMIN" />
-			<form:option value="authority" label="REFEREE"/>
-		</form:select>
-	</security:authorize>
-	<security:authorize access="isAnonymous()">
-	<form:select path="account.authorities" multiple="false" size="3">
-		<form:option value="authority" label="CUSTOMER" />
-		<form:option value="authority" label="HANDYWORKER"/>
-		<form:option value="authority" label="SPONSOR"/>
-	</form:select>
-	</security:authorize>
+	<jstl:forEach var="authority" items="${authorities}">
+		<form:radiobutton path="account.authorities" label="${authority}" value="${authority}"/>
+	</jstl:forEach>
+	<form:errors cssClass="error" path="account.authorities" />
+
 
 	<br />
 	<form:label path="name">
-		<spring:message code="actor.name" />
+		<spring:message code="actor.name" />*
 	</form:label>
 	<form:input path="name" />
 	<form:errors cssClass="error" path="name" />
@@ -67,7 +60,7 @@
 
 	<br />
 	<form:label path="surname">
-		<spring:message code="actor.surname" />
+		<spring:message code="actor.surname" />*
 	</form:label>
 	<form:input path="surname" />
 	<form:errors cssClass="error" path="surname" />
@@ -81,14 +74,14 @@
 
 	<br />
 	<form:label path="email">
-		<spring:message code="actor.email" />
+		<spring:message code="actor.email" />*
 	</form:label>
 	<form:input path="email" />
 	<form:errors cssClass="error" path="email" />
 
 	<br />
 	<form:label path="phone">
-		<spring:message code="actor.phone" />
+		<spring:message code="actor.phone" />*
 	</form:label>
 	<form:input path="phone" placeholder="+CC (AC) 666 333 222" />
 	<form:errors cssClass="error" path="phone" />
