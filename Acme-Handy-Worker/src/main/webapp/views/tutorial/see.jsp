@@ -11,7 +11,11 @@
 
 <p style="font-size: 2em"><strong><spring:message	code="tutorial.title" />:</strong> <jstl:out value='${tutorial.title}'></jstl:out></p>
 <p style="font-size: 1.5em"><strong><spring:message	code="tutorial.summary" />:</strong> <jstl:out value='${tutorial.summary}'></jstl:out></p>
-
+<security:authorize access="hasRole('HANDYWORKER')">
+	<jstl:if test="${tutorial.worker.account.username == principal}">
+		<button onClick="window.location.href='/Acme-Handy-Worker/section//handyworker/new.do?tutorialId=${tutorial.id}'"><spring:message code="tutorial.section.new"/></button>
+	</jstl:if>
+</security:authorize>
 <display:table pagesize="5" name="tutorial.sections" id="row" requestURI="tutorial/display.do">
 
 	<display:column property="number" titleKey="tutorial.section.number"></display:column>

@@ -87,7 +87,8 @@ public class TutorialService {
 	 * @return Tutorial
 	 */
 	public Tutorial findOne(final int id) {
-		final Tutorial result = this.tutorialRepository.findOne(id);
+		Tutorial result = this.tutorialRepository.findOne(id);
+		result = this.numberSections(result);
 		return result;
 	}
 
@@ -119,9 +120,9 @@ public class TutorialService {
 		this.spamService.isSpam(worker, tutorial.getTitle());
 		tutorial.setLastTimeUpdated(lastTimeUpdated);
 		result = this.tutorialRepository.save(tutorial);
+
 		return result;
 	}
-
 	/**
 	 * Sponsor make a sponsorship for a tutorial
 	 * 
@@ -169,4 +170,11 @@ public class TutorialService {
 		this.tutorialRepository.delete(id);
 	}
 
+	private Tutorial numberSections(final Tutorial t) {
+		final ArrayList<Section> sections = new ArrayList<>(t.getSections());
+		for (int i = 0; i < sections.size(); i++)
+			sections.get(i).setNumber(i + 1);
+		t.setSections(sections);
+		return t;
+	}
 }

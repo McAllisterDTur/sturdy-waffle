@@ -76,6 +76,8 @@
 		<security:intercept-url pattern="/tutorial/handyworker/myTutorials.do" access="hasRole('HANDYWORKER')" />
 		
 		<security:intercept-url pattern="/section/handyworker/edit.do" access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/handyworker/new.do" access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/handyworker/delete.do" access="hasRole('HANDYWORKER')" />
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 		<security:form-login

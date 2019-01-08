@@ -8,6 +8,8 @@
  * http://www.tdg-seville.info/License.html
  --%>
 
+<%@page import="org.springframework.web.servlet.support.RequestContextUtils"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
