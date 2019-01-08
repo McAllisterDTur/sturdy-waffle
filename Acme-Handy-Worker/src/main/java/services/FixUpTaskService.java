@@ -95,6 +95,8 @@ public class FixUpTaskService {
 	 */
 	public FixUpTask findOne(final int fixUpTaskId) {
 		final FixUpTask res = this.fixUpTaskRepository.findOne(fixUpTaskId);
+		if (res != null)
+			Assert.isTrue(AuthenticationUtility.checkAuthority("CUSTOMER") || AuthenticationUtility.checkAuthority("HANDYWORKER"));
 
 		return res;
 
@@ -270,6 +272,29 @@ public class FixUpTaskService {
 		close = close == null ? d2 : close;
 
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.findByFilter(keyWord, category, warranty, minPrice, maxPrice, open, close);
+
+		return res;
+	}
+
+	/**
+	 * Checks handy worker authority (Req 11.2)
+	 *
+	 * @param keyWord
+	 * @return a collection of fix up tasks filtered by the parameters given
+	 */
+	public Collection<FixUpTask> findByFilter(String keyWord) {
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+
+		final Authority au = new Authority();
+		au.setAuthority(Authority.HANDYWORKER);
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
+		keyWord = (keyWord == null || keyWord.isEmpty()) ? "" : keyWord;
+
+		final Collection<FixUpTask> res = this.fixUpTaskRepository.findByFilter(keyWord);
 
 		return res;
 	}

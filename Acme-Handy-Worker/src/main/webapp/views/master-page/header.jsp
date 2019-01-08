@@ -8,6 +8,8 @@
  * http://www.tdg-seville.info/License.html
  --%>
 
+<%@page import="org.springframework.web.servlet.support.RequestContextUtils"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -22,15 +24,15 @@
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<li><a class="fNiv" href="/Acme-Handy-Worker/"><spring:message code="master.page.home" /></a></li>
 		<li>
-			<a class="fNiv" href="tutorial/all.do"><spring:message code="master.page.tutorial" /></a>
-			<security:authorize access="hasRole('HANDYWORKER')">
+			<a class="fNiv"><spring:message code="master.page.tutorial" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="handyworker/myTutorials.do"><spring:message code="master.page.handy.myTutorials" /></a></li>
-					<li><a href="tutorial/all.do"><spring:message code="master.page.handy.allTutorials" /></a></li>
-					<li><a href="tutorial/create.do"><spring:message code="master.page.handy.createTut" /></a></li>
+					<li><a href="tutorial/list.do"><spring:message code="master.page.handy.allTutorials" /></a></li>
+					<security:authorize access="hasRole('HANDYWORKER')">
+					<li><a href="tutorial/handyworker/myTutorials.do"><spring:message code="master.page.handy.myTutorials" /></a></li>
+					<li><a href="tutorial/handyworker/new.do"><spring:message code="master.page.handy.createTut" /></a></li>
+					</security:authorize>
 				</ul>
-			</security:authorize>
 			<security:authorize access="hasRole('SPONSOR')">
 				<ul>
 					<li class="arrow"></li>
@@ -48,6 +50,8 @@
 					<li><a href="category/administrator/list.do"><spring:message code="master.page.administrator.categor" /></a></li>
 					<li><a href="administrator/warranties.do"><spring:message code="master.page.administrator.warrant" /></a></li>
 					<li><a href="administrator/categories.do"><spring:message code="master.page.administrator.categor" /></a></li>
+					<li><a href="security/administrator/register.do"><spring:message code="master.page.administrator.register" /></a></li>
+					<li><a href="administrator/suspiciousActors.do"><spring:message code="master.page.administrator.suspiciousActors" /></a></li>
 				</ul>
 			</li>
 

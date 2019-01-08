@@ -9,12 +9,7 @@
 <% String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() :""; %>
 <jstl:set var="principal" value="<%= s %>"/>
 
-<security:authorize access="hasRole('HANDYWORKER')">
-	<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/all.do'"><spring:message code="tutorial.all"/></button>
-	<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/myTutorials.do'"><spring:message code="tutorial.myTutorials"/></button>
-	<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/new.do'"><spring:message code="tutorial.new"/></button>
-</security:authorize>
-<display:table pagesize="5" name="tutorials" id="row" requestURI="tutorial/${url}.do">
+<display:table pagesize="5" name="tutorials" id="row" requestURI="${requestURI}">
 	
 
 	<display:column property="title" titleKey="tutorial.title"></display:column>
@@ -23,25 +18,23 @@
 	<display:column property="lastTimeUpdated" titleKey="tutorial.lastupdate"></display:column>
 	
 	<display:column>
-		<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/see.do?id=${row.id}'"><spring:message code="tutorial.see"/></button>
+		<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/display.do?id=${row.id}'"><spring:message code="tutorial.see"/></button>
 		
 	</display:column>
 	
 	<security:authorize access="hasRole('HANDYWORKER')">
 		<display:column>
 		<jstl:if test="${row.worker.account.username == principal}">
-			<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/edit.do?id=${row.id}'"><spring:message code="tutorial.edit"/></button>
+			<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/handyworker/edit.do?id=${row.id}'"><spring:message code="tutorial.edit"/></button>
 		</jstl:if>
 		</display:column>
 		<display:column>
 		<jstl:if test="${row.worker.account.username == principal}">
-			<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/delete.do?id=${row.id}'"><spring:message code="tutorial.delete"/></button>
+			<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/handyworker/delete.do?id=${row.id}'"><spring:message code="tutorial.delete"/></button>
 		</jstl:if>
 		</display:column>
 	</security:authorize>
 	<display:column>
-		<display:column>
-			<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/pictures.do?id=${row.id}'"><spring:message code="tutorial.pictures"/></button>
-		</display:column>
+		<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/pictures/list.do?id=${row.id}'"><spring:message code="tutorial.pictures"/></button>
 	</display:column>
 </display:table>

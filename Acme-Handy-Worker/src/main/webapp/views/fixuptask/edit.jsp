@@ -32,31 +32,31 @@
 	<spring:message code="fixuptask.placeholder.description" var="placeholderdescription"/>
 	<form:label path="description"><spring:message code="fixuptask.description" />:</form:label>
 	<form:input path="description" placeholder="${placeholderdescription}" />
-	<form:errors path="description" />
+	<form:errors path="description" cssClass="error"/>
 	<br/>
 
 	<spring:message code="fixuptask.placeholder.address" var="placeholderaddress"/>
 	<form:label path="address"><spring:message code="fixuptask.address" />:</form:label>
 	<form:input path="address" placeholder="${placeholderaddress}" />
-	<form:errors path="address" />
+	<form:errors path="address" cssClass="error"/>
 	<br/>
 
 	<spring:message code="fixuptask.placeholder.maxprice" var="placeholdermaxprice"/>
 	<form:label path="maxPrice"><spring:message code="fixuptask.maxPrice" />:</form:label>
 	<form:input type="number" step="0.01" path="maxPrice"  placeholder="${placeholdermaxprice}" />
-	<form:errors path="maxPrice" />
+	<form:errors path="maxPrice" cssClass="error"/>
 	<br/>
 
 	<spring:message code="fixuptask.placeholder.periodstart" var="placeholderperiodstart"/>
 	<form:label path="periodStart"><spring:message code="fixuptask.periodStart" />:</form:label>
 	<form:input type="date" path="periodStart" placeholder="${placeholderperiodstart}" />
-	<form:errors path="periodStart" />
+	<form:errors path="periodStart" cssClass="error"/>
 	<br/>
 
 	<spring:message code="fixuptask.placeholder.periodend" var="placeholderperiodend"/>
 	<form:label path="periodEnd"><spring:message code="fixuptask.periodEnd" />:</form:label>
 	<form:input type="date" path="periodEnd" placeholder="${placeholderperiodend}" />
-	<form:errors path="periodEnd" />
+	<form:errors path="periodEnd" cssClass="error"/>
 	<br/>
 
 	<form:label path="category"><spring:message code="fixuptask.category" />:</form:label>
@@ -79,7 +79,7 @@
 		<spring:message code="creditCard.holderName" />
 	</form:label>
 	<form:input path="creditCard.holderName" placeholder="${placeholderholdername}" />
-	<form:errors path="creditCard.holderName"/>
+	<form:errors path="creditCard.holderName" cssClass="error"/>
 	<br />
 
 	<spring:message code="creditcard.placeholder.number" var="placeholdernumber"/>
@@ -111,14 +111,14 @@
 	</form:label>
 	<spring:message code="creditcard.placeholder.codecvv" var="placeholdercodecvv"/>
 	<form:input path="creditCard.codeCVV" placeholder="${placeholdercodecvv}" />
-	<form:errors path="creditCard.codeCVV"/>
+	<form:errors path="creditCard.codeCVV" cssClass="error"/>
 	<br />
 
 	<form:label path="creditCard.brandName"><spring:message code="configuration.cardMaker" />:</form:label>
 	<form:select path="creditCard.brandName">
 		<form:options path="creditCard.brandName" items="${configuration.cardMaker}"/>
 	</form:select>
-	<form:errors path="creditCard.maker"/>
+	<form:errors path="creditCard.maker" cssClass="error"/>
 	<br />
 
 	<input type="submit" name="save" value="<spring:message code="fixuptask.save"/>" />

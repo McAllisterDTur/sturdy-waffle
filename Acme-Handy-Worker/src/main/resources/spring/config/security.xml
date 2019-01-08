@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- * security.xml * * Copyright (C) 2018 Universidad de Sevilla * * The 
-	use of this project is hereby constrained to the conditions of the * TDG 
+<!-- * security.xml * * Copyright (C) 2018 Universidad de Sevilla * * The
+	use of this project is hereby constrained to the conditions of the * TDG
 	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -59,8 +59,6 @@
 			access="hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/phase/handyworker/create.do"
 			access="hasRole('HANDYWORKER')" />
-		<security:intercept-url pattern="/phase/handyworker/save.do"
-			access="hasRole('HANDYWORKER')" />
 
 		<security:intercept-url pattern="/warranty/administrator/**"
 			access="hasRole('ADMIN')" />
@@ -107,11 +105,46 @@
 			access="hasRole('REFEREE')" />
 			<security:intercept-url pattern="/report/referee/save.do"
 			access="hasRole('REFEREE')" />
+			<security:intercept-url pattern="/phase/handyworker/save.do"
+			access="hasRole('HANDYWORKER')" />
 
-		<security:intercept-url pattern="/**"
-			access="hasRole('NONE')" />
-		<security:form-login login-page="/security/login.do"
-			password-parameter="password" username-parameter="username"
+		<security:intercept-url pattern="/fixuptask/handyworker/list.do" access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/fixuptask/customer/list.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer/create.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer/edit.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer/delete.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer,handyworker/display.do" access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
+
+		<security:intercept-url pattern="/security/register.do" access="permitAll" />
+		<security:intercept-url pattern="/security/administrator/register.do" access="hasRole('ADMIN')" />
+
+		<security:intercept-url pattern="/administrator/dashboard.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/suspiciousActors.do" access="hasRole('ADMIN')" />
+
+		<security:intercept-url pattern="/tutorial/list.do" access="permitAll" />
+		<security:intercept-url pattern="/tutorial/display.do" access="permitAll" />
+		<security:intercept-url pattern="/tutorial/pictures/list.do" access="permitAll" />
+
+		<security:intercept-url pattern="/tutorial/pictures/handyworker/delete.do" access="permitAll" />
+		<security:intercept-url pattern="/tutorial/pictures/handyworker/add.do" access="permitAll" />
+		<security:intercept-url pattern="/tutorial/handyworker/new.do" access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/tutorial/handyworker/edit.do" access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/tutorial/handyworker/delete.do" access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/tutorial/handyworker/myTutorials.do" access="hasRole('HANDYWORKER')" />
+
+		<security:intercept-url pattern="/section/pictures/list.do" access="permitAll" />
+
+		<security:intercept-url pattern="/section/pictures/handyworker/add.do" access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/pictures/handyworker/delete.do" access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/handyworker/edit.do" access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/handyworker/new.do" access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/handyworker/delete.do" access="hasRole('HANDYWORKER')" />
+
+		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
+		<security:form-login
+			login-page="/security/login.do"
+			password-parameter="password"
+			username-parameter="username"
 			authentication-failure-url="/security/loginFailure.do" />
 
 		<security:logout logout-success-url="/"

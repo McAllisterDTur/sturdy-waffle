@@ -29,9 +29,9 @@
 				<form:form
 					action="application/customer/accept.do?applicationId=${row.id}"
 					modelAttribute="${row}">
-					
+
 					<input type="hidden" value="ACCEPTED" />
-					
+
 					<input type="submit"
 						value="<spring:message code="application.task.accept" />" />
 

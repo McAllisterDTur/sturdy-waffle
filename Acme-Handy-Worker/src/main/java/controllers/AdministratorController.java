@@ -10,6 +10,7 @@
 
 package controllers;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.ApplicationService;
 import services.CustomerService;
 import services.FixUpTaskService;
 import services.HandyWorkerService;
+import domain.Actor;
 import domain.Customer;
 import domain.HandyWorker;
 
@@ -41,6 +44,9 @@ public class AdministratorController extends AbstractController {
 	@Autowired
 	private HandyWorkerService	workerService;
 
+	@Autowired
+	private ActorService		actorService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -48,10 +54,8 @@ public class AdministratorController extends AbstractController {
 		super();
 	}
 
-	// Action-1 ---------------------------------------------------------------		
-
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-	public ModelAndView action1() {
+	public ModelAndView dashboard() {
 		ModelAndView result;
 
 		result = this.calcStats("administrator/dashboard");
@@ -59,6 +63,15 @@ public class AdministratorController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/suspiciousActors", method = RequestMethod.GET)
+	public ModelAndView suspiciousActors() {
+		ModelAndView result;
+		final Collection<Actor> actors = this.actorService.findBySuspicious();
+		result = new ModelAndView("administrator/suspiciousActors");
+		result.addObject("actors", actors);
+		result.addObject("requestURI", "/administrator/suspiciousActors.do");
+		return result;
+	}
 	private ModelAndView calcStats(final String model) {
 		final ModelAndView res = new ModelAndView(model);
 

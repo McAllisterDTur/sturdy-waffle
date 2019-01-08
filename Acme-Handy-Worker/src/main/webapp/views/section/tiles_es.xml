@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles_es.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+
+	<definition name="section/edit" extends="master.page">	
+		<put-attribute name="title" value="Vista de una sección" />
+		<put-attribute name="body" value="/views/section/edit.jsp" />
+	</definition>
+	<definition name="section/pictures" extends="master.page">	
+		<put-attribute name="title" value="Imágenes de una sección" />
+		<put-attribute name="body" value="/views/section/pictures.jsp" />
+	</definition>
+	
+</tiles-definitions>

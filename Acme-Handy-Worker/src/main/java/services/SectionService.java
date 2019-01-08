@@ -31,6 +31,8 @@ public class SectionService {
 
 	@Autowired
 	private ActorService		actorService;
+	@Autowired
+	private TutorialService		tutorialService;
 
 
 	/**
@@ -43,12 +45,20 @@ public class SectionService {
 		final UserAccount ua = LoginService.getPrincipal();
 		Assert.isTrue(tutorial.getWorker().getAccount().equals(ua));
 		final Section section = new Section();
+		//		final Comparator<Section> cmp = new Comparator<Section>() {
+		//
+		//			@Override
+		//			public int compare(final Section o1, final Section o2) {
+		//				return o1.getNumber() - o2.getNumber();
+		//			}
+		//		};
+		//		final Integer max = Collections.max(tutorial.getSections(), cmp).getNumber();
+		//		section.setNumber(max + 1);
 		final Collection<String> photos = new ArrayList<>();
 		section.setPhotoURL(photos);
 		section.setTutorial(tutorial);
 		return section;
 	}
-
 	/**
 	 * Gets all sections of a tutorial from DB
 	 * 
@@ -95,7 +105,10 @@ public class SectionService {
 		} else {
 			this.spamService.isSpam(worker, section.getText());
 			this.spamService.isSpam(worker, section.getTitle());
+			// Guardo la sección
 			result = this.sectionRepository.save(section);
+
+			result.getTutorial().getSections().add(result);
 		}
 		return result;
 	}
@@ -111,6 +124,9 @@ public class SectionService {
 		final Section ac = this.findOne(section.getId());
 		Assert.isTrue(ac.getTutorial().getWorker().getAccount().equals(section.getTutorial().getWorker().getAccount()));
 		Assert.isTrue(section.getTutorial().getWorker().getAccount().equals(ua));
+		final Tutorial t = this.tutorialService.findOne(section.getTutorial().getId());
+		t.getSections().remove(section);
 		this.sectionRepository.delete(section);
 	}
+
 }
