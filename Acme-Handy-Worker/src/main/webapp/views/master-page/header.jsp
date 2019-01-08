@@ -65,7 +65,6 @@
 			<li><a class="fNiv"><spring:message	code="master.page.handy.futandapp" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="application/myApps.do"><spring:message code="master.page.handy.myApps" /></a></li>
 					<li><a href="application/customer,handyworker/list.do?fixuptaskId=0"><spring:message code="master.page.handy.myApps" /></a></li>
 					<li><a href="fixuptask/handyworker/list.do"><spring:message code="master.page.handy.list" /></a></li>
 					<li><a href="finder/update.do"><spring:message code="master.page.handy.finder" /></a></li>

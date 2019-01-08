@@ -45,28 +45,12 @@ public class ApplicationController extends AbstractController {
 		else
 			applications = this.applicationService.findAllTask(fixuptaskId);
 
-		System.out.println(applications);
-
 		result = new ModelAndView("application/customer,handyworker/list");
 		result.addObject("applications", applications);
 		result.addObject("requestURI", "applications/customer,handyworker/list.do");
 
 		return result;
 	}
-	//	@RequestMapping(value = "/customer/list", method = RequestMethod.GET)
-	//	public ModelAndView list(@RequestParam final int fixuptaskId) {
-	//		final ModelAndView result;
-	//		//this.account = LoginService.getPrincipal();
-	//		Collection<Application> applications;
-	//
-	//		applications = this.applicationService.findAllTask(fixuptaskId);
-	//
-	//		result = new ModelAndView("application/customer/list");
-	//		result.addObject("applications", applications);
-	//		result.addObject("requestURI", "applications/customer/list.do?fixuptaskId=?" + fixuptaskId);
-	//
-	//		return result;
-	//	}//TODO: unificar los metodos list para los roles
 
 	@RequestMapping(value = "/customer,handyworker/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int applicationId) {
@@ -137,15 +121,16 @@ public class ApplicationController extends AbstractController {
 		ModelAndView result;
 		if (binding.hasErrors()) {
 
-			System.out.println(binding.getFieldErrors());
+			System.out.println(binding.getAllErrors());
 			result = new ModelAndView("application/handyworker/edit");
 			result.addObject("application", application);
 		} else
 			try {
 				this.applicationService.save(application);
-				result = new ModelAndView("redirect:list.do");
+				result = new ModelAndView("redirect:/application/customer,handyworker/list.do");
 			} catch (final Throwable opps) {
 				System.out.println(opps.getMessage());
+				opps.printStackTrace();
 				result = new ModelAndView("application/handyworker/edit");
 				result.addObject("messageCode", "application.commit.error");
 			}

@@ -5,7 +5,9 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -91,5 +93,54 @@ public class ReportController extends AbstractController {
 
 		return res;
 
+	}
+
+	@RequestMapping("/referee/create")
+	public ModelAndView create(@RequestParam final int complaintId) {
+
+		ModelAndView res;
+
+		res = new ModelAndView("report/referee/edit");
+		Report rep = null;
+		if (complaintId != 0)
+			rep = this.reportService.create(complaintId);
+		res.addObject("report", rep);
+
+		return res;
+
+	}
+
+	@RequestMapping("/referee/edit")
+	public ModelAndView edit(@RequestParam final int reportId) {
+
+		ModelAndView res;
+
+		res = new ModelAndView("report/referee/edit");
+		Report rep = null;
+		if (reportId != 0)
+			rep = this.reportService.findOne(reportId);
+		res.addObject("report", rep);
+
+		return res;
+
+	}
+
+	@RequestMapping(value = "/referee/save", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(final Report r, final BindingResult br) {
+		ModelAndView result;
+		if (br.hasErrors()) {
+			result = new ModelAndView("report/referee/edit");
+			result.addObject("report", r);
+			System.out.println(br.getAllErrors());
+		} else
+			try {
+				this.reportService.save(r);
+				result = new ModelAndView("redirect:/report/customer,handyworker,referee/list.do");
+			} catch (final Throwable oops) {
+				oops.getMessage();
+				result = new ModelAndView("report/referee/edit");
+				result.addObject("success", false);
+			}
+		return result;
 	}
 }

@@ -14,6 +14,8 @@
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
+	<form:hidden path="fixUpTask"/>
+	<form:hidden path="handyWorker" />
 	
 	<form:hidden path="registerTime" />
 	<form:hidden path="status" />

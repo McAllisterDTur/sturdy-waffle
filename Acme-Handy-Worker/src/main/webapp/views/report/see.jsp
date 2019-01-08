@@ -21,14 +21,27 @@
 	<p>${worker}</p>
 	<b><spring:message code="report.description" /></b>
 	<p>${report.description}</p>
-	<br /> 
-	<b><spring:message code="report.final" /></b>
+	<br /> <b><spring:message code="report.final" /></b>
 	<p>${report.isFinal}</p>
 	<br />
-	<display:table name="notes" id="note" pagesize="10" requestURI="requestURI">
+	<display:table name="notes" id="note" pagesize="10"
+		requestURI="requestURI">
 		<display:column property="moment" titleKey="report.date" />
 		<display:column>
-			<a href="/notes/display.do?noteId=${note.id}"><spring:message code="report.seeMore" /> </a>
+			<a href="/notes/display.do?noteId=${note.id}"><spring:message
+					code="report.seeMore" /> </a>
 		</display:column>
 	</display:table>
+	<security:authorize access="hasRole('REFEREE')">
+		<jstl:if test="${report.isFinal }"> <!-- TODO: añadir not -->
+			<button
+				onClick="window.location.href='/Acme-Handy-Worker/report/referee/delete.do?reportId=${report.id}">
+				<spring:message code="report.delete" />
+			</button>
+			<button
+				onClick="window.location.href='/Acme-Handy-Worker/report/referee/edit.do?reportId=${report.id}">
+				<spring:message code="report.edit" />
+			</button>
+		</jstl:if>
+	</security:authorize>
 </div>

@@ -101,6 +101,12 @@
 			access="hasAnyRole('CUSTOMER','HANDYWORKER','REFEREE')" />
 		<security:intercept-url pattern="/report/customer,handyworker,referee/display.do"
 			access="hasAnyRole('CUSTOMER','HANDYWORKER','REFEREE')" />
+		<security:intercept-url pattern="/report/referee/edit.do"
+			access="hasRole('REFEREE')" />
+			<security:intercept-url pattern="/report/referee/create.do"
+			access="hasRole('REFEREE')" />
+			<security:intercept-url pattern="/report/referee/save.do"
+			access="hasRole('REFEREE')" />
 
 		<security:intercept-url pattern="/**"
 			access="hasRole('NONE')" />
