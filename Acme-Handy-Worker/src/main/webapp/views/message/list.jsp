@@ -18,8 +18,8 @@
 
 	<display:column property="subject" titleKey="message.subject" />
 
-	<display:column property="sender.account.username"
-		titleKey="message.actor.sender" />
+	<display:column property="reciever.account.username"
+		titleKey="message.actor.reciever" />
 
 	<display:column property="sendTime" titleKey="message.sendTime" />
 

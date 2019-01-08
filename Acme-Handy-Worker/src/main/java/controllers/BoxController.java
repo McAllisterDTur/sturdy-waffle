@@ -74,7 +74,6 @@ public class BoxController extends AbstractController {
 	public ModelAndView saveBox(@Valid final Box box, final BindingResult binding) {
 		ModelAndView result;
 		if (binding.hasErrors()) {
-			System.out.println(binding.getFieldErrors());
 			result = new ModelAndView("box/edit");
 			result.addObject("box", box);
 		} else

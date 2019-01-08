@@ -152,7 +152,7 @@ public class MessageService {
 				out = null;
 				out = this.bService.findByName(receiver.getId(), "SPAM");
 			} else
-				out = this.bService.findByName(receiver.getId(), "OUT");
+				out = this.bService.findByName(receiver.getId(), "IN");
 			//Modificamos el mensaje
 			msg.setReciever(receiver);
 			msg.setSender(sender);
@@ -204,11 +204,13 @@ public class MessageService {
 	//	}
 
 	public Message copy(final Message msg) {
-		Assert.notNull(msg);
+		System.out.println("llega al copy service");
+		Assert.notNull(msg, "Message copy null");
 		final UserAccount ua = LoginService.getPrincipal();
 		Message result = null;
 		final Message ac = this.findOne(msg.getId());
-		Assert.isTrue(msg.getSender().getAccount().equals(ua) || ac.getSender().getAccount().equals(msg.getSender().getAccount()) || msg.getReciever().getAccount().equals(ua) || ac.getReciever().getAccount().equals(ua));
+		Assert
+			.isTrue((msg.getSender().getAccount().equals(ua) || ac.getSender().getAccount().equals(msg.getSender().getAccount()) || msg.getReciever().getAccount().equals(ua) || ac.getReciever().getAccount().equals(ua)), "Message not belong to the actor");
 		final Actor actor = this.aService.findByUserAccountId(ua.getId());
 		//Comprobamos que el box agregado pertenezca al usuario
 		final Collection<Box> autoBox = this.bService.findByOwner(actor.getId());
@@ -217,7 +219,7 @@ public class MessageService {
 		newBox = unique;
 		final Collection<Box> compr = ac.getBoxes();
 		compr.removeAll(newBox);
-		Assert.isTrue(autoBox.containsAll(compr));
+		Assert.isTrue(autoBox.containsAll(compr), "New box not belong to the loged actor");
 		ac.setBoxes(newBox);
 		result = this.msgRepository.save(ac);
 		//Editamos los buzones

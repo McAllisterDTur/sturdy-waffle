@@ -67,12 +67,6 @@
 	<form:errors path="priority" />
 	<br />
 
-	<%-- 	<form:label path="tags">
-		<spring:message code="message.tags" />:</form:label>
-	<form:input path="tags" />
-	<form:errors path="tags" />
-	<br /> --%>
-
 	<spring:message code="message.tags" />
 		:
 		<button type="button" onClick="addFields()">

@@ -118,9 +118,8 @@ public class MessageController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/copy", method = RequestMethod.POST)
-	public ModelAndView copyMessage(final Message message) {
+	public ModelAndView copyMessage(@Valid final Message message) {
 		ModelAndView result;
-		System.out.println(message);
 		try {
 			this.messageService.copy(message);
 			result = new ModelAndView("redirect:/box/list.do");

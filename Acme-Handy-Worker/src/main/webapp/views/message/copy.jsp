@@ -18,13 +18,13 @@
 	<form:hidden path="version" />
 	<form:hidden path="sender" />
 	<form:hidden path="sendTime" />
-	<form:hidden path="boxes" />
+	<%-- <form:hidden path="boxes" /> --%>
 	<form:hidden path="subject" />
 	<form:hidden path="reciever" />
 	<form:hidden path="body" />
 	<form:hidden path="priority" />
 	<form:hidden path="tags" />
-	
+
 	<form:label path="boxes">
 		<spring:message code="message.list.boxes" />:&nbsp;</form:label>
 	<form:select path="boxes">
