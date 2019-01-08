@@ -13,7 +13,7 @@
 	<br />
 	<strong><spring:message code="application.offeredPrice" />: </strong> <jstl:out value="${ application.offeredPrice } "></jstl:out>
 	<br />
-	<strong><spring:message code="application.status" />: </strong> <jstl:out value="${ application.status } "></jstl:out>
+	<strong><spring:message code="application.status" />: </strong> <span class="${ application.status }"><jstl:out value="${ application.status } " /></span>
 	<br />
 	<jstl:if test="${application.status == 'ACCEPTED'}">
 		<display:table name="application.phases" id="row" class="dispalytag" pagesize="5" requestURI="${ requestURI}" >

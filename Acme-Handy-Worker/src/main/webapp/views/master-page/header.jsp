@@ -77,7 +77,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.referee.compandreps" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="complaint/**/list.do"><spring:message code="master.page.handy.myComplaints" /></a></li>
+					<li><a href="complaint/handyworker/myComplaints.do"><spring:message code="master.page.handy.myComplaints" /></a></li>
 					<li><a href="report/customer,handyworker,referee/list.do"><spring:message code="master.page.handy.myReports" /></a></li>
 				</ul>
 			</li>

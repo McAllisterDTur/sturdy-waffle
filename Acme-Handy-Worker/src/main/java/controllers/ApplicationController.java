@@ -66,26 +66,30 @@ public class ApplicationController extends AbstractController {
 		return res;
 	}
 
-	@RequestMapping(value = "/customer/accept", method = RequestMethod.GET)
+	@RequestMapping(value = "/customer/accept", method = RequestMethod.POST)
 	public ModelAndView accept(@RequestParam final int applicationId) {
-		final ModelAndView res;
+		ModelAndView res;
 
 		this.account = LoginService.getPrincipal();
 
 		final Application a = this.applicationService.findOne(applicationId);
 
-		//a.setStatus("ACCEPTED");
+		try {
+			a.setStatus("ACCEPTED");
 
-		this.applicationService.save(a);
+			this.applicationService.save(a);
 
-		Collection<Application> applications;
+			Collection<Application> applications;
 
-		applications = this.applicationService.findAllTask(a.getFixUpTask().getId());
+			applications = this.applicationService.findAllTask(a.getFixUpTask().getId());
 
-		res = new ModelAndView("application/customer,handyworker/list");
-		res.addObject("applications", applications);
-		res.addObject("requestURI", "applications/customer,handyworker/list.do?fixuptaskId=?" + a.getFixUpTask().getId());
-
+			res = new ModelAndView("application/customer,handyworker/list");
+			res.addObject("applications", applications);
+			res.addObject("requestURI", "applications/customer,handyworker/list.do?fixuptaskId=?" + a.getFixUpTask().getId());
+		} catch (final Throwable oops) {
+			oops.printStackTrace();
+			res = new ModelAndView("application/customer,handyworker/list");
+		}
 		return res;
 	}
 
@@ -124,17 +128,18 @@ public class ApplicationController extends AbstractController {
 			System.out.println(binding.getAllErrors());
 			result = new ModelAndView("application/handyworker/edit");
 			result.addObject("application", application);
-		} else
+		} else {
+			Application applicationF = null;
 			try {
-				this.applicationService.save(application);
-				result = new ModelAndView("redirect:/application/customer,handyworker/list.do");
+				applicationF = this.applicationService.save(application);
+				result = new ModelAndView("redirect:/application/customer,handyworker/display.do?applicationId=" + applicationF.getId());
 			} catch (final Throwable opps) {
 				System.out.println(opps.getMessage());
 				opps.printStackTrace();
 				result = new ModelAndView("application/handyworker/edit");
 				result.addObject("messageCode", "application.commit.error");
 			}
-
+		}
 		return result;
 	}
 }

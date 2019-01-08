@@ -17,7 +17,7 @@
 		titleKey="application.registerTime" />
 	<display:column property="offeredPrice"
 		titleKey="application.offeredPrice" />
-	<display:column property="status" titleKey="application.status" />
+	<display:column property="status" titleKey="application.status" class="${row.status }"/>
 	<display:column>
 		<a
 			href="application/customer,handyworker/display.do?applicationId=${row.id}"><spring:message
@@ -26,6 +26,7 @@
 	<security:authorize access="hasRole('CUSTOMER')">
 		<display:column>
 			<jstl:if test="${row.status == 'PENDING'}">
+				<jstl:if test="${row.fixUpTask.creditCard != null }">
 				<form:form
 					action="application/customer/accept.do?applicationId=${row.id}"
 					modelAttribute="${row}">
@@ -36,6 +37,10 @@
 						value="<spring:message code="application.task.accept" />" />
 
 				</form:form>
+				</jstl:if>
+				<jstl:if test="${ row.fixUpTask.creditCard == null }">
+					<a href="fixuptask/customer/edit.do?fixuptaskId=${row.fixUptask.id }">Add Card</a>
+				</jstl:if>
 			</jstl:if>
 		</display:column>
 	</security:authorize>

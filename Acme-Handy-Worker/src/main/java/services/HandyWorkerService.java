@@ -30,6 +30,7 @@ public class HandyWorkerService {
 	private UserAccountService		userAccountService;
 	@Autowired
 	private FixUpTaskService		futService;
+	@Autowired
 	private BoxService				boxService;
 	private UserAccount				account;
 
@@ -93,6 +94,14 @@ public class HandyWorkerService {
 		return res;
 	}
 
+	public HandyWorker findHandyWorkerFromFixUpTask(final Integer id) {
+		final FixUpTask f = this.futService.findOne(id);
+		HandyWorker res = null;
+		for (final Application a : f.getApplications())
+			if (a.getStatus().equals("ACCEPTED"))
+				res = a.getHandyWorker();
+		return res;
+	}
 
 	public HandyWorker actorToHandy(final Actor a) {
 		final HandyWorker res = new HandyWorker();

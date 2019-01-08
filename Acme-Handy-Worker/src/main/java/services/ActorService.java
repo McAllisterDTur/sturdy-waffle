@@ -26,22 +26,26 @@ import domain.Sponsor;
 public class ActorService {
 
 	@Autowired
-	private ActorRepository	actorRepository;
+	private ActorRepository		actorRepository;
 	@Autowired
-	HandyWorkerService		hwService;
+	HandyWorkerService			hwService;
 	@Autowired
-	CustomerService			cService;
+	CustomerService				cService;
 	@Autowired
-	RefereeService			rService;
+	RefereeService				rService;
 	@Autowired
-	SponsorService			sService;
+	SponsorService				sService;
 	@Autowired
-	AdministratorService	adminService;
+	AdministratorService		adminService;
+	@Autowired
+	private UserAccountService	accountService;
+	@Autowired
+	private BoxService			boxService;
 
 
 	/**
 	 * Creates a new empty actor
-	 *
+	 * 
 	 * @return actor
 	 */
 	public Actor create() {
@@ -53,7 +57,7 @@ public class ActorService {
 	/**
 	 * Saves a new actor in the DB or update it
 	 * If an admin is updating other actor, only can ban
-	 *
+	 * 
 	 * @param actor
 	 * @return actor
 	 */
@@ -90,7 +94,7 @@ public class ActorService {
 
 	/**
 	 * Get all actors from db
-	 *
+	 * 
 	 * @return actors
 	 */
 	public Collection<Actor> findAll() {
@@ -100,7 +104,7 @@ public class ActorService {
 
 	/**
 	 * Find an actor by id in the db
-	 *
+	 * 
 	 * @param actorId
 	 * @return actor
 	 */
@@ -111,7 +115,7 @@ public class ActorService {
 
 	/**
 	 * Finds an actor by his/her user account
-	 *
+	 * 
 	 * @param userAccount
 	 * @return an actor
 	 */

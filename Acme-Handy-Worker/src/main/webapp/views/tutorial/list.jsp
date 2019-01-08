@@ -13,7 +13,7 @@
 	
 
 	<display:column property="title" titleKey="tutorial.title"></display:column>
-	<display:column titleKey="tutorial.handyworker"><a href="profile/handyWorker.do?id=${row.worker.id}"><jstl:out value='${row.worker.make}'></jstl:out></a></display:column>
+	<display:column titleKey="tutorial.handyworker"><a href="profile/seeId?id=${row.worker.id}"><jstl:out value='${row.worker.make}'></jstl:out></a></display:column>
 	<display:column property="summary" titleKey="tutorial.summary"></display:column>
 	<display:column property="lastTimeUpdated" titleKey="tutorial.lastupdate"></display:column>
 	

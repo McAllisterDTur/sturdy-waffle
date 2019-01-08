@@ -45,7 +45,7 @@
 <br />
 
 <b><spring:message code="fixuptask.customer" />:&nbsp;</b>
-<jstl:out value="${fixuptask.customer.name}" />
+<a href="profile/seeId?id=${fixuptask.customer.id}"><jstl:out value="${fixuptask.customer.name}" /></a>
 <br />
 
 <b><spring:message code="fixuptask.warranty" />:&nbsp;</b>

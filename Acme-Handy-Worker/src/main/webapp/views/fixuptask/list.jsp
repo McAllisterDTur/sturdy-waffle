@@ -74,7 +74,7 @@
 		</display:column>
 		<display:column>
 		<jstl:if test="${row.customer.account.username == principal}">
-			<button onClick="window.location.href='/Acme-Handy-Worker/application/customer/list.do?fixuptaskId=${row.id}'">
+			<button onClick="window.location.href='/Acme-Handy-Worker/application/customer,handyworker/list.do?fixuptaskId=${row.id}'">
 				<spring:message code="fixuptask.applications"/>
 			</button>
 		</jstl:if>

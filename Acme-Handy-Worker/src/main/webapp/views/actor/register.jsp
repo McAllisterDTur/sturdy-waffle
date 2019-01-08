@@ -38,7 +38,9 @@
 		<spring:message code="actor.authority" />*
 	</form:label>
 
-	<form:radiobuttons path="account.authorities" items="${authorities}"  />
+	<jstl:forEach var="authority" items="${authorities}">
+		<form:radiobutton path="account.authorities" label="${authority}" value="${authority}"/>
+	</jstl:forEach>
 	<form:errors cssClass="error" path="account.authorities" />
 
 

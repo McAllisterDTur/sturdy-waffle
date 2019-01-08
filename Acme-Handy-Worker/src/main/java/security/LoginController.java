@@ -142,13 +142,12 @@ public class LoginController extends AbstractController {
 					this.sponsorService.save(sponsor);
 					break;
 				}
-
-				result = new ModelAndView("redirect:");
+				result = new ModelAndView("redirect:/security/login.do");
 			} catch (final Throwable opps) {
 				result = new ModelAndView("actor/register");
 				result.addObject("uri", "security/register.do");
 				result.addObject("messageCode", "actor.commit.error");
-				System.out.println(opps.getMessage());
+				opps.printStackTrace();
 			}
 
 		return result;
