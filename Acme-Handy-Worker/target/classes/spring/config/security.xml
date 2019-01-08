@@ -75,6 +75,10 @@
 		<security:intercept-url pattern="/tutorial/handyworker/delete.do" access="hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/tutorial/handyworker/myTutorials.do" access="hasRole('HANDYWORKER')" />
 		
+		<security:intercept-url pattern="/section/pictures/list.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/section/pictures/handyworker/add.do" access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/pictures/handyworker/delete.do" access="hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/section/handyworker/edit.do" access="hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/section/handyworker/new.do" access="hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/section/handyworker/delete.do" access="hasRole('HANDYWORKER')" />

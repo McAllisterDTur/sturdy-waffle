@@ -80,4 +80,40 @@ public class SectionController extends AbstractController {
 		}
 		return result;
 	}
+
+	@RequestMapping(value = "/pictures/list", method = RequestMethod.GET)
+	public ModelAndView tutorialPictures(@RequestParam("id") final int id) {
+		final Section section = this.sectionService.findOne(id);
+		ModelAndView result;
+		result = new ModelAndView("section/pictures");
+		result.addObject("section", section);
+		result.addObject("requestURI", "/section/pictures/list.do");
+		return result;
+	}
+
+	@RequestMapping(value = "/pictures/handyworker/delete", method = RequestMethod.GET)
+	public ModelAndView tutorialDeletePicture(@RequestParam("id") final int id, @RequestParam("picture") final String picture) {
+		ModelAndView result = null;
+		Section section;
+		section = this.sectionService.findOne(id);
+		section.getPhotoURL().remove(picture);
+		section = this.sectionService.save(section);
+		result = new ModelAndView("section/pictures");
+		result.addObject("section", section);
+		result.addObject("requestURI", "/section/pictures/list.do");
+		return result;
+	}
+
+	@RequestMapping(value = "/pictures/handyworker/add", method = RequestMethod.GET)
+	public ModelAndView tutorialAddPicture(@RequestParam("id") final int id, @RequestParam("picture") final String picture) {
+		ModelAndView result = null;
+		Section section;
+		section = this.sectionService.findOne(id);
+		section.getPhotoURL().add(picture);
+		section = this.sectionService.save(section);
+		result = new ModelAndView("section/pictures");
+		result.addObject("section", section);
+		result.addObject("requestURI", "/section/pictures/list.do");
+		return result;
+	}
 }

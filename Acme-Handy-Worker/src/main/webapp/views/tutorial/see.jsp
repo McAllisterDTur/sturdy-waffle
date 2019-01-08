@@ -32,7 +32,7 @@
 		</jstl:if>
 	</security:authorize>
 	<display:column>
-		<button onClick="window.location.href='/Acme-Handy-Worker/section/pictures.do?id=${row.id}'"><spring:message code="tutorial.section.pictures"/></button>
+		<button onClick="window.location.href='/Acme-Handy-Worker/section/pictures/list.do?id=${row.id}'"><spring:message code="tutorial.section.pictures"/></button>
 	</display:column>
 
 </display:table>
