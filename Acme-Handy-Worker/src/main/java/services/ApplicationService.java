@@ -74,18 +74,62 @@ public class ApplicationService {
 			//application.setStatus("PENDING");
 			a = this.applicationRepo.save(application);
 
-			//			final FixUpTask task = a.getFixUpTask();
-			//			task.getApplications().add(a);
-			//
-			//			this.taskService.save(task);
 		} else {//Actualizacion del status por parte del customer due�o de la fixUpTask
 			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
 			Assert.isTrue(application.getFixUpTask().getCustomer().getAccount().equals(this.account));//customer loggeado due�o de la task
 			if (application.getStatus().equals("ACCEPTED"))
-				Assert.notNull(application.getFixUpTask().getCreditCard());
+				Assert.isTrue(this.taskHasNoAcceptedApplication(application));
 			a = this.applicationRepo.save(application);
 		}
 		return a;
+	}
+
+	private boolean taskHasNoAcceptedApplication(final Application a) {
+		boolean res = true;
+
+		final FixUpTask t = this.taskService.findOne(a.getFixUpTask().getId());
+		final Collection<Application> apps = t.getApplications();
+
+		for (final Application app : apps)
+			if (app.getId() != a.getId())
+				if (app.getStatus().equals("ACCEPTED")) {
+					System.out.println("Esta Task ya tiene una solicitud aceptada.");
+					res = false;
+					break;
+				}
+
+		return res;
+	}
+	public Application accept(final Application a) {
+
+		Assert.notNull(a);
+		Assert.isTrue(a.getStatus().equals("PENDING"));
+
+		Assert.isTrue(this.taskHasNoAcceptedApplication(a));
+
+		a.setStatus("ACCEPTED");
+		System.out.println(a.getStatus());
+		final FixUpTask t = this.rejectRestOfApplications(a);
+
+		Assert.notNull(t);
+		System.out.println(t.getTicker());
+		a.setFixUpTask(t);
+
+		return this.save(a);
+
+	}
+
+	private FixUpTask rejectRestOfApplications(final Application a) {
+		final FixUpTask t = a.getFixUpTask();
+		final Collection<Application> apps = t.getApplications();
+		System.out.println("Rechazando resto de solicitudes");
+		for (final Application app : apps)
+			if (app.getId() != a.getId()) {
+				System.out.println("Rejecting application: " + app.getId());
+				app.setStatus("REJECTED");
+				this.save(app);
+			}
+		return this.taskService.save(t);
 	}
 
 	public Application getApplicationAcceptedForFixUpTask(final int fixuptaskId) {
