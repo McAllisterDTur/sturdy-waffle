@@ -1,8 +1,8 @@
 /*
  * WelcomeController.java
- * 
+ *
  * Copyright (C) 2018 Universidad de Sevilla
- * 
+ *
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -24,7 +24,6 @@ import services.ActorService;
 import services.ConfigurationService;
 
 @Controller
-@RequestMapping("/welcome")
 public class WelcomeController extends AbstractController {
 
 	@Autowired
@@ -39,7 +38,7 @@ public class WelcomeController extends AbstractController {
 		super();
 	}
 
-	// Index ------------------------------------------------------------------		
+	// Index ------------------------------------------------------------------
 
 	@RequestMapping(value = "/index")
 	public ModelAndView index() {
@@ -62,6 +61,10 @@ public class WelcomeController extends AbstractController {
 		moment = formatter.format(new Date());
 
 		result = new ModelAndView("welcome/index");
+		final Configuration config = this.configurationService.findAll().iterator().next();
+		result.addObject("bannerURL", config.getBannerURL());
+		result.addObject("welcomeEN", config.getWelcomeEN());
+		result.addObject("welcomeSP", config.getWelcomeSP());
 		result.addObject("name", name);
 		result.addObject("moment", moment);
 		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());

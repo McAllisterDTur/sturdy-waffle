@@ -23,17 +23,22 @@ public class BoxService {
 
 	//We create the repository
 	@Autowired
-	BoxRepository	boxRepository;
+	private BoxRepository	boxRepository;
 
 	//Auxiliary services
 	@Autowired
-	ActorService	actorService;
+	private ActorService	actorService;
+
+	@Autowired
+	private MessageService	messageService;
 
 
 	//CRUDs
 
-	public Box create() {
+	public Box create(final Actor actor) {
 		final Box b = new Box();
+		b.setOwner(actor);
+		b.setDeleteable(true);
 		b.setMessages(new ArrayList<Message>());
 		return b;
 	}
@@ -61,6 +66,8 @@ public class BoxService {
 	public void delete(final Box box) {
 		Assert.isTrue(LoginService.getPrincipal().equals(box.getOwner().getAccount()));
 		Assert.isTrue(box.getDeleteable());
+		for (final Message m : box.getMessages())
+			this.messageService.deleteMessages(m);
 		this.boxRepository.delete(box);
 	}
 
@@ -69,28 +76,24 @@ public class BoxService {
 	public void initializeDefaultBoxes() {
 		final UserAccount ownerAccount = LoginService.getPrincipal();
 		final Actor owner = this.actorService.findByUserAccountId(ownerAccount.getId());
-		final Box in = this.create();
+		final Box in = this.create(owner);
 		in.setDeleteable(false);
 		in.setName("IN");
-		in.setOwner(owner);
 		this.save(in);
 
-		final Box trash = this.create();
+		final Box trash = this.create(owner);
 		trash.setDeleteable(false);
 		trash.setName("TRASH");
-		trash.setOwner(owner);
 		this.save(trash);
 
-		final Box out = this.create();
+		final Box out = this.create(owner);
 		out.setDeleteable(false);
 		out.setName("OUT");
-		out.setOwner(owner);
 		this.save(out);
 
-		final Box spam = this.create();
+		final Box spam = this.create(owner);
 		spam.setDeleteable(false);
 		spam.setName("SPAM");
-		spam.setOwner(owner);
 		this.save(spam);
 	}
 
