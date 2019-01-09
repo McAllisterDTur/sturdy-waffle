@@ -95,6 +95,7 @@ public class CategoryService {
 	 */
 	public void delete(final Category category) {
 		//Admin authority
+		Assert.isTrue(!category.equals(this.findByName("CATEGORY")), "You cannot delete the category CATEGROY");
 		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
 		Assert.isTrue(au);
 		final Collection<FixUpTask> inCat = this.futService.getByCategory(category.getId());
@@ -102,6 +103,14 @@ public class CategoryService {
 			f.setCategory(null);
 			this.futService.save(f);
 		}
+		for (final Category c : this.findAll()) {
+			final Category father = c.getFather();
+			if (father != null && father.equals(category)) {
+				c.setFather(category.getFather());
+				this.catRepo.save(c);
+			}
+		}
+
 		this.catRepo.delete(category);
 	}
 	/**
@@ -111,13 +120,7 @@ public class CategoryService {
 	 */
 	public void delete(final int categoryId) {
 		//Admin authority
-		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
-		Assert.isTrue(au);
-		final Collection<FixUpTask> inCat = this.futService.getByCategory(categoryId);
-		for (final FixUpTask f : inCat) {
-			f.setCategory(null);
-			this.futService.save(f);
-		}
-		this.catRepo.delete(categoryId);
+		final Category c = this.catRepo.findOne(categoryId);
+		this.delete(c);
 	}
 }
