@@ -107,6 +107,7 @@ public class ApplicationController extends AbstractController {
 		}
 		return res;
 	}
+
 	@RequestMapping(value = "/handyworker/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final int fixuptaskId) {
 		final ModelAndView res;

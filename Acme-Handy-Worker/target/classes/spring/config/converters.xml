@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
- * converters.xml
- *
- * Copyright (C) 2018 Universidad de Sevilla
- *
- * The use of this project is hereby constrained to the conditions of the
- * TDG Licence, a copy of which you may download from
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * converters.xml * * Copyright (C) 2018 Universidad de Sevilla * * The
+	use of this project is hereby constrained to the conditions of the * TDG
+	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
@@ -18,10 +12,8 @@
 	">
 
 	<util:list id="converters">
-		<!--
-			Add your own converters using entries of the following form:
-			<bean class="converters.Class1ToClass2" />
-		-->
+		<!-- Add your own converters using entries of the following form: <bean
+			class="converters.Class1ToClass2" /> -->
 		<!-- Entity to String -->
 		<bean class="converters.ComplaintToStringConverter" />
 		<bean class="converters.CustomerToStringConverter" />
@@ -29,17 +21,16 @@
 		<bean class="converters.FixUpTaskToStringConverter" />
 		<bean class="converters.ApplicationToStringConverter" />
 		<bean class="converters.CreditCardToStringConverter" />
-		<bean class="converters.UserAccountToStringConverter" />
-		<bean class="converters.CategoryToStringConverter" />
-		<bean class="converters.RefereeToStringConverter" />
-		<bean class="converters.ReportToStringConverter" />
-		<bean class="converters.EndorsableToStringConverter" />
 		<bean class="converters.WarrantyToStringConverter" />
 		<bean class="converters.CategoryToStringConverter" />
 		<bean class="converters.AuthorityToStringConverter" />
 		<bean class="converters.SponsorshipToStringConverter" />
 		<bean class="converters.SectionToStringConverter" />
 		<bean class="converters.TutorialToStringConverter" />
+		<bean class="converters.ActorToStringConverter" />
+		<bean class="converters.BoxToStringConverter" />
+		<bean class="converters.MessageToStringConverter" />
+		<bean class="converters.AccountToStringConverter" />
 
 		<!-- String to Entity -->
 		<bean class="converters.StringToComplaintConverter" />
@@ -48,17 +39,16 @@
 		<bean class="converters.StringToFixUpTaskConverter" />
 		<bean class="converters.StringToApplicationConverter" />
 		<bean class="converters.StringToCreditCardConverter" />
-		<bean class="converters.StringToUserAccountConverter" />
-		<bean class="converters.StringToCategoryConverter" />
-		<bean class="converters.StringToRefereeConverter" />
-		<bean class="converters.StringToReportConverter" />
-		<bean class="converters.StringToEndorsableConverter" />
 		<bean class="converters.StringToWarrantyConverter" />
 		<bean class="converters.StringToCategoryConverter" />
 		<bean class="converters.StringToAuthorityConverter" />
 		<bean class="converters.StringToSponsorshipConverter" />
 		<bean class="converters.StringToSectionConverter" />
 		<bean class="converters.StringToTutorialConverter" />
+		<bean class="converters.StringToActorConverter" />
+		<bean class="converters.StringToBoxConverter" />
+		<bean class="converters.StringToMessageConverter" />
+		<bean class="converters.StringToAccountConverter" />
 
 	</util:list>
 

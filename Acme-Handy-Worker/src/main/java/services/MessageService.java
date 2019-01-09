@@ -15,6 +15,7 @@ import org.springframework.util.Assert;
 import repositories.MessageRepository;
 import security.LoginService;
 import security.UserAccount;
+import utilities.AuthenticationUtility;
 import domain.Actor;
 import domain.Box;
 import domain.Message;

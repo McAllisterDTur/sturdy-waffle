@@ -1,8 +1,8 @@
 /*
  * WelcomeController.java
- *
+ * 
  * Copyright (C) 2018 Universidad de Sevilla
- *
+ * 
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -22,6 +22,7 @@ import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
 import services.ConfigurationService;
+import domain.Configuration;
 
 @Controller
 public class WelcomeController extends AbstractController {
@@ -61,7 +62,7 @@ public class WelcomeController extends AbstractController {
 		moment = formatter.format(new Date());
 
 		result = new ModelAndView("welcome/index");
-		final Configuration config = this.configurationService.findAll().iterator().next();
+		final Configuration config = this.cService.findAll().iterator().next();
 		result.addObject("bannerURL", config.getBannerURL());
 		result.addObject("welcomeEN", config.getWelcomeEN());
 		result.addObject("welcomeSP", config.getWelcomeSP());

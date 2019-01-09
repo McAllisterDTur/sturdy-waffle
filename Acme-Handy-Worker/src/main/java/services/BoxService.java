@@ -99,25 +99,25 @@ public class BoxService {
 
 	public void initializeDefaultBoxes(final Actor a) {
 		final Actor owner = a;
-		final Box in = this.create();
+		final Box in = this.create(a);
 		in.setDeleteable(false);
 		in.setName("IN");
 		in.setOwner(owner);
 		this.save(in);
 
-		final Box trash = this.create();
+		final Box trash = this.create(a);
 		trash.setDeleteable(false);
 		trash.setName("TRASH");
 		trash.setOwner(owner);
 		this.save(trash);
 
-		final Box out = this.create();
+		final Box out = this.create(a);
 		out.setDeleteable(false);
 		out.setName("OUT");
 		out.setOwner(owner);
 		this.save(out);
 
-		final Box spam = this.create();
+		final Box spam = this.create(a);
 		spam.setDeleteable(false);
 		spam.setName("SPAM");
 		spam.setOwner(owner);
