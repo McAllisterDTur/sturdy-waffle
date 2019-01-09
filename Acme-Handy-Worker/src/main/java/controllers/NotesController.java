@@ -59,19 +59,6 @@ public class NotesController extends AbstractController {
 
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView comment(@RequestParam final int noteId) {
-		ModelAndView result;
-		final Notes note = this.notesService.findOne(noteId);
-
-		result = new ModelAndView("notes/edit");
-		result.addObject("note", note);
-		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
-
-		return result;
-
-	}
-
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView displayMessage(@RequestParam final int noteId) {
 		final ModelAndView result;
@@ -85,8 +72,22 @@ public class NotesController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam final int noteId) {
+		ModelAndView result;
+		Notes note = this.notesService.findOne(noteId);
+		if (noteId != 0)
+			note = this.notesService.comment(note);
+		result = new ModelAndView("notes/edit");
+		result.addObject("note", note);
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
+
+		return result;
+
+	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public ModelAndView saveBox(@Valid final Notes note, final BindingResult binding) {
+	public ModelAndView saveNote(@Valid final Notes note, final BindingResult binding) {
 		ModelAndView result;
 		if (binding.hasErrors()) {
 			result = new ModelAndView("notes/edit");
@@ -95,9 +96,7 @@ public class NotesController extends AbstractController {
 			try {
 				final Notes save = this.notesService.save(note);
 				result = new ModelAndView("redirect:list.do?reportId=" + save.getReport().getId());
-				System.out.println("Result -> " + result);
 			} catch (final Throwable opps) {
-				System.out.print("Errores de notas -> ");
 				opps.printStackTrace();
 				result = new ModelAndView("notes/edit");
 				result.addObject("note", note);
