@@ -17,9 +17,7 @@ import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
 import services.ApplicationService;
-import services.FixUpTaskService;
 import domain.Application;
-import domain.FixUpTask;
 
 @Controller
 @RequestMapping("/application/**")
@@ -29,8 +27,6 @@ public class ApplicationController extends AbstractController {
 	private ApplicationService	applicationService;
 	@Autowired
 	private ActorService		actorService;
-	@Autowired
-	private FixUpTaskService	taskService;
 	private UserAccount			account;
 
 
@@ -79,31 +75,20 @@ public class ApplicationController extends AbstractController {
 		final Application a = this.applicationService.findOne(applicationId);
 
 		try {
-			//			a.setStatus("ACCEPTED");
-			//
-			//			this.applicationService.save(a);
-			final Application app = this.applicationService.accept(a);
+			a.setStatus("ACCEPTED");
 
-			final Collection<Application> applications;
-			final FixUpTask t = this.taskService.findOne(app.getFixUpTask().getId());
+			this.applicationService.save(a);
 
-			applications = this.applicationService.findAllTask(t.getId());
+			Collection<Application> applications;
+
+			applications = this.applicationService.findAllTask(a.getFixUpTask().getId());
 
 			res = new ModelAndView("application/customer,handyworker/list");
 			res.addObject("applications", applications);
 			res.addObject("requestURI", "applications/customer,handyworker/list.do?fixuptaskId=?" + a.getFixUpTask().getId());
 		} catch (final Throwable oops) {
-
 			oops.printStackTrace();
-			final Collection<Application> applications;
-			final FixUpTask t = this.taskService.findOne(a.getFixUpTask().getId());
-
-			applications = this.applicationService.findAllTask(t.getId());
-
 			res = new ModelAndView("application/customer,handyworker/list");
-			res.addObject("applications", applications);
-			res.addObject("requestURI", "applications/customer,handyworker/list.do?fixuptaskId=?" + a.getFixUpTask().getId());
-
 		}
 		return res;
 	}
