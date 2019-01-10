@@ -1,8 +1,8 @@
 /*
  * WelcomeController.java
- * 
+ *
  * Copyright (C) 2018 Universidad de Sevilla
- * 
+ *
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -67,6 +67,7 @@ public class WelcomeController extends AbstractController {
 		result.addObject("bannerURL", config.getBannerURL());
 		result.addObject("welcomeEN", config.getWelcomeEN());
 		result.addObject("welcomeSP", config.getWelcomeSP());
+
 		result.addObject("name", name);
 		result.addObject("moment", moment);
 		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());

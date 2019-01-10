@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- * tiles.xml * * Copyright (C) 2018 Universidad de Sevilla * * The use 
-	of this project is hereby constrained to the conditions of the * TDG Licence, 
-	a copy of which you may download from * http://www.tdg-seville.info/License.html -->
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
 
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-
+       
 <tiles-definitions>
 
-	<definition name="box/list" extends="master.page">
+	<definition name="box/all" extends="master.page">	
 		<put-attribute name="title" value="All my boxes" />
-		<put-attribute name="body" value="/views/box/list.jsp" />
+		<put-attribute name="body" value="/views/box/all.jsp" />
 	</definition>
 	
-	<definition name="box/edit" extends="master.page">
-		<put-attribute name="title" value="New box" />
-		<put-attribute name="body" value="/views/box/edit.jsp" />
+	<definition name="box/messages" extends="master.page">	
+		<put-attribute name="title" value="Messages in box" />
+		<put-attribute name="body" value="/views/box/messages.jsp" />
 	</definition>
-
+	
+		
 </tiles-definitions>

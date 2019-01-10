@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- * security.xml * * Copyright (C) 2018 Universidad de Sevilla * * The 
-	use of this project is hereby constrained to the conditions of the * TDG 
+<!-- * security.xml * * Copyright (C) 2018 Universidad de Sevilla * * The
+	use of this project is hereby constrained to the conditions of the * TDG
 	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -47,22 +47,28 @@
 
 		<security:intercept-url pattern="/application/customer,handyworker/display.do"
 			access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
-		<security:intercept-url pattern="/application/handyworker/edit.do"
-			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/application/customer,handyworker/edit.do"
+			access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
 		<security:intercept-url pattern="/application/handyworker/create.do"
 			access="hasRole('HANDYWORKER')" />
-		<security:intercept-url pattern="/application/handyworker/save.do"
-			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/application/customer,handyworker/save.do"
+			access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
 		<security:intercept-url pattern="/application/customer,handyworker/list.do"
 			access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
 		<security:intercept-url pattern="/application/customer/accept.do"
+			access="hasRole('CUSTOMER')" />
+			<security:intercept-url pattern="/application/customer/reject.do"
 			access="hasRole('CUSTOMER')" />
 
 		<security:intercept-url pattern="/phase/handyworker/display.do"
 			access="hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/phase/handyworker/create.do"
 			access="hasRole('HANDYWORKER')" />
-		<security:intercept-url pattern="/phase/handyworker/save.do"
+			<security:intercept-url pattern="/phase/handyworker/edit.do"
+			access="hasRole('HANDYWORKER')" />
+			<security:intercept-url pattern="/phase/handyworker/delete.do"
+			access="hasRole('HANDYWORKER')" />
+			<security:intercept-url pattern="/phase/handyworker/exito.do"
 			access="hasRole('HANDYWORKER')" />
 
 		<security:intercept-url pattern="/warranty/administrator/**"
@@ -97,6 +103,9 @@
 			access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/fixuptask/customer,handyworker/display.do"
 			access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
+
+			<security:intercept-url pattern="/creditcard/customer/create.do"
+				access="hasRole('CUSTOMER')"/>
 
 		<security:intercept-url pattern="/administrator/dashboard.do"
 			access="hasRole('ADMIN')" />
@@ -175,8 +184,32 @@
 		<security:intercept-url pattern="/report/handyworker,referee/see.do"
 			access="hasAnyRole('HANDYWORKER','REFEREE')" />
 
-		<security:intercept-url pattern="/notes/**"
-			access="hasAnyRole('HANDYWORKER','REFEREE','CUSTOMER')" />
+		<security:intercept-url pattern="/tutorial/pictures/handyworker/delete.do"
+			access="permitAll" />
+		<security:intercept-url pattern="/tutorial/pictures/handyworker/add.do"
+			access="permitAll" />
+		<security:intercept-url pattern="/tutorial/handyworker/new.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/tutorial/handyworker/edit.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/tutorial/handyworker/delete.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/tutorial/handyworker/myTutorials.do"
+			access="hasRole('HANDYWORKER')" />
+
+		<security:intercept-url pattern="/section/pictures/list.do"
+			access="permitAll" />
+
+		<security:intercept-url pattern="/section/pictures/handyworker/add.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/pictures/handyworker/delete.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/handyworker/edit.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/handyworker/new.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/handyworker/delete.do"
+			access="hasRole('HANDYWORKER')" />
 
 
 		<security:intercept-url pattern="/box/**"

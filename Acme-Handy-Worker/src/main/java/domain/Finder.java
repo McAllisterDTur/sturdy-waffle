@@ -112,9 +112,6 @@ public class Finder extends DomainEntity {
 		this.startDate = startDate;
 	}
 
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getCacheUpdate() {
 		return this.cacheUpdate;
 	}

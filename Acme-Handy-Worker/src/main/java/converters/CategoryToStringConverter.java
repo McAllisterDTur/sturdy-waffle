@@ -6,20 +6,20 @@ import javax.transaction.Transactional;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import security.UserAccount;
+import domain.Category;
 
 @Component
 @Transactional
-public class AccountToStringConverter implements Converter<UserAccount, String> {
+public class CategoryToStringConverter implements Converter<Category, String> {
 
 	@Override
-	public String convert(final UserAccount account) {
+	public String convert(final Category category) {
 		String result;
 
-		if (account == null)
+		if (category == null)
 			result = null;
 		else
-			result = String.valueOf(account.getId());
+			result = String.valueOf(category.getId());
 		return result;
 	}
 

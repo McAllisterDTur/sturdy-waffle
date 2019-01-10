@@ -8,20 +8,20 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import security.UserAccount;
-import security.UserAccountRepository;
+import repositories.CategoryRepository;
+import domain.Category;
 
 @Component
 @Transactional
-public class StringToAccountConverter implements Converter<String, UserAccount> {
+public class StringToCategoryConverter implements Converter<String, Category> {
 
 	@Autowired
-	private UserAccountRepository	useraccountRepository;
+	private CategoryRepository	categoryRepository;
 
 
 	@Override
-	public UserAccount convert(final String text) {
-		UserAccount result;
+	public Category convert(final String text) {
+		Category result;
 		final int id;
 
 		try {
@@ -29,11 +29,12 @@ public class StringToAccountConverter implements Converter<String, UserAccount> 
 				result = null;
 			else {
 				id = Integer.valueOf(text);
-				result = this.useraccountRepository.findOne(id);
+				result = this.categoryRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}
 		return result;
 	}
+
 }

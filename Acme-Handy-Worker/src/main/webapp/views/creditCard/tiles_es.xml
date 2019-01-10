@@ -3,10 +3,10 @@
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-       
+      
 <tiles-definitions>
-	<definition name="finder/finderConfig" extends="master.page">	
-		<put-attribute name="title" value="Finder Configuration" />
-		<put-attribute name="body" value="/views/finder/finderConfig.jsp" />
+	<definition name="creditCard/edit" extends="master.page">
+		<put-attribute name="title" value="Tarjeta de Crédito" />
+		<put-attribute name="body" value="/views/creditCard/edit.jsp" />
 	</definition>
 </tiles-definitions>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- * PopulateDatabase.xml * * Copyright (C) 2018 Universidad de Sevilla 
-	* * The use of this project is hereby constrained to the conditions of the 
+<!-- * PopulateDatabase.xml * * Copyright (C) 2018 Universidad de Sevilla
+	* * The use of this project is hereby constrained to the conditions of the
 	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"

@@ -8,20 +8,20 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import repositories.BoxRepository;
-import domain.Box;
+import repositories.WarrantyRepository;
+import domain.Warranty;
 
 @Component
 @Transactional
-public class StringToBoxConverter implements Converter<String, Box> {
+public class StringToWarrantyConverter implements Converter<String, Warranty> {
 
 	@Autowired
-	private BoxRepository	boxRepository;
+	private WarrantyRepository	warrantyRepository;
 
 
 	@Override
-	public Box convert(final String text) {
-		Box result;
+	public Warranty convert(final String text) {
+		Warranty result;
 		final int id;
 
 		try {
@@ -29,7 +29,7 @@ public class StringToBoxConverter implements Converter<String, Box> {
 				result = null;
 			else {
 				id = Integer.valueOf(text);
-				result = this.boxRepository.findOne(id);
+				result = this.warrantyRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
 			throw new IllegalArgumentException(oops);

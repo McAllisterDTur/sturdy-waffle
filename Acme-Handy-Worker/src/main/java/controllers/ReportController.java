@@ -89,7 +89,6 @@ public class ReportController extends AbstractController {
 		res.addObject("worker", worker);
 
 		res.addObject("notes", r.getNotes());
-		res.addObject("requestURI", "report/customer,handyworker,referee/display");
 
 		return res;
 

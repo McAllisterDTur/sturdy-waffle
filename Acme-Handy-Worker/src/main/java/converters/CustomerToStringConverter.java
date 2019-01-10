@@ -6,20 +6,20 @@ import javax.transaction.Transactional;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import domain.Actor;
+import domain.Customer;
 
 @Component
 @Transactional
-public class ActorToStringConverter implements Converter<Actor, String> {
+public class CustomerToStringConverter implements Converter<Customer, String> {
 
 	@Override
-	public String convert(final Actor actor) {
+	public String convert(final Customer customer) {
 		String result;
 
-		if (actor == null)
+		if (customer == null)
 			result = null;
 		else
-			result = String.valueOf(actor.getId());
+			result = String.valueOf(customer.getId());
 		return result;
 	}
 

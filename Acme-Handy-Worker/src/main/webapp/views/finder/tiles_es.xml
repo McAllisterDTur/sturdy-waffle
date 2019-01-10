@@ -5,8 +5,8 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
       
 <tiles-definitions>
-	<definition name="finder/finder" extends="master.page">	
+	<definition name="finder/finderConfig" extends="master.page">	
 		<put-attribute name="title" value="Configurar Filtros" />
-		<put-attribute name="body" value="/views/finder/finder.jsp" />
+		<put-attribute name="body" value="/views/finder/finderConfig.jsp" />
 	</definition>
 </tiles-definitions>

@@ -10,21 +10,32 @@
 <% String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() :"";%>
 <jstl:set var="principal" value="<%= s %>"/>
 
-<form:form action="application/handyworker/save.do" modelAttribute="application">
+<form:form action="application/customer,handyworker/save.do" modelAttribute="application">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="fixUpTask"/>
 	<form:hidden path="handyWorker" />
-	
+
 	<form:hidden path="registerTime" />
 	<form:hidden path="status" />
-	
+
 	<form:label path="offeredPrice">
 		<spring:message code="application.offeredPrice" />
 	</form:label>
 	<form:input path="offeredPrice"/>
-	<form:errors cssClass="error" code="application.error.offeredPrice"/>
+	<form:errors path="offeredPrice" cssClass="error" code="application.error.offeredPrice"/>
+	<br />
+	<security:authorize access="hasRole('HANDYWORKER')">
+		<form:label path="handyComments"><spring:message code="application.comments" /></form:label>
+		<form:textarea path="handyComments"/>
+		<form:errors path="handyComments" cssClass="error" />
+	</security:authorize>
+	<security:authorize access="hasRole('CUSTOMER')">
+		<form:label path="customerComments"><spring:message code="application.comments" /></form:label>
+		<form:textarea path="customerComments"/>
+		<form:errors path="customerComments" cssClass="error" />
+	</security:authorize>
 	<br />
 	<input type="submit" />
 </form:form>

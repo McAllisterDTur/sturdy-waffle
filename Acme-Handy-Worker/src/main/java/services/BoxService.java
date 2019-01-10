@@ -12,7 +12,6 @@ import org.springframework.util.Assert;
 
 import repositories.BoxRepository;
 import security.LoginService;
-import security.UserAccount;
 import domain.Actor;
 import domain.Box;
 import domain.Message;
@@ -23,20 +22,15 @@ public class BoxService {
 
 	//We create the repository
 	@Autowired
-	private BoxRepository	boxRepository;
+	BoxRepository	boxRepository;
 
 	//Auxiliary services
 	@Autowired
-	private ActorService	actorService;
-
-	@Autowired
-	private MessageService	messageService;
+	ActorService	actorService;
 
 
 	public Box create(final Actor actor) {
 		final Box b = new Box();
-		b.setOwner(actor);
-		b.setDeleteable(true);
 		b.setMessages(new ArrayList<Message>());
 		return b;
 	}
@@ -71,27 +65,30 @@ public class BoxService {
 
 	//Other requirements
 
-	public void initializeDefaultBoxes() {
-		final UserAccount ownerAccount = LoginService.getPrincipal();
-		final Actor owner = this.actorService.findByUserAccountId(ownerAccount.getId());
-		final Box in = this.create(owner);
+	public void initializeDefaultBoxes(final Actor a) {
+		final Actor owner = a;
+		final Box in = this.create(a);
 		in.setDeleteable(false);
 		in.setName("IN");
+		in.setOwner(owner);
 		this.save(in);
 
-		final Box trash = this.create(owner);
+		final Box trash = this.create(a);
 		trash.setDeleteable(false);
 		trash.setName("TRASH");
+		trash.setOwner(owner);
 		this.save(trash);
 
-		final Box out = this.create(owner);
+		final Box out = this.create(a);
 		out.setDeleteable(false);
 		out.setName("OUT");
+		out.setOwner(owner);
 		this.save(out);
 
-		final Box spam = this.create(owner);
+		final Box spam = this.create(a);
 		spam.setDeleteable(false);
 		spam.setName("SPAM");
+		spam.setOwner(owner);
 		this.save(spam);
 	}
 

@@ -44,7 +44,9 @@
 
 	<display:column property="periodStart" titleKey="fixuptask.periodStart" />
 
-	<display:column property="maxPrice" titleKey="fixuptask.maxPrice" />
+	<display:column titleKey="fixuptask.maxPrice" >
+		<jstl:out value="${row.maxPrice }" />(<jstl:out value="${row.maxPrice *(1+(vat/100))}" />)
+	</display:column>
 
 	<display:column>
 		<button onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer,handyworker/display.do?fixuptaskId=${row.id}'">

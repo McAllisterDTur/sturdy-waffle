@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.PhaseService;
+import domain.Application;
 import domain.Phase;
 
 @Controller
@@ -47,13 +48,39 @@ public class PhaseController extends AbstractController {
 		return res;
 	}
 
+	@RequestMapping(value = "/handyworker/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam final int phaseId) {
+		final ModelAndView res;
+
+		final Phase p = this.phaseService.findOne(phaseId);
+		System.out.println(p);
+		res = new ModelAndView("phase/handyworker/edit");
+		res.addObject("phase", p);
+
+		return res;
+	}
+	@RequestMapping(value = "/handyworker/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam final int phaseId) {
+		final ModelAndView res;
+
+		final Phase p = this.phaseService.findOne(phaseId);
+		final Application a = p.getApplication();
+		final int id = a.getId();
+		this.phaseService.delete(p);
+
+		res = new ModelAndView("phase/handyworker/exito");
+		return res;
+	}
+
 	@RequestMapping(value = "/handyworker/save", method = RequestMethod.POST)
 	public ModelAndView save(@Valid final Phase phase, final BindingResult bind) {
 		ModelAndView res;
-		System.out.println("Errors: " + phase);
-		if (bind.hasErrors())
-			res = this.createMAV(phase);
-		else
+
+		if (bind.hasErrors()) {
+			System.out.println("Errors: " + phase);
+			res = new ModelAndView("phase/handyworker/create");
+			res.addObject("phase", phase);
+		} else
 			try {
 				final Phase p = this.phaseService.save(phase);
 				res = new ModelAndView("redirect:display.do?phaseId=" + p.getId());
@@ -61,10 +88,8 @@ public class PhaseController extends AbstractController {
 				oops.printStackTrace();
 				res = this.createMAV(phase);
 			}
-
 		return res;
 	}
-
 	private ModelAndView createMAV(final Phase p) {
 		ModelAndView res = null;
 		try {
