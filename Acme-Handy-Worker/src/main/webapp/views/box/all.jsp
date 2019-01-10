@@ -1,13 +1,3 @@
-<%--
- * index.jsp
- *
- * Copyright (C) 2018 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- --%>
-
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
@@ -16,6 +6,14 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<p><spring:message code="welcome.greeting.prefix" />${name}<spring:message code="welcome.greeting.suffix" /></p>
-
-<p><spring:message code="welcome.greeting.current.time" /> ${moment}</p> 
+<h1><spring:message code="box.titl" /> </h1>
+<div>
+	<display:table name="boxes" id="box" requestURI="${requestURI}" pagesize="10">
+			<display:column property="name" titleKey="boxes.name" />
+			<display:column titleKey="boxes.name">
+				<a href="messages/all.do?id=${row.box.id}">
+					<spring:message code="box.seeM" /> 
+				</a>
+		</display:column>
+	</display:table>
+</div>

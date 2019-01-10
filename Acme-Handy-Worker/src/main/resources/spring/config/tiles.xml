@@ -22,7 +22,6 @@
 		<value>/views/misc/tiles.xml</value>
 		<value>/views/security/tiles.xml</value>
 		<value>/views/welcome/tiles.xml</value>
-
 		<value>/views/administrator/tiles.xml</value>
 		<value>/views/customer/tiles.xml</value>
 		<value>/views/profile/tiles.xml</value>
@@ -38,7 +37,6 @@
 		<value>/views/actor/tiles.xml</value>
 		<value>/views/tutorial/tiles.xml</value>
 		<value>/views/section/tiles.xml</value>
-		<value>/views/notes/tiles.xml</value>
 	</util:list>
 
 </beans>

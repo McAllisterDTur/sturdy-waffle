@@ -13,8 +13,7 @@
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <div>
 	<a href="#"><img src="${bannerURL}" alt="Welcome to ACME Handy-Worker" height="200"></a>
@@ -43,8 +42,7 @@
 			</li>
 
 		<security:authorize access="hasRole('ADMIN')">
-			<li><a class="fNiv"><spring:message
-						code="master.page.administrator.acandw" /></a>
+			<li><a class="fNiv"><spring:message	code="master.page.administrator.acandw" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="administrator/register.do"><spring:message code="master.page.administrator.register" /></a></li>
@@ -68,8 +66,7 @@
 		</security:authorize>
 
 		<security:authorize access="hasRole('HANDYWORKER')">
-			<li><a class="fNiv"><spring:message
-						code="master.page.handy.futandapp" /></a>
+			<li><a class="fNiv"><spring:message	code="master.page.handy.futandapp" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="application/customer,handyworker/list.do?fixuptaskId=0"><spring:message code="master.page.handy.myApps" /></a></li>
@@ -87,8 +84,7 @@
 		</security:authorize>
 
 		<security:authorize access="hasRole('CUSTOMER')">
-			<li><a class="fNiv"><spring:message
-						code="master.page.customer.futsandcomp" /></a>
+			<li><a class="fNiv"><spring:message	code="master.page.customer.futsandcomp" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="fixuptask/customer/list.do"><spring:message code="master.page.customer.myfuts" /></a></li>
@@ -100,8 +96,7 @@
 		</security:authorize>
 
 		<security:authorize access="hasRole('REFEREE')">
-			<li><a class="fNiv"><spring:message
-						code="master.page.referee.compandreps" /></a>
+			<li><a class="fNiv"><spring:message	code="master.page.referee.compandreps" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="complaint/referee/unassignedComplaints.do"><spring:message code="master.page.referee.allComps" /></a></li>
@@ -112,8 +107,7 @@
 		</security:authorize>
 
 		<security:authorize access="hasRole('SPONSOR')">
-			<li><a class="fNiv"><spring:message
-						code="master.page.sponsor.sponsorships" /></a>
+			<li><a class="fNiv"><spring:message	code="master.page.sponsor.sponsorships" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="sponsorship/new.do"><spring:message code="master.page.sponsor.newSponsorship" /></a></li>
@@ -122,31 +116,31 @@
 			</li>
 		</security:authorize>
 		<security:authorize access="isAuthenticated()">
-			<li><a class="fNiv" href="box/list.do"><spring:message
-						code="master.page.messages" /></a>
+			<li>
+				<a class="fNiv" href="box/myBoxes.do"><spring:message code="master.page.messages" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="box/list.do"><spring:message
-								code="master.page.messages.myBoxes" /></a></li>
-					<li><a href="box/create.do"><spring:message
-								code="master.page.messages.newbox" /></a></li>
-					<li><a href="message/create.do"><spring:message
-								code="master.page.messages.new" /></a></li>
-					<security:authorize access="hasRole('HANDYWORKER')">
+					<li><a href="box/myBoxes.do"><spring:message code="master.page.messages.myBoxes" /></a></li>
+					<li><a href="message/new.do"><spring:message code="master.page.messages.new" /></a></li>
+					<security:authorize access="hasAnyRole('HANDYWORKER', 'CUSTOMER')">
+						<li><a href="endorsement/handyworker,customer/receivedEndorsements.do"><spring:message code="master.page.handyCus.myEndorsements" /></a></li>
 					</security:authorize>
-				</ul></li>
-			<li><a class="fNiv" href="profile.do"><spring:message
-						code="master.page.profile" /> (<security:authentication
-						property="principal.username" />)</a></li>
-			<li><a class="fNiv" href="j_spring_security_logout"><spring:message
-						code="master.page.logout" /> </a></li>
+				</ul>
+			</li>
+			<li>
+				<a class="fNiv" href="profile/see.do"><spring:message code="master.page.profile" />
+			        (<security:authentication property="principal.username" />)</a>
+			    <ul>
+					<li class="arrow"></li>
+					<li><a href="profile/edit.do"><spring:message code="master.page.profile.edit" /></a></li>
+				</ul>
+			</li>
+			<li><a class="fNiv" href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 		</security:authorize>
 
 		<security:authorize access="isAnonymous()">
-			<li><a class="fNiv" href="security/login.do"><spring:message
-						code="master.page.login" /></a></li>
-			<li><a class="fNiv" href="security/register.do"><spring:message
-						code="master.page.register" /></a></li>
+			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
+			<li><a class="fNiv" href="security/register.do"><spring:message code="master.page.register" /></a></li>
 		</security:authorize>
 	</ul>
 </div>

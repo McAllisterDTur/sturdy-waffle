@@ -25,6 +25,7 @@ import services.ConfigurationService;
 import domain.Configuration;
 
 @Controller
+@RequestMapping("/welcome")
 public class WelcomeController extends AbstractController {
 
 	@Autowired
@@ -39,7 +40,7 @@ public class WelcomeController extends AbstractController {
 		super();
 	}
 
-	// Index ------------------------------------------------------------------
+	// Index ------------------------------------------------------------------		
 
 	@RequestMapping(value = "/index")
 	public ModelAndView index() {
@@ -62,10 +63,13 @@ public class WelcomeController extends AbstractController {
 		moment = formatter.format(new Date());
 
 		result = new ModelAndView("welcome/index");
+<<<<<<< HEAD
 		final Configuration config = this.cService.findAll().iterator().next();
 		result.addObject("bannerURL", config.getBannerURL());
 		result.addObject("welcomeEN", config.getWelcomeEN());
 		result.addObject("welcomeSP", config.getWelcomeSP());
+=======
+>>>>>>> parent of a916da6... Merge remote-tracking branch 'origin/chema6' into manu6
 		result.addObject("name", name);
 		result.addObject("moment", moment);
 		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
