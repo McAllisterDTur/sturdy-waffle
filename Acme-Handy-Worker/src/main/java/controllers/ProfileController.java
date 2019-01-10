@@ -29,6 +29,7 @@ import services.HandyWorkerService;
 import services.RefereeService;
 import services.SocialProfileService;
 import services.SponsorService;
+import services.TutorialService;
 import domain.Actor;
 import domain.Administrator;
 import domain.Customer;
@@ -57,6 +58,8 @@ public class ProfileController extends AbstractController {
 	ConfigurationService	cService;
 	@Autowired
 	SocialProfileService	spService;
+	@Autowired
+	TutorialService			tService;
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -64,107 +67,20 @@ public class ProfileController extends AbstractController {
 
 		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		HandyWorker hw = this.hwService.create();
-		final SocialProfile sp = this.spService.create();
 		final String role = LoginService.getPrincipal().getAuthorities().toArray()[0].toString();
 
 		final ModelAndView res = new ModelAndView("profile/edit");
 
 		if (role.equals("HANDYWORKER")) {
 			hw = this.hwService.findOne(actor.getId());
-			res.addObject("socialProfileNew", sp);
-			res.addObject("socialProfiles", this.spService.findByActor(hw.getId()));
 			res.addObject("worker", hw);
 			res.addObject("handy", true);
 		} else {
-			res.addObject("socialProfileNew", sp);
-			res.addObject("socialProfiles", this.spService.findByActor(actor.getId()));
 			res.addObject("actor", actor);
 			res.addObject("handy", false);
 		}
 		res.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return res;
-	}
-
-	@RequestMapping(value = "/social/new", method = RequestMethod.POST, params = "save")
-	public ModelAndView saveSocialProfile(@Valid final SocialProfile sp, final BindingResult br) {
-		ModelAndView result;
-		System.out.println(sp);
-		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
-		HandyWorker hw = this.hwService.create();
-		final String role = LoginService.getPrincipal().getAuthorities().toArray()[0].toString();
-		sp.setActor(actor);
-
-		if (br.hasErrors()) {
-			System.out.println("Estoy en el br has errors");
-			System.out.println(br.getAllErrors());
-			result = new ModelAndView("profile/edit");
-			if (role == "HANDYWORKER") {
-				hw = this.hwService.findOne(actor.getId());
-				result.addObject("handy", true);
-				result.addObject("woker", hw);
-			} else {
-				result.addObject("actor", actor);
-				result.addObject("handy", false);
-			}
-			result.addObject("socialProfiles", this.spService.findByActor(actor.getId()));
-			result.addObject("socialProfileNew", sp);
-		} else {
-			System.out.println("No estoy en el br has errors");
-			result = new ModelAndView("profile/edit");
-			try {
-				System.out.println("Estoy en el try");
-				this.spService.save(sp);
-				result = new ModelAndView("redirect:see.do");
-			} catch (final Throwable oops) {
-				System.out.println("Estoy en el catch");
-				result.addObject("success", false);
-				if (role == "HANDYWORKER") {
-					hw = this.hwService.findOne(actor.getId());
-					result.addObject("handy", true);
-					result.addObject("woker", hw);
-				} else {
-					result.addObject("actor", actor);
-					result.addObject("handy", false);
-				}
-				result.addObject("socialProfiles", this.spService.findByActor(actor.getId()));
-				result.addObject("socialProfileNew", sp);
-				oops.printStackTrace();
-				return result;
-			}
-		}
-
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
-		return result;
-	}
-
-	@RequestMapping(value = "/social/delete", method = RequestMethod.GET)
-	public ModelAndView deleteSocialProfile(@RequestParam final Integer id) {
-		ModelAndView result;
-		try {
-			final SocialProfile sp = this.spService.findOne(id);
-			if (sp != null)
-				this.spService.delete(sp);
-			result = new ModelAndView("redirect:edit.do");
-		} catch (final Throwable oops) {
-			oops.printStackTrace();
-			final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
-			HandyWorker hw = this.hwService.create();
-			final String role = LoginService.getPrincipal().getAuthorities().toArray()[0].toString();
-			result = new ModelAndView("profile/edit");
-			result.addObject("success", false);
-			if (role == "HANDYWORKER") {
-				hw = this.hwService.findOne(actor.getId());
-				result.addObject("handy", true);
-				result.addObject("woker", hw);
-			} else {
-				result.addObject("actor", actor);
-				result.addObject("handy", false);
-			}
-			result.addObject("socialProfiles", this.spService.findByActor(actor.getId()));
-
-		}
-
-		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
@@ -286,6 +202,7 @@ public class ProfileController extends AbstractController {
 		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final String role = actor.getAccount().getAuthorities().iterator().next().toString();
 		result.addObject("actor", actor);
+		result.addObject("socialProfiles", this.spService.findByActor(actor.getId()));
 		result.addObject("username", actor.getAccount().getUsername());
 		result.addObject("logged", true);
 		if (role.equals("CUSTOMER")) {
@@ -297,6 +214,7 @@ public class ProfileController extends AbstractController {
 			result.addObject("make", this.hwService.findOne(actor.getId()).getMake());
 			result.addObject("endorsable", true);
 			result.addObject("score", this.hwService.findOne(actor.getId()).getScore());
+			result.addObject("tutorials", this.tService.findAllFromHandyworker(actor.getId()));
 		} else {
 			result.addObject("endorsable", false);
 			result.addObject("handy", false);
@@ -312,6 +230,7 @@ public class ProfileController extends AbstractController {
 		final String role = actor.getAccount().getAuthorities().iterator().next().toString();
 		result.addObject("actor", actor);
 		result.addObject("banned", actor.getBanned());
+		result.addObject("socialProfiles", this.spService.findByActor(actor.getId()));
 		result.addObject("username", actor.getAccount().getUsername());
 		if (LoginService.getPrincipal().equals(actor.getAccount()))
 			result.addObject("logged", true);
@@ -326,6 +245,7 @@ public class ProfileController extends AbstractController {
 			result.addObject("make", this.hwService.findOne(id).getMake());
 			result.addObject("endorsable", true);
 			result.addObject("score", this.hwService.findOne(id).getScore());
+			result.addObject("tutorials", this.tService.findAllFromHandyworker(actor.getId()));
 		} else {
 			result.addObject("endorsable", false);
 			result.addObject("handy", false);
@@ -351,6 +271,57 @@ public class ProfileController extends AbstractController {
 		if (a.getBanned())
 			this.actorService.unban(a);
 		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		return result;
+	}
+
+	// Social Profiles -------------------------------------------------------
+
+	@RequestMapping(value = "social/edit")
+	public ModelAndView newSocialProfile() {
+		ModelAndView result;
+
+		final SocialProfile sp = this.spService.create();
+		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		sp.setActor(actor);
+
+		result = new ModelAndView("profile/social/seeId");
+		result.addObject("socialProfile", sp);
+
+		return result;
+	}
+
+	@RequestMapping(value = "social/save", method = RequestMethod.POST)
+	public ModelAndView saveSocialProfile(@Valid final SocialProfile socialProfile, final BindingResult br) {
+		ModelAndView result;
+
+		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		socialProfile.setActor(actor);
+
+		if (br.hasErrors())
+			result = new ModelAndView("profile/social/seeId");
+		else
+			try {
+				this.spService.save(socialProfile);
+				result = new ModelAndView("redirect:/profile/see.do");
+			} catch (final Throwable oops) {
+				oops.printStackTrace();
+				result = new ModelAndView("profile/social/seeId");
+				result.addObject("socialProfile", socialProfile);
+			}
+
+		return result;
+	}
+
+	@RequestMapping(value = "social/delete", method = RequestMethod.GET)
+	public ModelAndView saveSocialProfile(@RequestParam final Integer id) {
+		final ModelAndView result = new ModelAndView("redirect:/profile/see.do");
+
+		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final SocialProfile sp = this.spService.findOne(id);
+
+		if (sp.getActor().equals(actor))
+			this.spService.delete(sp);
+
 		return result;
 	}
 

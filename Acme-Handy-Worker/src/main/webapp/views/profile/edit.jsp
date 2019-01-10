@@ -72,41 +72,10 @@
 		<input type="submit" name="save" value="<spring:message code="profile.edit.save"/>"/>
 	</form:form>
 	<br/>
-	<display:table name="socialProfiles" id="socialProfile" requestURI="profile/social/listAll.do">
-		<display:column property="socialNetwork" titleKey="profile.social.network"/>
-		<display:column titleKey="profile.social.nick">
-			<a href="${socialProfile.profileLink }">
-				<jstl:out value="${socialProfile.nick }"/>
-			</a>
-		</display:column>
-		<display:column>
-			<button onClick="window.location.href='profile/social/delete.do?id=${socialProfile.id}'">
-				<spring:message code="profile.social.delete"/>
-			</button>
-		</display:column>
-	</display:table>
-	
-	<form:form modelAttribute="socialProfileNew" action="profile/social/new.do" method="POST">
-		<p>
-			<spring:message code="profile.social.network"/>: 
-			<form:input path="socialNetwork"/>
-			<form:errors path="socialNetwork" cssClass="error"/>
-		</p>
-		<p>
-			<spring:message code="profile.social.nick"/>: 
-			<form:input path="nick"/>
-			<form:errors path="nick" cssClass="error"/>
-		</p>
-		<p>
-			<spring:message code="profile.social.link"/>: 
-			<form:input path="profileLink"/>
-			<form:errors path="profileLink" cssClass="error"/>	
-		</p>
-		<form:hidden path="actor" />
-		<form:hidden path="version" />
-		<form:hidden path="id" />
-		<input type="submit" name="save" value="<spring:message code="profile.edit.save"/>"/>
-	</form:form>	
+	<button onClick="window.location.href='profile/social/edit.do'">
+		<spring:message code="profile.social.edit"/>
+	</button>
+		
 </jstl:if>
 
 <jstl:if test="${handy }">
@@ -151,6 +120,8 @@
 			<form:input path="address"/>
 			<form:errors path="address" cssClass="error"/>
 		</p>
+	<br/>
+
 	<form:hidden path="banned" />
 	<form:hidden path="account" />
 	<form:hidden path="isSuspicious" />
@@ -158,4 +129,8 @@
 	
 	<input type="submit" name="saveHandy" value="<spring:message code="profile.edit.save"/>"/>
 </form:form>
+
+	<button onClick="window.location.href='profile/social/edit.do'">
+		<spring:message code="profile.social.edit"/>
+	</button>
 </jstl:if>

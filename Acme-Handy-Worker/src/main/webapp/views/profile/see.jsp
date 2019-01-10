@@ -67,5 +67,32 @@
 	<b><spring:message code="profile.address" /></b>: 
 	<jstl:out value="${actor.address }"/>
 </p>
-	
+<p>
+	<b><spring:message code="profile.socialNetworks" /></b>: 
+</p>
+	<display:table name="socialProfiles" id="socialProfile" requestURI="profile/see.do">
+		<display:column property="socialNetwork" titleKey="profile.social.network"/>
+		<display:column titleKey="profile.social.nick">
+			<a href="${socialProfile.profileLink }">
+				<jstl:out value="${socialProfile.nick }"/>
+			</a>
+		</display:column>
+		<jstl:if test="${logged }">
+			<display:column>
+				<button onClick="window.location.href='profile/social/delete.do?id=${socialProfile.id }'">
+					<spring:message code="profile.social.delete"/>
+				</button>
+			</display:column>
+		</jstl:if>
+	</display:table>
+<jstl:if test="${handy }"><p>
+	<b><spring:message code="profile.tutorials" /></b>: 
+	<display:table name="tutorials" id="tutorial" requestURI="profile/see.do">
+		<display:column titleKey="profile.title">
+			<a href="tutorial/display.do?id=${tutorial.id }">
+				<jstl:out value="${tutorial.title }"/>
+			</a>
+		</display:column>
+	</display:table>
+</p></jstl:if>
 	
