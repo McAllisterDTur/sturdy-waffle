@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.web.servlet.ModelAndView;
 
 import repositories.ActorRepository;
 import security.Authority;
@@ -199,5 +200,19 @@ public class ActorService {
 		default:
 			throw new NullPointerException();
 		}
+	}
+
+	public ModelAndView isBanned(ModelAndView result) {
+		try {
+			final UserAccount logged = LoginService.getPrincipal();
+			if (logged != null) {
+				final Actor a = this.findByUserAccountId(logged.getId());
+				if (a.getBanned())
+					result = new ModelAndView("security/banned");
+			}
+		} catch (final Throwable oops) {
+
+		}
+		return result;
 	}
 }

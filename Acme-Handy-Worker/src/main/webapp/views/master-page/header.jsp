@@ -124,17 +124,6 @@
 				</ul>
 			</li>
 		</security:authorize>
-
-		<security:authorize access="hasRole('ADMIN')">
-			<li><a class="fNiv"><spring:message	code="master.page.administrator.dandt" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="administrator/configuration.do"><spring:message code="master.page.administrator.config" /></a></li>
-					<li><a href="administrator/categories.do"><spring:message code="master.page.administrator.categor" /></a></li>
-					<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>
-				</ul>
-			</li>
-		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
 			<li>

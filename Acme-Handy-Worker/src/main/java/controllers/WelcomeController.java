@@ -55,10 +55,6 @@ public class WelcomeController extends AbstractController {
 				name = "";
 			else {
 				final Actor a = this.aService.findByUserAccountId(logged.getId());
-				if (a.getBanned()) {
-					result = new ModelAndView("security/banned");
-					return result;
-				}
 				name = " " + a.getName();
 			}
 		} catch (final Throwable oops) {
@@ -72,6 +68,8 @@ public class WelcomeController extends AbstractController {
 		result.addObject("name", name);
 		result.addObject("moment", moment);
 		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+
+		result = this.aService.isBanned(result);
 		return result;
 	}
 }

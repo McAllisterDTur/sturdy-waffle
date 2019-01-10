@@ -8,3 +8,4 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <p><spring:message code="banned"/></p>
+<a href="j_spring_security_logout"><spring:message code="banned.back" /> </a>
