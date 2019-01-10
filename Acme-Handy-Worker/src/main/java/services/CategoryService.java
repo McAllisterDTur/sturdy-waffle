@@ -123,4 +123,13 @@ public class CategoryService {
 		final Category c = this.catRepo.findOne(categoryId);
 		this.delete(c);
 	}
+
+	/**
+	 * Returns all the categories that depend of a given category
+	 * 
+	 * @param Category
+	 */
+	public Collection<Category> findByFather(final Category c) {
+		return this.catRepo.findByFather(c);
+	}
 }
