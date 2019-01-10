@@ -112,6 +112,7 @@ public class ApplicationService {
 
 		return res;
 	}
+
 	public Application accept(final Application a) {
 
 		Assert.notNull(a);
@@ -260,6 +261,12 @@ public class ApplicationService {
 		Assert.notNull(a);
 		return a;
 
+	}
+
+	public List<Object[]> findApplicationsPerTask() {
+		this.account = LoginService.getPrincipal();
+		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
+		return this.applicationRepo.applicationsPerFTask();
 	}
 
 }

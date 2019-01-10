@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.web.servlet.ModelAndView;
 
 import repositories.ConfigurationRepository;
 import security.Authority;
@@ -90,4 +91,11 @@ public class ConfigurationService {
 		this.configurationRepository.delete(configuration);
 	}
 
+	public ModelAndView configGeneral(final ModelAndView result) {
+		final Configuration config = this.findAll().iterator().next();
+		result.addObject("bannerURL", config.getBannerURL());
+		result.addObject("namesystem", config.getNameSystem());
+		return result;
+
+	}
 }

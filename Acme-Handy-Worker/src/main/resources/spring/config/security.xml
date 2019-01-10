@@ -211,10 +211,12 @@
 		<security:intercept-url pattern="/section/handyworker/delete.do"
 			access="hasRole('HANDYWORKER')" />
 
-
 		<security:intercept-url pattern="/box/**"
 			access="isAuthenticated()" />
 
+		<security:intercept-url pattern="/finder/**"
+			access="hasRole('HANDYWORKER')" />
+			
 		<security:intercept-url pattern="/message/**"
 			access="isAuthenticated()" />
 		<security:intercept-url pattern="/message/administrator/**"

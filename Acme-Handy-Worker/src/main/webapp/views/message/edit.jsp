@@ -24,8 +24,12 @@
 	String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() : "";
 %>
 <jstl:set var="principal" value="<%=s%>" />
-
-
+<jstl:out value="s"></jstl:out>
+<jstl:if test="${not empty messageCode}">
+	<h4>
+		<spring:message code="${messageCode}" />
+	</h4>
+</jstl:if>
 <form:form action="message/save.do" modelAttribute="messageO">
 
 	<form:hidden path="id" />
@@ -41,11 +45,11 @@
 	<form:label path="subject">
 		<spring:message code="message.subject" />*:</form:label>
 	<form:input path="subject" />
-	<form:errors path="subject" />
+	<form:errors path="subject" cssClass="error" />
 	<br />
 
 	<form:label path="reciever">
-		<spring:message code="message.actor.reciever" />*:&nbsp;</form:label>
+		<spring:message code="message.actor.reciever" />*:</form:label>
 	<form:select path="reciever">
 		<form:option label="----" value="0" />
 		<jstl:forEach var="act" items="${actors}">
@@ -54,7 +58,7 @@
 			</jstl:if>
 		</jstl:forEach>
 	</form:select>
-	<form:errors path="reciever" />
+	<form:errors path="reciever" cssClass="error" />
 	<br />
 
 	<form:label path="priority">
@@ -64,11 +68,11 @@
 		<form:option value="NEUTRAL" />
 		<form:option value="LOW" />
 	</form:select>
-	<form:errors path="priority" />
+	<form:errors path="priority" cssClass="error" />
 	<br />
 
 	<spring:message code="message.tags" />
-		:
+ 		:
 		<button type="button" onClick="addFields()">
 		<spring:message code="message.tags" />
 	</button>
@@ -81,7 +85,7 @@
 	<form:label path="body">
 		<spring:message code="message.body" />*: </form:label>
 	<form:textarea path="body" />
-	<form:errors path="body" />
+	<form:errors path="body" cssClass="error" />
 	<br />
 
 	<input type="submit" name="save"

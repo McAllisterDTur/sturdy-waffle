@@ -12,14 +12,19 @@
 	String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() : "";
 %>
 <jstl:set var="principal" value="<%=s%>" />
-
+<jstl:if test="${not empty messageCode}">
+	<h4>
+		<spring:message code="${messageCode}" />
+	</h4>
+</jstl:if>
 <display:table name="messages" id="row" pagesize="5"
 	requestURI="${requestURI}">
 
 	<display:column property="subject" titleKey="message.subject" />
 
 
-	<display:column property="sender.account.username" titleKey="message.actor.sender" />
+	<display:column property="sender.account.username"
+		titleKey="message.actor.sender" />
 
 
 	<display:column property="sendTime" titleKey="message.sendTime" />

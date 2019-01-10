@@ -17,14 +17,18 @@
 	<b><spring:message code="message.subject" />:&nbsp;</b>
 	<jstl:out value="${messageO.subject}" />
 </h3>
-
+<jstl:if test="${not empty messageCode}">
+	<h4>
+		<spring:message code="${messageCode}" />
+	</h4>
+</jstl:if>
 <b><spring:message code="message.actor.sender" />:&nbsp;</b>
 <jstl:out value="${messageO.sender.account.username}" />
 <br />
 
 <b><spring:message code="message.actor.reciever" />:&nbsp;</b>
-<jstl:forEach  var="actor" items="${messageO.reciever}">
-<jstl:out value="${actor.account.username}"></jstl:out>
+<jstl:forEach var="actor" items="${messageO.reciever}">
+	<jstl:out value="${actor.account.username}"></jstl:out>
 </jstl:forEach>
 <br />
 
