@@ -98,7 +98,7 @@ public class FixUpTaskController extends AbstractController {
 
 		result = new ModelAndView("fixuptask/edit");
 		result = this.addCategoriesWarrantiesConfiguration(result);
-		result.addObject("fixuptask", task);
+		result.addObject("fixUpTask", task);
 
 		return result;
 
@@ -113,27 +113,29 @@ public class FixUpTaskController extends AbstractController {
 		Assert.notNull(task);
 		result = new ModelAndView("fixuptask/edit");
 		result = this.addCategoriesWarrantiesConfiguration(result);
-		result.addObject("fixuptask", task);
+		result.addObject("fixUpTask", task);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/customer/edit", method = RequestMethod.POST)
-	public ModelAndView saveFixUpTask(@Valid final FixUpTask fixuptask, final BindingResult binding) {
+	public ModelAndView saveFixUpTask(@Valid final FixUpTask fixUpTask, final BindingResult binding) {
 		ModelAndView result;
 		if (binding.hasErrors()) {
-
 			System.out.println(binding.getFieldErrors());
 			result = new ModelAndView("fixuptask/edit");
-			result.addObject("fixuptask", fixuptask);
 			result = this.addCategoriesWarrantiesConfiguration(result);
+			result.addObject("fixUpTask", fixUpTask);
+
 		} else
 			try {
-				this.taskService.save(fixuptask);
+				this.taskService.save(fixUpTask);
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable opps) {
 				result = new ModelAndView("fixuptask/edit");
 				result.addObject("messageCode", "fixuptask.commit.error");
+				result = this.addCategoriesWarrantiesConfiguration(result);
+				result.addObject("fixUpTask", fixUpTask);
 			}
 
 		return result;

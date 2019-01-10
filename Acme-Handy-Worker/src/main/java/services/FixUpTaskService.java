@@ -21,6 +21,7 @@ import security.UserAccount;
 import utilities.AuthenticationUtility;
 import domain.Application;
 import domain.Complaint;
+import domain.CreditCard;
 import domain.Customer;
 import domain.FixUpTask;
 
@@ -52,6 +53,16 @@ public class FixUpTaskService {
 		res.setComplaints(new HashSet<Complaint>());
 		res.setApplications(new HashSet<Application>());
 		res.setTicker(this.tickerService.getTicker());
+
+		final CreditCard creditCard = new CreditCard();
+		creditCard.setHolderName("John Doe");
+		creditCard.setBrandName("Test");
+		creditCard.setExpirationMonth(12);
+		creditCard.setExpirationYear(10000);
+		creditCard.setNumber("1111222233334444");
+		creditCard.setCodeCVV(999);
+
+		res.setCreditCard(creditCard);
 		res.setPublishTime(new Date());
 		res.setCustomer((Customer) this.actorService.findByUserAccountId(userAccount.getId()));
 		return res;
@@ -65,7 +76,6 @@ public class FixUpTaskService {
 	 */
 	public FixUpTask save(final FixUpTask fixUpTask) {
 		UserAccount userAccount;
-
 		userAccount = LoginService.getPrincipal();
 		final Authority au = new Authority();
 		au.setAuthority(Authority.CUSTOMER);

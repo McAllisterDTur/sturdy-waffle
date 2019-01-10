@@ -121,6 +121,7 @@ public class HandyWorkerService {
 		res.setSurname(a.getSurname());
 		res.setVersion(a.getVersion());
 		res.setIsSuspicious(false);
+
 		return res;
 	}
 }

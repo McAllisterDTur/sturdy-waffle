@@ -42,7 +42,6 @@ public class CreditCardToStringConverter implements Converter<CreditCard, String
 				builder.append("|");
 				// CodeCVV
 				builder.append(this.encodeUTF8(Integer.toString(creditCard.getCodeCVV())));
-				builder.append("|");
 				result = builder.toString();
 			} catch (final Throwable oops) {
 				throw new RuntimeException(oops);
@@ -51,7 +50,7 @@ public class CreditCardToStringConverter implements Converter<CreditCard, String
 	}
 
 	private String encodeUTF8(final String text) throws UnsupportedEncodingException {
-		return URLEncoder.encode(text, "URF-8");
+		return URLEncoder.encode(text, "UTF-8");
 
 	}
 }

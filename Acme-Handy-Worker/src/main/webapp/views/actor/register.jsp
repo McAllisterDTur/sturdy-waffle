@@ -8,8 +8,20 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<script>
+	function checkPhone(errorCode) {
 
-<form:form modelAttribute="actor" action="${uri}">
+		var pattern = /((([+][1-9]{1}[0-9]{0,2}[\s]){0,1}([(][1-9]{1}[0-9]{0,2}[)][\s]){0,1})){0,1}([0-9]{4}){1}([0-9]{0,})/;
+		var phone = document.getElementById("phone").value;
+		var error = !pattern.test(phone);
+		if (error){
+			return confirm(errorCode);			
+		}
+		return;
+	}
+</script>
+<spring:message code="actor.phone.error" var="phoneError"/>'
+<form:form modelAttribute="actor" action="${uri}" onsubmit="return checkPhone('${phoneError }');">
 	<form:hidden path="id" />
 	<form:hidden path="version"/>
 	<form:hidden path="banned" />
@@ -20,6 +32,9 @@
 	</form:label>
 
 	<form:input path="account.username" />
+	<jstl:if test="${messageCode != null }">
+		<span class="error"><spring:message code="${messageCode}"/></span>
+	</jstl:if>
 	<form:errors cssClass="error" path="account.username" />
 
 	<br />
@@ -77,13 +92,15 @@
 		<spring:message code="actor.email" />*
 	</form:label>
 	<form:input path="email" />
-	<form:errors cssClass="error" path="email" />
+	<jstl:if test="${emailError == 'actor.email.error' }">
+		<span class="error"><spring:message code="${emailError}"/></span>
+	</jstl:if>
 
 	<br />
 	<form:label path="phone">
 		<spring:message code="actor.phone" />*
 	</form:label>
-	<form:input path="phone" placeholder="+CC (AC) 666 333 222" />
+	<form:input id="phone" path="phone" placeholder="+CC (AC) 666 333 222" value="${configuration.countryCode}"/>
 	<form:errors cssClass="error" path="phone" />
 
 	<br />
