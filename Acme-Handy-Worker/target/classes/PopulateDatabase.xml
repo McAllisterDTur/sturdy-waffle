@@ -1255,27 +1255,141 @@
 	</bean>
 
 	<bean id="Category1" class="domain.Category">
-		<property name="name" value="Fontanería" />
-		<property name="nameEn" value="Plumbing" />
-		<property name="father" ref="CategoryBase" />
-	</bean>
-
-	<bean id="Category2" class="domain.Category">
 		<property name="name" value="Carpintería" />
 		<property name="nameEn" value="Carpentry" />
 		<property name="father" ref="CategoryBase" />
 	</bean>
 
+	<bean id="Category2" class="domain.Category">
+		<property name="name" value="Reparación de techos" />
+		<property name="nameEn" value="Ceiling repair" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+
 	<bean id="Category3" class="domain.Category">
-		<property name="name" value="Servicios de cuidado" />
-		<property name="nameEn" value="Caring services" />
+		<property name="name" value="Limpieza" />
+		<property name="nameEn" value="Cleaning" />
 		<property name="father" ref="CategoryBase" />
 	</bean>
 
 	<bean id="Category4" class="domain.Category">
-		<property name="name" value="Cuidado de niños" />
-		<property name="nameEn" value="Childcare" />
-		<property name="father" ref="Category3" />
+		<property name="name" value="Trabajos de hormigón" />
+		<property name="nameEn" value="Concrete work" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+	
+	<bean id="Category5" class="domain.Category">
+		<property name="name" value="Puertas" />
+		<property name="nameEn" value="Doors" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+	
+	<bean id="Category6" class="domain.Category">
+		<property name="name" value="Tendidos eléctricos" />
+		<property name="nameEn" value="Electrical wiring" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+	
+	<bean id="Category7" class="domain.Category">
+		<property name="name" value="Instalación de ventiladores" />
+		<property name="nameEn" value="Fan instalation" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+	
+	<bean id="Category8" class="domain.Category">
+		<property name="name" value="Reparación de vallas" />
+		<property name="nameEn" value="Fence fixing" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+	
+	<bean id="Category9" class="domain.Category">
+		<property name="name" value="Sistemas de seguridad del hogar" />
+		<property name="nameEn" value="Home security systems" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+
+	<bean id="Category10" class="domain.Category">
+		<property name="name" value="Instalación de aislamiento" />
+		<property name="nameEn" value="Insulation installation" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+	
+	<bean id="Category11" class="domain.Category">
+		<property name="name" value="Reparaciñon de lámparas" />
+		<property name="nameEn" value="Lamp repairs" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+	
+	<bean id="Category12" class="domain.Category">
+		<property name="name" value="Mudanzas" />
+		<property name="nameEn" value="Moving" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+
+	<bean id="Category13" class="domain.Category">
+		<property name="name" value="Pintura" />
+		<property name="nameEn" value="Painting" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+
+	<bean id="Category14" class="domain.Category">
+		<property name="name" value="Control de plagas" />
+		<property name="nameEn" value="Pest control" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+
+	<bean id="Category15" class="domain.Category">
+		<property name="name" value="Tendidos eléctricos" />
+		<property name="nameEn" value="Electrical wiring" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+	
+	<bean id="Category16" class="domain.Category">
+		<property name="name" value="Reparación de cañerías" />
+		<property name="nameEn" value="Plumbing repairs" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+	
+	<bean id="Category17" class="domain.Category">
+		<property name="name" value="Tendidos eléctricos" />
+		<property name="nameEn" value="Electrical wiring" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+	
+	<bean id="Category18" class="domain.Category">
+		<property name="name" value="Tejados" />
+		<property name="nameEn" value="Roofing" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+	
+	<bean id="Category19" class="domain.Category">
+		<property name="name" value="Instalación de estanterías" />
+		<property name="nameEn" value="Shelf instalation" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+	
+	<bean id="Category20" class="domain.Category">
+		<property name="name" value="Paneles solares" />
+		<property name="nameEn" value="Solar panels" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+	
+	<bean id="Category21" class="domain.Category">
+		<property name="name" value="Insonorización" />
+		<property name="nameEn" value="Soundproofing" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+	
+	<bean id="Category22" class="domain.Category">
+		<property name="name" value="Reparación de aspersores" />
+		<property name="nameEn" value="Sprinkler repair" />
+		<property name="father" ref="CategoryBase" />
+	</bean>
+	
+	<bean id="Category23" class="domain.Category">
+		<property name="name" value="Reparación de ventanas" />
+		<property name="nameEn" value="Window repair" />
+		<property name="father" ref="CategoryBase" />
 	</bean>
 
 	<!-- Warranties -->
