@@ -91,6 +91,7 @@ public class MessageController extends AbstractController {
 		} else
 			try {
 				final String username = messageO.getReciever().iterator().next().getAccount().getUsername();
+
 				final UserAccount accountId = this.userAccountService.findByName(username);
 				final Actor actor = this.actorService.findByUserAccountId(accountId.getId());
 				this.messageService.send(messageO, actor);

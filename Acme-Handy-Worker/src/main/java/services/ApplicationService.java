@@ -21,6 +21,7 @@ import domain.Application;
 import domain.Customer;
 import domain.FixUpTask;
 import domain.HandyWorker;
+import domain.Message;
 import domain.Phase;
 
 @Service
@@ -77,6 +78,8 @@ public class ApplicationService {
 		if (application.getId() == 0) {//creacci�n port parte del handyWorker
 			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
 			Assert.isTrue(application.getOfferedPrice() != 0);
+
+			Assert.isTrue(application.getRegisterTime().before(application.getFixUpTask().getPeriodStart()));
 
 			application.setRegisterTime(new Date());
 			//application.setStatus("PENDING");
@@ -143,14 +146,24 @@ public class ApplicationService {
 				this.save(app);
 			}
 		return this.taskService.save(t);
-	private void sendAcceptMessageTo(final Application a) {
-
-		//TODO
 	}
+	private void sendAcceptMessageTo(final Application a) {
+		this.account = LoginService.getPrincipal();
+		final Message msg = this.messageService.create(this.actorService.findByUserAccountId(this.account.getId()));
+		msg.setPriority("HIGH");
+		msg.setSubject("ACCEPTED APPLICATION -- SOLICITUD ACEPTADA");
+		msg.setBody(ApplicationService.messageAcceptedEN + a.getFixUpTask().getTicker() + "\n\n" + ApplicationService.messageAcceptedES + a.getFixUpTask().getTicker());
 
+		this.messageService.send(msg, a.getHandyWorker());
+	}
 	private void sendRejectMessageTo(final Application a) {
+		this.account = LoginService.getPrincipal();
+		final Message msg = this.messageService.create(this.actorService.findByUserAccountId(this.account.getId()));
+		msg.setPriority("HIGH");
+		msg.setSubject("REJECTED APPLICATION -- SOLICITUD RECHAZADA");
+		msg.setBody(ApplicationService.messageRejectedEN + a.getFixUpTask().getTicker() + "\n\n" + ApplicationService.messageRejectedES + a.getFixUpTask().getTicker());
 
-		//TODO
+		this.messageService.send(msg, a.getHandyWorker());
 	}
 
 	public Application getApplicationAcceptedForFixUpTask(final int fixuptaskId) {

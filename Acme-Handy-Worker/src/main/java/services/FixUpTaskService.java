@@ -41,7 +41,7 @@ public class FixUpTaskService {
 	/**
 	 * Creates a new fix up task(Req 10.1)
 	 * n
-	 *
+	 * 
 	 * @return a new empty fix up task
 	 */
 	public FixUpTask create() {
@@ -59,7 +59,7 @@ public class FixUpTaskService {
 
 	/**
 	 * Checks customer authority. Saves or updates a fix up task(Req 10.1)
-	 *
+	 * 
 	 * @param fixUpTask
 	 * @return the fix up task saved in the database
 	 */
@@ -81,15 +81,18 @@ public class FixUpTaskService {
 			Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
 			Assert.isTrue(fixUpTask.getCustomer().getAccount().equals(aux.getCustomer().getAccount()));
 			res = this.fixUpTaskRepository.save(fixUpTask);
-		} else
+		} else {
+			Assert.isTrue(fixUpTask.getPeriodStart().before(fixUpTask.getPeriodEnd()));
 			res = this.fixUpTaskRepository.save(fixUpTask);
+		}
+
 		this.spamService.isSpam(this.actorService.findByUserAccountId(userAccount.getId()), res.getDescription());
 		return res;
 	}
 
 	/**
 	 * Checks customer authority. (Req 10.1)
-	 *
+	 * 
 	 * @param fixUpTaskId
 	 * @return the fix up task whose id is the one passed as parameter
 	 */
@@ -104,7 +107,7 @@ public class FixUpTaskService {
 
 	/**
 	 * Deletes the fix up task whose id is passed as parameter checking customer authority. (Req 10.1)
-	 *
+	 * 
 	 * @param fixUpTask
 	 */
 	public void delete(final int fixUpTaskId) {
@@ -128,9 +131,9 @@ public class FixUpTaskService {
 
 	/**
 	 * Deletes the fix up task passed as parameter checking customer authority. (Req 10.1)
-	 *
+	 * 
 	 * @param fixUpTask
-	 *
+	 * 
 	 */
 	public void delete(final FixUpTask fixUpTask) {
 		UserAccount userAccount;
@@ -146,7 +149,7 @@ public class FixUpTaskService {
 
 	/**
 	 * Checks customer authority (Req 10.1)
-	 *
+	 * 
 	 * @param CustomerId
 	 * @return Collection of the fix up tasks related to the logged customer
 	 */
@@ -166,7 +169,7 @@ public class FixUpTaskService {
 	}
 	/**
 	 * Checks admin authority (Req 12.5.1)
-	 *
+	 * 
 	 * @return Collection of fix up task count statistics
 	 */
 	public List<Object[]> avgMinMaxDevFixUpTaskCount() {
@@ -178,7 +181,7 @@ public class FixUpTaskService {
 
 	/**
 	 * Checks admin authority (Req 38.5.3)
-	 *
+	 * 
 	 * @return Ratio of fix up tasks with complaints
 	 */
 	public Double ratioFixUpTaskComplaint() {
@@ -190,7 +193,7 @@ public class FixUpTaskService {
 
 	/**
 	 * Checks admin authority (Req 12.5.3)
-	 *
+	 * 
 	 * @return Collection of fix up task price statistics
 	 */
 	public List<Object[]> avgMinMaxDevFixUpTaskPrice() {
@@ -201,7 +204,7 @@ public class FixUpTaskService {
 	}
 	/**
 	 * Checks handy worker authority (Req 11.1)
-	 *
+	 * 
 	 * @param CustomerId
 	 * @return Collection of the fix up tasks related to a customer
 	 */
@@ -221,7 +224,7 @@ public class FixUpTaskService {
 
 	/**
 	 * Checks handy worker authority (Req 11.1)
-	 *
+	 * 
 	 * @return Collection of all the fix up tasks
 	 */
 	public Collection<FixUpTask> findAll() {
@@ -240,7 +243,7 @@ public class FixUpTaskService {
 
 	/**
 	 * Checks handy worker authority (Req 11.2)
-	 *
+	 * 
 	 * @param keyWord
 	 * @param category
 	 * @param warranty
@@ -278,7 +281,7 @@ public class FixUpTaskService {
 
 	/**
 	 * Checks handy worker authority (Req 11.2)
-	 *
+	 * 
 	 * @param keyWord
 	 * @return a collection of fix up tasks filtered by the parameters given
 	 */
@@ -309,7 +312,7 @@ public class FixUpTaskService {
 
 	/**
 	 * Checks handy worker authority (Req 11.1)
-	 *
+	 * 
 	 * @param handyWorkerId
 	 * @return Collection of all the fix up tasks
 	 */

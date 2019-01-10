@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Configuration;
+
 import repositories.ConfigurationRepository;
 import security.Authority;
 import utilities.AuthenticationUtility;
-import domain.Configuration;
 
 @Service
 @Transactional
