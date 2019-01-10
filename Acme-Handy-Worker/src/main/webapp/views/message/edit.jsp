@@ -24,7 +24,7 @@
 	String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() : "";
 %>
 <jstl:set var="principal" value="<%=s%>" />
-<jstl:out value="s"></jstl:out>
+<jstl:out value="${s}"></jstl:out>
 <jstl:if test="${not empty messageCode}">
 	<h4>
 		<spring:message code="${messageCode}" />

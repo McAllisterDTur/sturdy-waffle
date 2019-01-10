@@ -38,7 +38,7 @@
 	<form:hidden path="sender" />
 	<form:hidden path="sendTime" />
 	<form:hidden path="reciever" />
-	<form:hidden path="boxes" value="${box}" />
+	<form:hidden path="boxes" />
 
 	<h3>
 		<spring:message code="message.broadcast" />
