@@ -123,6 +123,33 @@ public class BoxService {
 		this.save(spam);
 	}
 
+	public void initializeDefaultBoxes(final Actor a) {
+		final Actor owner = a;
+		final Box in = this.create();
+		in.setDeleteable(false);
+		in.setName("IN");
+		in.setOwner(owner);
+		this.save(in);
+
+		final Box trash = this.create();
+		trash.setDeleteable(false);
+		trash.setName("TRASH");
+		trash.setOwner(owner);
+		this.save(trash);
+
+		final Box out = this.create();
+		out.setDeleteable(false);
+		out.setName("OUT");
+		out.setOwner(owner);
+		this.save(out);
+
+		final Box spam = this.create();
+		spam.setDeleteable(false);
+		spam.setName("SPAM");
+		spam.setOwner(owner);
+		this.save(spam);
+	}
+
 	public Collection<Box> findByOwner(final int actorId) {
 		return this.boxRepository.boxesByActor(actorId);
 	}

@@ -21,6 +21,11 @@
 		<bean class="converters.FixUpTaskToStringConverter" />
 		<bean class="converters.ApplicationToStringConverter" />
 		<bean class="converters.CreditCardToStringConverter" />
+		<bean class="converters.UserAccountToStringConverter" />
+		<bean class="converters.CategoryToStringConverter" />
+		<bean class="converters.RefereeToStringConverter" />
+		<bean class="converters.ReportToStringConverter" />
+		<bean class="converters.EndorsableToStringConverter" />
 		<bean class="converters.WarrantyToStringConverter" />
 		<bean class="converters.CategoryToStringConverter" />
 		<bean class="converters.AuthorityToStringConverter" />
@@ -39,6 +44,11 @@
 		<bean class="converters.StringToFixUpTaskConverter" />
 		<bean class="converters.StringToApplicationConverter" />
 		<bean class="converters.StringToCreditCardConverter" />
+		<bean class="converters.StringToUserAccountConverter" />
+		<bean class="converters.StringToCategoryConverter" />
+		<bean class="converters.StringToRefereeConverter" />
+		<bean class="converters.StringToReportConverter" />
+		<bean class="converters.StringToEndorsableConverter" />
 		<bean class="converters.StringToWarrantyConverter" />
 		<bean class="converters.StringToCategoryConverter" />
 		<bean class="converters.StringToAuthorityConverter" />

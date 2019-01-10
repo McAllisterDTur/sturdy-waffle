@@ -13,19 +13,17 @@
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-       
+      
 <tiles-definitions>
 
-	<definition name="master.page" template="/views/master-page/layout.jsp">
-		<put-attribute name="title" value="" />
-		<put-attribute name="header" value="/views/master-page/header.jsp" />
-		<put-attribute name="body" value="" />
-		<put-attribute name="footer" value="/views/master-page/footer.jsp" />
+	<definition name="etc/license" extends="master.page">	
+		<put-attribute name="title" value="Licencia" />
+		<put-attribute name="body" value="/views/etc/license.jsp" />
 	</definition>
 	
-	<definition name="emptiness" template="/views/master-page/empty.jsp">
-		<put-attribute name="body" value="" />
+	<definition name="etc/about" extends="master.page">	
+		<put-attribute name="title" value="Sobre nosotros" />
+		<put-attribute name="body" value="/views/etc/about.jsp" />
 	</definition>
-	
 
 </tiles-definitions>

@@ -88,7 +88,7 @@ public class WarrantyController {
 	public ModelAndView editWarranty(@RequestParam final Integer id) {
 		ModelAndView result;
 		final Warranty w = this.wService.findOne(id);
-		if (w == null)
+		if (w == null || !w.getDraft())
 			result = new ModelAndView("redirect:list.do");
 		else {
 			result = new ModelAndView("warranty/edit");
@@ -101,15 +101,19 @@ public class WarrantyController {
 	@RequestMapping(value = "/administrator/delete", method = RequestMethod.GET)
 	public ModelAndView deleteWarranty(@RequestParam final Integer id) {
 		ModelAndView result;
-		try {
-			this.wService.delete(id);
+		final Warranty w = this.wService.findOne(id);
+		if (w == null || !w.getDraft())
 			result = new ModelAndView("redirect:list.do");
-			result.addObject("success", true);
-		} catch (final Throwable oops) {
-			oops.printStackTrace();
-			result = new ModelAndView("redirect:list.do");
-			result.addObject("success", false);
-		}
+		else
+			try {
+				this.wService.delete(id);
+				result = new ModelAndView("redirect:list.do");
+				result.addObject("success", true);
+			} catch (final Throwable oops) {
+				oops.printStackTrace();
+				result = new ModelAndView("redirect:list.do");
+				result.addObject("success", false);
+			}
 		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
 		return result;
 	}

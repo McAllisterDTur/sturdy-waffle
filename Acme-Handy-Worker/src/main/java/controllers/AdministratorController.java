@@ -1,8 +1,8 @@
 /*
  * AdministratorController.java
- * 
+ *
  * Copyright (C) 2018 Universidad de Sevilla
- * 
+ *
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -95,7 +95,7 @@ public class AdministratorController extends AbstractController {
 		res.addObject("devTaskPrice", stats3.get(0)[3]);
 
 		final List<Customer> stats4 = (List<Customer>) this.customerService.findCustomerMaxAverage();
-		//TODO: Ordenar por número de applications
+		//TODO: Ordenar por nï¿½mero de applications
 		res.addObject("customers", stats4);
 
 		final List<HandyWorker> stats5 = (List<HandyWorker>) this.workerService.findWorkerMoreAverage();

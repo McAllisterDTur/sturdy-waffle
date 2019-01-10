@@ -44,7 +44,9 @@ public class CategoryService {
 	public Category save(final Category category) {
 		//Admin authority
 		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
-		Assert.isTrue(au);
+		Assert.isTrue(au, "You are not an administrator");
+		Assert.notNull(category.getFather(), "This cannot be null");
+		Assert.isTrue(category.getFather().getName() != "", "This cannot be null");
 		return this.catRepo.save(category);
 	}
 
@@ -93,6 +95,7 @@ public class CategoryService {
 	 */
 	public void delete(final Category category) {
 		//Admin authority
+		Assert.isTrue(!category.equals(this.findByName("CATEGORY")), "You cannot delete the category CATEGROY");
 		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
 		Assert.isTrue(au);
 		final Collection<FixUpTask> inCat = this.futService.getByCategory(category.getId());
@@ -100,6 +103,14 @@ public class CategoryService {
 			f.setCategory(null);
 			this.futService.save(f);
 		}
+		for (final Category c : this.findAll()) {
+			final Category father = c.getFather();
+			if (father != null && father.equals(category)) {
+				c.setFather(category.getFather());
+				this.catRepo.save(c);
+			}
+		}
+
 		this.catRepo.delete(category);
 	}
 	/**
@@ -109,13 +120,16 @@ public class CategoryService {
 	 */
 	public void delete(final int categoryId) {
 		//Admin authority
-		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
-		Assert.isTrue(au);
-		final Collection<FixUpTask> inCat = this.futService.getByCategory(categoryId);
-		for (final FixUpTask f : inCat) {
-			f.setCategory(null);
-			this.futService.save(f);
-		}
-		this.catRepo.delete(categoryId);
+		final Category c = this.catRepo.findOne(categoryId);
+		this.delete(c);
+	}
+
+	/**
+	 * Returns all the categories that depend of a given category
+	 * 
+	 * @param Category
+	 */
+	public Collection<Category> findByFather(final Category c) {
+		return this.catRepo.findByFather(c);
 	}
 }

@@ -19,16 +19,6 @@
 	</jstl:if>
 </security:authorize>
 <security:authorize access="hasRole('CUSTOMER')">
-	<jstl:if test="${!draft }">
-		<button onClick="window.location.href='complaint/customer/draftedComplaints.do'">
-			<spring:message code="complaint.customer.drafted" />
-		</button>
-	</jstl:if>
-	<jstl:if test="${draft }">
-		<button onClick="window.location.href='complaint/customer/finalComplaints.do'">
-			<spring:message code="complaint.customer.published" />
-		</button>
-	</jstl:if>
 	<button onClick="window.location.href='complaint/customer/new.do'">
 		<spring:message code="complaint.customer.newComplaint" />
 	</button>
@@ -68,7 +58,7 @@
 				</jstl:if>
 				<jstl:if test="${empty complaint.reports}">
 					<jstl:if test="${not empty complaint.referee }">
-						<button onClick="window.location.href='report/referee/create.do?complaintId=${complaint.id}'">
+						<button onClick="window.location.href='report/referee/new.do?id=${complaint.id}'">
 							<spring:message code="complaint.referee.newReport" />
 						</button>
 					</jstl:if>
@@ -76,7 +66,7 @@
 						<button onClick="window.location.href='complaint/referee/assign.do?id=${complaint.id}'">
 							<spring:message code="complaint.referee.assign" />
 						</button>
-					</jstl:if>
+					</jstl:if>		
 				</jstl:if>
 			</display:column>
 		</security:authorize>

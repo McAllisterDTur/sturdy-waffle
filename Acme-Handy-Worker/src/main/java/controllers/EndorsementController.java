@@ -3,6 +3,8 @@ package controllers;
 
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -70,7 +72,7 @@ public class EndorsementController {
 	}
 
 	@RequestMapping(value = "/handyworker,customer/edit", method = RequestMethod.GET)
-	public ModelAndView editWarranty(@RequestParam final Integer id) {
+	public ModelAndView editEndorsement(@RequestParam final Integer id) {
 		ModelAndView result;
 		final Endorsement e = this.endoService.findOne(id);
 		final Integer ida = this.aService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
@@ -85,17 +87,22 @@ public class EndorsementController {
 		return result;
 	}
 	@RequestMapping(value = "/handyworker,customer/save", method = RequestMethod.POST, params = "save")
-	public ModelAndView saveFinalWarranty(final Endorsement e, final BindingResult br) {
+	public ModelAndView saveEndorsement(@Valid final Endorsement e, final BindingResult br) {
 		ModelAndView result;
-		if (br.hasErrors())
+		final Integer ida = this.aService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		if (br.hasErrors()) {
 			result = new ModelAndView("endorsement/edit");
-		else
+			result.addObject("endorsement", e);
+			result.addObject("users", this.endorsableService.findAllWorkedWith(ida));
+		} else
 			try {
 				this.endoService.save(e);
 				result = new ModelAndView("redirect:sentEndorsements.do");
 			} catch (final Throwable oops) {
 				oops.printStackTrace();
 				result = new ModelAndView("endorsement/edit");
+				result.addObject("endorsement", e);
+				result.addObject("users", this.endorsableService.findAllWorkedWith(ida));
 				result.addObject("success", false);
 			}
 		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
@@ -103,7 +110,7 @@ public class EndorsementController {
 	}
 
 	@RequestMapping(value = "/handyworker,customer/see", method = RequestMethod.GET)
-	public ModelAndView seeWarranty(@RequestParam final Integer id) {
+	public ModelAndView seeEndorsement(@RequestParam final Integer id) {
 		ModelAndView result;
 		try {
 			final Endorsement e = this.endoService.findOne(id);

@@ -36,6 +36,7 @@
 		<value>/views/message/tiles.xml</value>
 		<value>/views/finder/tiles.xml</value>
 		<value>/views/creditCard/tiles.xml</value>
+		<value>/views/configuration/tiles.xml</value>
 	</util:list>
 
 </beans>

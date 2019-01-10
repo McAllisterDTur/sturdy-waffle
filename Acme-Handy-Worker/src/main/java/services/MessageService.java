@@ -265,7 +265,7 @@ public class MessageService {
 			}
 			msg.setBoxes(boxes);
 			result = this.msgRepository.save(msg);
-			//Modificamos el buzon 
+			//Modificamos el buzon
 
 			for (final Box b : boxes) {
 				final Collection<Message> messagesOut = b.getMessages();

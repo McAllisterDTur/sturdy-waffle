@@ -56,8 +56,7 @@
 								code="master.page.administrator.warrant" /></a></li>
 					<li><a href="category/administrator/list.do"><spring:message
 								code="master.page.administrator.categor" /></a></li>
-					<li><a href="administrator/categories.do"><spring:message
-								code="master.page.administrator.categor" /></a></li>
+
 					<li><a href="security/administrator/register.do"><spring:message
 								code="master.page.administrator.register" /></a></li>
 					<li><a href="administrator/suspiciousActors.do"><spring:message
@@ -67,13 +66,11 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator.dandt" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/configuration.do"><spring:message
-								code="master.page.administrator.config" /></a></li>
-					<li><a href="administrator/categories.do"><spring:message
-								code="master.page.administrator.categor" /></a></li>
-					<li><a href="administrator/dashboard.do"><spring:message
-								code="master.page.administrator.dashboard" /></a></li>
-				</ul></li>
+					<li><a href="configuration/administrator/customize.do"><spring:message code="master.page.administrator.config" /></a></li>
+					<li><a href="category/administrator/list.do"><spring:message code="master.page.administrator.categor" /></a></li>
+					<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>
+				</ul>
+			</li>
 		</security:authorize>
 
 		<security:authorize access="hasRole('HANDYWORKER')">
@@ -104,15 +101,12 @@
 			<li><a class="fNiv"><spring:message	code="master.page.customer.futsandcomp" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="fixuptask/customer/list.do"><spring:message
-								code="master.page.customer.myfuts" /></a></li>
-					<li><a href="fixuptask/customer/create.do"><spring:message
-								code="master.page.customer.newfuts" /></a></li>
-					<li><a href="complaint/customer/finalComplaints.do"><spring:message
-								code="master.page.customer.mycomps" /></a></li>
-					<li><a href="complaint/customer/new.do"><spring:message
-								code="master.page.customer.newcomp" /></a></li>
-				</ul></li>
+					<li><a href="fixuptask/customer/list.do"><spring:message code="master.page.customer.myfuts" /></a></li>
+					<li><a href="fixuptask/customer/create.do"><spring:message code="master.page.customer.newfuts" /></a></li>
+					<li><a href="complaint/customer/finalComplaints.do"><spring:message code="master.page.customer.mycomps" /></a></li>
+					<li><a href="complaint/customer/new.do"><spring:message code="master.page.customer.newcomp" /></a></li>
+				</ul>
+			</li>
 		</security:authorize>
 
 		<security:authorize access="hasRole('REFEREE')">
@@ -132,6 +126,17 @@
 					<li class="arrow"></li>
 					<li><a href="sponsorship/new.do"><spring:message code="master.page.sponsor.newSponsorship" /></a></li>
 					<li><a href="sponsorship/mySponsorships.do"><spring:message code="master.page.sponsor.mySponsorships" /></a></li>
+				</ul>
+			</li>
+		</security:authorize>
+
+		<security:authorize access="hasAnyRole('CUSTOMER', 'HANDYWORKER')">
+			<li><a class="fNiv"><spring:message	code="master.page.handyCus.endorsements" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="endorsement/handyworker,customer/receivedEndorsements.do"><spring:message code="master.page.handyCus.myEndorsements" /></a></li>
+					<li><a href="endorsement/handyworker,customer/sentEndorsements.do"><spring:message code="master.page.handyCus.createdEndorse" /></a></li>
+					<li><a href="endorsement/handyworker,customer/new.do"><spring:message code="master.page.handyCus.newEndorsement" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

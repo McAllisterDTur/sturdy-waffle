@@ -13,19 +13,16 @@
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-       
+      
 <tiles-definitions>
 
-	<definition name="master.page" template="/views/master-page/layout.jsp">
-		<put-attribute name="title" value="" />
-		<put-attribute name="header" value="/views/master-page/header.jsp" />
-		<put-attribute name="body" value="" />
-		<put-attribute name="footer" value="/views/master-page/footer.jsp" />
+	<definition name="section/edit" extends="master.page">	
+		<put-attribute name="title" value="Vista de una sección" />
+		<put-attribute name="body" value="/views/section/edit.jsp" />
+	</definition>
+	<definition name="section/pictures" extends="master.page">	
+		<put-attribute name="title" value="Imágenes de una sección" />
+		<put-attribute name="body" value="/views/section/pictures.jsp" />
 	</definition>
 	
-	<definition name="emptiness" template="/views/master-page/empty.jsp">
-		<put-attribute name="body" value="" />
-	</definition>
-	
-
 </tiles-definitions>

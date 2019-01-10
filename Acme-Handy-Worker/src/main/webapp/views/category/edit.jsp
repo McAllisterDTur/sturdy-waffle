@@ -17,6 +17,9 @@
 			<legend><spring:message code="category.message"/></legend>
 			<jstl:if test="${not success }">
 				<spring:message code="category.error"/>
+				<jstl:if test="${father }">
+				. <spring:message code="category.errorFather"/>
+				</jstl:if>
 			</jstl:if>
 		</fieldset>
 	</jstl:if>
@@ -36,7 +39,12 @@
 			<spring:message code="category.father"/>: 
 			<form:select path="father">
 				<form:option value="0" label="-------"/>
-				<form:options items="${categories }" itemLabel="name" itemValue="id" />				
+				<jstl:if test="${pageContext.response.locale.language == 'es'}">
+					<form:options items="${categories }" itemLabel="name" itemValue="id" />				
+				</jstl:if>
+				<jstl:if test="${pageContext.response.locale.language == 'en'}">
+					<form:options items="${categories }" itemLabel="nameEn" itemValue="id" />				
+				</jstl:if>
 			</form:select>
 			<form:errors path="father" cssClass="error"/>
 		</p>

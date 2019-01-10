@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.web.servlet.ModelAndView;
 
 import repositories.ActorRepository;
 import security.Authority;
@@ -45,7 +46,7 @@ public class ActorService {
 
 	/**
 	 * Creates a new empty actor
-	 * 
+	 *
 	 * @return actor
 	 */
 	public Actor create() {
@@ -57,7 +58,7 @@ public class ActorService {
 	/**
 	 * Saves a new actor in the DB or update it
 	 * If an admin is updating other actor, only can ban
-	 * 
+	 *
 	 * @param actor
 	 * @return actor
 	 */
@@ -94,7 +95,7 @@ public class ActorService {
 
 	/**
 	 * Get all actors from db
-	 * 
+	 *
 	 * @return actors
 	 */
 	public Collection<Actor> findAll() {
@@ -104,7 +105,7 @@ public class ActorService {
 
 	/**
 	 * Find an actor by id in the db
-	 * 
+	 *
 	 * @param actorId
 	 * @return actor
 	 */
@@ -115,7 +116,7 @@ public class ActorService {
 
 	/**
 	 * Finds an actor by his/her user account
-	 * 
+	 *
 	 * @param userAccount
 	 * @return an actor
 	 */
@@ -199,5 +200,19 @@ public class ActorService {
 		default:
 			throw new NullPointerException();
 		}
+	}
+
+	public ModelAndView isBanned(ModelAndView result) {
+		try {
+			final UserAccount logged = LoginService.getPrincipal();
+			if (logged != null) {
+				final Actor a = this.findByUserAccountId(logged.getId());
+				if (a.getBanned())
+					result = new ModelAndView("security/banned");
+			}
+		} catch (final Throwable oops) {
+
+		}
+		return result;
 	}
 }
