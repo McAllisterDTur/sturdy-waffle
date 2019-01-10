@@ -45,11 +45,12 @@ public class ComplaintController {
 	@RequestMapping(value = "/customer/finalComplaints", method = RequestMethod.GET)
 	public ModelAndView listFinalComplaints() {
 		final Collection<Complaint> all = this.complaintService.findFinalFromLoggedCustomer();
-		final ModelAndView result = new ModelAndView("complaint/list");
+		ModelAndView result = new ModelAndView("complaint/list");
 		result.addObject("complaints", all);
 		result.addObject("requestURI", "complaint/customer/finalComplaints.do");
 		result.addObject("draft", false);
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 	//
@@ -67,42 +68,46 @@ public class ComplaintController {
 	@RequestMapping(value = "/referee/unassignedComplaints", method = RequestMethod.GET)
 	public ModelAndView listUnassignedComplaints() {
 		final Collection<Complaint> all = this.complaintService.findUnassigned();
-		final ModelAndView result = new ModelAndView("complaint/list");
+		ModelAndView result = new ModelAndView("complaint/list");
 		result.addObject("complaints", all);
 		result.addObject("requestURI", "complaint/referee/unassignedComplaints.do");
 		result.addObject("mine", false);
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/referee/myAssignedComplaints", method = RequestMethod.GET)
 	public ModelAndView listSelfassignedComplaints() {
 		final Collection<Complaint> all = this.complaintService.findSelfassigned();
-		final ModelAndView result = new ModelAndView("complaint/list");
+		ModelAndView result = new ModelAndView("complaint/list");
 		result.addObject("complaints", all);
 		result.addObject("requestURI", "complaint/referee/myAssignedComplaints.do");
 		result.addObject("mine", true);
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/fromFixUpTask", method = RequestMethod.GET)
 	public ModelAndView listFromFixUpTask(@RequestParam final Integer id) {
 		final Collection<Complaint> all = this.complaintService.findFromFixUpTask(id);
-		final ModelAndView result = new ModelAndView("complaint/list");
+		ModelAndView result = new ModelAndView("complaint/list");
 		result.addObject("complaints", all);
 		result.addObject("requestURI", "complaint/fromFixUpTask.do");
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/handyworker/myComplaints", method = RequestMethod.GET)
 	public ModelAndView listInvolvedComplaints() {
 		final Collection<Complaint> all = this.complaintService.findFromLoggedHandyWorker();
-		final ModelAndView result = new ModelAndView("complaint/list");
+		ModelAndView result = new ModelAndView("complaint/list");
 		result.addObject("complaints", all);
 		result.addObject("requestURI", "complaint/handyworker/myComplaints.do");
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 

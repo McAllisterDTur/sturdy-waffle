@@ -55,6 +55,7 @@ public class BoxController extends AbstractController {
 			result.addObject("messageCode", "box.commit.error");
 		}
 		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 
 		return result;
 	}
@@ -70,6 +71,7 @@ public class BoxController extends AbstractController {
 			result.addObject("messageCode", "box.commit.error");
 		}
 		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 
 		return result;
 	}
@@ -90,6 +92,7 @@ public class BoxController extends AbstractController {
 				result.addObject("messageCode", "box.commit.error");
 			}
 		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 
 		return result;
 	}
@@ -107,6 +110,7 @@ public class BoxController extends AbstractController {
 			result.addObject("messageCode", "box.commit.error");
 		}
 		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -125,6 +129,7 @@ public class BoxController extends AbstractController {
 		}
 
 		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 
 		return result;
 

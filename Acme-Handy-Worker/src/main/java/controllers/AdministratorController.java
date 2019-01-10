@@ -1,8 +1,8 @@
 /*
  * AdministratorController.java
- *
+ * 
  * Copyright (C) 2018 Universidad de Sevilla
- *
+ * 
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.ApplicationService;
+import services.ConfigurationService;
 import services.CustomerService;
 import services.FixUpTaskService;
 import services.HandyWorkerService;
@@ -33,19 +34,22 @@ import domain.HandyWorker;
 public class AdministratorController extends AbstractController {
 
 	@Autowired
-	private FixUpTaskService	taskService;
+	private FixUpTaskService		taskService;
 
 	@Autowired
-	private ApplicationService	applicationService;
+	private ApplicationService		applicationService;
 
 	@Autowired
-	private CustomerService		customerService;
+	private CustomerService			customerService;
 
 	@Autowired
-	private HandyWorkerService	workerService;
+	private HandyWorkerService		workerService;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
+
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -60,6 +64,8 @@ public class AdministratorController extends AbstractController {
 
 		result = this.calcStats("administrator/dashboard");
 
+		result = this.configurationService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -70,10 +76,13 @@ public class AdministratorController extends AbstractController {
 		result = new ModelAndView("administrator/suspiciousActors");
 		result.addObject("actors", actors);
 		result.addObject("requestURI", "/administrator/suspiciousActors.do");
+
+		result = this.configurationService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 	private ModelAndView calcStats(final String model) {
-		final ModelAndView res = new ModelAndView(model);
+		ModelAndView res = new ModelAndView(model);
 
 		final List<Object[]> stats1 = this.taskService.avgMinMaxDevFixUpTaskCount();
 		res.addObject("stats", stats1);
@@ -117,6 +126,8 @@ public class AdministratorController extends AbstractController {
 		res.addObject("rejectedRatio", stat8);
 		res.addObject("elapsedRatio", stat9);
 
+		res = this.configurationService.configGeneral(res);
+		res = this.actorService.isBanned(res);
 		return res;
 
 	}

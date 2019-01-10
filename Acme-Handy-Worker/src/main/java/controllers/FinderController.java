@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.CategoryService;
 import services.ConfigurationService;
 import services.FinderService;
@@ -31,6 +32,9 @@ public class FinderController extends AbstractController {
 
 	@Autowired
 	private CategoryService			categoryService;
+
+	@Autowired
+	private ActorService			actorService;
 
 
 	@RequestMapping(value = "/handyworker/finder", method = RequestMethod.POST)
@@ -51,7 +55,8 @@ public class FinderController extends AbstractController {
 				result = new ModelAndView("finder/finder");
 				result.addObject("messageCode", "finder.commit.error.edit");
 			}
-		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
+		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 
 		return result;
 	}
@@ -66,7 +71,8 @@ public class FinderController extends AbstractController {
 		result = new ModelAndView("finder/finder");
 		result.addObject("finder", finder);
 		result.addObject("categories", categories);
-		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
+		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 
 		return result;
 	}

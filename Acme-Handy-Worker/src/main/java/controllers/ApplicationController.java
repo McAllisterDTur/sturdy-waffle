@@ -18,8 +18,6 @@ import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
 import services.ApplicationService;
-import services.FixUpTaskService;
-import domain.Application;
 import services.ConfigurationService;
 import domain.Application;
 import domain.Customer;
@@ -44,7 +42,7 @@ public class ApplicationController extends AbstractController {
 
 	@RequestMapping(value = "/customer,handyworker/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam final int fixuptaskId) {
-		final ModelAndView result;
+		ModelAndView result;
 		this.account = LoginService.getPrincipal();
 		Collection<Application> applications;
 
@@ -59,13 +57,14 @@ public class ApplicationController extends AbstractController {
 		result.addObject("applications", applications);
 		result.addObject("vat", vat);
 		result.addObject("requestURI", "applications/customer,handyworker/list.do");
-
+		result = this.configurationService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/customer,handyworker/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int applicationId) {
-		final ModelAndView res;
+		ModelAndView res;
 
 		this.account = LoginService.getPrincipal();
 		final double vat = this.configurationService.findAll().iterator().next().getVat();
@@ -79,7 +78,8 @@ public class ApplicationController extends AbstractController {
 			res.addObject("customer", c);
 		}
 		//res.addObject("phases", a.getPhases());
-
+		res = this.configurationService.configGeneral(res);
+		res = this.actorService.isBanned(res);
 		return res;
 	}
 
@@ -103,6 +103,8 @@ public class ApplicationController extends AbstractController {
 			oops.printStackTrace();
 			res = new ModelAndView("application/customer,handyworker/list");
 		}
+		res = this.configurationService.configGeneral(res);
+		res = this.actorService.isBanned(res);
 		return res;
 	}
 
@@ -126,12 +128,14 @@ public class ApplicationController extends AbstractController {
 			oops.printStackTrace();
 			res = new ModelAndView("application/customer,handyworker/list");
 		}
+		res = this.configurationService.configGeneral(res);
+		res = this.actorService.isBanned(res);
 		return res;
 	}
 
 	@RequestMapping(value = "/handyworker/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final int fixuptaskId) {
-		final ModelAndView res;
+		ModelAndView res;
 
 		final Application a = this.applicationService.create(fixuptaskId);
 
@@ -139,20 +143,22 @@ public class ApplicationController extends AbstractController {
 		res = new ModelAndView("application/customer,handyworker/edit");
 		res.addObject("application", a);
 		//res.addObject("phases", a.getPhases());
-
+		res = this.configurationService.configGeneral(res);
+		res = this.actorService.isBanned(res);
 		return res;
 	}
 
 	@RequestMapping(value = "/customer,handyworker/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int applicationId) {
-		final ModelAndView res;
+		ModelAndView res;
 
 		final Application a = this.applicationService.findOne(applicationId);
 
 		res = new ModelAndView("application/customer,handyworker/edit");
 		res.addObject("application", a);
 		//res.addObject("phases", a.getPhases());
-
+		res = this.configurationService.configGeneral(res);
+		res = this.actorService.isBanned(res);
 		return res;
 	}
 
@@ -176,6 +182,8 @@ public class ApplicationController extends AbstractController {
 				result.addObject("messageCode", "application.commit.error");
 			}
 		}
+		result = this.configurationService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 }

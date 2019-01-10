@@ -59,6 +59,7 @@ public class MessageController extends AbstractController {
 			result.addObject("messageCode", "box.commit.error");
 		}
 		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -75,6 +76,7 @@ public class MessageController extends AbstractController {
 			result.addObject("messageCode", "message.commit.error");
 		}
 		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 
 		return result;
 	}
@@ -99,6 +101,7 @@ public class MessageController extends AbstractController {
 				result = new ModelAndView("redirect:create.do");
 			}
 		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 
 		return result;
 	}
@@ -117,6 +120,7 @@ public class MessageController extends AbstractController {
 			result.addObject("messageCode", "box.commit.error");
 		}
 		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 
 		return result;
 	}
@@ -141,6 +145,7 @@ public class MessageController extends AbstractController {
 				result.addObject("messageCode", "message.commit.error");
 			}
 		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 
 		return result;
 	}
@@ -162,6 +167,7 @@ public class MessageController extends AbstractController {
 			result.addObject("messageCode", "box.commit.error");
 		}
 		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 
 		return result;
 	}
@@ -180,6 +186,7 @@ public class MessageController extends AbstractController {
 			result.addObject("messageCode", "box.commit.error");
 		}
 		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 
 		return result;
 	}
@@ -200,6 +207,7 @@ public class MessageController extends AbstractController {
 			result.addObject("messageCode", "box.commit.error");
 		}
 		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 
 		return result;
 	}
@@ -220,6 +228,7 @@ public class MessageController extends AbstractController {
 				result = new ModelAndView("redirect:broadcast.do");
 			}
 		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 
 		return result;
 	}
@@ -238,6 +247,7 @@ public class MessageController extends AbstractController {
 			result.addObject("messageCode", "box.commit.error");
 		}
 		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 }

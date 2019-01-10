@@ -16,6 +16,7 @@ import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
 import services.ApplicationService;
+import services.ConfigurationService;
 import services.NotesService;
 import services.ReportService;
 import domain.Actor;
@@ -28,16 +29,20 @@ import domain.Report;
 @RequestMapping("/report/**")
 public class ReportController extends AbstractController {
 
-	private UserAccount			account;
+	private UserAccount				account;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
 	@Autowired
-	private ReportService		reportService;
+	private ReportService			reportService;
 	@Autowired
-	private ApplicationService	appService;
+	private ApplicationService		appService;
 	@Autowired
-	private NotesService		noteServices;
+	private NotesService			noteServices;
+	@Autowired
+	private ConfigurationService	configService;
+	@Autowired
+	private ActorService			aService;
 
 
 	public ReportController() {
@@ -47,9 +52,7 @@ public class ReportController extends AbstractController {
 	@RequestMapping("/customer,handyworker,referee/list")
 	public ModelAndView list() {
 
-		final ModelAndView res;
-
-		res = new ModelAndView("report/customer,handyworker,referee/list");
+		ModelAndView result = new ModelAndView("report/customer,handyworker,referee/list");
 
 		this.account = LoginService.getPrincipal();
 
@@ -64,63 +67,71 @@ public class ReportController extends AbstractController {
 
 		final Collection<Report> reports = this.reportService.findReportsActor(act.getId());
 
-		res.addObject("reports", reports);
-		res.addObject("requestURI", "report/customer,handyworker,referee/list.do");
+		result.addObject("reports", reports);
+		result.addObject("requestURI", "report/customer,handyworker,referee/list.do");
 
-		return res;
+		result = this.configService.configGeneral(result);
+		result = this.aService.isBanned(result);
+		return result;
 	}
 
 	@RequestMapping("/customer,handyworker,referee/display")
 	public ModelAndView display(@RequestParam final int reportId) {
 
-		ModelAndView res;
+		ModelAndView result;
 
-		res = new ModelAndView("report/customer,handyworker,referee/display");
+		result = new ModelAndView("report/customer,handyworker,referee/display");
 		final Report r = this.reportService.findOne(reportId);
 
 		final Referee ref = r.getComplaint().getReferee();
 		final Customer cust = r.getComplaint().getFixUpTask().getCustomer();
 		final HandyWorker worker = this.appService.getApplicationAcceptedForFixUpTask(r.getComplaint().getFixUpTask().getId()).getHandyWorker();
 
-		res.addObject("report", r);
+		result.addObject("report", r);
 
-		res.addObject("referee", ref);
-		res.addObject("customer", cust);
-		res.addObject("worker", worker);
+		result.addObject("referee", ref);
+		result.addObject("customer", cust);
+		result.addObject("worker", worker);
 
-		res.addObject("notes", r.getNotes());
+		result.addObject("notes", r.getNotes());
 
-		return res;
+		result = this.configService.configGeneral(result);
+		result = this.aService.isBanned(result);
+		return result;
 
 	}
 
 	@RequestMapping("/referee/create")
 	public ModelAndView create(@RequestParam final int complaintId) {
 
-		ModelAndView res;
+		ModelAndView result;
 
-		res = new ModelAndView("report/referee/edit");
+		result = new ModelAndView("report/referee/edit");
 		Report rep = null;
 		if (complaintId != 0)
 			rep = this.reportService.create(complaintId);
-		res.addObject("report", rep);
+		result.addObject("report", rep);
 
-		return res;
+		result = this.configService.configGeneral(result);
+		result = this.aService.isBanned(result);
+		return result;
 
 	}
 
 	@RequestMapping("/referee/edit")
 	public ModelAndView edit(@RequestParam final int reportId) {
 
-		ModelAndView res;
+		ModelAndView result;
 
-		res = new ModelAndView("report/referee/edit");
+		result = new ModelAndView("report/referee/edit");
 		Report rep = null;
 		if (reportId != 0)
 			rep = this.reportService.findOne(reportId);
-		res.addObject("report", rep);
+		result.addObject("report", rep);
 
-		return res;
+		result = this.configService.configGeneral(result);
+		result = this.aService.isBanned(result);
+		return result;
 
 	}
 
@@ -140,6 +151,9 @@ public class ReportController extends AbstractController {
 				result = new ModelAndView("report/referee/edit");
 				result.addObject("success", false);
 			}
+
+		result = this.configService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 }

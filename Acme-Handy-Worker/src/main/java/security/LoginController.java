@@ -1,8 +1,8 @@
 /*
  * LoginController.java
- *
+ * 
  * Copyright (C) 2018 Universidad de Sevilla
- *
+ * 
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.AdministratorService;
+import services.ConfigurationService;
 import services.CustomerService;
 import services.HandyWorkerService;
 import services.RefereeService;
@@ -60,6 +61,8 @@ public class LoginController extends AbstractController {
 	private AdministratorService	administratorService;
 	@Autowired
 	private RefereeService			refereeService;
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -81,6 +84,8 @@ public class LoginController extends AbstractController {
 		result.addObject("credentials", credentials);
 		result.addObject("showError", showError);
 
+		result = this.configurationService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -92,6 +97,8 @@ public class LoginController extends AbstractController {
 
 		result = new ModelAndView("redirect:login.do?showError=true");
 
+		result = this.configurationService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -105,6 +112,9 @@ public class LoginController extends AbstractController {
 		result.addObject("actor", a);
 		result.addObject("authorities", authorities);
 		result.addObject("uri", "security/register.do");
+
+		result = this.configurationService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -150,6 +160,8 @@ public class LoginController extends AbstractController {
 				opps.printStackTrace();
 			}
 
+		result = this.configurationService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -163,6 +175,8 @@ public class LoginController extends AbstractController {
 		result.addObject("actor", a);
 		result.addObject("authorities", authorities);
 		result.addObject("uri", "security/administrator/register.do");
+		result = this.configurationService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -201,7 +215,8 @@ public class LoginController extends AbstractController {
 				result.addObject("messageCode", "actor.commit.error");
 				System.out.println(opps.getMessage());
 			}
-
+		result = this.configurationService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 

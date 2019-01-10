@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import services.ActorService;
+import services.ConfigurationService;
 import services.TutorialService;
 import domain.HandyWorker;
 import domain.Tutorial;
@@ -33,9 +34,11 @@ import domain.Tutorial;
 public class TutorialController extends AbstractController {
 
 	@Autowired
-	private TutorialService	tutorialService;
+	private TutorialService			tutorialService;
 	@Autowired
-	private ActorService	actorService;
+	private ActorService			actorService;
+	@Autowired
+	private ConfigurationService	configService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -54,6 +57,9 @@ public class TutorialController extends AbstractController {
 		result = new ModelAndView("tutorial/list");
 		result.addObject("tutorials", tutorials);
 		result.addObject("requestURI", "/tutorial/list.do");
+
+		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -65,6 +71,9 @@ public class TutorialController extends AbstractController {
 		result = new ModelAndView("tutorial/list");
 		result.addObject("tutorials", tutorials);
 		result.addObject("requestURI", "/tutorial/myTutorials.do");
+
+		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -74,6 +83,9 @@ public class TutorialController extends AbstractController {
 		ModelAndView result;
 		result = new ModelAndView("tutorial/see");
 		result.addObject("tutorial", tutorial);
+
+		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -83,6 +95,9 @@ public class TutorialController extends AbstractController {
 		ModelAndView result;
 		result = new ModelAndView("tutorial/edit");
 		result.addObject("tutorial", tutorial);
+
+		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -92,6 +107,9 @@ public class TutorialController extends AbstractController {
 		ModelAndView result;
 		result = new ModelAndView("tutorial/edit");
 		result.addObject("tutorial", tutorial);
+
+		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -108,6 +126,9 @@ public class TutorialController extends AbstractController {
 			result = new ModelAndView("redirect:myTutorials.do");
 
 		}
+
+		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -116,6 +137,9 @@ public class TutorialController extends AbstractController {
 		this.tutorialService.delete(id);
 		ModelAndView result;
 		result = new ModelAndView("redirect:myTutorials.do");
+
+		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -126,6 +150,9 @@ public class TutorialController extends AbstractController {
 		result = new ModelAndView("tutorial/pictures");
 		result.addObject("tutorial", tutorial);
 		result.addObject("requestURI", "/tutorial/pictures/list.do");
+
+		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -139,6 +166,9 @@ public class TutorialController extends AbstractController {
 		result = new ModelAndView("tutorial/pictures");
 		result.addObject("tutorial", tutorial);
 		result.addObject("requestURI", "/tutorial/pictures/list.do");
+
+		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -152,6 +182,9 @@ public class TutorialController extends AbstractController {
 		result = new ModelAndView("tutorial/pictures");
 		result.addObject("tutorial", tutorial);
 		result.addObject("requestURI", "/tutorial/pictures/list.do");
+
+		result = this.configService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 }

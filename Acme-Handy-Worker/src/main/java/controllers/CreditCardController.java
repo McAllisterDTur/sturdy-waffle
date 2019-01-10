@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.ApplicationService;
 import services.ConfigurationService;
 import services.FixUpTaskService;
@@ -27,6 +28,8 @@ public class CreditCardController {
 	private ApplicationService		applicationService;
 	@Autowired
 	private ConfigurationService	confignService;
+	@Autowired
+	private ActorService			aService;
 
 
 	public CreditCardController() {
@@ -45,6 +48,8 @@ public class CreditCardController {
 		result.addObject("fixuptask", t);
 		result.addObject("makers", makers);
 
+		result = this.confignService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -65,6 +70,8 @@ public class CreditCardController {
 				result.addObject(task);
 			}
 
+		result = this.confignService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 }

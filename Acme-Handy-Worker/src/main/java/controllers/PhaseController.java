@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
+import services.ConfigurationService;
 import services.PhaseService;
 import domain.Application;
 import domain.Phase;
@@ -20,7 +22,11 @@ import domain.Phase;
 public class PhaseController extends AbstractController {
 
 	@Autowired
-	private PhaseService	phaseService;
+	private PhaseService			phaseService;
+	@Autowired
+	private ConfigurationService	configService;
+	@Autowired
+	private ActorService			aService;
 
 
 	@RequestMapping(value = "handyworker/display", method = RequestMethod.GET)
@@ -33,35 +39,41 @@ public class PhaseController extends AbstractController {
 		res = new ModelAndView("phase/handyworker/display");
 		res.addObject("phase", p);
 
+		res = this.configService.configGeneral(res);
+		res = this.aService.isBanned(res);
 		return res;
 	}
 
 	@RequestMapping(value = "/handyworker/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final int applicationId) {
-		final ModelAndView res;
+		ModelAndView res;
 
 		final Phase p = this.phaseService.create(applicationId);
 		System.out.println(p);
 		res = new ModelAndView("phase/handyworker/create");
 		res.addObject("phase", p);
 
+		res = this.configService.configGeneral(res);
+		res = this.aService.isBanned(res);
 		return res;
 	}
 
 	@RequestMapping(value = "/handyworker/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int phaseId) {
-		final ModelAndView res;
+		ModelAndView res;
 
 		final Phase p = this.phaseService.findOne(phaseId);
 		System.out.println(p);
 		res = new ModelAndView("phase/handyworker/edit");
 		res.addObject("phase", p);
 
+		res = this.configService.configGeneral(res);
+		res = this.aService.isBanned(res);
 		return res;
 	}
 	@RequestMapping(value = "/handyworker/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam final int phaseId) {
-		final ModelAndView res;
+		ModelAndView res;
 
 		final Phase p = this.phaseService.findOne(phaseId);
 		final Application a = p.getApplication();
@@ -69,6 +81,8 @@ public class PhaseController extends AbstractController {
 		this.phaseService.delete(p);
 
 		res = new ModelAndView("phase/handyworker/exito");
+		res = this.configService.configGeneral(res);
+		res = this.aService.isBanned(res);
 		return res;
 	}
 
@@ -88,6 +102,8 @@ public class PhaseController extends AbstractController {
 				oops.printStackTrace();
 				res = this.createMAV(phase);
 			}
+		res = this.configService.configGeneral(res);
+		res = this.aService.isBanned(res);
 		return res;
 	}
 
@@ -100,6 +116,8 @@ public class PhaseController extends AbstractController {
 			oops.printStackTrace();
 		}
 
+		res = this.configService.configGeneral(res);
+		res = this.aService.isBanned(res);
 		return res;
 	}
 

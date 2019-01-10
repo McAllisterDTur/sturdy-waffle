@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.CategoryService;
 import services.ConfigurationService;
 import domain.Category;
@@ -27,28 +28,32 @@ public class CategoryController {
 	CategoryService			cService;
 	@Autowired
 	ConfigurationService	conService;
+	@Autowired
+	ActorService			aService;
 
 
 	@RequestMapping(value = "/administrator/list", method = RequestMethod.GET)
 	public ModelAndView listAllCategories() {
 		final Collection<Category> all = this.cService.findAll();
-		final ModelAndView result = new ModelAndView("category/list");
+		ModelAndView result = new ModelAndView("category/list");
 		final Category o = this.cService.findByName("CATEGORY");
 		all.remove(o);
 		result.addObject("categories", all);
 		final Locale locale = LocaleContextHolder.getLocale();
 		result.addObject("lang", locale.getLanguage());
-		result.addObject("bannerURL", this.conService.findAll().iterator().next().getBannerURL());
+		result = this.conService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/administrator/new", method = RequestMethod.GET)
 	public ModelAndView newCategory() {
 		final Category c = this.cService.create();
-		final ModelAndView result = new ModelAndView("category/edit");
+		ModelAndView result = new ModelAndView("category/edit");
 		result.addObject("category", c);
 		result.addObject("categories", this.cService.findAll());
-		result.addObject("bannerURL", this.conService.findAll().iterator().next().getBannerURL());
+		result = this.conService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -72,7 +77,8 @@ public class CategoryController {
 					result.addObject("father", true);
 				result.addObject("categories", this.cService.findAll());
 			}
-		result.addObject("bannerURL", this.conService.findAll().iterator().next().getBannerURL());
+		result = this.conService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -87,7 +93,8 @@ public class CategoryController {
 			result.addObject("category", c);
 			result.addObject("categories", this.cService.findAll());
 		}
-		result.addObject("bannerURL", this.conService.findAll().iterator().next().getBannerURL());
+		result = this.conService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -103,7 +110,8 @@ public class CategoryController {
 			result = new ModelAndView("redirect:list.do");
 			result.addObject("success", false);
 		}
-		result.addObject("bannerURL", this.conService.findAll().iterator().next().getBannerURL());
+		result = this.conService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -119,7 +127,8 @@ public class CategoryController {
 			result = new ModelAndView("redirect:list.do");
 			result.addObject("success", false);
 		}
-		result.addObject("bannerURL", this.conService.findAll().iterator().next().getBannerURL());
+		result = this.conService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 

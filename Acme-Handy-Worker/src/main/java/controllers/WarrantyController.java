@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.ConfigurationService;
 import services.WarrantyService;
 import domain.Warranty;
@@ -25,14 +26,18 @@ public class WarrantyController {
 	WarrantyService			wService;
 	@Autowired
 	ConfigurationService	cService;
+	@Autowired
+	ActorService			aService;
 
 
 	@RequestMapping(value = "/administrator/list", method = RequestMethod.GET)
 	public ModelAndView listAllWarranties() {
 		final Collection<Warranty> all = this.wService.findAll();
-		final ModelAndView result = new ModelAndView("warranty/list");
+		ModelAndView result = new ModelAndView("warranty/list");
 		result.addObject("warranties", all);
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 
 	}
@@ -40,9 +45,11 @@ public class WarrantyController {
 	@RequestMapping(value = "/administrator/new", method = RequestMethod.GET)
 	public ModelAndView newWarranty() {
 		final Warranty w = this.wService.create();
-		final ModelAndView result = new ModelAndView("warranty/edit");
+		ModelAndView result = new ModelAndView("warranty/edit");
 		result.addObject("warranty", w);
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 
 	}
@@ -61,7 +68,9 @@ public class WarrantyController {
 				result = new ModelAndView("warranty/edit");
 				result.addObject("success", false);
 			}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -80,7 +89,9 @@ public class WarrantyController {
 				result = new ModelAndView("warranty/edit");
 				result.addObject("success", false);
 			}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -94,7 +105,9 @@ public class WarrantyController {
 			result = new ModelAndView("warranty/edit");
 			result.addObject("warranty", w);
 		}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -114,7 +127,9 @@ public class WarrantyController {
 				result = new ModelAndView("redirect:list.do");
 				result.addObject("success", false);
 			}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -130,7 +145,9 @@ public class WarrantyController {
 			result = new ModelAndView("redirect:list.do");
 			result.addObject("success", false);
 		}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.CategoryService;
 import services.ConfigurationService;
 import services.FixUpTaskService;
@@ -34,6 +35,8 @@ public class FixUpTaskController extends AbstractController {
 	private CategoryService			catService;
 	@Autowired
 	private WarrantyService			warrantyService;
+	@Autowired
+	private ActorService			actorService;
 
 
 	public FixUpTaskController() {
@@ -51,6 +54,8 @@ public class FixUpTaskController extends AbstractController {
 		result.addObject("fixuptasks", tasks);
 		result.addObject("requestURI", "/fixuptask/handyworker/list.do");
 		result.addObject("vat", vat);
+		result = this.confService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 
 	}
@@ -65,6 +70,8 @@ public class FixUpTaskController extends AbstractController {
 		result.addObject("fixuptasks", tasks);
 		result.addObject("requestURI", "/fixuptask/customer/list.do");
 		result.addObject("vat", vat);
+		result = this.confService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 
 	}
@@ -87,6 +94,8 @@ public class FixUpTaskController extends AbstractController {
 		}
 		System.out.println("Tasks: " + tasks);
 		result.addObject("fixuptasks", tasks);
+		result = this.confService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -100,6 +109,8 @@ public class FixUpTaskController extends AbstractController {
 		result = this.addCategoriesWarrantiesConfiguration(result);
 		result.addObject("fixUpTask", task);
 
+		result = this.confService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 
 	}
@@ -115,6 +126,8 @@ public class FixUpTaskController extends AbstractController {
 		result = this.addCategoriesWarrantiesConfiguration(result);
 		result.addObject("fixUpTask", task);
 
+		result = this.confService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -138,6 +151,8 @@ public class FixUpTaskController extends AbstractController {
 				result.addObject("fixUpTask", fixUpTask);
 			}
 
+		result = this.confService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 	@RequestMapping(value = "/customer/delete", method = RequestMethod.GET)
@@ -151,12 +166,14 @@ public class FixUpTaskController extends AbstractController {
 			result.addObject("messageCode", "fixuptask.commit.error");
 		}
 
+		result = this.confService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/customer,handyworker/display", method = RequestMethod.GET)
 	public ModelAndView displayFixUpTask(@RequestParam final int fixuptaskId) {
-		final ModelAndView result;
+		ModelAndView result;
 		FixUpTask task;
 
 		final double vat = this.confService.findAll().iterator().next().getVat();
@@ -166,6 +183,8 @@ public class FixUpTaskController extends AbstractController {
 		result.addObject("fixuptask", task);
 		result.addObject("vat", vat);
 
+		result = this.confService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 	private ModelAndView addCategoriesWarrantiesConfiguration(final ModelAndView model) {

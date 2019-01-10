@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
+import services.ConfigurationService;
 import services.SectionService;
 import services.TutorialService;
 import domain.Section;
@@ -21,9 +23,13 @@ import domain.Tutorial;
 public class SectionController extends AbstractController {
 
 	@Autowired
-	private SectionService	sectionService;
+	private SectionService			sectionService;
 	@Autowired
-	private TutorialService	tutorialService;
+	private TutorialService			tutorialService;
+	@Autowired
+	private ActorService			aService;
+	@Autowired
+	private ConfigurationService	configService;
 
 
 	public SectionController() {
@@ -37,6 +43,9 @@ public class SectionController extends AbstractController {
 		ModelAndView result;
 		result = new ModelAndView("section/edit");
 		result.addObject("section", section);
+
+		result = this.configService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 	@RequestMapping(value = "/handyworker/edit", method = RequestMethod.GET)
@@ -45,6 +54,8 @@ public class SectionController extends AbstractController {
 		ModelAndView result;
 		result = new ModelAndView("section/edit");
 		result.addObject("section", section);
+		result = this.configService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -62,6 +73,8 @@ public class SectionController extends AbstractController {
 			final Tutorial tutorial = this.tutorialService.findOne(section.getTutorial().getId());
 			result.addObject("tutorial", tutorial);
 		}
+		result = this.configService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -78,6 +91,8 @@ public class SectionController extends AbstractController {
 			result = new ModelAndView("section/edit");
 			result.addObject("section", section);
 		}
+		result = this.configService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -88,6 +103,8 @@ public class SectionController extends AbstractController {
 		result = new ModelAndView("section/pictures");
 		result.addObject("section", section);
 		result.addObject("requestURI", "/section/pictures/list.do");
+		result = this.configService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -101,6 +118,8 @@ public class SectionController extends AbstractController {
 		result = new ModelAndView("section/pictures");
 		result.addObject("section", section);
 		result.addObject("requestURI", "/section/pictures/list.do");
+		result = this.configService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -114,6 +133,8 @@ public class SectionController extends AbstractController {
 		result = new ModelAndView("section/pictures");
 		result.addObject("section", section);
 		result.addObject("requestURI", "/section/pictures/list.do");
+		result = this.configService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 }

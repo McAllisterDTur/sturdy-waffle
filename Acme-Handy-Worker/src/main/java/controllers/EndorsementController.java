@@ -39,11 +39,12 @@ public class EndorsementController {
 	public ModelAndView listReceivedEndorsements() {
 		final Integer id = this.aService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
 		final Collection<Endorsement> all = this.endoService.findAllReceivedByEndorsable(id);
-		final ModelAndView result = new ModelAndView("endorsement/list");
+		ModelAndView result = new ModelAndView("endorsement/list");
 		result.addObject("endorsements", all);
 		result.addObject("forMe", true);
 		result.addObject("requestURI", "endorsement/handyworker,customer/receivedEndorsements.do");
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -51,11 +52,12 @@ public class EndorsementController {
 	public ModelAndView listSentEndorsements() {
 		final Integer id = this.aService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
 		final Collection<Endorsement> all = this.endoService.findAllSentByEndorsable(id);
-		final ModelAndView result = new ModelAndView("endorsement/list");
+		ModelAndView result = new ModelAndView("endorsement/list");
 		result.addObject("endorsements", all);
 		result.addObject("forMe", false);
 		result.addObject("requestURI", "endorsement/handyworker,customer/sentEndorsements.do");
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -63,11 +65,12 @@ public class EndorsementController {
 	public ModelAndView newEndorsement() {
 		final Endorsement e = this.endoService.create();
 		final Actor a = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
-		final ModelAndView result = new ModelAndView("endorsement/edit");
+		ModelAndView result = new ModelAndView("endorsement/edit");
 		e.setSender(this.endorsableService.findOne(a.getId()));
 		result.addObject("endorsement", e);
 		result.addObject("users", this.endorsableService.findAllWorkedWith(a.getId()));
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -83,7 +86,8 @@ public class EndorsementController {
 			result.addObject("endorsement", e);
 			result.addObject("users", this.endorsableService.findAllWorkedWith(ida));
 		}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 	@RequestMapping(value = "/handyworker,customer/save", method = RequestMethod.POST, params = "save")
@@ -105,7 +109,8 @@ public class EndorsementController {
 				result.addObject("users", this.endorsableService.findAllWorkedWith(ida));
 				result.addObject("success", false);
 			}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -125,7 +130,8 @@ public class EndorsementController {
 			result = new ModelAndView("redirect:receivedEndorsements.do");
 			result.addObject("success", false);
 		}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -144,7 +150,8 @@ public class EndorsementController {
 			result = new ModelAndView("redirect:sentEndorsements.do");
 			result.addObject("success", false);
 		}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 

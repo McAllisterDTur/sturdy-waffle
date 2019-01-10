@@ -50,7 +50,8 @@ public class EtcController extends AbstractController {
 
 		result.addObject("year", year);
 		result.addObject("locale", LocaleContextHolder.getLocale().getLanguage());
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 
 		return result;
 	}
@@ -62,7 +63,8 @@ public class EtcController extends AbstractController {
 		result = new ModelAndView("etc/about");
 
 		result.addObject("locale", LocaleContextHolder.getLocale().getLanguage());
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 
 		return result;
 	}

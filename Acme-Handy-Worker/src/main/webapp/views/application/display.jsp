@@ -33,7 +33,7 @@
 	<br />
 	<jstl:if test="${application.status == 'ACCEPTED'}">
 		<display:table name="application.phases" id="row" class="dispalytag"
-			pagesize="5" requestURI="${ requestURI}"><br />
+			pagesize="5" requestURI="${ requestURI}"><br /></display:table></jstl:if>
 	<spring:message code="application.handy.comments"/>
 	<br />
 	<jstl:forEach items="${application.handyComments }" var="comment">

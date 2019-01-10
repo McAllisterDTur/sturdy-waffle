@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.ConfigurationService;
 import domain.Configuration;
 
@@ -28,35 +29,37 @@ public class ConfigurationController extends AbstractController {
 
 	@Autowired
 	ConfigurationService	cService;
+	@Autowired
+	ActorService			aService;
 
 
 	@RequestMapping(value = "/administrator/customize", method = RequestMethod.GET)
 	public ModelAndView getConfiguration() {
-		final ModelAndView result = new ModelAndView("configuration/edit");
+		ModelAndView result = new ModelAndView("configuration/edit");
 		final Configuration c = this.cService.findAll().iterator().next();
 		result.addObject("configuration", c);
-		result.addObject("bannerURL", c.getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
+
 		return result;
 	}
 
 	@RequestMapping(value = "/administrator/save", method = RequestMethod.POST)
 	public ModelAndView getConfiguration(@Valid final Configuration configuration, final BindingResult br) {
-		final ModelAndView result = new ModelAndView("configuration/edit");
-		if (br.hasErrors()) {
-			final Configuration c = this.cService.findAll().iterator().next();
+		ModelAndView result = new ModelAndView("configuration/edit");
+		if (br.hasErrors())
 			result.addObject("configuration", configuration);
-			result.addObject("bannerURL", c.getBannerURL());
-		} else
+		else
 			try {
 				this.cService.save(configuration);
 				result.addObject("configuration", configuration);
-				result.addObject("bannerURL", configuration.getBannerURL());
+
 			} catch (final Throwable oops) {
 				oops.printStackTrace();
-				final Configuration c = this.cService.findAll().iterator().next();
 				result.addObject("configuration", configuration);
-				result.addObject("bannerURL", c.getBannerURL());
 			}
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 }

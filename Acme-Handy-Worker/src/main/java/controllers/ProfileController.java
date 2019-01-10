@@ -1,8 +1,8 @@
 /*
  * ProfileController.java
- *
+ * 
  * Copyright (C) 2018 Universidad de Sevilla
- *
+ * 
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -70,7 +70,7 @@ public class ProfileController extends AbstractController {
 		HandyWorker hw = this.hwService.create();
 		final String role = LoginService.getPrincipal().getAuthorities().toArray()[0].toString();
 
-		final ModelAndView res = new ModelAndView("profile/edit");
+		ModelAndView res = new ModelAndView("profile/edit");
 
 		if (role.equals("HANDYWORKER")) {
 			hw = this.hwService.findOne(actor.getId());
@@ -80,13 +80,14 @@ public class ProfileController extends AbstractController {
 			res.addObject("actor", actor);
 			res.addObject("handy", false);
 		}
-		res.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		res = this.cService.configGeneral(res);
+		res = this.actorService.isBanned(res);
 		return res;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final Actor actor, final BindingResult br) {
-		final ModelAndView result;
+		ModelAndView result;
 		if (br.hasErrors()) {
 			result = new ModelAndView("profile/edit");
 			result.addObject("actor", actor);
@@ -155,14 +156,15 @@ public class ProfileController extends AbstractController {
 			}
 			result.addObject("success", true);
 		}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveHandy")
 	public ModelAndView saveHandy(@Valid final HandyWorker worker, final BindingResult br) {
 
-		final ModelAndView result;
+		ModelAndView result;
 		if (br.hasErrors()) {
 
 			result = new ModelAndView("profile/edit");
@@ -194,13 +196,14 @@ public class ProfileController extends AbstractController {
 				oops.printStackTrace();
 			}
 		}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "see", method = RequestMethod.GET)
 	public ModelAndView seeProfile() {
-		final ModelAndView result = new ModelAndView("profile/see");
+		ModelAndView result = new ModelAndView("profile/see");
 		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final String role = actor.getAccount().getAuthorities().iterator().next().toString();
 		result.addObject("actor", actor);
@@ -221,13 +224,14 @@ public class ProfileController extends AbstractController {
 			result.addObject("endorsable", false);
 			result.addObject("handy", false);
 		}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "seeId", method = RequestMethod.GET)
 	public ModelAndView seeProfile(@RequestParam final Integer id) {
-		final ModelAndView result = new ModelAndView("profile/see");
+		ModelAndView result = new ModelAndView("profile/see");
 		final Actor actor = this.actorService.findOne(id);
 		final String role = actor.getAccount().getAuthorities().iterator().next().toString();
 		result.addObject("actor", actor);
@@ -253,27 +257,30 @@ public class ProfileController extends AbstractController {
 			result.addObject("endorsable", false);
 			result.addObject("handy", false);
 		}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "administrator/ban", method = RequestMethod.GET)
 	public ModelAndView banProfile(@RequestParam final Integer id) {
-		final ModelAndView result = new ModelAndView("redirect:/profile/seeId.do?id=" + id);
+		ModelAndView result = new ModelAndView("redirect:/profile/seeId.do?id=" + id);
 		final Actor a = this.actorService.findOne(id);
 		if (!a.getBanned())
 			this.actorService.ban(a);
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "administrator/unban", method = RequestMethod.GET)
 	public ModelAndView unbanProfile(@RequestParam final Integer id) {
-		final ModelAndView result = new ModelAndView("redirect:/profile/seeId.do?id=" + id);
+		ModelAndView result = new ModelAndView("redirect:/profile/seeId.do?id=" + id);
 		final Actor a = this.actorService.findOne(id);
 		if (a.getBanned())
 			this.actorService.unban(a);
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -290,6 +297,8 @@ public class ProfileController extends AbstractController {
 		result = new ModelAndView("profile/social/seeId");
 		result.addObject("socialProfile", sp);
 
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -312,12 +321,14 @@ public class ProfileController extends AbstractController {
 				result.addObject("socialProfile", socialProfile);
 			}
 
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "social/delete", method = RequestMethod.GET)
 	public ModelAndView saveSocialProfile(@RequestParam final Integer id) {
-		final ModelAndView result = new ModelAndView("redirect:/profile/see.do");
+		ModelAndView result = new ModelAndView("redirect:/profile/see.do");
 
 		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final SocialProfile sp = this.spService.findOne(id);
@@ -325,6 +336,8 @@ public class ProfileController extends AbstractController {
 		if (sp.getActor().equals(actor))
 			this.spService.delete(sp);
 
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
