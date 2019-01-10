@@ -18,6 +18,7 @@
 		<display:column titleKey="application.offeredPrice">
 			<b><jstl:out value="${row.offeredPrice}"></jstl:out></b><p>(<jstl:out value="${row.offeredPrice * (1+(vat/100))}"></jstl:out>)</p>
 		</display:column>
+		<display:column>
 			<jstl:if test="${currentDate.time gt row.fixUpTask.periodStart.time and row.status == 'PENDING' }">
 				<span class="PASSED"><jstl:out value="${ row.status }" /></span>
 			</jstl:if>
@@ -25,9 +26,11 @@
 				<span class="${ row.status }"><jstl:out value="${ row.status }" /></span>
 			</jstl:if>
 		</display:column>
+		<display:column>
 		<a
 			href="application/customer,handyworker/display.do?applicationId=${row.id}"><spring:message
 				code="application.see" /></a>
+				
 	</display:column>
 	<security:authorize access="hasRole('CUSTOMER')">
 		<display:column>

@@ -83,15 +83,11 @@ public class MessageController extends AbstractController {
 		ModelAndView result;
 		if (binding.hasErrors()) {
 			System.out.println(binding.getAllErrors());
-			result = new ModelAndView("message/edit");
-			result.addObject("messageO", messageO);
-			final Collection<Actor> actores = this.actorService.findAll();
-			result.addObject("actors", actores);
+			result = new ModelAndView("redirect:create.do");
 			System.out.println("Termina el binding");
 		} else
 			try {
 				final String username = messageO.getReciever().iterator().next().getAccount().getUsername();
-
 				final UserAccount accountId = this.userAccountService.findByName(username);
 				final Actor actor = this.actorService.findByUserAccountId(accountId.getId());
 				this.messageService.send(messageO, actor);
@@ -100,9 +96,7 @@ public class MessageController extends AbstractController {
 				final Box bout = this.boxService.findByName(sender.getId(), "OUT");
 				result = new ModelAndView("redirect:list.do?boxId=" + bout.getId());
 			} catch (final Throwable opps) {
-				result = new ModelAndView("message/edit");
-				result.addObject("messageO", messageO);
-				result.addObject("messageCode", "message.commit.error");
+				result = new ModelAndView("redirect:create.do");
 			}
 		result = this.configService.configGeneral(result);
 
@@ -213,10 +207,9 @@ public class MessageController extends AbstractController {
 	@RequestMapping(value = "/administrator/broadcast", method = RequestMethod.POST)
 	public ModelAndView saveBroadcast(@Valid final Message message, final BindingResult binding) {
 		ModelAndView result;
-		if (binding.hasErrors()) {
-			result = new ModelAndView("message/broadcast");
-			result.addObject("messageO", message);
-		} else
+		if (binding.hasErrors())
+			result = new ModelAndView("redirect:broadcast.do");
+		else
 			try {
 				this.messageService.broadcastMessage(message);
 				final UserAccount account = LoginService.getPrincipal();
@@ -224,9 +217,7 @@ public class MessageController extends AbstractController {
 				final Box bout = this.boxService.findByName(sender.getId(), "OUT");
 				result = new ModelAndView("redirect:../list.do?boxId=" + bout.getId());
 			} catch (final Throwable opps) {
-				result = new ModelAndView("message/broadcast");
-				result.addObject("messageO", message);
-				result.addObject("messageCode", "message.commit.error");
+				result = new ModelAndView("redirect:broadcast.do");
 			}
 		result = this.configService.configGeneral(result);
 

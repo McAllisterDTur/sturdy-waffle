@@ -2,6 +2,8 @@
 package services;
 
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 
@@ -27,26 +29,28 @@ import domain.Sponsor;
 public class ActorService {
 
 	@Autowired
-	private ActorRepository		actorRepository;
+	private ActorRepository			actorRepository;
 	@Autowired
-	HandyWorkerService			hwService;
+	HandyWorkerService				hwService;
 	@Autowired
-	CustomerService				cService;
+	CustomerService					cService;
 	@Autowired
-	RefereeService				rService;
+	RefereeService					rService;
 	@Autowired
-	SponsorService				sService;
+	SponsorService					sService;
 	@Autowired
-	AdministratorService		adminService;
+	AdministratorService			adminService;
 	@Autowired
-	private UserAccountService	accountService;
+	private UserAccountService		accountService;
 	@Autowired
-	private BoxService			boxService;
+	private BoxService				boxService;
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	/**
 	 * Creates a new empty actor
-	 *
+	 * 
 	 * @return actor
 	 */
 	public Actor create() {
@@ -58,7 +62,7 @@ public class ActorService {
 	/**
 	 * Saves a new actor in the DB or update it
 	 * If an admin is updating other actor, only can ban
-	 *
+	 * 
 	 * @param actor
 	 * @return actor
 	 */
@@ -95,7 +99,7 @@ public class ActorService {
 
 	/**
 	 * Get all actors from db
-	 *
+	 * 
 	 * @return actors
 	 */
 	public Collection<Actor> findAll() {
@@ -105,7 +109,7 @@ public class ActorService {
 
 	/**
 	 * Find an actor by id in the db
-	 *
+	 * 
 	 * @param actorId
 	 * @return actor
 	 */
@@ -116,7 +120,7 @@ public class ActorService {
 
 	/**
 	 * Finds an actor by his/her user account
-	 *
+	 * 
 	 * @param userAccount
 	 * @return an actor
 	 */
@@ -214,5 +218,19 @@ public class ActorService {
 
 		}
 		return result;
+	}
+	public String checkSetPhoneCC(String phoneNumber) {
+		final Pattern p = Pattern.compile("([0-9]{4}){1}([0-9]{0,})");
+		final Matcher m = p.matcher(phoneNumber);
+		final boolean b = m.matches();
+		if (b)
+			phoneNumber = this.configurationService.findAll().iterator().next().getCountryCode() + " " + phoneNumber;
+		return phoneNumber;
+	}
+
+	public String validateEmail(final String email) {
+		final Pattern pattern = Pattern.compile("(([a-z]|[0-9]){1,}[@]{1}([a-z]|[0-9]){1,}([.]{1}([a-z]|[0-9]){1,}){0,})|((([a-z]|[0-9]){1,}[ ]{1}){1,}<(([a-z]|[0-9]){1,}[@]{1}([a-z]|[0-9]){1,}([.]{1}([a-z]|[0-9]){1,}){0,})>)");
+		final Matcher matcher = pattern.matcher(email);
+		return matcher.matches() ? "" : "actor.email.error";
 	}
 }
