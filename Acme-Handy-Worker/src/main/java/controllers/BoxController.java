@@ -42,18 +42,22 @@ public class BoxController extends AbstractController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView listAll() {
-		final ModelAndView result;
+		ModelAndView result;
 		final UserAccount uaccount = LoginService.getPrincipal();
-		final Actor actorId = this.actorService.findByUserAccountId(uaccount.getId());
-		final Collection<Box> boxes = this.boxService.findByOwner(actorId.getId());
-		result = new ModelAndView("box/list");
-		result.addObject("boxes", boxes);
-		result.addObject("requestURI", "/box/list.do");
-		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
+		try {
+			result = new ModelAndView("box/list");
+			final Actor actorId = this.actorService.findByUserAccountId(uaccount.getId());
+			final Collection<Box> boxes = this.boxService.findByOwner(actorId.getId());
+			result.addObject("requestURI", "/box/list.do");
+			result.addObject("boxes", boxes);
+		} catch (final Throwable opps) {
+			result = new ModelAndView("redirect:welcome/index.do");
+			result.addObject("messageCode", "box.commit.error");
+		}
+		result = this.configService.configGeneral(result);
 
 		return result;
 	}
-
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView deleteBox(@RequestParam final int boxId) {
 		ModelAndView result;
@@ -62,10 +66,10 @@ public class BoxController extends AbstractController {
 			this.boxService.delete(box);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable opps) {
-			result = new ModelAndView("box/list");
-			result.addObject("messageCode", "box.commit.error.delete");
+			result = new ModelAndView("redirect:list.do");
+			result.addObject("messageCode", "box.commit.error");
 		}
-		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
+		result = this.configService.configGeneral(result);
 
 		return result;
 	}
@@ -82,9 +86,10 @@ public class BoxController extends AbstractController {
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable opps) {
 				result = new ModelAndView("box/edit");
-				result.addObject("messageCode", "box.commit.error.edit");
+				result.addObject("box", box);
+				result.addObject("messageCode", "box.commit.error");
 			}
-		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
+		result = this.configService.configGeneral(result);
 
 		return result;
 	}
@@ -93,13 +98,15 @@ public class BoxController extends AbstractController {
 	public ModelAndView editBox(@RequestParam final int boxId) {
 		ModelAndView result;
 		Box box;
-
-		box = this.boxService.findOne(boxId);
-		Assert.notNull(box);
-		result = new ModelAndView("box/edit");
-		result.addObject("box", box);
-		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
-
+		try {
+			box = this.boxService.findOne(boxId);
+			result = new ModelAndView("box/edit");
+			Assert.notNull(box);
+		} catch (final Throwable opps) {
+			result = new ModelAndView("redirect:list.do");
+			result.addObject("messageCode", "box.commit.error");
+		}
+		result = this.configService.configGeneral(result);
 		return result;
 	}
 
@@ -107,12 +114,17 @@ public class BoxController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView result;
 		final UserAccount uaccount = LoginService.getPrincipal();
-		final Actor actor = this.actorService.findByUserAccountId(uaccount.getId());
-		final Box box = this.boxService.create(actor);
+		try {
+			final Actor actor = this.actorService.findByUserAccountId(uaccount.getId());
+			result = new ModelAndView("box/edit");
+			final Box box = this.boxService.create(actor);
+			result.addObject("box", box);
+		} catch (final Throwable opps) {
+			result = new ModelAndView("redirect:list.do");
+			result.addObject("messageCode", "box.commit.error");
+		}
 
-		result = new ModelAndView("box/edit");
-		result.addObject("box", box);
-		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
+		result = this.configService.configGeneral(result);
 
 		return result;
 

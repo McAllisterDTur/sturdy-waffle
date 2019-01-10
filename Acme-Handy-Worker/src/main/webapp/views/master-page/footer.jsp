@@ -22,4 +22,4 @@
 	<a href="http://www.us.es"><spring:message code="master.page.footer.us"/></a> |
 	<a href="mailto:contact.hw@acme.co"><spring:message code="master.page.footer.contact"/></a>
 </p>
-<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> ACME Co.</b>
+<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> ${namesystem}</b>

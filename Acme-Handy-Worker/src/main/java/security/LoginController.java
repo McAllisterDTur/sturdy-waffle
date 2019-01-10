@@ -47,8 +47,6 @@ public class LoginController extends AbstractController {
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	LoginService					service;
-	@Autowired
 	private ActorService			actorService;
 	@Autowired
 	private HandyWorkerService		handyService;

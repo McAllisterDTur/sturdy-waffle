@@ -18,22 +18,26 @@
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="deleteable" />
-	<form:hidden path="owner"/>
-	
+	<form:hidden path="owner" />
+
 	<jstl:forEach var="message" items="${box.messages}">
-		<form:hidden path = "messages" value = "${message.id}" />
+		<form:hidden path="messages" value="${message.id}" />
 	</jstl:forEach>
 
 	<h3>
 		<spring:message code="box.header" />
 	</h3>
-
+	<jstl:if test="${not empty messageCode}">
+		<h4>
+			<spring:message code="${messageCode}" />
+		</h4>
+	</jstl:if>
 	<spring:message code="box.placeholder.name"
 		var="placeholderdescription" />
 	<form:label path="name">
-		<spring:message code="box.name" />:</form:label>
+		<spring:message code="box.name" />*: </form:label>
 	<form:input path="name" placeholder="${placeholderdescription}" />
-	<form:errors path="name"/>
+	<form:errors path="name" cssClass="error" />
 	<br />
 
 	<input type="submit" name="save"

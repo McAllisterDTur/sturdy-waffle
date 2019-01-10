@@ -16,6 +16,14 @@
 
 <br/>
 
+<h2><spring:message code="administrator.dashboard.applicationsPerTask"/></h2>
+<span><spring:message code="administrator.dashboard.avg"/>: <jstl:out value="${avgAppNum}"/></span>
+<span><spring:message code="administrator.dashboard.min"/>: <jstl:out value="${minAppNum}"/></span>
+<span><spring:message code="administrator.dashboard.max"/>: <jstl:out value="${maxAppNum}"/></span>
+<span><spring:message code="administrator.dashboard.dev"/>: <jstl:out value="${devAppNum}"/></span>
+
+<br/>
+
 <h2><spring:message code="administrator.dashboard.fixUpTaskStatsPrice"/></h2>
 <span><spring:message code="administrator.dashboard.avg"/>: <jstl:out value="${avgTaskPrice}"/></span>
 <span><spring:message code="administrator.dashboard.min"/>: <jstl:out value="${minTaskPrice}"/></span>
@@ -41,13 +49,13 @@
 <div>
 <h2><spring:message code="administrator.dashboard.customerTenPercentMoreApplications"/></h2>
 <jstl:forEach var="customer" items="${customers}">
-	<jstl:out value="${customer}"/>
+	<jstl:out value="${customer.account.name}"/>
 	<br/>
 </jstl:forEach>
 
 <h2><spring:message code="administrator.dashboard.handyTenPercentMoreAccepted"/></h2>
 <jstl:forEach var="handyWorker" items="${handyWorkers}">
-	<jstl:out value="${handyWorker}"/>
+	<jstl:out value="${handyWorker.account.name}"/>
 	<br/>
 </jstl:forEach>
 </div>

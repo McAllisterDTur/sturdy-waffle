@@ -280,6 +280,7 @@
 	<bean id="configuration" class="domain.Configuration">
 		<property name="cacheTime" value="1" />
 		<property name="vat" value="21" />
+		<property name="nameSystem" value="Acme Handy Worker" />
 		<property name="bannerURL" value="https://tinyurl.com/acme-handy-worker-logo" />
 		<property name="welcomeSP"
 			value="¡Bienvenidos a Acme Handy Worker! Precio, calidad y confianza en el mismo sitio" />

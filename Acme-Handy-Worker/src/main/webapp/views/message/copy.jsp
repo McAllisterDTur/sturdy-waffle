@@ -12,7 +12,11 @@
 	String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() : "";
 %>
 <jstl:set var="principal" value="<%=s%>" />
-
+<jstl:if test="${not empty messageCode}">
+	<h4>
+		<spring:message code="${messageCode}" />
+	</h4>
+</jstl:if>
 <form:form action="message/copy.do" modelAttribute="messageO">
 	<form:hidden path="id" />
 	<form:hidden path="version" />

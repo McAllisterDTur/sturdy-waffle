@@ -19,7 +19,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <div>
-	<img src="${bannerURL}" alt="Welcome to ACME Handy-Worker" height="200">
+	<img src="${bannerURL}" alt="Welcome to ${namesystem}" height="200" />
 </div>
 
 <div>
@@ -91,7 +91,7 @@
 								code="master.page.handy.myApps" /></a></li>
 					<li><a href="fixuptask/handyworker/list.do"><spring:message
 								code="master.page.handy.list" /></a></li>
-					<li><a href="finder/update.do"><spring:message
+					<li><a href="finder/finder.do"><spring:message
 								code="master.page.handy.finder" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message

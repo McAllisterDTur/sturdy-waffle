@@ -67,6 +67,7 @@ public class WelcomeController extends AbstractController {
 		result.addObject("bannerURL", config.getBannerURL());
 		result.addObject("welcomeEN", config.getWelcomeEN());
 		result.addObject("welcomeSP", config.getWelcomeSP());
+		result.addObject("namesystem", config.getNameSystem());
 		result.addObject("name", name);
 		result.addObject("moment", moment);
 		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());

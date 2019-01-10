@@ -44,12 +44,16 @@ public class MessageService {
 		final Collection<Box> boxes = new ArrayList<>();
 		final Collection<String> tags = new ArrayList<>();
 		final Collection<Actor> receiver = new ArrayList<>();
-		m.setTags(tags);
 		final Date d = new Date();
+		m.setTags(tags);
 		m.setSendTime(d);
 		m.setBoxes(boxes);
 		m.setReciever(receiver);
 		m.setSender(sender);
+		m.setBody("");
+		m.setPriority("");
+		m.setSubject("");
+
 		return m;
 
 	}
@@ -80,7 +84,7 @@ public class MessageService {
 		final Message message = this.findOne(msg.getId());
 		final Box trashBox = this.bService.findByName(act.getId(), "TRASH");
 		final Box boxdelete = this.bService.findOne(box.getId());
-		Assert.isTrue((msg.getSender().getAccount().equals(ua) || message.getSender().getAccount().equals(msg.getSender().getAccount()) || msg.getReciever().contains(ua) || message.getReciever().contains(ua)), "");
+		Assert.isTrue((msg.getSender().getAccount().equals(ua) || message.getSender().getAccount().equals(msg.getSender().getAccount()) || msg.getReciever().contains(ua) || message.getReciever().contains(ua)), "Message not belong to the logged actor");
 		if (!(box.getName().equals("TRASH"))) {
 			//Tratamos el mensaje
 			boxes = message.getBoxes();
@@ -144,13 +148,13 @@ public class MessageService {
 	}
 
 	public Message send(final Message msg, final Actor receiver) {
-		Assert.notNull(msg);
+		Assert.notNull(msg, "Message can not be null");
 		final UserAccount ua = LoginService.getPrincipal();
 		Message result = null;
 		final Actor sender = this.aService.findByUserAccountId(ua.getId());
 		if (msg.getId() != 0) {
 			final Message ac = this.findOne(msg.getId());
-			Assert.isTrue(msg.getSender().getAccount().equals(ua) || ac.getSender().getAccount().equals(msg.getSender().getAccount()) || msg.getReciever().contains(ua) || ac.getReciever().contains(ua));
+			Assert.isTrue(msg.getSender().getAccount().equals(ua) || ac.getSender().getAccount().equals(msg.getSender().getAccount()) || msg.getReciever().contains(ua) || ac.getReciever().contains(ua), "Message not belong to the actor");
 			ac.setBoxes(msg.getBoxes());
 			result = this.msgRepository.save(ac);
 		} else {
@@ -223,17 +227,17 @@ public class MessageService {
 	}
 
 	public void broadcastMessage(final Message msg) {
-		Assert.isTrue(AuthenticationUtility.checkAuthority("ADMIN"));
+		Assert.isTrue(AuthenticationUtility.checkAuthority("ADMIN"), "Logged actor is not an administrator");
 		final Collection<Actor> receivers = this.aService.findAll();
 		final UserAccount ua = LoginService.getPrincipal();
 		final Actor actor = this.aService.findByUserAccountId(ua.getId());
 		receivers.remove(actor);
-		Assert.notNull(msg);
+		Assert.notNull(msg, "Message can not be null");
 		Message result = null;
 		final Actor sender = this.aService.findByUserAccountId(ua.getId());
 		if (msg.getId() != 0) {
 			final Message ac = this.findOne(msg.getId());
-			Assert.isTrue(msg.getSender().getAccount().equals(ua) || ac.getSender().getAccount().equals(msg.getSender().getAccount()) || msg.getReciever().contains(ua) || ac.getReciever().contains(ua));
+			Assert.isTrue(msg.getSender().getAccount().equals(ua) || ac.getSender().getAccount().equals(msg.getSender().getAccount()) || msg.getReciever().contains(ua) || ac.getReciever().contains(ua), "Message not belong to the actor");
 			ac.setBoxes(msg.getBoxes());
 			result = this.msgRepository.save(ac);
 		} else {

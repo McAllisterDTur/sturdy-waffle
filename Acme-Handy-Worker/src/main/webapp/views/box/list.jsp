@@ -14,6 +14,11 @@
 <jstl:set var="principal" value="<%=s%>" />
 
 <div>
+	<jstl:if test="${not empty messageCode}">
+		<h4>
+			<spring:message code="${messageCode}" />
+		</h4>
+	</jstl:if>
 	<display:table name="boxes" id="box" requestURI="${requestURI}"
 		pagesize="10">
 		<display:column property="name" titleKey="box.name" />
@@ -26,13 +31,13 @@
 		</display:column>
 
 		<display:column titleKey="box.edit">
-		<jstl:if test="${box.deleteable == true}">
+			<jstl:if test="${box.deleteable == true}">
 
 				<button
 					onClick="window.location.href='/Acme-Handy-Worker/box/edit.do?boxId=${box.id}'">
 					<spring:message code="box.edit" />
 				</button>
-		</jstl:if>
+			</jstl:if>
 		</display:column>
 		<display:column titleKey="box.delete">
 			<jstl:if test="${box.deleteable == true}">

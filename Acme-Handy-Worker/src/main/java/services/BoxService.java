@@ -42,6 +42,7 @@ public class BoxService {
 	}
 	public Box save(final Box box) {
 		// We search boxes from logged actor
+
 		try {
 			final List<String> names = this.allBoxNames();
 			if (box.getId() == 0)

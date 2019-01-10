@@ -106,6 +106,12 @@ public class AdministratorController extends AbstractController {
 		final Double stat8 = this.applicationService.ratioRejectedApplications();
 		final Double stat9 = this.applicationService.ratioElapsedApplications();
 
+		final List<Object[]> stats10 = this.applicationService.findApplicationsPerTask();
+		res.addObject("avgAppNum", stats10.get(0)[0]);
+		res.addObject("minAppNum", stats10.get(0)[1]);
+		res.addObject("maxAppNum", stats10.get(0)[2]);
+		res.addObject("devAppNum", stats10.get(0)[3]);
+
 		res.addObject("pendingRatio", stat6);
 		res.addObject("acceptedRatio", stat7);
 		res.addObject("rejectedRatio", stat8);

@@ -14,7 +14,7 @@ public interface HandyWorkerRepository extends JpaRepository<HandyWorker, Intege
 
 	// Lista de los handy-workers que tienen al menos un 10% m�s de aplicaciones
 	// aceptadas que la media
-	@Query("select avg(a.offeredPrice),  min(a.offeredPrice), max(a.offeredPrice), sqrt(sum(a.offeredPrice * a.offeredPrice) / count(a) - avg(a.offeredPrice) * avg(a.offeredPrice)) from Application a")
+	@Query("select h from HandyWorker h where (select count(a) from Application a join a.handyWorker i where i.id = h.id) >= 1.1*((select count(b) from Application b)*1.0/(select count(j) from HandyWorker j)*1.0) order by (h.applications.size)")
 	public Collection<HandyWorker> findHandyWorkerMoreAverage();
 
 	//select top 3 distinct h from HandyWorker h join h.applications a join a.fixUpTask f join f.complaints co order by co.size desc
