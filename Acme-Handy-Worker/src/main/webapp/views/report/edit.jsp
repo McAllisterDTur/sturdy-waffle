@@ -13,9 +13,7 @@
 	<form:hidden path="version" />
 	<form:hidden path="reportTime"/>
 	<form:hidden path="isFinal"/>
-	<!--<form:hidden path="notes" />-->
 	<form:hidden path="complaint" />
-	<!--<form:hidden path="attachment" />-->
 
 	<form:label path="description"><spring:message code="report.description" />:</form:label>
 	<br />

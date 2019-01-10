@@ -11,10 +11,6 @@ import org.springframework.util.Assert;
 
 import repositories.MessageRepository;
 import security.LoginService;
-<<<<<<< HEAD
-import security.UserAccount;
-=======
->>>>>>> parent of a916da6... Merge remote-tracking branch 'origin/chema6' into manu6
 import utilities.AuthenticationUtility;
 import domain.Actor;
 import domain.Box;

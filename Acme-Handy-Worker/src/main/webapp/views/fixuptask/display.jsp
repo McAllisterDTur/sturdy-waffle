@@ -42,6 +42,7 @@
 
 <b><spring:message code="fixuptask.maxPrice" />:&nbsp;</b>
 <jstl:out value="${fixuptask.maxPrice}" />
+(<jstl:out value="${fixuptask.maxPrice * (1+(vat/100)) }" />)
 <br />
 
 <b><spring:message code="fixuptask.customer" />:&nbsp;</b>

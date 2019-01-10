@@ -48,11 +48,18 @@ public class PhaseService {
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER));
 		//Verificamos que el creador de la phase sea el due�o de la application
 		Assert.isTrue(phase.getApplication().getHandyWorker().getAccount().getId() == this.account.getId());
-		final Phase res = this.repo.save(phase);
-		this.applicationService.findOne(res.getApplication().getId()).getPhases().add(res);
+		Phase res = null;
+		if (phase.getId() == 0) {
+			Assert.isTrue(phase.getStartTime().before(phase.getEndTime()));
+			res = this.repo.save(phase);
+			this.applicationService.findOne(res.getApplication().getId()).getPhases().add(res);
+		} else {
+			Assert.isTrue(phase.getStartTime().before(phase.getEndTime()));
+			res = this.repo.save(phase);
+		}
+
 		return res;
 	}
-
 	public Phase findOne(final int id) {
 
 		this.account = LoginService.getPrincipal();
@@ -101,6 +108,8 @@ public class PhaseService {
 
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(p.getApplication().getHandyWorker().getAccount().getId() == this.account.getId());
+
+		p.getApplication().getPhases().remove(p);
 
 		this.repo.delete(p);
 

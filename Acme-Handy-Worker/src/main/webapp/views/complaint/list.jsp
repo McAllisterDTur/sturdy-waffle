@@ -68,7 +68,7 @@
 				</jstl:if>
 				<jstl:if test="${empty complaint.reports}">
 					<jstl:if test="${not empty complaint.referee }">
-						<button onClick="window.location.href='report/referee/new.do?id=${complaint.id}'">
+						<button onClick="window.location.href='report/referee/create.do?complaintId=${complaint.id}'">
 							<spring:message code="complaint.referee.newReport" />
 						</button>
 					</jstl:if>

@@ -11,9 +11,23 @@
 <div>
 	<strong><spring:message code="application.application" />: </strong> <jstl:out value="${application.fixUpTask.id }" />
 	<br />
-	<strong><spring:message code="application.offeredPrice" />: </strong> <jstl:out value="${ application.offeredPrice } "></jstl:out>
+	<strong><spring:message code="application.offeredPrice" />: </strong> <b><jstl:out value="${application.offeredPrice}"></jstl:out></b><p>(<jstl:out value="${application.offeredPrice * (1+(vat/100))}"></jstl:out>)</p>
 	<br />
 	<strong><spring:message code="application.status" />: </strong> <span class="${ application.status }"><jstl:out value="${ application.status } " /></span>
+	<br />
+	<spring:message code="application.handy.comments"/>
+	<br />
+	<jstl:forEach items="${application.handyComments }" var="comment">
+		<jstl:out value="${ comment}" />
+		<br />
+	</jstl:forEach>
+	<br />
+	<spring:message code="application.customer.comments"/>
+	<br />
+	<jstl:forEach items="${application.customerComments }" var="comment">
+		<jstl:out value="${ comment}" />
+		<br />
+	</jstl:forEach>
 	<br />
 	<jstl:if test="${application.status == 'ACCEPTED'}">
 		<display:table name="application.phases" id="row" class="dispalytag" pagesize="5" requestURI="${ requestURI}" >
@@ -24,6 +38,15 @@
 				<a href="phase/handyworker/display.do?phaseId=${row.id }" ><spring:message code="application.see" /></a>
 			</display:column>
 		</display:table>
-		<a href="phase/handyworker/create.do?applicationId=${application.id }" ><spring:message code="application.phase.create"/></a>
+		<security:authorize access="hasRole('HANDYWORKER')">
+			<a href="phase/handyworker/create.do?applicationId=${application.id }" ><spring:message code="application.phase.create"/></a>
+		</security:authorize>
+		<security:authorize access="hasRole('CUSTOMER')">
+			<jstl:if test="${application.customer == customer }">
+				<a href="application/customer,handyworker/edit.do?applicationId=${application.id}"><spring:message code="application.addComment" /></a>
+			</jstl:if>
+			
+		</security:authorize>
+		
 	</jstl:if>
 </div>

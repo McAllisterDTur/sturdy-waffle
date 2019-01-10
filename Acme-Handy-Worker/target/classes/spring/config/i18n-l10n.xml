@@ -35,11 +35,11 @@
 		<value>/views/application/messages</value>
 		<value>/views/phase/messages</value>
 		<value>/views/report/messages</value>
-		<value>/views/notes/messages</value>
 
 		<value>/views/actor/messages</value>
 		<value>/views/tutorial/messages</value>
 		<value>/views/section/messages</value>
+		<value>/views/creditCard/messages</value>
 
 	</util:list>
 

@@ -37,8 +37,16 @@ public class ApplicationService {
 	private ActorService			actorService;
 	@Autowired
 	private FixUpTaskService		taskService;
+	@Autowired
+	private MessageService			messageService;
 
 	private UserAccount				account;
+
+	private static String			messageAcceptedEN	= "Congratulations, your application for the task has been accepted. Task: ";
+	private static String			messageRejectedEN	= "We're so sorry, the customer has rejected your application to: ";
+
+	private static String			messageAcceptedES	= "Enhorabuena, tu soliitud para la tarea ha sido aceptada. Tarea: ";
+	private static String			messageRejectedES	= "Lo sentimos, el cliente no ha aceptado tu solicitud para la tarea: ";
 
 
 	public Application create(final int fixuptaskId) {
@@ -81,11 +89,25 @@ public class ApplicationService {
 		} else {//Actualizacion del status por parte del customer due�o de la fixUpTask
 			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
 			Assert.isTrue(application.getFixUpTask().getCustomer().getAccount().equals(this.account));//customer loggeado due�o de la task
-			if (application.getStatus().equals("ACCEPTED"))
+			if (application.getStatus().equals("ACCEPTED")) {
 				Assert.notNull(application.getFixUpTask().getCreditCard());
+				this.sendAcceptMessageTo(application);
+			} else
+				this.sendRejectMessageTo(application);
+
 			a = this.applicationRepo.save(application);
 		}
 		return a;
+	}
+
+	private void sendAcceptMessageTo(final Application a) {
+
+		//TODO
+	}
+
+	private void sendRejectMessageTo(final Application a) {
+
+		//TODO
 	}
 
 	public Application getApplicationAcceptedForFixUpTask(final int fixuptaskId) {

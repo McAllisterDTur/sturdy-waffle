@@ -45,23 +45,26 @@ public class FixUpTaskController extends AbstractController {
 		ModelAndView result;
 
 		final Collection<FixUpTask> tasks = this.taskService.findAll();
+		final double vat = this.confService.findAll().iterator().next().getVat();
 
 		result = new ModelAndView("fixuptask/list");
 		result.addObject("fixuptasks", tasks);
 		result.addObject("requestURI", "/fixuptask/handyworker/list.do");
+		result.addObject("vat", vat);
 		return result;
 
 	}
-
 	@RequestMapping(value = "/customer/list", method = RequestMethod.GET)
 	public ModelAndView listFromCustomer() {
 		ModelAndView result;
 
 		final Collection<FixUpTask> tasks = this.taskService.findFromLoggedCustomer();
+		final double vat = this.confService.findAll().iterator().next().getVat();
 
 		result = new ModelAndView("fixuptask/list");
 		result.addObject("fixuptasks", tasks);
 		result.addObject("requestURI", "/fixuptask/customer/list.do");
+		result.addObject("vat", vat);
 		return result;
 
 	}
@@ -71,10 +74,12 @@ public class FixUpTaskController extends AbstractController {
 		ModelAndView result;
 		result = new ModelAndView("fixuptask/list");
 		Collection<FixUpTask> tasks;
+		final double vat = this.confService.findAll().iterator().next().getVat();
 		try {
 			final String decodedKeyword = URLDecoder.decode(keyword, "UTF-8");
 			tasks = this.taskService.findByFilter(decodedKeyword);
 			result.addObject("requestURI", "/fixuptask/handyworker/list.do");
+			result.addObject("vat", vat);
 			System.out.println("Decoded Keyword:" + decodedKeyword);
 		} catch (final UnsupportedEncodingException e) {
 			tasks = this.taskService.findAll();
@@ -152,14 +157,15 @@ public class FixUpTaskController extends AbstractController {
 		final ModelAndView result;
 		FixUpTask task;
 
+		final double vat = this.confService.findAll().iterator().next().getVat();
 		task = this.taskService.findOne(fixuptaskId);
 		Assert.notNull(task);
 		result = new ModelAndView("fixuptask/display");
 		result.addObject("fixuptask", task);
+		result.addObject("vat", vat);
 
 		return result;
 	}
-
 	private ModelAndView addCategoriesWarrantiesConfiguration(final ModelAndView model) {
 		model.addObject("categories", this.catService.findAll());
 		model.addObject("configuration", this.confService.findAll().iterator().next());

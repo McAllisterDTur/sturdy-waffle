@@ -13,21 +13,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
 import services.ApplicationService;
+import services.ConfigurationService;
 import domain.Application;
+import domain.Customer;
+import domain.FixUpTask;
 
 @Controller
 @RequestMapping("/application/**")
 public class ApplicationController extends AbstractController {
 
 	@Autowired
-	private ApplicationService	applicationService;
+	private ApplicationService		applicationService;
 	@Autowired
-	private ActorService		actorService;
-	private UserAccount			account;
+	private ActorService			actorService;
+	@Autowired
+	private ConfigurationService	configurationService;
+	private UserAccount				account;
 
 
 	public ApplicationController() {
@@ -40,6 +46,8 @@ public class ApplicationController extends AbstractController {
 		this.account = LoginService.getPrincipal();
 		Collection<Application> applications;
 
+		final double vat = this.configurationService.findAll().iterator().next().getVat();
+
 		if (fixuptaskId == 0)
 			applications = this.applicationService.findAllWorker(this.actorService.findByUserAccountId(this.account.getId()).getId());
 		else
@@ -47,6 +55,7 @@ public class ApplicationController extends AbstractController {
 
 		result = new ModelAndView("application/customer,handyworker/list");
 		result.addObject("applications", applications);
+		result.addObject("vat", vat);
 		result.addObject("requestURI", "applications/customer,handyworker/list.do");
 
 		return result;
@@ -57,10 +66,16 @@ public class ApplicationController extends AbstractController {
 		final ModelAndView res;
 
 		this.account = LoginService.getPrincipal();
-
+		final double vat = this.configurationService.findAll().iterator().next().getVat();
 		final Application a = this.applicationService.findOne(applicationId);
 		res = new ModelAndView("application/customer,handyworker/display");
 		res.addObject("application", a);
+		res.addObject("vat", vat);
+
+		if (this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.CUSTOMER)) {
+			final Customer c = (Customer) this.actorService.findByUserAccountId(this.account.getId());
+			res.addObject("customer", c);
+		}
 		//res.addObject("phases", a.getPhases());
 
 		return res;
@@ -79,13 +94,32 @@ public class ApplicationController extends AbstractController {
 
 			this.applicationService.save(a);
 
-			Collection<Application> applications;
+			final FixUpTask task = a.getFixUpTask();
 
-			applications = this.applicationService.findAllTask(a.getFixUpTask().getId());
-
+			res = new ModelAndView("redirect:../../creditCard/customer/create.do?fixuptaskId=" + task.getId());
+		} catch (final Throwable oops) {
+			oops.printStackTrace();
 			res = new ModelAndView("application/customer,handyworker/list");
-			res.addObject("applications", applications);
-			res.addObject("requestURI", "applications/customer,handyworker/list.do?fixuptaskId=?" + a.getFixUpTask().getId());
+		}
+		return res;
+	}
+
+	@RequestMapping(value = "/customer/reject", method = RequestMethod.POST)
+	public ModelAndView reject(@RequestParam final int applicationId) {
+		ModelAndView res;
+
+		this.account = LoginService.getPrincipal();
+
+		final Application a = this.applicationService.findOne(applicationId);
+
+		try {
+			a.setStatus("REJECTED");
+
+			this.applicationService.save(a);
+
+			final FixUpTask task = a.getFixUpTask();
+
+			res = new ModelAndView("application/customer,handyworker/list.do?fixuptaskId=" + task.getId());
 		} catch (final Throwable oops) {
 			oops.printStackTrace();
 			res = new ModelAndView("application/customer,handyworker/list");
@@ -100,33 +134,33 @@ public class ApplicationController extends AbstractController {
 		final Application a = this.applicationService.create(fixuptaskId);
 
 		System.out.println(a);
-		res = new ModelAndView("application/handyworker/edit");
+		res = new ModelAndView("application/customer,handyworker/edit");
 		res.addObject("application", a);
 		//res.addObject("phases", a.getPhases());
 
 		return res;
 	}
 
-	@RequestMapping(value = "/handyworker/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/customer,handyworker/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int applicationId) {
 		final ModelAndView res;
 
 		final Application a = this.applicationService.findOne(applicationId);
 
-		res = new ModelAndView("application/handyworker/edit");
+		res = new ModelAndView("application/customer,handyworker/edit");
 		res.addObject("application", a);
 		//res.addObject("phases", a.getPhases());
 
 		return res;
 	}
 
-	@RequestMapping(value = "/handyworker/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer,handyworker/save", method = RequestMethod.POST)
 	public ModelAndView save(@Valid final Application application, final BindingResult binding) {
 		ModelAndView result;
 		if (binding.hasErrors()) {
 
 			System.out.println(binding.getAllErrors());
-			result = new ModelAndView("application/handyworker/edit");
+			result = new ModelAndView("application/customer,handyworker/edit");
 			result.addObject("application", application);
 		} else {
 			Application applicationF = null;
@@ -136,7 +170,7 @@ public class ApplicationController extends AbstractController {
 			} catch (final Throwable opps) {
 				System.out.println(opps.getMessage());
 				opps.printStackTrace();
-				result = new ModelAndView("application/handyworker/edit");
+				result = new ModelAndView("application/customer,handyworker/edit");
 				result.addObject("messageCode", "application.commit.error");
 			}
 		}

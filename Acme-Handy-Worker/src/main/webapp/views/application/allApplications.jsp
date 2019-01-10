@@ -15,8 +15,9 @@
 	<display:column property="fixUpTask.id" titleKey="application.task" />
 	<display:column property="registerTime"
 		titleKey="application.registerTime" />
-	<display:column property="offeredPrice"
-		titleKey="application.offeredPrice" />
+	<display:column titleKey="application.offeredPrice">
+		<b><jstl:out value="${row.offeredPrice}"></jstl:out></b><p>(<jstl:out value="${row.offeredPrice * (1+(vat/100))}"></jstl:out>)</p>
+	</display:column>
 	<display:column property="status" titleKey="application.status" class="${row.status }"/>
 	<display:column>
 		<a
@@ -26,22 +27,29 @@
 	<security:authorize access="hasRole('CUSTOMER')">
 		<display:column>
 			<jstl:if test="${row.status == 'PENDING'}">
-				<jstl:if test="${row.fixUpTask.creditCard != null }">
 				<form:form
 					action="application/customer/accept.do?applicationId=${row.id}"
 					modelAttribute="${row}">
 
-					<input type="hidden" value="ACCEPTED" />
+					<input type="hidden" />
 
 					<input type="submit"
 						value="<spring:message code="application.task.accept" />" />
-
 				</form:form>
 				</jstl:if>
-				<jstl:if test="${ row.fixUpTask.creditCard == null }">
-					<a href="fixuptask/customer/edit.do?fixuptaskId=${row.fixUptask.id }">Add Card</a>
+		</display:column>
+		<display:column>
+			<jstl:if test="${row.status == 'PENDING'}">
+				<form:form
+					action="application/customer/reject.do?applicationId=${row.id}"
+					modelAttribute="${row}">
+
+					<input type="hidden" />
+
+					<input type="submit"
+						value="<spring:message code="application.task.reject" />" />
+				</form:form>
 				</jstl:if>
-			</jstl:if>
 		</display:column>
 	</security:authorize>
 </display:table>

@@ -24,5 +24,12 @@
 		<put-attribute name="title" value="Fase"/>
 		<put-attribute name="body" value="/views/phase/create.jsp"/>
 	</definition>
-
+	<definition name="phase/handyworker/edit" extends="master.page">
+		<put-attribute name="title" value="Fase"/>
+		<put-attribute name="body" value="/views/phase/create.jsp"/>
+	</definition>
+	<definition name="phase/handyworker/exito" extends="master.page">
+		<put-attribute name="title" value="Exito"/>
+		<put-attribute name="body" value="/views/phase/exito.jsp"/>
+	</definition>
 </tiles-definitions>

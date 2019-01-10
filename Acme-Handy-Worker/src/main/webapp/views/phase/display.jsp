@@ -14,6 +14,6 @@
 	<strong><spring:message code="phase.startTime" />: </strong><jstl:out value="${ phase.startTime}"></jstl:out>
 	<strong><spring:message code="phase.endTime" />: </strong><jstl:out value="${ phase.endTime}"></jstl:out>
 	<br />
-	<a href="/phase/handyworker/edit.do?phaseId=${ phase.id}"><spring:message code="phase.edit" /></a>
-	<a href="/phase/handyworker/delete.do=phaseId=${ phase.id}"><spring:message code="phase.delete" /></a>
+	<a href="phase/handyworker/edit.do?phaseId=${ phase.id}"><spring:message code="phase.edit" /></a>
+	<a href="phase/handyworker/delete.do?phaseId=${ phase.id}"><spring:message code="phase.delete" /></a>
 </div>
