@@ -8,12 +8,49 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<display:table name="applications" id="row" class="displaytag" pagesize="6" requestURI="${requestURI }">
+
+<display:table name="applications" id="row" class="displaytag"
+	pagesize="6" requestURI="${requestURI }">
+	<display:column property="id" titleKey="application.id" />
 	<display:column property="fixUpTask.id" titleKey="application.task" />
-	<display:column property="registerTime" titleKey="application.registerTime" />
-	<display:column property="offeredPrice" titleKey="application.offeredPrice" />
-	<display:column property="status" titleKey="application.status" class="${ row.status }"/>
-	<display:column>
-		<a href="application/handyworker/display.do?applicationId=${row.id}" ><spring:message code="application.see"/></a>
+	<display:column property="registerTime"
+		titleKey="application.registerTime" />
+	<display:column property="offeredPrice"
+		titleKey="application.offeredPrice" />
+	<display:column titleKey="application.status">
+		<jstl:if test="${currentDate.time gt row.fixUpTask.periodStart.time and row.status == 'PENDING' }">
+			<span class="PASSED"><jstl:out value="${ row.status }" /></span>
+		</jstl:if>
+		<jstl:if test="${row.status != 'PENDING'}">
+			<span class="${ row.status }"><jstl:out value="${ row.status }" /></span>
+		</jstl:if>
 	</display:column>
+	<display:column>
+		<a
+			href="application/customer,handyworker/display.do?applicationId=${row.id}"><spring:message
+				code="application.see" /></a>
+	</display:column>
+	<security:authorize access="hasRole('CUSTOMER')">
+		<display:column>
+			<jstl:if test="${row.status == 'PENDING'}">
+				<jstl:if test="${row.fixUpTask.creditCard != null }">
+					<form:form
+						action="application/customer/accept.do?applicationId=${row.id}"
+						modelAttribute="${row}">
+
+						<input type="hidden" value="ACCEPTED" />
+
+						<input type="submit"
+							value="<spring:message code="application.task.accept" />" />
+
+					</form:form>
+				</jstl:if>
+				<jstl:if test="${ row.fixUpTask.creditCard == null }">
+					<a
+						href="fixuptask/customer/edit.do?fixuptaskId=${row.fixUptask.id }">Add
+						Card</a>
+				</jstl:if>
+			</jstl:if>
+		</display:column>
+	</security:authorize>
 </display:table>

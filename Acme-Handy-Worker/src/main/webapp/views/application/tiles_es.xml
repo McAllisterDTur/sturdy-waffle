@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- 
+<!--
  * tiles_es.xml
  *
  * Copyright (C) 2018 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
+ *
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
  -->
 
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-      
+
 <tiles-definitions>
 
-	<definition name="application/handyworker/list" extends="master.page">	
+	<definition name="application/handyworker/list" extends="master.page">
 		<put-attribute name="title" value="Mis Solicitudes" />
 		<put-attribute name="body" value="/views/application/allApplications.jsp" />
 	</definition>
-	
-	<definition name="application/handyworker/display" extends="master.page">	
+
+	<definition name="application/customer/list" extends="master.page">
+		<put-attribute name="title" value="Mis solicitudes" />
+		<put-attribute name="body" value="/views/application/allApplications.jsp" />
+	</definition>
+
+	<definition name="application/handyworker/display" extends="master.page">
 		<put-attribute name="title" value="Solicitud" />
 		<put-attribute name="body" value="/views/application/display.jsp" />
 	</definition>
-	
-	<definition name="application/handyworker/create" extends="master.page">	
+
+	<definition name="application/handyworker/edit" extends="master.page">
 		<put-attribute name="title" value="Solicitar" />
-		<put-attribute name="body" value="/views/application/newApplication.jsp" />
+		<put-attribute name="body" value="/views/application/edit.jsp" />
 	</definition>
 
 </tiles-definitions>

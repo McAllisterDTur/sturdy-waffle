@@ -17,6 +17,7 @@ import security.UserAccount;
 import utilities.AuthenticationUtility;
 import domain.Actor;
 import domain.Application;
+import domain.FixUpTask;
 import domain.HandyWorker;
 
 @Service
@@ -28,8 +29,9 @@ public class HandyWorkerService {
 	@Autowired
 	private UserAccountService		userAccountService;
 	@Autowired
+	private FixUpTaskService		futService;
+	@Autowired
 	private BoxService				boxService;
-
 	private UserAccount				account;
 
 
@@ -92,6 +94,15 @@ public class HandyWorkerService {
 		return res;
 	}
 
+	public HandyWorker findHandyWorkerFromFixUpTask(final Integer id) {
+		final FixUpTask f = this.futService.findOne(id);
+		HandyWorker res = null;
+		for (final Application a : f.getApplications())
+			if (a.getStatus().equals("ACCEPTED"))
+				res = a.getHandyWorker();
+		return res;
+	}
+
 	public HandyWorker actorToHandy(final Actor a) {
 		final HandyWorker res = new HandyWorker();
 		res.setAccount(a.getAccount());
@@ -110,6 +121,7 @@ public class HandyWorkerService {
 		res.setSurname(a.getSurname());
 		res.setVersion(a.getVersion());
 		res.setIsSuspicious(false);
+
 		return res;
 	}
 }

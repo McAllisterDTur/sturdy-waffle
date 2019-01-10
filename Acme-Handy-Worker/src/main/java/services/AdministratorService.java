@@ -2,6 +2,8 @@
 package services;
 
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,8 @@ public class AdministratorService {
 	private BoxService				boxService;
 	@Autowired
 	private UserAccountService		userAccountService;
+	@Autowired
+	private ActorService			actorService;
 
 
 	//CRUDs
@@ -78,6 +82,17 @@ public class AdministratorService {
 		res.setSurname(a.getSurname());
 		res.setVersion(a.getVersion());
 		res.setIsSuspicious(false);
+		return res;
+	}
+
+	public String validateEmail(final String email) {
+		final Pattern pattern = Pattern.compile("((([a-z]|[0-9]){1,}[@])|(([a-z]|[0-9]){1,}[ ]{1}){1,}<(([a-z]|[0-9]){1,}[@]>))");
+		final Matcher matcher = pattern.matcher(email);
+		final String match1 = this.actorService.validateEmail(email);
+		final String match2 = matcher.matches() ? "" : "actor.email.error";
+		String res = "";
+		if (!match1.isEmpty() && !match2.isEmpty())
+			res = match2;
 		return res;
 	}
 }

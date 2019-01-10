@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.AdministratorService;
+import services.ConfigurationService;
 import services.CustomerService;
 import services.HandyWorkerService;
 import services.RefereeService;
@@ -35,6 +36,7 @@ import services.SponsorService;
 import controllers.AbstractController;
 import domain.Actor;
 import domain.Administrator;
+import domain.Configuration;
 import domain.Customer;
 import domain.HandyWorker;
 import domain.Referee;
@@ -60,6 +62,8 @@ public class LoginController extends AbstractController {
 	private AdministratorService	administratorService;
 	@Autowired
 	private RefereeService			refereeService;
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -80,7 +84,9 @@ public class LoginController extends AbstractController {
 		result = new ModelAndView("security/login");
 		result.addObject("credentials", credentials);
 		result.addObject("showError", showError);
-
+		final Configuration configuration = this.configurationService.findAll().iterator().next();
+		result.addObject("configuration", configuration);
+		System.out.println("THIS IS AMERICA");
 		return result;
 	}
 
@@ -91,7 +97,8 @@ public class LoginController extends AbstractController {
 		ModelAndView result;
 
 		result = new ModelAndView("redirect:login.do?showError=true");
-
+		final Configuration configuration = this.configurationService.findAll().iterator().next();
+		result.addObject("configuration", configuration);
 		return result;
 	}
 
@@ -104,6 +111,8 @@ public class LoginController extends AbstractController {
 		result = new ModelAndView("actor/register");
 		result.addObject("actor", a);
 		result.addObject("authorities", authorities);
+		final Configuration configuration = this.configurationService.findAll().iterator().next();
+		result.addObject("configuration", configuration);
 		result.addObject("uri", "security/register.do");
 		return result;
 	}
@@ -111,46 +120,56 @@ public class LoginController extends AbstractController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ModelAndView registerPOST(@Valid final Actor actor, final BindingResult binding) {
 		ModelAndView result;
-		if (binding.hasErrors()) {
-
+		Collection<Authority> authorities = null;
+		authorities = this.getDefaultRegisterAuthorities();
+		final String validEmail = this.actorService.validateEmail(actor.getEmail());
+		if (binding.hasErrors() || !validEmail.isEmpty()) {
 			System.out.println(binding.getFieldErrors());
 			result = new ModelAndView("actor/register");
 			result.addObject("uri", "security/register.do");
 			result.addObject("actor", actor);
+			result.addObject("authorities", authorities);
+			result.addObject("emailError", validEmail);
 		} else
 			try {
 				final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+				actor.setPhone(this.actorService.checkSetPhoneCC(actor.getPhone()));
 				switch (actor.getAccount().getAuthorities().iterator().next().getAuthority()) {
 				case Authority.HANDYWORKER:
-					final HandyWorker handy = this.handyService.actorToHandy(actor);
+					HandyWorker handy = this.handyService.actorToHandy(actor);
 
 					final String hash = encoder.encodePassword(actor.getAccount().getPassword(), null);
+					handy = this.handyService.save(handy);
 					handy.getAccount().setPassword(hash);
-					this.handyService.save(handy);
+					handy = this.handyService.save(handy);
 					break;
 				case Authority.CUSTOMER:
-					final Customer customer = this.customerService.actorToCustomer(actor);
+					Customer customer = this.customerService.actorToCustomer(actor);
 
 					final String hash1 = encoder.encodePassword(actor.getAccount().getPassword(), null);
+					customer = this.customerService.save(customer);
 					customer.getAccount().setPassword(hash1);
-					this.customerService.save(customer);
+					customer = this.customerService.save(customer);
 					break;
 				case Authority.SPONSOR:
-					final Sponsor sponsor = this.sponsorService.actorToSponsor(actor);
+					Sponsor sponsor = this.sponsorService.actorToSponsor(actor);
 					final String hash2 = encoder.encodePassword(actor.getAccount().getPassword(), null);
+					sponsor = this.sponsorService.save(sponsor);
 					sponsor.getAccount().setPassword(hash2);
-					this.sponsorService.save(sponsor);
+					sponsor = this.sponsorService.save(sponsor);
 					break;
 				}
-
-				result = new ModelAndView("redirect:");
+				result = new ModelAndView("redirect:/security/login.do");
 			} catch (final Throwable opps) {
 				result = new ModelAndView("actor/register");
 				result.addObject("uri", "security/register.do");
 				result.addObject("messageCode", "actor.commit.error");
-				System.out.println(opps.getMessage());
+				result.addObject("actor", actor);
+				result.addObject("authorities", authorities);
+				opps.printStackTrace();
 			}
-
+		final Configuration configuration = this.configurationService.findAll().iterator().next();
+		result.addObject("configuration", configuration);
 		return result;
 	}
 
@@ -164,26 +183,39 @@ public class LoginController extends AbstractController {
 		result.addObject("actor", a);
 		result.addObject("authorities", authorities);
 		result.addObject("uri", "security/administrator/register.do");
+		final Configuration configuration = this.configurationService.findAll().iterator().next();
+		result.addObject("configuration", configuration);
 		return result;
 	}
 
 	@RequestMapping(value = "/administrator/register", method = RequestMethod.POST)
 	public ModelAndView registerAdminPOST(@Valid final Actor actor, final BindingResult binding) {
 		ModelAndView result;
-		if (binding.hasErrors()) {
+		Collection<Authority> authorities = null;
+		authorities = this.getAdminRegisterAuthorities();
 
+		String validEmail = "";
+		final Collection<Authority> auths = actor.getAccount().getAuthorities();
+		if (!auths.isEmpty() && (auths.iterator().next().getAuthority().equals("ADMIN")))
+			validEmail = this.administratorService.validateEmail(actor.getEmail());
+		System.out.println("MAJAAAAALAAAAA ACMA" + validEmail);
+		if (binding.hasErrors() || !validEmail.isEmpty()) {
 			System.out.println(binding.getFieldErrors());
 			result = new ModelAndView("actor/register");
 			result.addObject("uri", "security/administrator/register.do");
 			result.addObject("actor", actor);
+			result.addObject("authorities", authorities);
+			result.addObject("emailError", validEmail);
 		} else
 			try {
 				final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+				actor.setPhone(this.actorService.checkSetPhoneCC(actor.getPhone()));
 				switch (actor.getAccount().getAuthorities().iterator().next().getAuthority()) {
 				case Authority.ADMIN:
 					final Administrator admin = this.administratorService.actorToAdmin(actor);
 
 					final String hash = encoder.encodePassword(actor.getAccount().getPassword(), null);
+					this.administratorService.save(admin);
 					admin.getAccount().setPassword(hash);
 					this.administratorService.save(admin);
 					break;
@@ -191,6 +223,7 @@ public class LoginController extends AbstractController {
 					final Referee referee = this.refereeService.actorToReferee(actor);
 
 					final String hash1 = encoder.encodePassword(actor.getAccount().getPassword(), null);
+					this.refereeService.save(referee);
 					referee.getAccount().setPassword(hash1);
 					this.refereeService.save(referee);
 					break;
@@ -200,13 +233,16 @@ public class LoginController extends AbstractController {
 				result = new ModelAndView("actor/register");
 				result.addObject("uri", "security/administrator/register.do");
 				result.addObject("messageCode", "actor.commit.error");
+				result.addObject("actor", actor);
+				result.addObject("authorities", authorities);
 				System.out.println(opps.getMessage());
 			}
-
+		final Configuration configuration = this.configurationService.findAll().iterator().next();
+		result.addObject("configuration", configuration);
 		return result;
 	}
 
-	public List<Authority> getDefaultRegisterAuthorities() {
+	private List<Authority> getDefaultRegisterAuthorities() {
 		final Authority handyWorker = new Authority();
 		handyWorker.setAuthority(Authority.HANDYWORKER);
 		final Authority customer = new Authority();
@@ -217,7 +253,7 @@ public class LoginController extends AbstractController {
 		return Arrays.asList(handyWorker, customer, sponsor);
 	}
 
-	public List<Authority> getAdminRegisterAuthorities() {
+	private List<Authority> getAdminRegisterAuthorities() {
 		final Authority admin = new Authority();
 		admin.setAuthority(Authority.ADMIN);
 		final Authority referee = new Authority();

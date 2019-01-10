@@ -19,6 +19,7 @@ import security.UserAccount;
 import utilities.AuthenticationUtility;
 import domain.Application;
 import domain.Customer;
+import domain.FixUpTask;
 import domain.HandyWorker;
 import domain.Phase;
 
@@ -42,11 +43,15 @@ public class ApplicationService {
 
 	public Application create(final int fixuptaskId) {
 		this.account = LoginService.getPrincipal();
-		Assert.isTrue(this.account.getAuthorities().contains(Authority.HANDYWORKER));
+		//Assert.isTrue(this.account.getAuthorities().contains(Authority.HANDYWORKER));
 		final Application res = new Application();
 
-		res.setFixUpTask(this.taskService.findOne(fixuptaskId));
+		final FixUpTask task = this.taskService.findOne(fixuptaskId);
+		System.out.println(task);
 
+		res.setFixUpTask(task);
+		res.setRegisterTime(new Date());
+		res.setStatus("PENDING");
 		res.setHandyWorker((HandyWorker) this.actorService.findByUserAccountId(this.account.getId()));
 
 		res.setCustomerComments(new ArrayList<String>());
@@ -66,7 +71,7 @@ public class ApplicationService {
 			Assert.isTrue(application.getOfferedPrice() != 0);
 
 			application.setRegisterTime(new Date());
-			application.setStatus("PENDING");
+			//application.setStatus("PENDING");
 			a = this.applicationRepo.save(application);
 
 			//			final FixUpTask task = a.getFixUpTask();
@@ -81,6 +86,12 @@ public class ApplicationService {
 			a = this.applicationRepo.save(application);
 		}
 		return a;
+	}
+
+	public Application getApplicationAcceptedForFixUpTask(final int fixuptaskId) {
+		Assert.notNull(fixuptaskId);
+
+		return this.applicationRepo.getAcepptedApplicationForFixUpTask(fixuptaskId);
 	}
 
 	public Application saveComment(final int applicationId, final String comment) {
@@ -128,6 +139,16 @@ public class ApplicationService {
 		Assert.isTrue(w.getAccount().getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER));
 
 		return this.applicationRepo.findAllWorker(workerId);
+	}
+
+	public Collection<Application> findAllTask(final int taskId) {
+		this.account = LoginService.getPrincipal();
+		final Customer c = (Customer) this.actorService.findByUserAccountId(this.account.getId());
+		//FIXME
+		//Al comprobar el id, como no pueden exixtir dos usuarios con el mismo id, te certificas que ya es Worker, aun as�
+		Assert.isTrue(c.getAccount().getAuthorities().iterator().next().getAuthority().equals(Authority.CUSTOMER));
+
+		return this.applicationRepo.findAllTask(taskId);
 	}
 
 	public List<Object[]> statictisApplications() {

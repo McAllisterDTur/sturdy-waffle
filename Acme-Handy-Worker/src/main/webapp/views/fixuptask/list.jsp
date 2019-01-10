@@ -23,7 +23,7 @@
 <jstl:set var="principal" value="<%= s %>"/>
 
 <display:table name="fixuptasks" id="row" pagesize="5" requestURI="${requestURI}">
-	
+
 	<security:authorize access="hasRole('CUSTOMER')">
 		<jstl:if test="${row.customer.account.username == principal}">
 			<display:column>
@@ -34,8 +34,8 @@
 			</display:column>
 		</jstl:if>
 	</security:authorize>
-	
-	
+
+
 
 	<display:column property="ticker" titleKey="fixuptask.ticker"/>
 	<display:column property="category.name" titleKey="fixuptask.category" />
@@ -45,13 +45,24 @@
 	<display:column property="periodStart" titleKey="fixuptask.periodStart" />
 
 	<display:column property="maxPrice" titleKey="fixuptask.maxPrice" />
-	
+
 	<display:column>
 		<button onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer,handyworker/display.do?fixuptaskId=${row.id}'">
 			<spring:message code="fixuptask.display"/>
 		</button>
 	</display:column>
-	
+
+	<security:authorize access="hasRole('HANDYWORKER')">
+
+		<display:column>
+			<button
+					onClick="window.location.href='/Acme-Handy-Worker/application/handyworker/create.do?fixuptaskId=${row.id}'">
+					<spring:message code="fixuptask.apply" />
+				</button>
+		</display:column>
+
+	</security:authorize>
+
 	<security:authorize access="hasRole('CUSTOMER')">
 		<display:column>
 			<jstl:if test="${row.customer.account.username == principal}">
@@ -62,6 +73,13 @@
 			</jstl:if>
 		</display:column>
 		<display:column>
+		<jstl:if test="${row.customer.account.username == principal}">
+			<button onClick="window.location.href='/Acme-Handy-Worker/application/customer,handyworker/list.do?fixuptaskId=${row.id}'">
+				<spring:message code="fixuptask.applications"/>
+			</button>
+		</jstl:if>
+		</display:column>
+		<display:column>
 			<jstl:if test="${row.customer.account.username == principal}">
 				<button onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer/delete.do?fixuptaskId=${row.id}'">
 					<spring:message code="fixuptask.delete" />
@@ -70,11 +88,3 @@
 		</display:column>
 	</security:authorize>
 </display:table>
-
-
-	
-
-
-
-
-

@@ -7,6 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -41,7 +42,7 @@ public class Warranty extends DomainEntity {
 	}
 
 	@NotNull
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	public Collection<String> getLaw() {
 		return this.law;
 	}
@@ -51,7 +52,7 @@ public class Warranty extends DomainEntity {
 	}
 
 	@NotNull
-	public Boolean isDraft() {
+	public Boolean getDraft() {
 		return this.draft;
 	}
 

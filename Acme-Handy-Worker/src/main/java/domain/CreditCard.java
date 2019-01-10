@@ -22,17 +22,6 @@ public class CreditCard {
 	private int		expirationYear;
 	private Integer	codeCVV;
 
-	//+
-	private String maker;
-	
-	@NotBlank
-	public String getMaker() {
-		return maker;
-	}
-
-	public void setMaker(String maker) {
-		this.maker = maker;
-	}
 
 	@NotBlank
 	public String getHolderName() {
@@ -87,59 +76,57 @@ public class CreditCard {
 	public Integer getCodeCVV() {
 		return this.codeCVV;
 	}
-	
+
 	@NotNull
 	public void setCodeCVV(final Integer codeCVV) {
 		this.codeCVV = codeCVV;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((brandName == null) ? 0 : brandName.hashCode());
-		result = prime * result + ((codeCVV == null) ? 0 : codeCVV.hashCode());
-		result = prime * result + expirationMonth;
-		result = prime * result + expirationYear;
-		result = prime * result
-				+ ((holderName == null) ? 0 : holderName.hashCode());
-		result = prime * result + ((number == null) ? 0 : number.hashCode());
+		result = prime * result + ((this.brandName == null) ? 0 : this.brandName.hashCode());
+		result = prime * result + ((this.codeCVV == null) ? 0 : this.codeCVV.hashCode());
+		result = prime * result + this.expirationMonth;
+		result = prime * result + this.expirationYear;
+		result = prime * result + ((this.holderName == null) ? 0 : this.holderName.hashCode());
+		result = prime * result + ((this.number == null) ? 0 : this.number.hashCode());
 		return result;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (this.getClass() != obj.getClass())
 			return false;
-		CreditCard other = (CreditCard) obj;
-		if (brandName == null) {
+		final CreditCard other = (CreditCard) obj;
+		if (this.brandName == null) {
 			if (other.brandName != null)
 				return false;
-		} else if (!brandName.equals(other.brandName))
+		} else if (!this.brandName.equals(other.brandName))
 			return false;
-		if (codeCVV == null) {
+		if (this.codeCVV == null) {
 			if (other.codeCVV != null)
 				return false;
-		} else if (!codeCVV.equals(other.codeCVV))
+		} else if (!this.codeCVV.equals(other.codeCVV))
 			return false;
-		if (expirationMonth != other.expirationMonth)
+		if (this.expirationMonth != other.expirationMonth)
 			return false;
-		if (expirationYear != other.expirationYear)
+		if (this.expirationYear != other.expirationYear)
 			return false;
-		if (holderName == null) {
+		if (this.holderName == null) {
 			if (other.holderName != null)
 				return false;
-		} else if (!holderName.equals(other.holderName))
+		} else if (!this.holderName.equals(other.holderName))
 			return false;
-		if (number == null) {
+		if (this.number == null) {
 			if (other.number != null)
 				return false;
-		} else if (!number.equals(other.number))
+		} else if (!this.number.equals(other.number))
 			return false;
 		return true;
 	}

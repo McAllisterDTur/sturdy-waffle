@@ -2,6 +2,8 @@
 package services;
 
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 
@@ -15,17 +17,34 @@ import security.LoginService;
 import security.UserAccount;
 import utilities.AuthenticationUtility;
 import domain.Actor;
+import domain.Administrator;
+import domain.Customer;
+import domain.HandyWorker;
+import domain.Referee;
+import domain.Sponsor;
 
 @Service
 @Transactional
 public class ActorService {
 
 	@Autowired
-	private ActorRepository		actorRepository;
+	private ActorRepository			actorRepository;
 	@Autowired
-	private BoxService			boxService;
+	HandyWorkerService				hwService;
 	@Autowired
-	private UserAccountService	accountService;
+	CustomerService					cService;
+	@Autowired
+	RefereeService					rService;
+	@Autowired
+	SponsorService					sService;
+	@Autowired
+	AdministratorService			adminService;
+	@Autowired
+	private UserAccountService		accountService;
+	@Autowired
+	private BoxService				boxService;
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	/**
@@ -66,7 +85,7 @@ public class ActorService {
 				result = this.actorRepository.save(actor);
 			}
 		} else {
-			//TODO Por ahora, por decisión de grupo, la useracount se agrega
+			//TODO Por ahora, por decisiï¿½n de grupo, la useracount se agrega
 			//en el controller
 			final UserAccount account = actor.getAccount();
 			final UserAccount savedAccount = this.accountService.save(account);
@@ -114,15 +133,91 @@ public class ActorService {
 	}
 
 	//B
-	public void ban(final Actor end) {
+	public void ban(final Actor actor) {
+		System.out.println("Vamo a banea");
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
-		end.setBanned(true);
-		this.actorRepository.save(end);
+		final Integer id = actor.getId();
+		final String role = actor.getAccount().getAuthorities().iterator().next().toString();
+		switch (role) {
+		case "HANDYWORKER":
+			final HandyWorker hw = this.hwService.findOne(id);
+			hw.setBanned(true);
+			this.hwService.save(hw);
+			break;
+		case "CUSTOMER":
+			final Customer c = this.cService.findOne(id);
+			c.setBanned(true);
+			this.cService.save(c);
+			break;
+		case "ADMIN":
+			final Administrator admin = this.adminService.findOne(id);
+			admin.setBanned(true);
+			this.adminService.save(admin);
+			break;
+		case "SPONSOR":
+			final Sponsor s = this.sService.findOne(id);
+			s.setBanned(true);
+			this.sService.save(s);
+			break;
+		case "REFEREE":
+			final Referee r = this.rService.findOne(id);
+			r.setBanned(true);
+			this.rService.save(r);
+			break;
+		default:
+			throw new NullPointerException();
+		}
 	}
 	//B
-	public void unban(final Actor end) {
+	public void unban(final Actor actor) {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
-		end.setBanned(false);
-		this.actorRepository.save(end);
+		final Integer id = actor.getId();
+		final String role = actor.getAccount().getAuthorities().iterator().next().toString();
+		switch (role) {
+		case "HANDYWORKER":
+			final HandyWorker hw = this.hwService.findOne(id);
+			hw.setBanned(false);
+			this.hwService.save(hw);
+			break;
+		case "CUSTOMER":
+			final Customer c = this.cService.findOne(id);
+			c.setBanned(false);
+			this.cService.save(c);
+			break;
+		case "ADMIN":
+			final Administrator admin = this.adminService.findOne(id);
+			admin.setBanned(false);
+			this.adminService.save(admin);
+			break;
+		case "SPONSOR":
+			final Sponsor s = this.sService.findOne(id);
+			s.setBanned(false);
+			this.sService.save(s);
+			break;
+		case "REFEREE":
+			final Referee r = this.rService.findOne(id);
+			r.setBanned(false);
+			this.rService.save(r);
+			System.out.println(r.getBanned());
+			break;
+		default:
+			throw new NullPointerException();
+		}
 	}
+
+	public String checkSetPhoneCC(String phoneNumber) {
+		final Pattern p = Pattern.compile("([0-9]{4}){1}([0-9]{0,})");
+		final Matcher m = p.matcher(phoneNumber);
+		final boolean b = m.matches();
+		if (b)
+			phoneNumber = this.configurationService.findAll().iterator().next().getCountryCode() + " " + phoneNumber;
+		return phoneNumber;
+	}
+
+	public String validateEmail(final String email) {
+		final Pattern pattern = Pattern.compile("(([a-z]|[0-9]){1,}[@]{1}([a-z]|[0-9]){1,}([.]{1}([a-z]|[0-9]){1,}){0,})|((([a-z]|[0-9]){1,}[ ]{1}){1,}<(([a-z]|[0-9]){1,}[@]{1}([a-z]|[0-9]){1,}([.]{1}([a-z]|[0-9]){1,}){0,})>)");
+		final Matcher matcher = pattern.matcher(email);
+		return matcher.matches() ? "" : "actor.email.error";
+	}
+
 }

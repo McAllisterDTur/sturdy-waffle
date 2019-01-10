@@ -4,9 +4,9 @@
 }
 
 .REJECTED{
-	color: red;
+	color: orange;
 }
 
-.PENDING{
-	color: goldenrod;
+.PASSED{
+	color: grey;
 }

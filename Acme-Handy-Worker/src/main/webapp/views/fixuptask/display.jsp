@@ -45,7 +45,14 @@
 <br />
 
 <b><spring:message code="fixuptask.customer" />:&nbsp;</b>
-<jstl:out value="${fixuptask.customer.name}" />
+<security:authorize access="hasRole('HANDYWORKER')">
+<a href="profile/seeId.do?id=${fixuptask.customer.id}">
+	<jstl:out value='${fixuptask.customer.name} ${fixuptask.customer.surname}'/>
+</a>
+</security:authorize>
+<security:authorize access="not hasRole('HANDYWORKER')">
+	<jstl:out value='${fixuptask.customer.name} ${fixuptask.customer.surname}'/>
+</security:authorize>
 <br />
 
 <b><spring:message code="fixuptask.warranty" />:&nbsp;</b>

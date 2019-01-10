@@ -41,7 +41,7 @@ public class StringToCreditCardConverter implements Converter<String, CreditCard
 			} catch (final Throwable oops) {
 				throw new RuntimeException(oops);
 			}
-		return null;
+		return result;
 	}
 	private String decodeUTF8(final String text) throws UnsupportedEncodingException {
 		return URLDecoder.decode(text, "UTF-8");
