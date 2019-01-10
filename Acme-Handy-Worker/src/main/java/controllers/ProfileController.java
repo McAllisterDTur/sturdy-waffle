@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
+import security.UserAccount;
 import services.ActorService;
 import services.AdministratorService;
 import services.ConfigurationService;
@@ -232,7 +233,8 @@ public class ProfileController extends AbstractController {
 		result.addObject("banned", actor.getBanned());
 		result.addObject("socialProfiles", this.spService.findByActor(actor.getId()));
 		result.addObject("username", actor.getAccount().getUsername());
-		if (LoginService.getPrincipal().equals(actor.getAccount()))
+		final UserAccount logged = LoginService.getPrincipal();
+		if (logged != null && logged.equals(actor.getAccount()))
 			result.addObject("logged", true);
 		else
 			result.addObject("logged", false);
