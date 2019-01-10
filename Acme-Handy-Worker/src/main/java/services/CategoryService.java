@@ -32,7 +32,7 @@ public class CategoryService {
 	 */
 	public Category create() {
 		final Category c = new Category();
-		c.setFather(this.findByName("CATEGORY"));
+		//c.setFather(this.findByName("CATEGORY"));
 		return c;
 	}
 	/**
@@ -57,7 +57,10 @@ public class CategoryService {
 		//Admin authority
 		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
 		Assert.isTrue(au);
-		return this.catRepo.findByName(name);
+		Category c = this.catRepo.findByName(name);
+		if (c == null)
+			c = this.catRepo.findByNameEn(name);
+		return c;
 	}
 
 	/**
@@ -67,8 +70,6 @@ public class CategoryService {
 	 */
 	public Collection<Category> findAll() {
 		//Admin authority
-		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
-		Assert.isTrue(au);
 		return this.catRepo.findAll();
 	}
 	/**

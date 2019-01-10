@@ -81,7 +81,7 @@ public class Phase extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "Phase [title=" + this.title + ", description=" + this.description + ", startTime=" + this.startTime + ", endTime=" + this.endTime + "]";
+		return "Phase [ID=" + this.getId() + "title=" + this.title + ", description=" + this.description + ", startTime=" + this.startTime + ", endTime=" + this.endTime + "]";
 	}
 
 }

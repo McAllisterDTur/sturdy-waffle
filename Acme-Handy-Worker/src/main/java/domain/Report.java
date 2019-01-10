@@ -28,6 +28,7 @@ public class Report extends DomainEntity {
 	private Collection<String>	attachment;
 	private Boolean				isFinal;
 	private Collection<Notes>	notes;
+	private Complaint			complaint;
 
 
 	@NotNull
@@ -78,11 +79,8 @@ public class Report extends DomainEntity {
 		this.attachment = attachment;
 	}
 
-
 	//Relationships
 	//	private Referee		referee;
-	private Complaint	complaint;
-
 
 	//	@NotNull
 	//	@ManyToOne(optional = false)

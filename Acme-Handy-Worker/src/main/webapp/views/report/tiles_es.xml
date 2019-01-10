@@ -16,10 +16,18 @@
       
 <tiles-definitions>
 
-	<definition name="report/see" extends="master.page">	
-		<put-attribute name="title" value="Viendo informe" />
+	<definition name="report/handyworker,referee/display" extends="master.page">	
+		<put-attribute name="title" value="Informe" />
 		<put-attribute name="body" value="/views/report/see.jsp" />
 	</definition>
 	
+	<definition name="report/handyworker,referee/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de informes" />
+		<put-attribute name="body" value="/views/report/list.jsp" />
+	</definition>
+	<definition name="report/referee/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar Informe" />
+		<put-attribute name="body" value="/views/report/edit.jsp" />
+	</definition>
 	
 </tiles-definitions>

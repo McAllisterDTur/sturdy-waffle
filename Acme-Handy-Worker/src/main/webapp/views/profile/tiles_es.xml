@@ -16,14 +16,19 @@
       
 <tiles-definitions>
 
-	<definition name="profile/action-1" extends="master.page">	
-		<put-attribute name="title" value="Perfil: Acción 1" />
-		<put-attribute name="body" value="/views/profile/action-1.jsp" />
+	<definition name="profile/edit" extends="master.page">	
+		<put-attribute name="title" value="Editando tu perfil" />
+		<put-attribute name="body" value="/views/profile/edit.jsp" />
 	</definition>
 	
-	<definition name="profile/action-2" extends="master.page">	
-		<put-attribute name="title" value="Perfil: Acción 2" />
-		<put-attribute name="body" value="/views/profile/action-2.jsp" />
+	<definition name="profile/see" extends="master.page">	
+		<put-attribute name="title" value="Perfil:" />
+		<put-attribute name="body" value="/views/profile/see.jsp" />
+	</definition>
+	
+	<definition name="profile/seeId" extends="master.page">	
+		<put-attribute name="title" value="Perfil:" />
+		<put-attribute name="body" value="/views/profile/see.jsp" />
 	</definition>
 	
 </tiles-definitions>

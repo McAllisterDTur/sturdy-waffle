@@ -3,25 +3,32 @@
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-      
+
 <tiles-definitions>
 	<definition name="message/list" extends="master.page">
 		<put-attribute name="title" value="Listar mensajes" />
 		<put-attribute name="body" value="/views/message/list.jsp" />
 	</definition>
-	
+
 	<definition name="message/edit" extends="master.page">
 		<put-attribute name="title" value="Crearmensajes" />
 		<put-attribute name="body" value="/views/message/edit.jsp" />
 	</definition>
-	
+
 	<definition name="message/display" extends="master.page">
 		<put-attribute name="title" value="Mostrar mensajes" />
 		<put-attribute name="body" value="/views/message/display.jsp" />
 	</definition>
-	
-		<definition name="message/copy" extends="master.page">
+
+	<definition name="message/copy" extends="master.page">
 		<put-attribute name="title" value="Copiar mensaje en otro buzón" />
 		<put-attribute name="body" value="/views/message/copy.jsp" />
 	</definition>
+
+	<definition name="message/broadcast" extends="master.page">
+		<put-attribute name="title" value="Mensaje general" />
+		<put-attribute name="body"
+			value="/views/message/broadcast.jsp" />
+	</definition>
+	
 </tiles-definitions>

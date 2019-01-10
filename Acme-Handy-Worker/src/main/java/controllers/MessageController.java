@@ -76,17 +76,22 @@ public class MessageController extends AbstractController {
 	}
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ModelAndView saveMessage(@Valid final Message messageO, final BindingResult binding) {
-		System.out.println("El mensaje es -> " + messageO);
 		ModelAndView result;
+		//		if (messageO.getReciever().size() > 1) {
+		//			result = new ModelAndView("message/edit");
+		//			result.addObject("messageO", messageO);
+		//			final Collection<Actor> actores = this.actorService.findAll();
+		//			result.addObject("actors", actores);
+		//			result.addObject("messageActor", "message.actor.multiple");
+		//		} else 
 		if (binding.hasErrors()) {
-			System.out.println(binding.getFieldErrors());
 			result = new ModelAndView("message/edit");
 			result.addObject("messageO", messageO);
 			final Collection<Actor> actores = this.actorService.findAll();
 			result.addObject("actors", actores);
 		} else
 			try {
-				final String username = messageO.getReciever().getAccount().getUsername();
+				final String username = messageO.getReciever().iterator().next().getAccount().getUsername();
 				final UserAccount accountId = this.userAccountService.findByName(username);
 				final Actor actor = this.actorService.findByUserAccountId(accountId.getId());
 				this.messageService.send(messageO, actor);
@@ -118,15 +123,24 @@ public class MessageController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/copy", method = RequestMethod.POST)
-	public ModelAndView copyMessage(@Valid final Message message) {
+	public ModelAndView copyMessage(@Valid final Message message, final BindingResult binding) {
 		ModelAndView result;
-		try {
-			this.messageService.copy(message);
-			result = new ModelAndView("redirect:/box/list.do");
-		} catch (final Throwable opps) {
-			result = new ModelAndView("message/copy");
-			result.addObject("messageCode", "message.commit.error");
-		}
+		if (binding.hasErrors()) {
+			result = new ModelAndView("message/edit");
+			result.addObject("messageO", message);
+			final UserAccount account = LoginService.getPrincipal();
+			final Actor actor = this.actorService.findByUserAccountId(account.getId());
+			final Collection<Box> boxes = this.boxService.findByOwner(actor.getId());
+			result.addObject("boxes", boxes);
+		} else
+			try {
+				this.messageService.copy(message);
+				result = new ModelAndView("redirect:/box/list.do");
+			} catch (final Throwable opps) {
+				result = new ModelAndView("message/copy");
+				result.addObject("messageO", message);
+				result.addObject("messageCode", "message.commit.error");
+			}
 		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
 
 		return result;
@@ -173,6 +187,41 @@ public class MessageController extends AbstractController {
 		result.addObject("actors", actores);
 		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
 
+		return result;
+	}
+
+	@RequestMapping(value = "/administrator/broadcast", method = RequestMethod.POST)
+	public ModelAndView saveBroadcast(@Valid final Message message, final BindingResult binding) {
+		ModelAndView result;
+		if (binding.hasErrors()) {
+			result = new ModelAndView("message/broadcast");
+			result.addObject("messageO", message);
+		} else
+			try {
+				this.messageService.broadcastMessage(message);
+				final UserAccount account = LoginService.getPrincipal();
+				final Actor sender = this.actorService.findByUserAccountId(account.getId());
+				final Box bout = this.boxService.findByName(sender.getId(), "OUT");
+				result = new ModelAndView("redirect:../list.do?boxId=" + bout.getId());
+			} catch (final Throwable opps) {
+				result = new ModelAndView("message/broadcast");
+				result.addObject("messageO", message);
+				result.addObject("messageCode", "message.commit.error");
+			}
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
+
+		return result;
+	}
+
+	@RequestMapping(value = "/administrator/broadcast", method = RequestMethod.GET)
+	public ModelAndView displayBroadcast() {
+		ModelAndView result;
+		final UserAccount uaccount = LoginService.getPrincipal();
+		final Actor actor = this.actorService.findByUserAccountId(uaccount.getId());
+		final Message message = this.messageService.create(actor);
+		result = new ModelAndView("message/broadcast");
+		result.addObject("messageO", message);
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
 		return result;
 	}
 }

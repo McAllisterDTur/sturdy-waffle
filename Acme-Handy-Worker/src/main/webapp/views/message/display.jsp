@@ -23,7 +23,9 @@
 <br />
 
 <b><spring:message code="message.actor.reciever" />:&nbsp;</b>
-<jstl:out value="${messageO.reciever.account.username}" />
+<jstl:forEach  var="actor" items="${messageO.reciever}">
+<jstl:out value="${actor.account.username}"></jstl:out>
+</jstl:forEach>
 <br />
 
 <b><spring:message code="message.sendTime" />:&nbsp;</b>

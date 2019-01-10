@@ -8,11 +8,13 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<% String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() :"";%>
+<jstl:set var="principal" value="<%= s %>"/>
+
 <h3>
 	<b><spring:message code="fixuptask.ticker" />:&nbsp;</b>
 	<jstl:out value="${fixuptask.ticker}" />
 </h3>
-<spring:message var="patternDate" code="event.pattern.date" />
 
 <b><spring:message code="fixuptask.publishTime" />:&nbsp;</b>
 <jstl:out value="${fixuptask.publishTime}" />
@@ -27,9 +29,7 @@
 <br />
 
 <b><spring:message code="fixuptask.category" />:&nbsp;</b>
-<a
-	href="fixuptask/list-byCategoryId.do?categoryId=${fixuptask.category.id}"><jstl:out
-		value="${fixuptask.category.name}" /></a>
+<jstl:out value="${fixuptask.category.name}" />
 <br />
 
 <b><spring:message code="fixuptask.periodStart" />:&nbsp;</b>
@@ -45,29 +45,24 @@
 <br />
 
 <b><spring:message code="fixuptask.customer" />:&nbsp;</b>
-<jstl:out value="${fixuptask.customer.name}" />
+<a href="profile/seeId?id=${fixuptask.customer.id}"><jstl:out value="${fixuptask.customer.name}" /></a>
 <br />
 
 <b><spring:message code="fixuptask.warranty" />:&nbsp;</b>
-<a href="warranty/display.do?warrantyId=${fixuptask.warranty.id}"><jstl:out
-		value="${fixuptask.fixuptask.title}" /></a>
+<jstl:out value="${fixuptask.warranty.title}" />
 <br />
 
 <security:authorize access="hasRole('CUSTOMER')">
-	<display:column>
-		<jstl:if test="${row.customer.account.username == principalId}">
+		<jstl:if test="${fixuptask.customer.account.username == principal}">
 			<button
-				onClick="window.location.href='/Acme-Handy-Worker/fixuptask/edit.do?id=${row.id}'">
+				onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer/edit.do?fixuptaskId=${fixuptask.id}'">
 				<spring:message code="fixuptask.edit" />
 			</button>
 		</jstl:if>
-	</display:column>
-	<display:column>
-		<jstl:if test="${row.worker.account.username == principalId}">
+		<jstl:if test="${fixuptask.customer.account.username == principal}">
 			<button
-				onClick="window.location.href='/Acme-Handy-Worker/fixuptask/delete.do?id=${row.id}'">
+				onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer/delete.do?fixuptaskId=${fixuptask.id}'">
 				<spring:message code="fixuptask.delete" />
 			</button>
 		</jstl:if>
-	</display:column>
 </security:authorize>

@@ -39,13 +39,13 @@
 	</h3>
 
 	<form:label path="subject">
-		<spring:message code="message.subject" />:</form:label>
-	<form:input path="subject" placeholder="${placeholderdescription}" />
+		<spring:message code="message.subject" />*:</form:label>
+	<form:input path="subject" />
 	<form:errors path="subject" />
 	<br />
 
 	<form:label path="reciever">
-		<spring:message code="message.actor.reciever" />:&nbsp;</form:label>
+		<spring:message code="message.actor.reciever" />*:&nbsp;</form:label>
 	<form:select path="reciever">
 		<form:option label="----" value="0" />
 		<jstl:forEach var="act" items="${actors}">
@@ -58,7 +58,7 @@
 	<br />
 
 	<form:label path="priority">
-		<spring:message code="message.priority" />:</form:label>
+		<spring:message code="message.priority" />*:</form:label>
 	<form:select path="priority">
 		<form:option value="HIGH" />
 		<form:option value="NEUTRAL" />
@@ -79,7 +79,7 @@
 	<form:errors path="tags" cssClass="error" />
 
 	<form:label path="body">
-		<spring:message code="message.body" />:</form:label>
+		<spring:message code="message.body" />*: </form:label>
 	<form:textarea path="body" />
 	<form:errors path="body" />
 	<br />

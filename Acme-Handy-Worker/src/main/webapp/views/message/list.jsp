@@ -18,8 +18,9 @@
 
 	<display:column property="subject" titleKey="message.subject" />
 
-	<display:column property="reciever.account.username"
-		titleKey="message.actor.reciever" />
+
+	<display:column property="sender.account.username" titleKey="message.actor.sender" />
+
 
 	<display:column property="sendTime" titleKey="message.sendTime" />
 
@@ -33,7 +34,7 @@
 			<spring:message code="message.display" />
 		</button>
 	</display:column>
-		<display:column>
+	<display:column>
 		<button
 			onClick="window.location.href='/Acme-Handy-Worker/message/copy.do?messageId=${row.id}'">
 			<spring:message code="message.edit" />

@@ -40,11 +40,11 @@ public class PhaseServiceTest extends AbstractTest {
 	public void createAndSaveTest() {
 		super.authenticate("handy6");
 		final HandyWorker worker = (HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final Application a = worker.getApplications().iterator().next();
 
-		final Phase p = this.phaseService.create();
+		final Phase p = this.phaseService.create(a.getId());
 		Assert.notNull(p);
 
-		final Application a = worker.getApplications().iterator().next();
 		p.setApplication(a);
 
 		p.setDescription("Consiste en mirar por la ventana.");

@@ -51,7 +51,7 @@ public class WarrantyService {
 			// We are updating 
 			// Check draft, but the one on ddbb, otherwise you couldn't change draft
 			final Warranty aux = this.wRepo.findOne(warranty.getId());
-			Assert.isTrue(aux.isDraft());
+			Assert.isTrue(aux.getDraft());
 		}
 
 		// We are saving			
@@ -65,9 +65,6 @@ public class WarrantyService {
 	 * @return Collection of all the warranties
 	 */
 	public Collection<Warranty> findAll() {
-		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.ADMIN);
-		// Check authority
-		Assert.isTrue(hasAu);
 		return this.wRepo.findAll();
 	}
 
@@ -94,7 +91,7 @@ public class WarrantyService {
 		// Check authority
 		Assert.isTrue(hasAu);
 		// Check draft
-		Assert.isTrue(warranty.isDraft());
+		Assert.isTrue(warranty.getDraft());
 		this.wRepo.delete(warranty);
 
 	}
@@ -111,10 +108,13 @@ public class WarrantyService {
 		Assert.isTrue(hasAu);
 		// Check draft
 		final Warranty w = this.wRepo.findOne(warrantyId);
-		Assert.isTrue(w.isDraft());
+		Assert.isTrue(w.getDraft());
 
 		this.wRepo.delete(warrantyId);
 
 	}
 
+	public Collection<Warranty> findNotDraft() {
+		return this.wRepo.findNotDraft();
+	}
 }

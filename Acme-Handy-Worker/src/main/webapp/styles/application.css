@@ -1,0 +1,12 @@
+
+.ACCEPTED{
+	color: green;
+}
+
+.REJECTED{
+	color: goldenrod;
+}
+
+.PASSED{
+	color: grey;
+}
