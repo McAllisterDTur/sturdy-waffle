@@ -31,4 +31,8 @@
 		<put-attribute name="body" value="/views/tutorial/edit.jsp" />
 	</definition>
 
+	<definition name="tutorial/pictures" extends="master.page">	
+		<put-attribute name="title" value="Pictures of a tutorial" />
+		<put-attribute name="body" value="/views/tutorial/pictures.jsp" />
+	</definition>
 </tiles-definitions>

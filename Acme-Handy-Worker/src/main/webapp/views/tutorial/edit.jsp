@@ -6,9 +6,24 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form modelAttribute="tutorial" action="tutorial/edit.do" method="post">
+<form:form modelAttribute="tutorial" action="tutorial/handyworker/edit.do" method="post">
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
+	<form:hidden path="lastTimeUpdated"/>
+	
+	<jstl:forEach var="url" items="${tutorial.photoURL}">
+		<form:hidden path = "photoURL" value = "${url}" />
+	</jstl:forEach>
+	
+	<form:hidden path="worker"/>
+
+	<jstl:forEach var="sponsorship" items="${tutorial.sponsorships}">
+		<form:hidden path = "sponsorships" value = "${sponsorship.id}" />
+	</jstl:forEach>
+	
+	<jstl:forEach var="section" items="${tutorial.sections}">
+		<form:hidden path = "sections" value = "${section.id}" />
+	</jstl:forEach>
 
 	<form:label path="title"><spring:message code="tutorial.title" />:</form:label>
 	<form:input path="title" />
@@ -21,8 +36,5 @@
 	<form:errors path="summary" />
 	
 	<br/>
-	
-	<jstl:forEach var="picture" items="${tutorial.photoURL}"> <img src="${picture}" alt="Smiley face" height="200"> </jstl:forEach>
-	
 	<input type="submit" name="save" value="Submit" />
 </form:form>

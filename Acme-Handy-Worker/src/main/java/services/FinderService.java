@@ -16,6 +16,7 @@ import repositories.FinderRepository;
 import security.Authority;
 import security.LoginService;
 import utilities.AuthenticationUtility;
+import domain.Actor;
 import domain.Configuration;
 import domain.Finder;
 import domain.FixUpTask;
@@ -26,15 +27,19 @@ import domain.HandyWorker;
 public class FinderService {
 
 	@Autowired
-	FinderRepository		finderRepository;
+	private FinderRepository		finderRepository;
 	@Autowired
-	ActorService			aService;
+	private ActorService			aService;
 	@Autowired
-	ConfigurationService	cService;
+	private ConfigurationService	cService;
+	@Autowired
+	private FixUpTaskService		taskService;
 
 
-	public Finder create() {
+	public Finder create(final Actor actor) {
+		final HandyWorker handy = (HandyWorker) actor;
 		final Finder f = new Finder();
+		f.setWorker(handy);
 		f.setFixUpTask(new ArrayList<FixUpTask>());
 		return f;
 	}
@@ -49,6 +54,7 @@ public class FinderService {
 	}
 
 	public Finder save(final Finder f) {
+		Finder result;
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
 		final HandyWorker logged = (HandyWorker) this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		if (f.getId() == 0) {
@@ -60,38 +66,16 @@ public class FinderService {
 			Assert.isTrue(f.getId() == fh.getId());
 		}
 
-		if (f.getMinPrice() == null)
-			f.setMinPrice(0.0);
-		if (f.getMinPrice() == null)
-			f.setMaxPrice(Double.MAX_VALUE);
-		if (f.getStartDate() == null)
-			f.setStartDate(new Date(0));
-		if (f.getEndDate() == null)
-			f.setEndDate(new Date(Long.MAX_VALUE));
-		if (f.getKeyWord() == null)
-			f.setKeyWord("%%");
-		else
-			f.setKeyWord("%" + f.getKeyWord() + "%");
-		if (f.getCategory() == null)
-			f.setCategory("%%");
-		else
-			f.setCategory("%" + f.getCategory() + "%");
-		if (f.getWarranty() == null)
-			f.setWarranty("%%");
-		else
-			f.setWarranty("%" + f.getWarranty() + "%");
-
 		final Configuration configuration = this.cService.findAll().iterator().next();
 
-		List<FixUpTask> futSearched = this.finderRepository.search(f.getWarranty(), f.getKeyWord(), f.getCategory(), f.getMinPrice(), f.getMaxPrice(), f.getStartDate(), f.getEndDate());
+		List<FixUpTask> futSearched = (List) this.taskService.findByFilter(f.getKeyWord(), f.getCategory(), f.getWarranty(), f.getMinPrice(), f.getMaxPrice(), f.getStartDate(), f.getEndDate());
 		if (futSearched.size() > configuration.getFinderResults())
 			futSearched = futSearched.subList(0, configuration.getFinderResults());
-
 		f.setCacheUpdate(new Date());
 		f.setFixUpTask(futSearched);
 		f.setWorker(logged);
-
-		return this.finderRepository.save(f);
+		result = this.finderRepository.save(f);
+		return result;
 
 	}
 	private Finder findByHandyWorker(final HandyWorker h) {
@@ -103,7 +87,8 @@ public class FinderService {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
 		final HandyWorker logged = (HandyWorker) this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final Finder f = this.finderRepository.findByHandyWorker(logged.getId());
-		this.checkOutdated(f);
+		if (f != null)
+			this.checkOutdated(f);
 		return f;
 	}
 

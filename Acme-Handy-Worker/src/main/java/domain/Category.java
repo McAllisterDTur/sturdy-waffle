@@ -5,6 +5,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -12,11 +13,24 @@ import org.hibernate.validator.constraints.NotBlank;
 @Access(AccessType.PROPERTY)
 public class Category extends DomainEntity {
 
-	private String		name;
+	private String		nameEn;	//English name
+
+	private String		name;	//Spanish name
 
 	private Category	father;
 
 
+	@NotNull
+	@NotBlank
+	public String getNameEn() {
+		return this.nameEn;
+	}
+
+	public void setNameEn(final String nameEn) {
+		this.nameEn = nameEn;
+	}
+
+	@NotNull
 	@NotBlank
 	public String getName() {
 		return this.name;
@@ -37,7 +51,6 @@ public class Category extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "Category [name=" + this.name + ", father=" + this.father + "]";
+		return "Category [nameEs=" + this.name + "nameEn=" + this.nameEn + ", father=" + this.father + "]";
 	}
-
 }

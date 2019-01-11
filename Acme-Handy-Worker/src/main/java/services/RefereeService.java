@@ -10,7 +10,9 @@ import org.springframework.util.Assert;
 
 import repositories.RefereeRepository;
 import security.Authority;
+import security.UserAccount;
 import utilities.AuthenticationUtility;
+import domain.Actor;
 import domain.Referee;
 
 @Service
@@ -19,7 +21,11 @@ public class RefereeService {
 
 	//Managed repository
 	@Autowired
-	RefereeRepository	refRepository;
+	RefereeRepository			refRepository;
+	@Autowired
+	private UserAccountService	userAccountService;
+	@Autowired
+	private BoxService			boxService;
 
 
 	public Referee create() {
@@ -37,7 +43,17 @@ public class RefereeService {
 	}
 
 	public Referee save(final Referee ref) {
-		return this.refRepository.save(ref);
+		Assert.notNull(ref);
+		final Referee result;
+		if (ref.getId() == 0) {
+			final UserAccount account = ref.getAccount();
+			final UserAccount savedAccount = this.userAccountService.save(account);
+			ref.setAccount(savedAccount);
+			result = this.refRepository.save(ref);
+			this.boxService.initializeDefaultBoxes(result);
+		} else
+			result = this.refRepository.save(ref);
+		return result;
 	}
 
 	public void ban(final Referee ref) {
@@ -49,5 +65,23 @@ public class RefereeService {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
 		ref.setBanned(false);
 		this.refRepository.save(ref);
+	}
+
+	public Referee actorToReferee(final Actor a) {
+		final Referee res = new Referee();
+		res.setAccount(a.getAccount());
+		res.setAddress(a.getAddress());
+		res.setBanned(a.getBanned());
+		res.setEmail(a.getEmail());
+		res.setId(a.getId());
+		res.setIsSuspicious(a.getIsSuspicious());
+		res.setMiddleName(a.getMiddleName());
+		res.setName(a.getName());
+		res.setPhone(a.getPhone());
+		res.setPhotoURL(a.getPhotoURL());
+		res.setSurname(a.getSurname());
+		res.setVersion(a.getVersion());
+		res.setIsSuspicious(false);
+		return res;
 	}
 }

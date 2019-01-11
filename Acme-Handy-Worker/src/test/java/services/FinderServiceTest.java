@@ -9,7 +9,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import security.LoginService;
 import utilities.AbstractTest;
+import domain.Actor;
 import domain.Finder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,14 +29,16 @@ public class FinderServiceTest extends AbstractTest {
 
 	@Test
 	public void createTest() {
-		Assert.notNull(this.finderService.create());
+		final Actor a = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(this.finderService.create(a));
 	}
 
 	@Test
 	public void createBadTest() {
 		try {
+			final Actor a = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 			super.authenticate("handy1");
-			final Finder f = this.finderService.create();
+			final Finder f = this.finderService.create(a);
 			Assert.notEmpty(this.finderService.save(f).getFixUpTask());
 		} catch (final IllegalArgumentException e) {
 			Assert.notNull(e);
@@ -48,7 +52,8 @@ public class FinderServiceTest extends AbstractTest {
 	@Test
 	public void saveTest() {
 		super.authenticate("handy2");
-		final Finder f = this.finderService.create();
+		final Actor a = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final Finder f = this.finderService.create(a);
 		Assert.notNull(this.finderService.save(f).getFixUpTask());
 	}
 

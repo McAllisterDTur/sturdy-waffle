@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -20,6 +21,7 @@ import security.UserAccount;
 import utilities.AuthenticationUtility;
 import domain.Application;
 import domain.Complaint;
+import domain.CreditCard;
 import domain.Customer;
 import domain.FixUpTask;
 
@@ -39,64 +41,79 @@ public class FixUpTaskService {
 
 	/**
 	 * Creates a new fix up task(Req 10.1)
-	 * 
+	 * n
+	 *
 	 * @return a new empty fix up task
 	 */
 	public FixUpTask create() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+
 		final FixUpTask res = new FixUpTask();
 		res.setComplaints(new HashSet<Complaint>());
 		res.setApplications(new HashSet<Application>());
+		res.setTicker(this.tickerService.getTicker());
+
+		final CreditCard creditCard = new CreditCard();
+		creditCard.setHolderName("John Doe");
+		creditCard.setBrandName("Test");
+		creditCard.setExpirationMonth(12);
+		creditCard.setExpirationYear(10000);
+		creditCard.setNumber("1111222233334444");
+		creditCard.setCodeCVV(999);
+
+		res.setCreditCard(creditCard);
+		res.setPublishTime(new Date());
+		res.setCustomer((Customer) this.actorService.findByUserAccountId(userAccount.getId()));
 		return res;
 	}
 
 	/**
 	 * Checks customer authority. Saves or updates a fix up task(Req 10.1)
-	 * 
+	 *
 	 * @param fixUpTask
 	 * @return the fix up task saved in the database
 	 */
 	public FixUpTask save(final FixUpTask fixUpTask) {
 		UserAccount userAccount;
-
 		userAccount = LoginService.getPrincipal();
 		final Authority au = new Authority();
 		au.setAuthority(Authority.CUSTOMER);
-		Assert.isTrue(userAccount.getAuthorities().contains(au));
+		final Authority au1 = new Authority();
+		au1.setAuthority(Authority.ADMIN);
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au1));
 
 		FixUpTask res;
 
 		//comprobamos que la warranty NO est� en draft mode
-		Assert.isTrue(!fixUpTask.getWarranty().isDraft());
+		Assert.isTrue(!fixUpTask.getWarranty().getDraft());
 		if (fixUpTask.getId() != 0) {
 			// Ya est� en base de datos
-			final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTask.getId());
-			Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
-			Assert.isTrue(fixUpTask.getCustomer().getAccount().equals(aux.getCustomer().getAccount()));
+			if (userAccount.getAuthorities().contains(au)) {
+				final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTask.getId());
+				Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
+				Assert.isTrue(fixUpTask.getCustomer().getAccount().equals(aux.getCustomer().getAccount()));
+			}
 			res = this.fixUpTaskRepository.save(fixUpTask);
 		} else {
-			fixUpTask.setTicker(this.tickerService.getTicker());
-			fixUpTask.setPublishTime(new Date());
-			fixUpTask.setCustomer((Customer) this.actorService.findByUserAccountId(userAccount.getId()));
+			Assert.isTrue(fixUpTask.getPeriodStart().before(fixUpTask.getPeriodEnd()));
 			res = this.fixUpTaskRepository.save(fixUpTask);
 		}
+
 		this.spamService.isSpam(this.actorService.findByUserAccountId(userAccount.getId()), res.getDescription());
 		return res;
 	}
 
 	/**
 	 * Checks customer authority. (Req 10.1)
-	 * 
+	 *
 	 * @param fixUpTaskId
 	 * @return the fix up task whose id is the one passed as parameter
 	 */
 	public FixUpTask findOne(final int fixUpTaskId) {
-		UserAccount userAccount;
-
-		userAccount = LoginService.getPrincipal();
-
 		final FixUpTask res = this.fixUpTaskRepository.findOne(fixUpTaskId);
 		if (res != null)
-			Assert.isTrue(res.getCustomer().getAccount().equals(userAccount));
+			Assert.isTrue(AuthenticationUtility.checkAuthority("CUSTOMER") || AuthenticationUtility.checkAuthority("HANDYWORKER"));
 
 		return res;
 
@@ -104,7 +121,7 @@ public class FixUpTaskService {
 
 	/**
 	 * Deletes the fix up task whose id is passed as parameter checking customer authority. (Req 10.1)
-	 * 
+	 *
 	 * @param fixUpTask
 	 */
 	public void delete(final int fixUpTaskId) {
@@ -116,14 +133,21 @@ public class FixUpTaskService {
 
 		Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
 
+		// Removing application from handy worker
+		for (final Application a : aux.getApplications())
+			a.getHandyWorker().getApplications().remove(a);
+
+		// Removing fix up task from customer
+		aux.getCustomer().getFixUpTasks().remove(aux);
+
 		this.fixUpTaskRepository.delete(aux);
 	}
 
 	/**
 	 * Deletes the fix up task passed as parameter checking customer authority. (Req 10.1)
-	 * 
+	 *
 	 * @param fixUpTask
-	 * 
+	 *
 	 */
 	public void delete(final FixUpTask fixUpTask) {
 		UserAccount userAccount;
@@ -134,12 +158,12 @@ public class FixUpTaskService {
 
 		Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
 
-		this.fixUpTaskRepository.delete(aux);
+		this.fixUpTaskRepository.delete(aux.getId());
 	}
 
 	/**
 	 * Checks customer authority (Req 10.1)
-	 * 
+	 *
 	 * @param CustomerId
 	 * @return Collection of the fix up tasks related to the logged customer
 	 */
@@ -159,10 +183,10 @@ public class FixUpTaskService {
 	}
 	/**
 	 * Checks admin authority (Req 12.5.1)
-	 * 
+	 *
 	 * @return Collection of fix up task count statistics
 	 */
-	public Collection<Double> avgMinMaxDevFixUpTaskCount() {
+	public List<Object[]> avgMinMaxDevFixUpTaskCount() {
 		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
 		Assert.isTrue(au);
 
@@ -171,7 +195,7 @@ public class FixUpTaskService {
 
 	/**
 	 * Checks admin authority (Req 38.5.3)
-	 * 
+	 *
 	 * @return Ratio of fix up tasks with complaints
 	 */
 	public Double ratioFixUpTaskComplaint() {
@@ -183,10 +207,10 @@ public class FixUpTaskService {
 
 	/**
 	 * Checks admin authority (Req 12.5.3)
-	 * 
+	 *
 	 * @return Collection of fix up task price statistics
 	 */
-	public Collection<Double> avgMinMaxDevFixUpTaskPrice() {
+	public List<Object[]> avgMinMaxDevFixUpTaskPrice() {
 		final boolean au = AuthenticationUtility.checkAuthority(Authority.ADMIN);
 		Assert.isTrue(au);
 
@@ -194,7 +218,7 @@ public class FixUpTaskService {
 	}
 	/**
 	 * Checks handy worker authority (Req 11.1)
-	 * 
+	 *
 	 * @param CustomerId
 	 * @return Collection of the fix up tasks related to a customer
 	 */
@@ -214,7 +238,7 @@ public class FixUpTaskService {
 
 	/**
 	 * Checks handy worker authority (Req 11.1)
-	 * 
+	 *
 	 * @return Collection of all the fix up tasks
 	 */
 	public Collection<FixUpTask> findAll() {
@@ -233,7 +257,7 @@ public class FixUpTaskService {
 
 	/**
 	 * Checks handy worker authority (Req 11.2)
-	 * 
+	 *
 	 * @param keyWord
 	 * @param category
 	 * @param warranty
@@ -269,6 +293,29 @@ public class FixUpTaskService {
 		return res;
 	}
 
+	/**
+	 * Checks handy worker authority (Req 11.2)
+	 *
+	 * @param keyWord
+	 * @return a collection of fix up tasks filtered by the parameters given
+	 */
+	public Collection<FixUpTask> findByFilter(String keyWord) {
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+
+		final Authority au = new Authority();
+		au.setAuthority(Authority.HANDYWORKER);
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
+		keyWord = (keyWord == null || keyWord.isEmpty()) ? "" : keyWord;
+
+		final Collection<FixUpTask> res = this.fixUpTaskRepository.findByFilter(keyWord);
+
+		return res;
+	}
+
 	public int getNumberOfTickers(final String ticker) {
 		return this.fixUpTaskRepository.getNumberOfTickers(ticker);
 	}
@@ -279,7 +326,7 @@ public class FixUpTaskService {
 
 	/**
 	 * Checks handy worker authority (Req 11.1)
-	 * 
+	 *
 	 * @param handyWorkerId
 	 * @return Collection of all the fix up tasks
 	 */

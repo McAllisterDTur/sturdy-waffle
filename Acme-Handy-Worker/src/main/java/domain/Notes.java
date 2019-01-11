@@ -9,8 +9,15 @@ import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -20,13 +27,13 @@ public class Notes extends DomainEntity {
 	private Collection<String>	customerComments;
 	private Collection<String>	refereeComments;
 	private Collection<String>	handyComments;
-	private Boolean				isFinal;
 	//+
 	private Report				report;
 
 
-	@Past
 	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getMoment() {
 		return this.moment;
 	}
@@ -62,15 +69,6 @@ public class Notes extends DomainEntity {
 		this.handyComments = handyComments;
 	}
 
-	@NotNull
-	public Boolean getIsFinal() {
-		return this.isFinal;
-	}
-
-	public void setIsFinal(final Boolean isFinal) {
-		this.isFinal = isFinal;
-	}
-
 	@ManyToOne(optional = false)
 	public Report getReport() {
 		return this.report;
@@ -82,7 +80,7 @@ public class Notes extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "Notes [moment=" + this.moment + ", customerComments=" + this.customerComments + ", refereeComments=" + this.refereeComments + ", handyCommetns=" + this.handyComments + ", isFinal=" + this.isFinal + "]";
+		return "Notes [moment=" + this.moment + ", customerComments=" + this.customerComments + ", refereeComments=" + this.refereeComments + ", handyCommetns=" + this.handyComments + "]";
 	}
 
 }

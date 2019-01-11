@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.EndorsableRepository;
+import domain.Application;
 import domain.Configuration;
 import domain.Endorsable;
 import domain.Endorsement;
@@ -27,6 +28,10 @@ public class EndorsableService {
 	ConfigurationService	confService;
 	@Autowired
 	EndorsementService		endorService;
+	@Autowired
+	FixUpTaskService		futService;
+	@Autowired
+	ApplicationService		appService;
 
 
 	public Endorsable findOne(final int id) {
@@ -56,5 +61,24 @@ public class EndorsableService {
 		final Double normalized = score / total;
 		end.setScore(normalized);
 		return this.endRepository.save(end);
+	}
+
+	public Collection<Endorsable> findAllWorkedWith(final Integer id) {
+		final Endorsable e = this.findOne(id);
+		final String role = e.getAccount().getAuthorities().iterator().next().getAuthority();
+		System.out.println(role);
+		final Collection<Endorsable> res = new ArrayList<>();
+		if (role.equals("HANDYWORKER"))
+			//			for (final Application app : this.appService.findAllWorker(id))
+			//				if (app.getStatus().equals("ACCEPTED"))
+			//					res.add(app.getFixUpTask().getCustomer());
+			res.addAll(this.endRepository.findAllCustomerWhoWorkedWithHandy(id));
+		else if (role.equals("CUSTOMER")) {
+			for (final Application app : this.appService.findAllCustomer(id))
+				if (app.getStatus().equals("ACCEPTED"))
+					res.add(app.getHandyWorker());
+		} else
+			throw new IllegalArgumentException("An endorsable is either a HandyWorker or a Customer");
+		return res;
 	}
 }

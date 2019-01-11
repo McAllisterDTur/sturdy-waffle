@@ -51,11 +51,12 @@ public class ComplaintService {
 	 * @return the complaint saved in the database
 	 */
 	public Complaint save(final Complaint complaint) {
-		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.CUSTOMER);
-		Assert.isTrue(hasAu);
+		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.REFEREE);
+		final boolean hasAu1 = AuthenticationUtility.checkAuthority(Authority.CUSTOMER);
+		Assert.isTrue(hasAu || hasAu1);
 
 		// We can't update
-		Assert.isTrue(complaint.getId() == 0);
+
 		complaint.setTicker(this.tickerService.getTicker());
 		complaint.setComplaintTime(new Date());
 		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
@@ -72,6 +73,30 @@ public class ComplaintService {
 		Assert.isTrue(hasAu);
 		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		return this.complaintRepository.findFromCustomer(c.getId());
+	}
+
+	/**
+	 * Checks customer authority (Req 35.1)
+	 * 
+	 * @return Collection of the final complaints related to the logged customer
+	 */
+	public Collection<Complaint> findFinalFromLoggedCustomer() {
+		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.CUSTOMER);
+		Assert.isTrue(hasAu);
+		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		return this.complaintRepository.findFinalFromCustomer(c.getId());
+	}
+
+	/**
+	 * Checks customer authority (Req 35.1)
+	 * 
+	 * @return Collection of the drafted complaints related to the logged customer
+	 */
+	public Collection<Complaint> findDraftedFromLoggedCustomer() {
+		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.CUSTOMER);
+		Assert.isTrue(hasAu);
+		final Customer c = (Customer) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		return this.complaintRepository.findDraftedFromCustomer(c.getId());
 	}
 
 	/**
@@ -117,10 +142,11 @@ public class ComplaintService {
 	public Complaint findOne(final int complaintId) {
 		final boolean hasAu = AuthenticationUtility.checkAuthority(Authority.REFEREE);
 		final boolean hasAu1 = AuthenticationUtility.checkAuthority(Authority.CUSTOMER);
-		Assert.isTrue(hasAu || hasAu1);
+		final boolean hasAu2 = AuthenticationUtility.checkAuthority(Authority.HANDYWORKER);
+		Assert.isTrue(hasAu || hasAu1 || hasAu2);
 		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final Complaint c1 = this.complaintRepository.findOne(complaintId);
-		Assert.isTrue(c1.getReferee() != null && c1.getReferee().equals(actor) || c1.getFixUpTask().getCustomer().equals(actor));
+		//Assert.isTrue(c1.getReferee() != null && c1.getReferee().equals(actor) || c1.getFixUpTask().getCustomer().equals(actor));
 		return c1;
 	}
 
@@ -137,7 +163,21 @@ public class ComplaintService {
 		return this.complaintRepository.findFromHandyWorker(h.getId());
 	}
 
+	//======List complaints of a FixUpTask
+	/**
+	 * Lists all the complaints from a fixup task (Req 37.3)
+	 * 
+	 * @return Collection of the complaints related to a given FixUp Task
+	 */
+	public Collection<Complaint> findFromFixUpTask(final Integer id) {
+		Assert.isTrue(!LoginService.getPrincipal().getAuthorities().isEmpty());
+		return this.complaintRepository.findFromFixUpTask(id);
+	}
 	public int getNumberOfTickers(final String ticker) {
 		return this.complaintRepository.getNumberOfTickers(ticker);
+	}
+
+	public Collection<Complaint> findAll() {
+		return this.complaintRepository.findAll();
 	}
 }

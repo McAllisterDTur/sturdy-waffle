@@ -42,7 +42,7 @@ public class ReportServiceTest extends AbstractTest {
 
 		super.authenticate("referee1");
 
-		final Report r = this.reportService.create();
+		final Report r = this.reportService.create(this.complaintService.findAll().iterator().next().getId());
 		Assert.notNull(r);
 
 		r.setReportTime(new Date());

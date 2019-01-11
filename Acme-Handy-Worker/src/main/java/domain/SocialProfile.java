@@ -5,7 +5,6 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
@@ -18,6 +17,7 @@ public class SocialProfile extends DomainEntity {
 	private String	socialNetwork;
 	private String	profileLink;
 	private Actor	actor;
+
 
 	@NotBlank
 	public String getNick() {
@@ -43,25 +43,22 @@ public class SocialProfile extends DomainEntity {
 		return this.profileLink;
 	}
 
-	public void setProfileLink(String profileLink) {
+	public void setProfileLink(final String profileLink) {
 		this.profileLink = profileLink;
 	}
-	
-	@NotNull
-	@ManyToOne(optional=false)
+
+	@ManyToOne(optional = true)
 	public Actor getActor() {
-		return actor;
+		return this.actor;
 	}
 
-	public void setActor(Actor actor) {
+	public void setActor(final Actor actor) {
 		this.actor = actor;
 	}
 
 	@Override
 	public String toString() {
-		return "SocialProfile [nick=" + nick + ", socialNetwork="
-				+ socialNetwork + ", profileLink=" + profileLink + ", actor="
-				+ actor + "]";
+		return "SocialProfile [nick=" + this.nick + ", socialNetwork=" + this.socialNetwork + ", profileLink=" + this.profileLink + ", actor=" + this.actor + "]";
 	}
-	
+
 }

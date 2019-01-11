@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -29,35 +30,44 @@ public class ReportService {
 	private SpamService			spamService;
 	@Autowired
 	private ActorService		actorService;
+	@Autowired
+	private ComplaintService	complaintService;
 
 	private UserAccount			account;
 
 
-	public Report create() {
+	public Report create(final int complaintId) {
 		final Report res = new Report();
 
+		res.setComplaint(this.complaintService.findOne(complaintId));
+		res.setIsFinal(false);
+		res.setReportTime(new Date());
 		res.setAttachment(new ArrayList<String>());
 		res.setNotes(new ArrayList<Notes>());
 
 		return res;
 
 	}
-
 	public Report save(final Report report) {
+		Assert.notNull(report);
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.REFEREE));
 
+		Report res = null;
 		Assert.isTrue(report.getComplaint().getReferee().getAccount().equals(this.account));
 		if (report.getId() != 0)
-			Assert.isTrue(!report.getIsFinal());
-		else if (report.getId() == 0)
+			Assert.isTrue(!report.getIsFinal());//TODO: a�adir un !
+		else if (report.getId() == 0) {
+			report.setReportTime(new Date());
 			report.setIsFinal(false);
+		}
 
 		this.spamService.isSpam(this.actorService.findByUserAccountId(this.account.getId()), report.getDescription());
 
-		return this.reportRepo.save(report);
+		res = this.reportRepo.save(report);
+		res.getComplaint().getReports().add(res);
+		return res;
 	}
-
 	public Report findOne(final int reportId) {
 		Assert.isTrue(reportId > 0);
 

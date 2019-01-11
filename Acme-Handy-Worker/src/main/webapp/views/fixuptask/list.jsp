@@ -1,31 +1,77 @@
-<%@page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
-<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<script>
-	function searchByKeyword(e) {
-		if (e.keyCode == 13) {
-			var keyword = document.getElementById("keyword").value;
-			window.location.assign("fixuptask/list.do?keyword=" + keyword);
-			return false;
-		}
-	}
-</script>
-<input type="text" id="keyword"
-	placeholder="<spring:message code="fixuptask.search" />"
-	onkeypress="searchByKeyword(event)" />
+<security:authorize access="hasRole('HANDYWORKER')">
+<form:form action="fixuptask/handyworker/list.do" modelAttribute="finder">
 
-<display:table name="fixuptask" id="row" pagesize="5" class="displaytag"
-	requestURI="${requestURI}">
+	<form:label path="keyWord">
+		<spring:message code="finder.keyword" />: </form:label>
+	<form:input path="keyWord" />
+	<form:errors path="keyWord" cssClass="error" />
+	<br />
+
+	<form:label path="warranty">
+		<spring:message code="finder.warranty" />: </form:label>
+	<form:input path="warranty" />
+	<form:errors path="warranty" cssClass="error" />
+	<br />
+
+	<form:label path="minPrice">
+		<spring:message code="finder.minprice" />: </form:label>
+	<form:input path="minPrice" placeholder="0.0" />
+	<form:errors path="minPrice" cssClass="error" />
+	<br />
+
+	<form:label path="maxPrice">
+		<spring:message code="finder.maxprice" />: </form:label>
+	<form:input path="maxPrice" placeholder="1000.0" />
+	<form:errors path="maxPrice" cssClass="error" />
+	<br />
+
+	<form:label path="startDate">
+		<spring:message code="finder.startdate" />:&nbsp;</form:label>
+	<form:input path="startDate" />
+	<form:errors path="startDate" cssClass="error" />
+	<br />
+
+	<form:label path="endDate">
+		<spring:message code="finder.enddate" />:&nbsp;</form:label>
+	<form:input path="endDate" />
+	<form:errors path="endDate" cssClass="error" />
+	<br />
+
+	<form:label path="category">
+		<spring:message code="finder.category" />:&nbsp;</form:label>
+	<form:select path="category">
+		<form:option label="----" value="" />
+		<jstl:if test="${pageContext.response.locale.language == 'en'}">
+			<form:options items="${categories}" itemLabel="nameEn" itemValue="nameEn" />
+		</jstl:if>
+		<jstl:if test="${pageContext.response.locale.language == 'es'}">
+			<form:options items="${categories}" itemLabel="name" itemValue="name" />
+		</jstl:if>
+	</form:select>
+	<form:errors path="category" cssClass="error" />
+	<br />
+
+	<input type="submit" name="save"
+		value="<spring:message code="finder.search"/>" />
+
+</form:form>
+</security:authorize>
+
+<% String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() :""; %>
+<jstl:set var="principal" value="<%= s %>"/>
+
+<display:table name="fixuptasks" id="row" pagesize="5" requestURI="${requestURI}">
 
 	<security:authorize access="hasRole('CUSTOMER')">
-		<jstl:if test="${requestURI == 'fixuptask/customer/list.do'}">
+		<jstl:if test="${row.customer.account.username == principal}">
 			<display:column>
 				<jstl:if test="${row.publishTime gt date}">
 					<a href="fixuptask/customer/edit.do?fixuptaskId=${row.id}"><spring:message
@@ -35,51 +81,58 @@
 		</jstl:if>
 	</security:authorize>
 
-	<display:column>
-		<a href="fixuptask/display.do?fixuptaskId=${row.id}"><spring:message
-				code="fixuptask.display" /></a>
+
+
+	<display:column property="ticker" titleKey="fixuptask.ticker"/>
+	<display:column property="category.name" titleKey="fixuptask.category" />
+
+	<display:column property="periodStart" titleKey="fixuptask.periodStart"  />
+
+	<display:column property="periodStart" titleKey="fixuptask.periodStart" />
+
+	<display:column titleKey="fixuptask.maxPrice" >
+		<jstl:out value="${row.maxPrice }" />(<jstl:out value="${row.maxPrice *(1+(vat/100))}" />)
 	</display:column>
 
-	<spring:message var="tickerH" code="fixuptask.ticker" />
-	<display:column property="fixuptask.ticker" titleKey="fixuptask.ticker"/>
-
-	<spring:message var="categoryH" code="fixuptask.category" />
-	<display:column property="category.name" titleKey="fixuptask.category.name" />
-
-	<spring:message var="periodStartH" code="fixuptask.periodStart" />
-	<display:column property="fixuptask.periodStart" titleKey="fixuptask.periodStart"  />
-
-	<spring:message var="periodEndH" code="fixuptask.periodEnd" />
-	<display:column property="fixuptask.periodStart" titleKey="fixuptask.periodStart" />
-
-	<spring:message var="maxPriceH" code="fixuptask.maxPrice" />
-	<display:column property="fixuptask.maxPrice" titleKey="fixuptask.maxPrice" />
 	<display:column>
-		<button
-			onClick="window.location.href='/Acme-Handy-Worker/fixuptask/display.do?id=${row.id}'">
-			<spring:message code="fixuptask.display" />
+		<button onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer,handyworker/display.do?fixuptaskId=${row.id}'">
+			<spring:message code="fixuptask.display"/>
 		</button>
 	</display:column>
-	
+
+	<security:authorize access="hasRole('HANDYWORKER')">
+
+		<display:column>
+			<button
+					onClick="window.location.href='/Acme-Handy-Worker/application/handyworker/create.do?fixuptaskId=${row.id}'">
+					<spring:message code="fixuptask.apply" />
+				</button>
+		</display:column>
+
+	</security:authorize>
+
 	<security:authorize access="hasRole('CUSTOMER')">
 		<display:column>
-			<jstl:if test="${row.customer.account.username == principalId}">
+			<jstl:if test="${row.customer.account.username == principal}">
 				<button
-					onClick="window.location.href='/Acme-Handy-Worker/fixuptask/edit.do?id=${row.id}'">
+					onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer/edit.do?fixuptaskId=${row.id}'">
 					<spring:message code="fixuptask.edit" />
 				</button>
 			</jstl:if>
 		</display:column>
 		<display:column>
-			<jstl:if test="${row.customer.account.username == principalId}">
-				<button
-					onClick="window.location.href='/Acme-Handy-Worker/fixuptask/delete.do?id=${row.id}'">
+		<jstl:if test="${row.customer.account.username == principal}">
+			<button onClick="window.location.href='/Acme-Handy-Worker/application/customer,handyworker/list.do?fixuptaskId=${row.id}'">
+				<spring:message code="fixuptask.applications"/>
+			</button>
+		</jstl:if>
+		</display:column>
+		<display:column>
+			<jstl:if test="${row.customer.account.username == principal}">
+				<button onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer/delete.do?fixuptaskId=${row.id}'">
 					<spring:message code="fixuptask.delete" />
 				</button>
 			</jstl:if>
 		</display:column>
 	</security:authorize>
-
 </display:table>
-
-

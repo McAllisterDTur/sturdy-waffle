@@ -10,21 +10,12 @@
 
 package controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-import services.ActorService;
-import domain.Actor;
 
 @Controller
 @RequestMapping("/actor")
 public class ActorController extends AbstractController {
-
-	@Autowired
-	private ActorService	actorService;
-
 
 	// Constructors -----------------------------------------------------------
 
@@ -32,14 +23,4 @@ public class ActorController extends AbstractController {
 		super();
 	}
 
-	// Tutorials ---------------------------------------------------------------		
-
-	@RequestMapping("/register")
-	public ModelAndView test1() {
-		final Actor a = this.actorService.create();
-		ModelAndView result;
-		result = new ModelAndView("actor/register");
-		result.addObject("actor", a);
-		return result;
-	}
 }

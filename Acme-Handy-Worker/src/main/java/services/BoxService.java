@@ -23,24 +23,33 @@ public class BoxService {
 
 	//We create the repository
 	@Autowired
-	BoxRepository	boxRepository;
+	private BoxRepository	boxRepository;
 
 	//Auxiliary services
 	@Autowired
-	ActorService	actorService;
+	private ActorService	actorService;
+
+	@Autowired
+	private MessageService	messageService;
 
 
-	//CRUDs
-
-	public Box create() {
+	public Box create(final Actor actor) {
 		final Box b = new Box();
+		b.setOwner(actor);
+		b.setDeleteable(true);
 		b.setMessages(new ArrayList<Message>());
 		return b;
 	}
 	public Box save(final Box box) {
-		final List<String> names = this.allBoxNames();
-		if (box.getId() == 0)
-			Assert.isTrue(names == null || !names.contains(box.getName()));
+		// We search boxes from logged actor
+
+		try {
+			final List<String> names = this.allBoxNames();
+			if (box.getId() == 0)
+				Assert.isTrue((names == null || !names.contains(box.getName())), "Box with bad name");
+		} catch (final Throwable oops) {
+			// If we can't find a logged actor, it's because is the first time we are calling this
+		}
 		final Box saved = this.boxRepository.save(box);
 		return saved;
 	}
@@ -54,8 +63,10 @@ public class BoxService {
 	}
 
 	public void delete(final Box box) {
-		Assert.isTrue(LoginService.getPrincipal().equals(box.getOwner().getAccount()));
-		Assert.isTrue(box.getDeleteable());
+		Assert.isTrue((LoginService.getPrincipal().equals(box.getOwner().getAccount())), "Box not belong to the logged actor");
+		Assert.isTrue((box.getDeleteable()), "Box undeleteable");
+		for (final Message m : box.getMessages())
+			this.messageService.deleteMessages(m, box);
 		this.boxRepository.delete(box);
 	}
 
@@ -64,25 +75,48 @@ public class BoxService {
 	public void initializeDefaultBoxes() {
 		final UserAccount ownerAccount = LoginService.getPrincipal();
 		final Actor owner = this.actorService.findByUserAccountId(ownerAccount.getId());
-		final Box in = this.create();
+		final Box in = this.create(owner);
+		in.setDeleteable(false);
+		in.setName("IN");
+		this.save(in);
+
+		final Box trash = this.create(owner);
+		trash.setDeleteable(false);
+		trash.setName("TRASH");
+		this.save(trash);
+
+		final Box out = this.create(owner);
+		out.setDeleteable(false);
+		out.setName("OUT");
+		this.save(out);
+
+		final Box spam = this.create(owner);
+		spam.setDeleteable(false);
+		spam.setName("SPAM");
+		this.save(spam);
+	}
+
+	public void initializeDefaultBoxes(final Actor a) {
+		final Actor owner = a;
+		final Box in = this.create(a);
 		in.setDeleteable(false);
 		in.setName("IN");
 		in.setOwner(owner);
 		this.save(in);
 
-		final Box trash = this.create();
+		final Box trash = this.create(a);
 		trash.setDeleteable(false);
 		trash.setName("TRASH");
 		trash.setOwner(owner);
 		this.save(trash);
 
-		final Box out = this.create();
+		final Box out = this.create(a);
 		out.setDeleteable(false);
 		out.setName("OUT");
 		out.setOwner(owner);
 		this.save(out);
 
-		final Box spam = this.create();
+		final Box spam = this.create(a);
 		spam.setDeleteable(false);
 		spam.setName("SPAM");
 		spam.setOwner(owner);

@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -20,7 +21,7 @@ public class HandyWorker extends Endorsable {
 
 	//+
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.REFRESH)
 	public Collection<Application> getApplications() {
 		return this.applications;
 	}
@@ -40,7 +41,7 @@ public class HandyWorker extends Endorsable {
 
 	@Override
 	public String toString() {
-		return "HandyWorker [" + super.toString() + "make=" + this.make + "]";
+		return this.getName() + " " + this.getMiddleName() + " " + this.getSurname();
 	}
 
 }

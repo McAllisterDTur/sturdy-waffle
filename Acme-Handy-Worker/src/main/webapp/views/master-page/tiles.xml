@@ -22,5 +22,9 @@
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/views/master-page/footer.jsp" />
 	</definition>
+	
+	<definition name="emptiness" template="/views/master-page/empty.jsp">
+		<put-attribute name="body" value="" />
+	</definition>
 
 </tiles-definitions>

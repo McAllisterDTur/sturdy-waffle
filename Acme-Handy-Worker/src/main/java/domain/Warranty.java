@@ -7,6 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -16,10 +17,11 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Warranty extends DomainEntity {
 
 	//Atributes
-	private String			title;
-	private String			terms;
+	private String				title;
+	private String				terms;
 	private Collection<String>	law;
-	private Boolean			draft;
+	private Boolean				draft;
+
 
 	@NotBlank
 	public String getTitle() {
@@ -38,9 +40,9 @@ public class Warranty extends DomainEntity {
 	public void setTerms(final String terms) {
 		this.terms = terms;
 	}
-	
+
 	@NotNull
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	public Collection<String> getLaw() {
 		return this.law;
 	}
@@ -50,7 +52,7 @@ public class Warranty extends DomainEntity {
 	}
 
 	@NotNull
-	public Boolean isDraft() {
+	public Boolean getDraft() {
 		return this.draft;
 	}
 
@@ -60,7 +62,7 @@ public class Warranty extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "Warranty [title=" + this.title + ", terms=" + this.terms + ", law=" + this.law.toString() + ", draft=" + this.draft + "]";
+		return this.title + ": " + this.terms + ". " + this.law.toString();
 	}
 
 }

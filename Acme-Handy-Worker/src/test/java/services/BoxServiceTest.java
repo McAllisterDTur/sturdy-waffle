@@ -35,7 +35,8 @@ public class BoxServiceTest extends AbstractTest {
 	@Test
 	public void createTest() {
 		//We create a box
-		final Box box = this.boxService.create();
+		final Actor a = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		final Box box = this.boxService.create(a);
 		//Did we make it?
 		Assert.notNull(box);
 	}
@@ -55,7 +56,7 @@ public class BoxServiceTest extends AbstractTest {
 		//We get the actor that is logged with that user
 		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		//Now we create a box
-		final Box n = this.boxService.create();
+		final Box n = this.boxService.create(owner);
 		n.setDeleteable(true);
 		n.setName("TEST BOX");
 		n.setOwner(owner);
@@ -73,7 +74,7 @@ public class BoxServiceTest extends AbstractTest {
 		//We get the actor that is logged with that user
 		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		//Now we create a box
-		final Box n = this.boxService.create();
+		final Box n = this.boxService.create(owner);
 		n.setDeleteable(true);
 		n.setName("TEST BOX");
 		n.setOwner(owner);
@@ -91,7 +92,7 @@ public class BoxServiceTest extends AbstractTest {
 		//We get the actor that is logged with that user
 		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		//Now we create a box
-		final Box n = this.boxService.create();
+		final Box n = this.boxService.create(owner);
 		n.setDeleteable(true);
 		n.setName("TEST BOX");
 		n.setOwner(owner);
@@ -111,7 +112,7 @@ public class BoxServiceTest extends AbstractTest {
 		//We get the actor that is logged with that user
 		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		//Now we create a box
-		final Box n = this.boxService.create();
+		final Box n = this.boxService.create(owner);
 		n.setDeleteable(true);
 		n.setName("TEST BOX");
 		n.setOwner(owner);
@@ -141,7 +142,7 @@ public class BoxServiceTest extends AbstractTest {
 		//We get the actor that is logged with that user
 		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		//Now we create a box
-		final Box n = this.boxService.create();
+		final Box n = this.boxService.create(owner);
 		n.setDeleteable(true);
 		n.setName("TEST BOX");
 		n.setOwner(owner);

@@ -4,6 +4,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -18,7 +19,9 @@ import security.UserAccount;
 import utilities.AuthenticationUtility;
 import domain.Application;
 import domain.Customer;
+import domain.FixUpTask;
 import domain.HandyWorker;
+import domain.Message;
 import domain.Phase;
 
 @Service
@@ -32,14 +35,33 @@ public class ApplicationService {
 	@Autowired
 	private HandyWorkerService		workerService;
 	@Autowired
+	private ActorService			actorService;
+	@Autowired
 	private FixUpTaskService		taskService;
 	@Autowired
-	private ActorService			actorService;
+	private MessageService			messageService;
+
 	private UserAccount				account;
 
+	private static String			messageAcceptedEN	= "Congratulations, your application for the task has been accepted. Task: ";
+	private static String			messageRejectedEN	= "We're so sorry, the customer has rejected your application to: ";
 
-	public Application create() {
+	private static String			messageAcceptedES	= "Enhorabuena, tu soliitud para la tarea ha sido aceptada. Tarea: ";
+	private static String			messageRejectedES	= "Lo sentimos, el cliente no ha aceptado tu solicitud para la tarea: ";
+
+
+	public Application create(final int fixuptaskId) {
+		this.account = LoginService.getPrincipal();
+		//Assert.isTrue(this.account.getAuthorities().contains(Authority.HANDYWORKER));
 		final Application res = new Application();
+
+		final FixUpTask task = this.taskService.findOne(fixuptaskId);
+		System.out.println(task);
+
+		res.setFixUpTask(task);
+		res.setRegisterTime(new Date());
+		res.setStatus("PENDING");
+		res.setHandyWorker((HandyWorker) this.actorService.findByUserAccountId(this.account.getId()));
 
 		res.setCustomerComments(new ArrayList<String>());
 		res.setHandyComments(new ArrayList<String>());
@@ -57,22 +79,97 @@ public class ApplicationService {
 			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
 			Assert.isTrue(application.getOfferedPrice() != 0);
 
+			Assert.isTrue(application.getRegisterTime().before(application.getFixUpTask().getPeriodStart()));
+
 			application.setRegisterTime(new Date());
-			application.setStatus("PENDING");
+			//application.setStatus("PENDING");
 			a = this.applicationRepo.save(application);
 
-			//			final FixUpTask task = a.getFixUpTask();
-			//			task.getApplications().add(a);
-			//
-			//			this.taskService.save(task);
 		} else {//Actualizacion del status por parte del customer due�o de la fixUpTask
 			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
 			Assert.isTrue(application.getFixUpTask().getCustomer().getAccount().equals(this.account));//customer loggeado due�o de la task
-			if (application.getStatus().equals("ACCEPTED"))
+			if (application.getStatus().equals("ACCEPTED")) {
 				Assert.notNull(application.getFixUpTask().getCreditCard());
+				this.sendAcceptMessageTo(application);
+			} else
+				this.sendRejectMessageTo(application);
+
 			a = this.applicationRepo.save(application);
 		}
 		return a;
+	}
+
+	private boolean taskHasNoAcceptedApplication(final Application a) {
+		boolean res = true;
+
+		final FixUpTask t = this.taskService.findOne(a.getFixUpTask().getId());
+		final Collection<Application> apps = t.getApplications();
+
+		for (final Application app : apps)
+			if (app.getId() != a.getId())
+				if (app.getStatus().equals("ACCEPTED")) {
+					System.out.println("Esta Task ya tiene una solicitud aceptada.");
+					res = false;
+					break;
+				}
+
+		return res;
+	}
+
+	public Application accept(final Application a) {
+
+		Assert.notNull(a);
+		Assert.isTrue(a.getStatus().equals("PENDING"));
+
+		Assert.isTrue(this.taskHasNoAcceptedApplication(a));
+
+		a.setStatus("ACCEPTED");
+		System.out.println(a.getStatus());
+		final FixUpTask t = this.rejectRestOfApplications(a);
+
+		Assert.notNull(t);
+		System.out.println(t.getTicker());
+		a.setFixUpTask(t);
+
+		return this.save(a);
+
+	}
+
+	private FixUpTask rejectRestOfApplications(final Application a) {
+		final FixUpTask t = a.getFixUpTask();
+		final Collection<Application> apps = t.getApplications();
+		System.out.println("Rechazando resto de solicitudes");
+		for (final Application app : apps)
+			if (app.getId() != a.getId()) {
+				System.out.println("Rejecting application: " + app.getId());
+				app.setStatus("REJECTED");
+				this.save(app);
+			}
+		return this.taskService.save(t);
+	}
+	private void sendAcceptMessageTo(final Application a) {
+		this.account = LoginService.getPrincipal();
+		final Message msg = this.messageService.create(this.actorService.findByUserAccountId(this.account.getId()));
+		msg.setPriority("HIGH");
+		msg.setSubject("ACCEPTED APPLICATION -- SOLICITUD ACEPTADA");
+		msg.setBody(ApplicationService.messageAcceptedEN + a.getFixUpTask().getTicker() + "\n\n" + ApplicationService.messageAcceptedES + a.getFixUpTask().getTicker());
+
+		this.messageService.send(msg, a.getHandyWorker());
+	}
+	private void sendRejectMessageTo(final Application a) {
+		this.account = LoginService.getPrincipal();
+		final Message msg = this.messageService.create(this.actorService.findByUserAccountId(this.account.getId()));
+		msg.setPriority("HIGH");
+		msg.setSubject("REJECTED APPLICATION -- SOLICITUD RECHAZADA");
+		msg.setBody(ApplicationService.messageRejectedEN + a.getFixUpTask().getTicker() + "\n\n" + ApplicationService.messageRejectedES + a.getFixUpTask().getTicker());
+
+		this.messageService.send(msg, a.getHandyWorker());
+	}
+
+	public Application getApplicationAcceptedForFixUpTask(final int fixuptaskId) {
+		Assert.notNull(fixuptaskId);
+
+		return this.applicationRepo.getAcepptedApplicationForFixUpTask(fixuptaskId);
 	}
 
 	public Application saveComment(final int applicationId, final String comment) {
@@ -119,10 +216,20 @@ public class ApplicationService {
 		//Al comprobar el id, como no pueden exixtir dos usuarios con el mismo id, te certificas que ya es Worker, aun as�
 		Assert.isTrue(w.getAccount().getAuthorities().iterator().next().getAuthority().equals(Authority.HANDYWORKER));
 
-		return this.applicationRepo.findAllCustomer(workerId);
+		return this.applicationRepo.findAllWorker(workerId);
 	}
 
-	public Collection<Double> statictisApplications() {
+	public Collection<Application> findAllTask(final int taskId) {
+		this.account = LoginService.getPrincipal();
+		final Customer c = (Customer) this.actorService.findByUserAccountId(this.account.getId());
+		//FIXME
+		//Al comprobar el id, como no pueden exixtir dos usuarios con el mismo id, te certificas que ya es Worker, aun as�
+		Assert.isTrue(c.getAccount().getAuthorities().iterator().next().getAuthority().equals(Authority.CUSTOMER));
+
+		return this.applicationRepo.findAllTask(taskId);
+	}
+
+	public List<Object[]> statictisApplications() {
 
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
@@ -167,6 +274,12 @@ public class ApplicationService {
 		Assert.notNull(a);
 		return a;
 
+	}
+
+	public List<Object[]> findApplicationsPerTask() {
+		this.account = LoginService.getPrincipal();
+		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
+		return this.applicationRepo.applicationsPerFTask();
 	}
 
 }

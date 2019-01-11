@@ -23,6 +23,8 @@ public class Configuration extends DomainEntity {
 
 	private String				bannerURL;
 
+	private String				nameSystem;
+
 	private String				welcomeEN;
 
 	private String				welcomeSP;
@@ -39,6 +41,15 @@ public class Configuration extends DomainEntity {
 
 	private Collection<String>	cardMaker;
 
+
+	@NotBlank
+	public String getNameSystem() {
+		return this.nameSystem;
+	}
+
+	public void setNameSystem(final String nameSystem) {
+		this.nameSystem = nameSystem;
+	}
 
 	@Min(1)
 	@Max(24)
