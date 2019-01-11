@@ -105,6 +105,7 @@ public class BoxController extends AbstractController {
 			box = this.boxService.findOne(boxId);
 			result = new ModelAndView("box/edit");
 			Assert.notNull(box);
+			result.addObject("box", box);
 		} catch (final Throwable opps) {
 			result = new ModelAndView("redirect:list.do");
 			result.addObject("messageCode", "box.commit.error");

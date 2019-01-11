@@ -6,6 +6,6 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<<spring:message code="phase.exito"/>
+<spring:message code="phase.exito"/>
 <br />
 <a href="application/customer,handyworker/list.do?fixuptaskId=0" ><spring:message code="phase.return" /></a>
