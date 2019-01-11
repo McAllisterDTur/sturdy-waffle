@@ -87,8 +87,7 @@ public class FinderService {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
 		final HandyWorker logged = (HandyWorker) this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final Finder f = this.finderRepository.findByHandyWorker(logged.getId());
-		if (f != null)
-			this.checkOutdated(f);
+		this.checkOutdated(f);
 		return f;
 	}
 
