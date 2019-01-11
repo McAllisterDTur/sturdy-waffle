@@ -275,5 +275,11 @@ public class MessageService {
 			}
 
 		}
+		private final Boolean checkTagSpam(final Collection<String> tags, final Actor sender){
+			for(final String t: tags)
+				if(this.spamService.isSpam(sender, t)){
+					
+				}
+		}
 	}
 }

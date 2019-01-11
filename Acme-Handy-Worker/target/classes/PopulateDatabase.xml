@@ -2990,5 +2990,4 @@
 		<property name="cacheUpdate" value="11/01/2018 12:31" />
 		<property name="worker" ref="Worker1" />
 	</bean>
-
 </beans>

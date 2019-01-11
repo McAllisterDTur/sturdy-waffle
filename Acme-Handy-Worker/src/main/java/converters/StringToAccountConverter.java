@@ -13,28 +13,27 @@ import security.UserAccountRepository;
 
 @Component
 @Transactional
-public class StringToUserAccountConverter implements Converter<String, UserAccount> {
+public class StringToAccountConverter implements Converter<String, UserAccount> {
 
 	@Autowired
-	UserAccountRepository	uaRepo;
+	private UserAccountRepository	useraccountRepository;
 
 
 	@Override
-	public UserAccount convert(final String s) {
-		UserAccount res;
-		Integer id;
+	public UserAccount convert(final String text) {
+		UserAccount result;
+		final int id;
 
 		try {
-			if (StringUtils.isEmpty(s))
-				res = null;
+			if (StringUtils.isEmpty(text))
+				result = null;
 			else {
-				id = Integer.valueOf(s);
-				res = this.uaRepo.findOne(id);
+				id = Integer.valueOf(text);
+				result = this.useraccountRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}
-
-		return res;
+		return result;
 	}
 }
