@@ -22,15 +22,16 @@
 			<jstl:if test="${currentDate.time gt row.fixUpTask.periodStart.time and row.status == 'PENDING' }">
 				<span class="PASSED"><jstl:out value="${ row.status }" /></span>
 			</jstl:if>
-		
+
 			<jstl:if test="${row.status != 'PENDING'}">
 				<span class="${ row.status }"><jstl:out value="${ row.status }" /></span>
 			</jstl:if>
 		</display:column>
-	<display:column>	
+	<display:column>
 		<a
 			href="application/customer,handyworker/display.do?applicationId=${row.id}"><spring:message
 				code="application.see" /></a>
+
 	</display:column>
 	<security:authorize access="hasRole('CUSTOMER')">
 		<display:column>

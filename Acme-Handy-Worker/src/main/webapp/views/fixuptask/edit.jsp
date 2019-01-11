@@ -80,8 +80,15 @@
 	<form:label path="category">
 		<spring:message code="fixuptask.category" />:</form:label>
 	<form:select path="category">
-		<form:options items="${categories}" itemLabel="name" itemValue="id" />
+		<form:option label="----" value="" />
+		<jstl:if test="${pageContext.response.locale.language == 'en'}">
+			<form:options items="${categories}" itemLabel="nameEn" itemValue="id"  />
+		</jstl:if>
+		<jstl:if test="${pageContext.response.locale.language == 'es'}">
+			<form:options items="${categories}" itemLabel="name" itemValue="id" />
+		</jstl:if>
 	</form:select>
+	<form:errors path="category" cssClass="error" />
 	<br />
 	<form:label path="warranty">
 		<spring:message code="fixuptask.warranty" />:</form:label>
