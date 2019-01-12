@@ -49,13 +49,13 @@
 <div>
 <h2><spring:message code="administrator.dashboard.customerTenPercentMoreApplications"/></h2>
 <jstl:forEach var="customer" items="${customers}">
-	<jstl:out value="${customer.account.name}"/>
+	<jstl:out value="${customer.account.username}"/>
 	<br/>
 </jstl:forEach>
 
 <h2><spring:message code="administrator.dashboard.handyTenPercentMoreAccepted"/></h2>
 <jstl:forEach var="handyWorker" items="${handyWorkers}">
-	<jstl:out value="${handyWorker.account.name}"/>
+	<jstl:out value="${handyWorker.account.username}"/>
 	<br/>
 </jstl:forEach>
 </div>
