@@ -46,11 +46,11 @@ public class NotesServiceTest extends AbstractTest {
 	public void testCreateAndTestReferee() {
 		super.authenticate("referee1");
 		this.account = LoginService.getPrincipal();
-		final Notes n = this.notesServices.create();
-
-		Assert.notNull(n);
 		final Referee actor = (Referee) this.actorService.findByUserAccountId(this.account.getId());
 		final Collection<Report> reports = this.reportService.findReportsActor(actor.getId());
+		final Notes n = this.notesServices.create(reports.iterator().next());
+
+		Assert.notNull(n);
 
 		Report r = null;
 		for (final Report t : reports)
@@ -69,11 +69,11 @@ public class NotesServiceTest extends AbstractTest {
 	public void testCreateAndTestCustomer() {
 		super.authenticate("Customer1");
 		this.account = LoginService.getPrincipal();
-		final Notes n = this.notesServices.create();
-
-		Assert.notNull(n);
 		final Customer actor = (Customer) this.actorService.findByUserAccountId(this.account.getId());
 		final Collection<Report> reports = this.reportService.findReportsActor(actor.getId());
+		final Notes n = this.notesServices.create(reports.iterator().next());
+
+		Assert.notNull(n);
 
 		Report r = null;
 		for (final Report t : reports)
@@ -92,11 +92,11 @@ public class NotesServiceTest extends AbstractTest {
 	public void testCreateAndTestWorker() {
 		super.authenticate("handy2");
 		this.account = LoginService.getPrincipal();
-		final Notes n = this.notesServices.create();
-
-		Assert.notNull(n);
 		final HandyWorker actor = (HandyWorker) this.actorService.findByUserAccountId(this.account.getId());
 		final Collection<Report> reports = this.reportService.findReportsActor(actor.getId());
+		final Notes n = this.notesServices.create(reports.iterator().next());
+
+		Assert.notNull(n);
 
 		Report r = null;
 		for (final Report t : reports)

@@ -15,51 +15,46 @@
 		<!-- Add your own converters using entries of the following form: <bean
 			class="converters.Class1ToClass2" /> -->
 		<!-- Entity to String -->
-		<bean class="converters.ComplaintToStringConverter" />
-		<bean class="converters.CustomerToStringConverter" />
-		<bean class="converters.HandyWorkerToStringConverter" />
-		<bean class="converters.FixUpTaskToStringConverter" />
+		<bean class="converters.ActorToStringConverter" />
 		<bean class="converters.ApplicationToStringConverter" />
-		<bean class="converters.CreditCardToStringConverter" />
-		<bean class="converters.UserAccountToStringConverter" />
+		<bean class="converters.AuthorityToStringConverter" />
+		<bean class="converters.BoxToStringConverter" />
 		<bean class="converters.CategoryToStringConverter" />
+		<bean class="converters.ComplaintToStringConverter" />
+		<bean class="converters.CreditCardToStringConverter" />
+		<bean class="converters.CustomerToStringConverter" />
+		<bean class="converters.EndorsableToStringConverter" />
+		<bean class="converters.FixUpTaskToStringConverter" />
+		<bean class="converters.HandyWorkerToStringConverter" />
+		<bean class="converters.MessageToStringConverter" />
 		<bean class="converters.RefereeToStringConverter" />
 		<bean class="converters.ReportToStringConverter" />
-		<bean class="converters.EndorsableToStringConverter" />
-		<bean class="converters.WarrantyToStringConverter" />
-		<bean class="converters.CategoryToStringConverter" />
-		<bean class="converters.AuthorityToStringConverter" />
-		<bean class="converters.SponsorshipToStringConverter" />
 		<bean class="converters.SectionToStringConverter" />
+		<bean class="converters.SponsorshipToStringConverter" />
 		<bean class="converters.TutorialToStringConverter" />
-		<bean class="converters.ActorToStringConverter" />
-		<bean class="converters.BoxToStringConverter" />
-		<bean class="converters.MessageToStringConverter" />
-		<bean class="converters.AccountToStringConverter" />
+		<bean class="converters.UserAccountToStringConverter" />
+		<bean class="converters.WarrantyToStringConverter" />		
 
 		<!-- String to Entity -->
-		<bean class="converters.StringToComplaintConverter" />
-		<bean class="converters.StringToCustomerConverter" />
-		<bean class="converters.StringToHandyWorkerConverter" />
-		<bean class="converters.StringToFixUpTaskConverter" />
+		<bean class="converters.StringToActorConverter" />
 		<bean class="converters.StringToApplicationConverter" />
-		<bean class="converters.StringToCreditCardConverter" />
-		<bean class="converters.StringToUserAccountConverter" />
+		<bean class="converters.StringToAuthorityConverter" />
+		<bean class="converters.StringToBoxConverter" />
 		<bean class="converters.StringToCategoryConverter" />
+		<bean class="converters.StringToComplaintConverter" />
+		<bean class="converters.StringToCreditCardConverter" />
+		<bean class="converters.StringToCustomerConverter" />
+		<bean class="converters.StringToEndorsableConverter" />
+		<bean class="converters.StringToFixUpTaskConverter" />
+		<bean class="converters.StringToHandyWorkerConverter" />
+		<bean class="converters.StringToMessageConverter" />
 		<bean class="converters.StringToRefereeConverter" />
 		<bean class="converters.StringToReportConverter" />
-		<bean class="converters.StringToEndorsableConverter" />
-		<bean class="converters.StringToWarrantyConverter" />
-		<bean class="converters.StringToCategoryConverter" />
-		<bean class="converters.StringToAuthorityConverter" />
-		<bean class="converters.StringToSponsorshipConverter" />
 		<bean class="converters.StringToSectionConverter" />
+		<bean class="converters.StringToSponsorshipConverter" />
 		<bean class="converters.StringToTutorialConverter" />
-		<bean class="converters.StringToActorConverter" />
-		<bean class="converters.StringToBoxConverter" />
-		<bean class="converters.StringToMessageConverter" />
-		<bean class="converters.StringToAccountConverter" />
-
+		<bean class="converters.StringToUserAccountConverter" />		
+		<bean class="converters.StringToWarrantyConverter" />
 	</util:list>
 
 </beans>
