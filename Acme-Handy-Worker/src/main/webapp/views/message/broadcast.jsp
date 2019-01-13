@@ -76,6 +76,8 @@
 	<form:textarea path="body" />
 	<form:errors path="body" />
 	<br />
+	<spring:message code="mandatory" />
+	<br />
 
 	<input type="submit" name="save"
 		value="<spring:message code="message.save"/>" />

@@ -22,7 +22,6 @@
 	<form:hidden path="version" />
 	<form:hidden path="sender" />
 	<form:hidden path="sendTime" />
-	<%-- <form:hidden path="boxes" /> --%>
 	<form:hidden path="subject" />
 	<form:hidden path="reciever" />
 	<form:hidden path="body" />
@@ -30,15 +29,19 @@
 	<form:hidden path="tags" />
 
 	<form:label path="boxes">
-		<spring:message code="message.list.boxes" />:&nbsp;</form:label>
+		<spring:message code="message.list.boxes" />: </form:label>
 	<form:select path="boxes">
 		<jstl:forEach var="box" items="${boxes}">
 			<form:option value="${box.id}" label="${box.name}"></form:option>
 		</jstl:forEach>
 	</form:select>
+	<spring:message code="message.actor.one" />
 	<form:errors path="boxes" />
 
 	<br />
+	<spring:message code="mandatory" />
+	<br />
+
 	<input type="submit" name="save"
 		value="<spring:message code="message.copy"/>" />
 </form:form>
