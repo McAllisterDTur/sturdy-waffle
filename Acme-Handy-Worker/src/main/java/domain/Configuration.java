@@ -11,6 +11,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.URL;
 
 @Entity
@@ -96,6 +97,7 @@ public class Configuration extends DomainEntity {
 		this.welcomeSP = welcomeSP;
 	}
 	@ElementCollection
+	@NotEmpty
 	public Collection<String> getSpamWords() {
 		return this.spamWords;
 	}
@@ -112,6 +114,7 @@ public class Configuration extends DomainEntity {
 		this.countryCode = countryCode;
 	}
 	@ElementCollection
+	@NotEmpty
 	public Collection<String> getPositiveWords() {
 		return this.positiveWords;
 	}
@@ -120,6 +123,7 @@ public class Configuration extends DomainEntity {
 		this.positiveWords = positiveWords;
 	}
 	@ElementCollection
+	@NotEmpty
 	public Collection<String> getNegativeWords() {
 		return this.negativeWords;
 	}
