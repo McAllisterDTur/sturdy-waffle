@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -43,9 +44,16 @@ public class ApplicationServiceTest extends AbstractTest {
 	public void createAndSave() {
 
 		//Creamos una application vac�a
+		super.authenticate("handy1");
 		final FixUpTask task = (FixUpTask) this.taskService.findAsHandyWorker().toArray()[0];
 		final Application a = this.applicationService.create(task.getId());
+		super.unauthenticate();
 
+		task.setPeriodStart(new Date("01/01/2038 00:01"));
+		task.setPeriodStart(new Date("01/01/2038 01:01"));
+		super.authenticate(task.getCustomer().getAccount().getUsername());
+		this.taskService.save(task);
+		super.unauthenticate();
 		Assert.notNull(a);
 
 		//Creamos el worker due�o de la aplicacion

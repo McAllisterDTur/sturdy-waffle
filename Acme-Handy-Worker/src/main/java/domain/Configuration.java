@@ -11,6 +11,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -61,6 +62,7 @@ public class Configuration extends DomainEntity {
 		this.cacheTime = cacheTime;
 	}
 
+	@Min(0)
 	public double getVat() {
 		return this.vat;
 	}
@@ -68,6 +70,7 @@ public class Configuration extends DomainEntity {
 	public void setVat(final double vat) {
 		this.vat = vat;
 	}
+	@URL
 	@NotBlank
 	public String getBannerURL() {
 		return this.bannerURL;
@@ -100,7 +103,7 @@ public class Configuration extends DomainEntity {
 	public void setSpamWords(final Collection<String> spamWords) {
 		this.spamWords = spamWords;
 	}
-
+	@NotBlank
 	public String getCountryCode() {
 		return this.countryCode;
 	}
@@ -124,7 +127,9 @@ public class Configuration extends DomainEntity {
 	public void setNegativeWords(final Collection<String> negativeWords) {
 		this.negativeWords = negativeWords;
 	}
+
 	@Max(100)
+	@Min(1)
 	public int getFinderResults() {
 		return this.finderResults;
 	}
