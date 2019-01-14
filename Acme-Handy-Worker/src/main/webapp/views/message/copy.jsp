@@ -45,6 +45,6 @@
 	<input type="submit" name="save"
 		value="<spring:message code="message.copy"/>" />
 </form:form>
-<button onClick="window.location.href='/Acme-Handy-Worker/box/list.do'">
+<button onClick="window.location.href='box/list.do'">
 	<spring:message code="message.cancel" />
 </button>

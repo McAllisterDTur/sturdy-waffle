@@ -3,7 +3,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,24 +41,29 @@ public class BoxService {
 	}
 	public Box save(final Box box) {
 		// We search boxes from logged actor
+		Box saved;
+		if (box.getId() != 0) {
+			final Box boxBD = this.findOne(box.getId());
+			if (boxBD.getDeleteable() == false)
+				boxBD.setMessages(box.getMessages());
+			else {
+				if (LoginService.getPrincipal() == box.getOwner().getAccount())
+					boxBD.setName(box.getName());
 
-		try {
-			final List<String> names = this.allBoxNames();
-			if (box.getId() == 0)
-				Assert.isTrue((names == null || !names.contains(box.getName())), "Box with bad name");
-		} catch (final Throwable oops) {
-			// If we can't find a logged actor, it's because is the first time we are calling this
-		}
-		final Box saved = this.boxRepository.save(box);
+				boxBD.setMessages(box.getMessages());
+			}
+			saved = this.boxRepository.save(boxBD);
+		} else
+			saved = this.boxRepository.save(box);
 		return saved;
 	}
-
 	public Collection<Box> findAll() {
 		return this.boxRepository.findAll();
 	}
 
 	public Box findOne(final int idBox) {
-		return this.boxRepository.findOne(idBox);
+		final Box box = this.boxRepository.findOne(idBox);
+		return box;
 	}
 
 	public void delete(final Box box) {
@@ -127,22 +131,8 @@ public class BoxService {
 		return this.boxRepository.boxesByActor(actorId);
 	}
 
-	public Box findByName(final int actorId, final String name) {
+	public Collection<Box> findByName(final int actorId, final String name) {
 		return this.boxRepository.boxByName(actorId, name);
 	}
 
-	//Auxiliary methods
-
-	private List<String> allBoxNames() {
-		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
-		List<String> names = new ArrayList<>();
-		try {
-			for (final Box b : this.boxRepository.boxesByActor(owner.getId()))
-				names.add(b.getName());
-		} catch (final NullPointerException e) {
-			names = null;
-		}
-
-		return names;
-	}
 }
