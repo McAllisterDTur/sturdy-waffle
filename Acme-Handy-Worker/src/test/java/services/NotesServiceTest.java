@@ -33,13 +33,15 @@ import domain.Report;
 public class NotesServiceTest extends AbstractTest {
 
 	@Autowired
-	private NotesService	notesServices;
+	private NotesService		notesServices;
 	@Autowired
-	private ReportService	reportService;
+	private ReportService		reportService;
 	@Autowired
-	private ActorService	actorService;
+	private ActorService		actorService;
+	@Autowired
+	private ComplaintService	complaintService;
 
-	private UserAccount		account;
+	private UserAccount			account;
 
 
 	@Test
@@ -90,7 +92,7 @@ public class NotesServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreateAndTestWorker() {
-		super.authenticate("handy2");
+		super.authenticate("handy1");
 		this.account = LoginService.getPrincipal();
 		final HandyWorker actor = (HandyWorker) this.actorService.findByUserAccountId(this.account.getId());
 		final Collection<Report> reports = this.reportService.findReportsActor(actor.getId());
@@ -110,5 +112,4 @@ public class NotesServiceTest extends AbstractTest {
 
 		super.unauthenticate();
 	}
-
 }

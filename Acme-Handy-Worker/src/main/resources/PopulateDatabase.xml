@@ -2061,50 +2061,6 @@
 		</property>
 	</bean>
 
-	<bean id="Box38" class="domain.Box">
-		<property name="name" value="IN" />
-		<property name="deleteable" value="false" />
-		<property name="owner" ref="Customer10" />
-		<property name="messages">
-			<list>
-				<null />
-			</list>
-		</property>
-	</bean>
-
-	<bean id="Box39" class="domain.Box">
-		<property name="name" value="OUT" />
-		<property name="deleteable" value="false" />
-		<property name="owner" ref="Customer10" />
-		<property name="messages">
-			<list>
-				<null />
-			</list>
-		</property>
-	</bean>
-
-	<bean id="Box40" class="domain.Box">
-		<property name="name" value="SPAM" />
-		<property name="deleteable" value="false" />
-		<property name="owner" ref="Customer10" />
-		<property name="messages">
-			<list>
-				<null />
-			</list>
-		</property>
-	</bean>
-
-	<bean id="Box41" class="domain.Box">
-		<property name="name" value="TRASH" />
-		<property name="deleteable" value="false" />
-		<property name="owner" ref="Customer10" />
-		<property name="messages">
-			<list>
-				<null />
-			</list>
-		</property>
-	</bean>
-
 	<bean id="Box42" class="domain.Box">
 		<property name="name" value="IN" />
 		<property name="deleteable" value="false" />
