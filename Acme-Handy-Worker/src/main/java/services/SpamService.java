@@ -40,13 +40,16 @@ public class SpamService {
 
 	public Boolean isSpam(final Actor a, final Collection<String> sCol) {
 		Boolean spam = false;
-		for (final String s : sCol) {
-			spam = this.isSpam(a, s);
-			if (spam)
-				break;
+		if (!sCol.isEmpty() || sCol != null) {
+			for (final String s : sCol) {
+				spam = this.isSpam(a, s);
+				if (spam)
+					break;
+			}
+			a.setIsSuspicious(spam);
+			this.aService.save(a);
 		}
-		a.setIsSuspicious(spam);
-		this.aService.save(a);
+
 		return spam;
 	}
 }
