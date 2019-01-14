@@ -223,14 +223,14 @@ public class FixUpTaskService {
 	 * @return Collection of the fix up tasks related to a customer
 	 */
 	public Collection<FixUpTask> findFromCustomer(final int customerId) {
-		UserAccount userAccount;
+		//		UserAccount userAccount;
 
-		userAccount = LoginService.getPrincipal();
-
-		final Authority au1 = new Authority();
-		au1.setAuthority(Authority.CUSTOMER);
-
-		Assert.isTrue(userAccount.getAuthorities().contains(au1));
+		//		userAccount = LoginService.getPrincipal();
+		//
+		//		final Authority au1 = new Authority();
+		//		au1.setAuthority(Authority.CUSTOMER);
+		//
+		//		Assert.isTrue(userAccount.getAuthorities().contains(au1));
 
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.findFromCustomer(customerId);
 		return res;

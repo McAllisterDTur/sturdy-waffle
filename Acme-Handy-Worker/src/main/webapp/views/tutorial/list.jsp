@@ -27,23 +27,23 @@
 	<display:column property="lastTimeUpdated" titleKey="tutorial.lastupdate"></display:column>
 	
 	<display:column>
-		<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/display.do?id=${row.id}'"><spring:message code="tutorial.see"/></button>
+		<button onClick="window.location.href='tutorial/display.do?id=${row.id}'"><spring:message code="tutorial.see"/></button>
 		
 	</display:column>
 	
 	<security:authorize access="hasRole('HANDYWORKER')">
 		<display:column>
 		<jstl:if test="${row.worker.account.username == principal}">
-			<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/handyworker/edit.do?id=${row.id}'"><spring:message code="tutorial.edit"/></button>
+			<button onClick="window.location.href='tutorial/handyworker/edit.do?id=${row.id}'"><spring:message code="tutorial.edit"/></button>
 		</jstl:if>
 		</display:column>
 		<display:column>
 		<jstl:if test="${row.worker.account.username == principal}">
-			<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/handyworker/delete.do?id=${row.id}'"><spring:message code="tutorial.delete"/></button>
+			<button onClick="window.location.href='tutorial/handyworker/delete.do?id=${row.id}'"><spring:message code="tutorial.delete"/></button>
 		</jstl:if>
 		</display:column>
 	</security:authorize>
 	<display:column>
-		<button onClick="window.location.href='/Acme-Handy-Worker/tutorial/pictures/list.do?id=${row.id}'"><spring:message code="tutorial.pictures"/></button>
+		<button onClick="window.location.href='tutorial/pictures/list.do?id=${row.id}'"><spring:message code="tutorial.pictures"/></button>
 	</display:column>
 </display:table>
