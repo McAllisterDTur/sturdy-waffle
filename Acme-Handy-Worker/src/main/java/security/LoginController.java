@@ -124,7 +124,7 @@ public class LoginController extends AbstractController {
 		String emailError = "";
 		if (actor.getEmail() != null)
 			emailError = this.actorService.validateEmail(actor.getEmail());
-		if (binding.hasErrors()) {
+		if (binding.hasErrors() || !emailError.isEmpty()) {
 			System.out.println(binding.getFieldErrors());
 			result = new ModelAndView("actor/register");
 			result.addObject("uri", "security/register.do");

@@ -254,6 +254,8 @@ public class ProfileController extends AbstractController {
 			result.addObject("endorsable", true);
 			result.addObject("score", this.custoService.findOne(id).getScore());
 			result.addObject("handy", false);
+			result.addObject("vat", this.cService.findAll().iterator().next().getVat());
+			result.addObject("fixUpTasks", this.futService.findFromCustomer(actor.getId()));
 		} else if (role.equals("HANDYWORKER")) {
 			result.addObject("handy", true);
 			result.addObject("make", this.hwService.findOne(id).getMake());

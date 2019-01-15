@@ -86,6 +86,7 @@ public class FixUpTaskController extends AbstractController {
 		result.addObject("fixuptasks", tasks);
 		result.addObject("finder", finder);
 		result.addObject("categories", this.catService.findAll());
+		result.addObject("vat", this.confService.findAll().iterator().next().getVat());
 		result = this.confService.configGeneral(result);
 		result = this.actorService.isBanned(result);
 
@@ -142,8 +143,9 @@ public class FixUpTaskController extends AbstractController {
 				result.addObject("messageCode", "fixuptask.commit.error");
 				result = this.addCategoriesWarrantiesConfiguration(result);
 				result.addObject("fixUpTask", fixUpTask);
-			}
 
+			}
+		result.addObject("vat", this.confService.findAll().iterator().next().getVat());
 		result = this.confService.configGeneral(result);
 		result = this.actorService.isBanned(result);
 		return result;

@@ -106,7 +106,7 @@
 			<jstl:out value="${row.maxPrice }" />(<jstl:out value="${row.maxPrice *(1+(vat/100))}" />)
 		</display:column>
 		<display:column>
-			<button onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer,handyworker/display.do?fixuptaskId=${row.id}'">
+			<button onClick="window.location.href='fixuptask/customer,handyworker/display.do?fixuptaskId=${row.id}'">
 				<spring:message code="fixuptask.display"/>
 			</button>
 		</display:column>

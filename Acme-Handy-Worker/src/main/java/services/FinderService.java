@@ -55,25 +55,24 @@ public class FinderService {
 
 	public Finder save(final Finder f) {
 		Finder result;
-		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
-		final HandyWorker logged = (HandyWorker) this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		if (f.getId() == 0) {
-			final Finder fh = this.findByHandyWorker(logged);
+			final Finder fh = this.findByHandyWorker(f.getWorker());
 			Assert.isNull(fh);
 		} else {
+			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
+			final HandyWorker logged = (HandyWorker) this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 			final Finder fh = this.findByHandyWorker(logged);
 			Assert.isTrue(f.getWorker().equals(logged));
 			Assert.isTrue(f.getId() == fh.getId());
+
+			final Configuration configuration = this.cService.findAll().iterator().next();
+
+			List<FixUpTask> futSearched = (List<FixUpTask>) this.taskService.findByFilter(f.getKeyWord(), f.getCategory(), f.getWarranty(), f.getMinPrice(), f.getMaxPrice(), f.getStartDate(), f.getEndDate());
+			if (futSearched.size() > configuration.getFinderResults())
+				futSearched = futSearched.subList(0, configuration.getFinderResults());
+			f.setCacheUpdate(new Date());
+			f.setFixUpTask(futSearched);
 		}
-
-		final Configuration configuration = this.cService.findAll().iterator().next();
-
-		List<FixUpTask> futSearched = (List) this.taskService.findByFilter(f.getKeyWord(), f.getCategory(), f.getWarranty(), f.getMinPrice(), f.getMaxPrice(), f.getStartDate(), f.getEndDate());
-		if (futSearched.size() > configuration.getFinderResults())
-			futSearched = futSearched.subList(0, configuration.getFinderResults());
-		f.setCacheUpdate(new Date());
-		f.setFixUpTask(futSearched);
-		f.setWorker(logged);
 		result = this.finderRepository.save(f);
 		return result;
 

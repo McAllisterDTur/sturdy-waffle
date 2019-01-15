@@ -76,7 +76,7 @@
 
 	<input type="submit" name="save" value="<spring:message code="fixuptask.save"/>" />
 	<jstl:if test="${fixuptask.customer.account.username == principal}">
-		<button onClick="window.location.href='/Acme-Handy-Worker/fixuptask/delete.do?id=${fixuptask.id}'">
+		<button onClick="window.location.href='fixuptask/delete.do?id=${fixuptask.id}'">
 			<spring:message code="fixuptask.delete" />
 		</button>
 	</jstl:if>

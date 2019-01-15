@@ -31,9 +31,6 @@
 	</jstl:if>
 
 	<br />
-	<jstl:if test="${application.status == 'ACCEPTED'}">
-		<display:table name="application.phases" id="row" class="dispalytag"
-			pagesize="5" requestURI="${ requestURI}"><br /></display:table></jstl:if>
 	<spring:message code="application.handy.comments"/>
 	<br />
 	<jstl:forEach items="${application.handyComments }" var="comment">
@@ -64,7 +61,7 @@
 			<a href="phase/handyworker/create.do?applicationId=${application.id }" ><spring:message code="application.phase.create"/></a>
 		</security:authorize>
 		<security:authorize access="hasRole('CUSTOMER')">
-			<jstl:if test="${application.customer == customer }">
+			<jstl:if test="${application.fixUpTask.customer == customer }">
 				<a href="application/customer,handyworker/edit.do?applicationId=${application.id}"><spring:message code="application.addComment" /></a>
 			</jstl:if>
 
