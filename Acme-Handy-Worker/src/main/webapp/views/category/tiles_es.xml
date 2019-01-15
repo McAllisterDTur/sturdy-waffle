@@ -16,18 +16,18 @@
       
 <tiles-definitions>
 
-	<definition name="warranty/list" extends="master.page">	
-		<put-attribute name="title" value="Garantías" />
-		<put-attribute name="body" value="/views/warranty/list.jsp" />
+	<definition name="category/list" extends="master.page">	
+		<put-attribute name="title" value="Categorías" />
+		<put-attribute name="body" value="/views/category/list.jsp" />
 	</definition>
 	
-	<definition name="warranty/edit" extends="master.page">	
-		<put-attribute name="title" value="Garantías" />
-		<put-attribute name="body" value="/views/warranty/edit.jsp" />
+	<definition name="category/edit" extends="master.page">	
+		<put-attribute name="title" value="Editando categoría" />
+		<put-attribute name="body" value="/views/category/edit.jsp" />
 	</definition>
 	
-	<definition name="warranty/see" extends="master.page">	
-		<put-attribute name="title" value="Viendo garantía" />
-		<put-attribute name="body" value="/views/warranty/see.jsp" />
+	<definition name="category/see" extends="master.page">	
+		<put-attribute name="title" value="Viendo categoría" />
+		<put-attribute name="body" value="/views/category/see.jsp" />
 	</definition>
 </tiles-definitions>
