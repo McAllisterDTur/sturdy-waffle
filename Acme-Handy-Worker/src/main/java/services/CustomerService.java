@@ -29,6 +29,8 @@ public class CustomerService {
 	private UserAccountService	userAccountService;
 	@Autowired
 	private BoxService			boxService;
+	@Autowired
+	private FinderService		finderService;
 
 	private UserAccount			account;
 

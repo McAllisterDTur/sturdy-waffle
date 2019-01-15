@@ -62,16 +62,8 @@ public class SponsorService {
 			Assert.isTrue(sponsor.getAccount().equals(ua));
 			Assert.isTrue(ac.getAccount().equals(sponsor.getAccount()));
 			Assert.isTrue(ac.getBanned().equals(sponsor.getBanned()));
-			if (!(sponsor.getPhone().startsWith("+"))) {
-				final String cc = this.configurationService.findAll().iterator().next().getCountryCode();
-				sponsor.setPhone(cc + " " + sponsor.getPhone());
-			}
 			res = this.sponsorRepository.save(sponsor);
 		} else {
-			if (!(sponsor.getPhone().startsWith("+"))) {
-				final String cc = this.configurationService.findAll().iterator().next().getCountryCode();
-				sponsor.setPhone(cc + " " + sponsor.getPhone());
-			}
 			final UserAccount account = sponsor.getAccount();
 			final UserAccount savedAccount = this.userAccountService.save(account);
 			sponsor.setAccount(savedAccount);

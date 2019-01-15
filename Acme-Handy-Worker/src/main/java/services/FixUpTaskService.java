@@ -104,6 +104,21 @@ public class FixUpTaskService {
 		return res;
 	}
 
+	public FixUpTask updateTask(final Application app) {
+		final FixUpTask task = app.getFixUpTask();
+		FixUpTask res;
+
+		Assert.notNull(app);
+		task.getApplications().add(app);
+
+		res = this.fixUpTaskRepository.saveAndFlush(task);
+
+		Assert.notNull(res);
+
+		return res;
+
+	}
+
 	/**
 	 * Checks customer authority. (Req 10.1)
 	 * 

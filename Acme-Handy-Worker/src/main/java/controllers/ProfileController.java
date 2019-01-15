@@ -91,9 +91,10 @@ public class ProfileController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final Actor actor, final BindingResult br) {
 		ModelAndView result;
-		if (br.hasErrors()) {
+		final String emailError = this.actorService.validateEmail(actor.getEmail());
+		if (br.hasErrors() || !emailError.equals("")) {
 			result = new ModelAndView("profile/edit");
-
+			result.addObject("emailError", emailError);
 			result.addObject("handy", false);
 		} else {
 			result = new ModelAndView("profile/edit");
@@ -101,7 +102,7 @@ public class ProfileController extends AbstractController {
 			result.addObject("handy", false);
 			final String role = LoginService.getPrincipal().getAuthorities().toArray()[0].toString();
 			final Integer id = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
-
+			actor.setPhone(this.actorService.checkSetPhoneCC(actor.getPhone()));
 			try {
 				switch (role) {
 				case "CUSTOMER":
@@ -218,6 +219,7 @@ public class ProfileController extends AbstractController {
 			result.addObject("endorsable", true);
 			result.addObject("score", this.custoService.findOne(actor.getId()).getScore());
 			result.addObject("handy", false);
+			result.addObject("vat", this.cService.findAll().iterator().next().getVat());
 			result.addObject("fixUpTasks", this.futService.findFromCustomer(actor.getId()));
 		} else if (role.equals("HANDYWORKER")) {
 			result.addObject("handy", true);
@@ -252,6 +254,8 @@ public class ProfileController extends AbstractController {
 			result.addObject("endorsable", true);
 			result.addObject("score", this.custoService.findOne(id).getScore());
 			result.addObject("handy", false);
+			result.addObject("vat", this.cService.findAll().iterator().next().getVat());
+			result.addObject("fixUpTasks", this.futService.findFromCustomer(actor.getId()));
 		} else if (role.equals("HANDYWORKER")) {
 			result.addObject("handy", true);
 			result.addObject("make", this.hwService.findOne(id).getMake());

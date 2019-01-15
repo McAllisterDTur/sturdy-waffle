@@ -163,7 +163,7 @@ public class MessageService {
 				out = null;
 				out = this.checkSystemBox(this.bService.findByName(receiver.getId(), "SPAM"));
 			} else
-				out = this.checkSystemBox(this.bService.findByName(sender.getId(), "OUT"));
+				out = this.checkSystemBox(this.bService.findByName(receiver.getId(), "IN"));
 			//Modificamos el mensaje
 
 			final Collection<Actor> receptor = new ArrayList<>();

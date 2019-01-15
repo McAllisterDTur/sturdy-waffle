@@ -105,11 +105,11 @@ public class LoginController extends AbstractController {
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView registerGET() {
 		final Actor a = this.actorService.create();
-		Collection<Authority> authorities = null;
-		authorities = this.getDefaultRegisterAuthorities();
 		ModelAndView result;
 		result = new ModelAndView("actor/register");
 		result.addObject("actor", a);
+		Collection<Authority> authorities = null;
+		authorities = this.getDefaultRegisterAuthorities();
 		result.addObject("authorities", authorities);
 		result.addObject("uri", "security/register.do");
 
@@ -121,12 +121,18 @@ public class LoginController extends AbstractController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ModelAndView registerPOST(@Valid final Actor actor, final BindingResult binding) {
 		ModelAndView result;
-		if (binding.hasErrors()) {
-
+		String emailError = "";
+		if (actor.getEmail() != null)
+			emailError = this.actorService.validateEmail(actor.getEmail());
+		if (binding.hasErrors() || !emailError.isEmpty()) {
 			System.out.println(binding.getFieldErrors());
 			result = new ModelAndView("actor/register");
 			result.addObject("uri", "security/register.do");
 			result.addObject("actor", actor);
+			Collection<Authority> authorities = null;
+			authorities = this.getDefaultRegisterAuthorities();
+			result.addObject("authorities", authorities);
+			result.addObject("emailError", emailError);
 		} else
 			try {
 				final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -157,6 +163,10 @@ public class LoginController extends AbstractController {
 				result = new ModelAndView("actor/register");
 				result.addObject("uri", "security/register.do");
 				result.addObject("messageCode", "actor.commit.error");
+				Collection<Authority> authorities = null;
+				authorities = this.getDefaultRegisterAuthorities();
+				result.addObject("authorities", authorities);
+				result.addObject("emailError", emailError);
 				opps.printStackTrace();
 			}
 
@@ -168,11 +178,11 @@ public class LoginController extends AbstractController {
 	@RequestMapping(value = "/administrator/register", method = RequestMethod.GET)
 	public ModelAndView registerAdminGET() {
 		final Actor a = this.actorService.create();
-		Collection<Authority> authorities = null;
-		authorities = this.getAdminRegisterAuthorities();
 		ModelAndView result;
 		result = new ModelAndView("actor/register");
 		result.addObject("actor", a);
+		Collection<Authority> authorities = null;
+		authorities = this.getAdminRegisterAuthorities();
 		result.addObject("authorities", authorities);
 		result.addObject("uri", "security/administrator/register.do");
 		result = this.configurationService.configGeneral(result);
@@ -183,12 +193,19 @@ public class LoginController extends AbstractController {
 	@RequestMapping(value = "/administrator/register", method = RequestMethod.POST)
 	public ModelAndView registerAdminPOST(@Valid final Actor actor, final BindingResult binding) {
 		ModelAndView result;
+		String emailError = "";
+		if (actor.getEmail() != null)
+			emailError = this.administratorService.validateEmail(actor.getEmail());
 		if (binding.hasErrors()) {
 
 			System.out.println(binding.getFieldErrors());
 			result = new ModelAndView("actor/register");
 			result.addObject("uri", "security/administrator/register.do");
 			result.addObject("actor", actor);
+			Collection<Authority> authorities = null;
+			authorities = this.getAdminRegisterAuthorities();
+			result.addObject("authorities", authorities);
+			result.addObject("emailError", emailError);
 		} else
 			try {
 				final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -213,7 +230,10 @@ public class LoginController extends AbstractController {
 				result = new ModelAndView("actor/register");
 				result.addObject("uri", "security/administrator/register.do");
 				result.addObject("messageCode", "actor.commit.error");
-				System.out.println(opps.getMessage());
+				Collection<Authority> authorities = null;
+				authorities = this.getAdminRegisterAuthorities();
+				result.addObject("authorities", authorities);
+				result.addObject("emailError", emailError);
 			}
 		result = this.configurationService.configGeneral(result);
 		result = this.actorService.isBanned(result);

@@ -47,28 +47,29 @@ public class FixUpTaskController extends AbstractController {
 		ModelAndView result;
 
 		final Collection<FixUpTask> tasks = this.taskService.findAll();
-		final double vat = this.confService.findAll().iterator().next().getVat();
 
 		result = new ModelAndView("fixuptask/list");
 		result.addObject("fixuptasks", tasks);
 		result.addObject("requestURI", "/fixuptask/handyworker/list.do");
-		result.addObject("vat", vat);
+		result.addObject("finder", new Finder());
+		result.addObject("categories", this.catService.findAll());
+		result.addObject("vat", this.confService.findAll().iterator().next().getVat());
 		result = this.confService.configGeneral(result);
 		result = this.actorService.isBanned(result);
 		return result;
 
 	}
+
 	@RequestMapping(value = "/customer/list", method = RequestMethod.GET)
 	public ModelAndView listFromCustomer() {
 		ModelAndView result;
 
 		final Collection<FixUpTask> tasks = this.taskService.findFromLoggedCustomer();
-		final double vat = this.confService.findAll().iterator().next().getVat();
 
 		result = new ModelAndView("fixuptask/list");
 		result.addObject("fixuptasks", tasks);
 		result.addObject("requestURI", "/fixuptask/customer/list.do");
-		result.addObject("vat", vat);
+		result.addObject("vat", this.confService.findAll().iterator().next().getVat());
 		result = this.confService.configGeneral(result);
 		result = this.actorService.isBanned(result);
 		return result;
@@ -85,6 +86,7 @@ public class FixUpTaskController extends AbstractController {
 		result.addObject("fixuptasks", tasks);
 		result.addObject("finder", finder);
 		result.addObject("categories", this.catService.findAll());
+		result.addObject("vat", this.confService.findAll().iterator().next().getVat());
 		result = this.confService.configGeneral(result);
 		result = this.actorService.isBanned(result);
 
@@ -141,8 +143,9 @@ public class FixUpTaskController extends AbstractController {
 				result.addObject("messageCode", "fixuptask.commit.error");
 				result = this.addCategoriesWarrantiesConfiguration(result);
 				result.addObject("fixUpTask", fixUpTask);
-			}
 
+			}
+		result.addObject("vat", this.confService.findAll().iterator().next().getVat());
 		result = this.confService.configGeneral(result);
 		result = this.actorService.isBanned(result);
 		return result;
