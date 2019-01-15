@@ -66,9 +66,11 @@
 			<form:errors path="photoURL" cssClass="error"/>	
 		</p>
 		<p>
-			<spring:message code="profile.edit.email"/>: 
-			<form:input path="email"/>
-			<form:errors path="email" cssClass="error"/>	
+			<spring:message code="profile.edit.email"/>:
+			<form:input path="email" />
+			<jstl:if test="${emailError == 'actor.email.error' }">
+				<span class="error"><spring:message code="${emailError}"/></span>
+			</jstl:if>	
 		</p>
 		<p>
 			<spring:message code="profile.edit.phone"/>: 
@@ -120,9 +122,10 @@
 			<form:errors path="photoURL" cssClass="error"/>	
 		</p>
 		<p>
-			<spring:message code="profile.edit.email"/>: 
-			<form:input path="email"/>
-			<form:errors path="email" cssClass="error"/>	
+			<form:input path="email" />
+			<jstl:if test="${emailError == 'actor.email.error' }">
+				<span class="error"><spring:message code="${emailError}"/></span>
+			</jstl:if>	
 		</p>
 		<p>
 			<spring:message code="profile.edit.phone"/>: 

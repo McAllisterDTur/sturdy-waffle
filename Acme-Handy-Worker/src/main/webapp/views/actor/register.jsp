@@ -20,7 +20,7 @@
 		return;
 	}
 </script>
-<spring:message code="actor.phone.error" var="phoneError"/>'
+<spring:message code="actor.phone.error" var="phoneError"/>
 <form:form modelAttribute="actor" action="${uri}" onsubmit="return checkPhone('${phoneError }');">
 	<form:hidden path="id" />
 	<form:hidden path="version"/>

@@ -77,18 +77,21 @@ public class ApplicationService {
 		Application a;
 		if (application.getId() == 0) {//creacci�n port parte del handyWorker
 			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
-			Assert.isTrue(application.getOfferedPrice() != 0);
+			Assert.isTrue(application.getOfferedPrice() >= 0);
 
 			Assert.isTrue(application.getRegisterTime().before(application.getFixUpTask().getPeriodStart()));
 
 			application.setRegisterTime(new Date());
 			//application.setStatus("PENDING");
 			a = this.applicationRepo.save(application);
+			this.taskService.updateTask(a);
 
 		} else {//Actualizacion del status por parte del customer due�o de la fixUpTask
 			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
 			Assert.isTrue(application.getFixUpTask().getCustomer().getAccount().equals(this.account));//customer loggeado due�o de la task
 			if (application.getStatus().equals("ACCEPTED")) {
+				Assert.isTrue(this.taskHasNoAcceptedApplication(application));
+				this.rejectRestOfApplications(application);
 				Assert.notNull(application.getFixUpTask().getCreditCard());
 				this.sendAcceptMessageTo(application);
 			} else
@@ -105,14 +108,15 @@ public class ApplicationService {
 		final FixUpTask t = this.taskService.findOne(a.getFixUpTask().getId());
 		final Collection<Application> apps = t.getApplications();
 
-		for (final Application app : apps)
+		for (final Application app : apps) {
+			System.out.println(app);
 			if (app.getId() != a.getId())
 				if (app.getStatus().equals("ACCEPTED")) {
 					System.out.println("Esta Task ya tiene una solicitud aceptada.");
 					res = false;
 					break;
 				}
-
+		}
 		return res;
 	}
 

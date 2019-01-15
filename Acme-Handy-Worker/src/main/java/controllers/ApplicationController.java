@@ -123,10 +123,11 @@ public class ApplicationController extends AbstractController {
 
 			final FixUpTask task = a.getFixUpTask();
 
-			res = new ModelAndView("application/customer,handyworker/list.do?fixuptaskId=" + task.getId());
+			res = new ModelAndView("redirect:../customer,handyworker/list.do?fixuptaskId=" + task.getId());
+
 		} catch (final Throwable oops) {
 			oops.printStackTrace();
-			res = new ModelAndView("application/customer,handyworker/list");
+			res = new ModelAndView("application/customer,handyworker/list.do?fixuptaskId=" + a.getFixUpTask().getId());
 		}
 		res = this.configurationService.configGeneral(res);
 		res = this.actorService.isBanned(res);

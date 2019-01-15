@@ -89,7 +89,7 @@
 
 	<display:column>
 		<button
-			onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer,handyworker/display.do?fixuptaskId=${row.id}'">
+			onClick="window.location.href='fixuptask/customer,handyworker/display.do?fixuptaskId=${row.id}'">
 			<spring:message code="finder.fixuptask.display" />
 		</button>
 	</display:column>

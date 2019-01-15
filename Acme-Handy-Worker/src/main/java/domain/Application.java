@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -45,6 +46,7 @@ public class Application extends DomainEntity {
 		this.registerTime = registerTime;
 	}
 
+	@Min(1)
 	@NotNull
 	public Double getOfferedPrice() {
 		return this.offeredPrice;
