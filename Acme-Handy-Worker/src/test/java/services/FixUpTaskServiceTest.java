@@ -42,9 +42,9 @@ public class FixUpTaskServiceTest extends AbstractTest {
 
 	@Test
 	public void saveAndFindOneGood() {
+		super.authenticate("Customer1");
 		final FixUpTask f = this.fixUpTaskService.create();
 
-		super.authenticate("Customer1");
 		final UserAccount userAccount = LoginService.getPrincipal();
 		final Actor c = this.actorService.findByUserAccountId(userAccount.getId());
 		f.setCustomer((Customer) c);
@@ -73,8 +73,10 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	}
 	@Test
 	public void saveAndFindOneBad() {
-		super.authenticate(null);
+		super.authenticate("Customer1");
 		final FixUpTask f = this.fixUpTaskService.create();
+		super.unauthenticate();
+		super.authenticate(null);
 		FixUpTask f3 = null;
 		try {
 			final UserAccount userAccount = LoginService.getPrincipal();
@@ -152,10 +154,10 @@ public class FixUpTaskServiceTest extends AbstractTest {
 
 	@Test
 	public void saveAndFindOneBad2() {
-		final FixUpTask f = this.fixUpTaskService.create();
-
 		super.authenticate("Customer1");
+		final FixUpTask f = this.fixUpTaskService.create();
 		super.unauthenticate();
+
 		super.authenticate("admin");
 		final Warranty w = this.warrantyService.create();
 		w.setDraft(true);
@@ -176,9 +178,9 @@ public class FixUpTaskServiceTest extends AbstractTest {
 
 	@Test
 	public void deleteGood1() {
+		super.authenticate("Customer1");
 		final FixUpTask f = this.fixUpTaskService.create();
 
-		super.authenticate("Customer1");
 		final UserAccount userAccount = LoginService.getPrincipal();
 		final Actor c = this.actorService.findByUserAccountId(userAccount.getId());
 		f.setCustomer((Customer) c);
@@ -209,9 +211,9 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	}
 	@Test
 	public void deleteGood2() {
+		super.authenticate("Customer1");
 		final FixUpTask f = this.fixUpTaskService.create();
 
-		super.authenticate("Customer1");
 		final UserAccount userAccount = LoginService.getPrincipal();
 		final Actor c = this.actorService.findByUserAccountId(userAccount.getId());
 		f.setCustomer((Customer) c);
@@ -240,7 +242,9 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	}
 	@Test
 	public void deleteBad() {
+		super.authenticate("Customer1");
 		final FixUpTask f = this.fixUpTaskService.create();
+		super.unauthenticate();
 
 		super.authenticate(null);
 		FixUpTask f2 = null;

@@ -25,7 +25,7 @@
 
 		<display:column>
 			<button
-				onClick="window.location.href='/Acme-Handy-Worker/message/list.do?boxId=${box.id}'">
+				onClick="window.location.href='message/list.do?boxId=${box.id}'">
 				<spring:message code="box.seeM" />
 			</button>
 		</display:column>
@@ -34,7 +34,7 @@
 			<jstl:if test="${box.deleteable == true}">
 
 				<button
-					onClick="window.location.href='/Acme-Handy-Worker/box/edit.do?boxId=${box.id}'">
+					onClick="window.location.href='box/edit.do?boxId=${box.id}'">
 					<spring:message code="box.edit" />
 				</button>
 			</jstl:if>
@@ -42,7 +42,7 @@
 		<display:column titleKey="box.delete">
 			<jstl:if test="${box.deleteable == true}">
 				<button
-					onClick="window.location.href='/Acme-Handy-Worker/box/delete.do?boxId=${box.id}'">
+					onClick="window.location.href='box/delete.do?boxId=${box.id}'">
 					<spring:message code="box.delete" />
 				</button>
 			</jstl:if>

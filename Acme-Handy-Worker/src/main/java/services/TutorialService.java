@@ -87,8 +87,13 @@ public class TutorialService {
 	 * @return Tutorial
 	 */
 	public Tutorial findOne(final int id) {
-		Tutorial result = this.tutorialRepository.findOne(id);
-		result = this.numberSections(result);
+		Tutorial result;
+		try {
+			result = this.tutorialRepository.findOne(id);
+			result = this.numberSections(result);
+		} catch (final NullPointerException e) {
+			result = null;
+		}
 		return result;
 	}
 

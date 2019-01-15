@@ -95,4 +95,21 @@
 		</display:column>
 	</display:table>
 </p></jstl:if>
+<jstl:if test="${customer }"><p>
+	<b><spring:message code="profile.fixUpTasks" /></b>: 
+	<display:table name="fixUpTasks" id="row" requestURI="/fixuptask/customer/list.do">
+		<display:column property="ticker" titleKey="fixuptask.ticker"/>
+		<display:column property="category.name" titleKey="fixuptask.category" />
+		<display:column property="periodStart" titleKey="fixuptask.periodStart"  />
+		<display:column property="periodStart" titleKey="fixuptask.periodStart" />
+		<display:column titleKey="fixuptask.maxPrice" >
+			<jstl:out value="${row.maxPrice }" />(<jstl:out value="${row.maxPrice *(1+(vat/100))}" />)
+		</display:column>
+		<display:column>
+			<button onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer,handyworker/display.do?fixuptaskId=${row.id}'">
+				<spring:message code="fixuptask.display"/>
+			</button>
+		</display:column>
+	</display:table>
+</p></jstl:if>
 	

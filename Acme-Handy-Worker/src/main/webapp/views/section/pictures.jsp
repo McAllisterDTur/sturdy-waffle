@@ -17,7 +17,7 @@
 	<script type="text/javascript">
 		function add(id){
 			var picture = document.getElementById('picture').value;
-			window.location.href='/Acme-Handy-Worker/section/pictures/handyworker/add.do?id=' + id + '&picture=' + picture;
+			window.location.href='section/pictures/handyworker/add.do?id=' + id + '&picture=' + picture;
 		}
 	</script>
 	<input type="text" id="picture" placeholder="Picture url"/>
@@ -30,7 +30,7 @@
 	<security:authorize access="hasRole('HANDYWORKER')">
 	<jstl:if test="${section.tutorial.worker.account.username == principal}">
 		<display:column>
-			<button onClick="window.location.href='/Acme-Handy-Worker/section/pictures/handyworker/delete.do?id=${section.id }&picture=${row}'"><spring:message code="tutorial.pictures.delete"/></button>
+			<button onClick="window.location.href='section/pictures/handyworker/delete.do?id=${section.id }&picture=${row}'"><spring:message code="tutorial.pictures.delete"/></button>
 		</display:column>
 	</jstl:if>
 	</security:authorize>

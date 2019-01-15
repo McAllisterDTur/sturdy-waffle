@@ -16,7 +16,21 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<script>
+	function checkPhone(errorCode) {
+
+		var pattern = /((([+][1-9]{1}[0-9]{0,2}[\s]){0,1}([(][1-9]{1}[0-9]{0,2}[)][\s]){0,1})){0,1}([0-9]{4}){1}([0-9]{0,})/;
+		var phone = document.getElementById("phone").value;
+		var error = !pattern.test(phone);
+		if (error){
+			return confirm(errorCode);			
+		}
+		return;
+	}
+</script>
 <h2><spring:message code="profile.edit.info" /></h2>
+<spring:message code="actor.phone.error" var="phoneError"/>
+
 <jstl:if test="${not empty success }">
 	<fieldset>
 		<legend><spring:message code="profile.message"/></legend>
@@ -30,7 +44,7 @@
 </jstl:if>
 
 <jstl:if test="${not handy }">
-	<form:form modelAttribute="actor" action="profile/edit.do" method="POST">
+	<form:form modelAttribute="actor" action="profile/edit.do" onsubmit="return checkPhone('${phoneError }');" method="POST">
 		<p>
 			<spring:message code="profile.edit.name"/>: 
 			<form:input path="name"/>

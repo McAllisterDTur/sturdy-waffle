@@ -66,12 +66,10 @@ public class CategoryService {
 	}
 
 	/**
-	 * Checks administrator authority (Req 12.3)
 	 * 
 	 * @return Collection of all the categories
 	 */
 	public Collection<Category> findAll() {
-		//Admin authority
 		return this.catRepo.findAll();
 	}
 	/**
