@@ -71,7 +71,7 @@
 	<form:select path="creditCard.brandName">
 		<form:options path="creditCard.brandName" items="${makers}"/>
 	</form:select>
-	<form:errors path="creditCard.maker" cssClass="error"/>
+	<form:errors path="creditCard.brandName" cssClass="error"/>
 	<br />
 
 	<input type="submit" name="save" value="<spring:message code="fixuptask.save"/>" />
