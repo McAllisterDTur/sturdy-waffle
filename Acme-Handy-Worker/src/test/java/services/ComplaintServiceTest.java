@@ -16,7 +16,6 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Complaint;
-import domain.FixUpTask;
 
 // Indica que se tiene que ejecutar a trav�s de Spring
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -88,27 +87,6 @@ public class ComplaintServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 
-	@Test
-	public void findOneBad() {
-		super.authenticate("Customer1");
-		final Complaint c = this.cService.create();
-		c.setAttachments(Arrays.asList("Attachment 1", "Attachment 2"));
-		c.setComplaintTime(new Date());
-		c.setDescription("Escucha la historia de como mi vida cambi� mi movida");
-		c.setIsFinal(false);
-		final FixUpTask f = this.fService.findFromLoggedCustomer().iterator().next();
-		c.setFixUpTask(f);
-		final Complaint c2 = this.cService.save(c);
-		super.unauthenticate();
-		super.authenticate("handy1");
-		Complaint c1 = null;
-		try {
-			c1 = this.cService.findOne(c2.getId());
-		} catch (final Exception e) {
-		}
-		Assert.isNull(c1);
-		super.unauthenticate();
-	}
 	@Test
 	public void findFromLoggedCustomerGood() {
 		super.authenticate("Customer2");

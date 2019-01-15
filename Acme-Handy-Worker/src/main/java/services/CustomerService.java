@@ -17,6 +17,7 @@ import security.UserAccount;
 import utilities.AuthenticationUtility;
 import domain.Actor;
 import domain.Customer;
+import domain.Finder;
 import domain.FixUpTask;
 
 @Service
@@ -29,6 +30,8 @@ public class CustomerService {
 	private UserAccountService	userAccountService;
 	@Autowired
 	private BoxService			boxService;
+	@Autowired
+	private FinderService		finderService;
 
 	private UserAccount			account;
 
@@ -56,8 +59,11 @@ public class CustomerService {
 			c.setAccount(savedAccount);
 			result = this.customerRepo.save(c);
 			this.boxService.initializeDefaultBoxes(result);
-		} else
+		} else {
 			result = this.customerRepo.save(c);
+			final Finder finder = this.finderService.create(result);
+			this.finderService.save(finder);
+		}
 		return result;
 	}
 

@@ -17,6 +17,7 @@ import security.UserAccount;
 import utilities.AuthenticationUtility;
 import domain.Actor;
 import domain.Application;
+import domain.Finder;
 import domain.FixUpTask;
 import domain.HandyWorker;
 
@@ -32,6 +33,8 @@ public class HandyWorkerService {
 	private FixUpTaskService		futService;
 	@Autowired
 	private BoxService				boxService;
+	@Autowired
+	private FinderService			finderService;
 	private UserAccount				account;
 
 
@@ -57,8 +60,12 @@ public class HandyWorkerService {
 			worker.setAccount(savedAccount);
 			result = this.repo.save(worker);
 			this.boxService.initializeDefaultBoxes(result);
-		} else
+		} else {
 			result = this.repo.save(worker);
+			final Finder finder = this.finderService.create(result);
+			this.finderService.save(finder);
+		}
+
 		return result;
 	}
 

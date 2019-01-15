@@ -15,6 +15,7 @@ import security.LoginService;
 import security.UserAccount;
 import utilities.AuthenticationUtility;
 import domain.Actor;
+import domain.Finder;
 import domain.Sponsor;
 
 @Service
@@ -33,6 +34,8 @@ public class SponsorService {
 	private UserAccountService		userAccountService;
 	@Autowired
 	private BoxService				boxService;
+	@Autowired
+	private FinderService			finderService;
 
 
 	/**
@@ -62,21 +65,24 @@ public class SponsorService {
 			Assert.isTrue(sponsor.getAccount().equals(ua));
 			Assert.isTrue(ac.getAccount().equals(sponsor.getAccount()));
 			Assert.isTrue(ac.getBanned().equals(sponsor.getBanned()));
-			if (!(sponsor.getPhone().startsWith("+"))) {
-				final String cc = this.configurationService.findAll().iterator().next().getCountryCode();
-				sponsor.setPhone(cc + " " + sponsor.getPhone());
-			}
+			//Se debe comprobar al guardar o editar el actor
+			//			if (!(sponsor.getPhone().startsWith("+"))) {
+			//				final String cc = this.configurationService.findAll().iterator().next().getCountryCode();
+			//				sponsor.setPhone(cc + " " + sponsor.getPhone());
+			//			}
 			res = this.sponsorRepository.save(sponsor);
 		} else {
-			if (!(sponsor.getPhone().startsWith("+"))) {
-				final String cc = this.configurationService.findAll().iterator().next().getCountryCode();
-				sponsor.setPhone(cc + " " + sponsor.getPhone());
-			}
+			//			if (!(sponsor.getPhone().startsWith("+"))) {
+			//				final String cc = this.configurationService.findAll().iterator().next().getCountryCode();
+			//				sponsor.setPhone(cc + " " + sponsor.getPhone());
+			//			}
 			final UserAccount account = sponsor.getAccount();
 			final UserAccount savedAccount = this.userAccountService.save(account);
 			sponsor.setAccount(savedAccount);
 			res = this.sponsorRepository.save(sponsor);
 			this.boxService.initializeDefaultBoxes(res);
+			final Finder finder = this.finderService.create(res);
+			this.finderService.save(finder);
 		}
 		return res;
 	}
