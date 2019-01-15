@@ -86,8 +86,6 @@ public class ActorService {
 				result = this.actorRepository.save(actor);
 			}
 		} else {
-			//TODO Por ahora, por decisi�n de grupo, la useracount se agrega
-			//en el controller
 			final UserAccount account = actor.getAccount();
 			final UserAccount savedAccount = this.accountService.save(account);
 			actor.setAccount(savedAccount);

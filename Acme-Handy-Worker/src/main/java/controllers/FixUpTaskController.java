@@ -1,8 +1,6 @@
 
 package controllers;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -21,6 +19,7 @@ import services.CategoryService;
 import services.ConfigurationService;
 import services.FixUpTaskService;
 import services.WarrantyService;
+import domain.Finder;
 import domain.FixUpTask;
 
 @Controller
@@ -48,54 +47,48 @@ public class FixUpTaskController extends AbstractController {
 		ModelAndView result;
 
 		final Collection<FixUpTask> tasks = this.taskService.findAll();
-		final double vat = this.confService.findAll().iterator().next().getVat();
 
 		result = new ModelAndView("fixuptask/list");
 		result.addObject("fixuptasks", tasks);
 		result.addObject("requestURI", "/fixuptask/handyworker/list.do");
-		result.addObject("vat", vat);
+		result.addObject("finder", new Finder());
+		result.addObject("categories", this.catService.findAll());
+		result.addObject("vat", this.confService.findAll().iterator().next().getVat());
 		result = this.confService.configGeneral(result);
 		result = this.actorService.isBanned(result);
 		return result;
 
 	}
+
 	@RequestMapping(value = "/customer/list", method = RequestMethod.GET)
 	public ModelAndView listFromCustomer() {
 		ModelAndView result;
 
 		final Collection<FixUpTask> tasks = this.taskService.findFromLoggedCustomer();
-		final double vat = this.confService.findAll().iterator().next().getVat();
 
 		result = new ModelAndView("fixuptask/list");
 		result.addObject("fixuptasks", tasks);
 		result.addObject("requestURI", "/fixuptask/customer/list.do");
-		result.addObject("vat", vat);
+		result.addObject("vat", this.confService.findAll().iterator().next().getVat());
 		result = this.confService.configGeneral(result);
 		result = this.actorService.isBanned(result);
 		return result;
 
 	}
 
-	@RequestMapping(value = "/handyworker/list", method = RequestMethod.GET, params = "keyword")
-	public ModelAndView listHandySearch(@RequestParam final String keyword) {
+	@RequestMapping(value = "/handyworker/list", method = RequestMethod.POST)
+	public ModelAndView listHandySearch(final Finder finder) {
 		ModelAndView result;
 		result = new ModelAndView("fixuptask/list");
 		Collection<FixUpTask> tasks;
-		final double vat = this.confService.findAll().iterator().next().getVat();
-		try {
-			final String decodedKeyword = URLDecoder.decode(keyword, "UTF-8");
-			tasks = this.taskService.findByFilter(decodedKeyword);
-			result.addObject("requestURI", "/fixuptask/handyworker/list.do");
-			result.addObject("vat", vat);
-			System.out.println("Decoded Keyword:" + decodedKeyword);
-		} catch (final UnsupportedEncodingException e) {
-			tasks = this.taskService.findAll();
-			result.addObject("requestURI", "/fixuptask/handyworker/list.do");
-		}
-		System.out.println("Tasks: " + tasks);
+		tasks = this.taskService.findByFilter(finder.getKeyWord(), finder.getCategory(), finder.getWarranty(), finder.getMinPrice(), finder.getMaxPrice(), finder.getStartDate(), finder.getEndDate());
+		result.addObject("requestURI", "/fixuptask/handyworker/list.do");
 		result.addObject("fixuptasks", tasks);
+		result.addObject("finder", finder);
+		result.addObject("categories", this.catService.findAll());
 		result = this.confService.configGeneral(result);
 		result = this.actorService.isBanned(result);
+
 		return result;
 	}
 

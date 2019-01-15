@@ -77,7 +77,7 @@ public class ApplicationService {
 		Application a;
 		if (application.getId() == 0) {//creacci�n port parte del handyWorker
 			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
-			Assert.isTrue(application.getOfferedPrice() != 0);
+			Assert.isTrue(application.getOfferedPrice() >= 0);
 
 			Assert.isTrue(application.getRegisterTime().before(application.getFixUpTask().getPeriodStart()));
 
@@ -89,6 +89,7 @@ public class ApplicationService {
 			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
 			Assert.isTrue(application.getFixUpTask().getCustomer().getAccount().equals(this.account));//customer loggeado due�o de la task
 			if (application.getStatus().equals("ACCEPTED")) {
+				Assert.isTrue(this.taskHasNoAcceptedApplication(application));
 				Assert.notNull(application.getFixUpTask().getCreditCard());
 				this.sendAcceptMessageTo(application);
 			} else

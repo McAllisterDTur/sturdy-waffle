@@ -139,7 +139,7 @@
 		</security:authorize>
 		<security:authorize access="isAuthenticated()">
 			<li>
-				<a class="fNiv" href="box/myBoxes.do"><spring:message code="master.page.messages" /></a>
+				<a class="fNiv"><spring:message code="master.page.messages" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="box/list.do"><spring:message

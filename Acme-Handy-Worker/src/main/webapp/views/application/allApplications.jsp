@@ -23,7 +23,7 @@
 				<span class="PASSED"><jstl:out value="${ row.status }" /></span>
 			</jstl:if>
 		
-			<jstl:if test="${row.status != 'PENDING'}">
+			<jstl:if test="${row.status != ' '}">
 				<span class="${ row.status }"><jstl:out value="${ row.status }" /></span>
 			</jstl:if>
 		</display:column>

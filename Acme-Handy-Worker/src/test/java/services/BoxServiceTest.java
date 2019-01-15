@@ -93,10 +93,7 @@ public class BoxServiceTest extends AbstractTest {
 		final Actor owner = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		//Now we create a box
 		final Box n = this.boxService.create(owner);
-		n.setDeleteable(true);
 		n.setName("TEST BOX");
-		n.setOwner(owner);
-		n.setMessages(null);
 		//And now we save it
 		final Box saved = this.boxService.save(n);
 		//Knowing as we do that save is working, let's delete it
@@ -132,8 +129,8 @@ public class BoxServiceTest extends AbstractTest {
 		final int id = owner.getId();
 		//Let's initialize the four default boxes [IN, OUT, TRASH, SPAM]
 		this.boxService.initializeDefaultBoxes();
-		//Have we created four boxes?
-		Assert.isTrue(this.boxService.findByOwner(id).size() == 4);
+		//The original 4 and the new 4
+		Assert.isTrue(this.boxService.findByOwner(id).size() == 8);
 	}
 
 	public void findByNameTest() {
