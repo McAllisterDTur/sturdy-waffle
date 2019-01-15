@@ -281,7 +281,7 @@ public class MessageService {
 		}
 	}
 
-	private Box checkSystemBox(final Collection<Box> boxes) {
+	public Box checkSystemBox(final Collection<Box> boxes) {
 		Box box = null;
 		for (final Box b : boxes)
 			if (!(b.getDeleteable()))

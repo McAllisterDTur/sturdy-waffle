@@ -93,7 +93,7 @@ public class MessageController extends AbstractController {
 				this.messageService.send(messageO, actor);
 				final UserAccount account = LoginService.getPrincipal();
 				final Actor sender = this.actorService.findByUserAccountId(account.getId());
-				final Box bout = this.checkSystemBox(this.boxService.findByName(sender.getId(), "OUT"));
+				final Box bout = this.messageService.checkSystemBox(this.boxService.findByName(sender.getId(), "OUT"));
 				result = new ModelAndView("redirect:list.do?boxId=" + bout.getId());
 			} catch (final Throwable opps) {
 				result = new ModelAndView("redirect:create.do");
@@ -214,7 +214,7 @@ public class MessageController extends AbstractController {
 				this.messageService.broadcastMessage(message);
 				final UserAccount account = LoginService.getPrincipal();
 				final Actor sender = this.actorService.findByUserAccountId(account.getId());
-				final Box bout = this.checkSystemBox(this.boxService.findByName(sender.getId(), "OUT"));
+				final Box bout = this.messageService.checkSystemBox(this.boxService.findByName(sender.getId(), "OUT"));
 				result = new ModelAndView("redirect:../list.do?boxId=" + bout.getId());
 			} catch (final Throwable opps) {
 				opps.printStackTrace();
@@ -242,11 +242,5 @@ public class MessageController extends AbstractController {
 		result = this.actorService.isBanned(result);
 		return result;
 	}
-	private Box checkSystemBox(final Collection<Box> boxes) {
-		Box box = null;
-		for (final Box b : boxes)
-			if (!(b.getDeleteable()))
-				box = b;
-		return box;
-	}
+
 }
