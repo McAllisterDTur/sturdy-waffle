@@ -39,6 +39,8 @@
 	<form:hidden path="sendTime" />
 	<form:hidden path="reciever" />
 	<form:hidden path="boxes" />
+	<form:hidden path="tags" />
+
 
 	<h3>
 		<spring:message code="message.broadcast" />
@@ -76,16 +78,10 @@
 	<form:textarea path="body" />
 	<form:errors path="body" />
 	<br />
+	<spring:message code="mandatory" />
+	<br />
 
 	<input type="submit" name="save"
 		value="<spring:message code="message.save"/>" />
-
-
-	<jstl:if test="${messageO.sender.account.username == principal}">
-		<button
-			onClick="window.location.href='/Acme-Handy-Worker/box/list.do'">
-			<spring:message code="message.cancel" />
-		</button>
-	</jstl:if>
 
 </form:form>

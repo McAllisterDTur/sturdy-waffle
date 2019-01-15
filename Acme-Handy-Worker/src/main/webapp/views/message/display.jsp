@@ -7,6 +7,8 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
 	String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() : "";
@@ -14,7 +16,7 @@
 <jstl:set var="principal" value="<%=s%>" />
 
 <h3>
-	<b><spring:message code="message.subject" />:&nbsp;</b>
+	<b><spring:message code="message.subject" />: </b>
 	<jstl:out value="${messageO.subject}" />
 </h3>
 <jstl:if test="${not empty messageCode}">
@@ -22,32 +24,40 @@
 		<spring:message code="${messageCode}" />
 	</h4>
 </jstl:if>
-<b><spring:message code="message.actor.sender" />:&nbsp;</b>
+<b><spring:message code="message.actor.sender" />: </b>
 <jstl:out value="${messageO.sender.account.username}" />
 <br />
 
-<b><spring:message code="message.actor.reciever" />:&nbsp;</b>
-<jstl:forEach var="actor" items="${messageO.reciever}">
-	<jstl:out value="${actor.account.username}"></jstl:out>
-</jstl:forEach>
+<b><spring:message code="message.actor.reciever" />: </b>
+<c:choose>
+	<c:when test="${fn:length(messageO.reciever) gt 1}">
+		<spring:message code="message.broadcast" />
+
+	</c:when>
+	<c:otherwise>
+		<jstl:forEach var="actor" items="${messageO.reciever}">
+			<jstl:out value="${actor.account.username}"></jstl:out>
+		</jstl:forEach>
+	</c:otherwise>
+</c:choose>
 <br />
 
-<b><spring:message code="message.sendTime" />:&nbsp;</b>
+<b><spring:message code="message.sendTime" />: </b>
 <jstl:out value="${messageO.sendTime}" />
 <br />
 
-<b><spring:message code="message.priority" />:&nbsp;</b>
+<b><spring:message code="message.priority" />: </b>
 <jstl:out value="${messageO.priority}" />
 <br />
 
-<b><spring:message code="message.tags" />:&nbsp;</b>
+<b><spring:message code="message.tags" />: </b>
 <jstl:out value="${messageO.tags}" />
 <br />
 
-<b><spring:message code="message.body" />:&nbsp;</b>
+<b><spring:message code="message.body" />: </b>
 <jstl:out value="${messageO.body}" />
 <br />
 
-<button onClick="window.location.href='/Acme-Handy-Worker/box/list.do'">
+<button onClick="window.location.href='box/list.do'">
 	<spring:message code="message.cancel" />
 </button>

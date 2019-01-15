@@ -83,11 +83,9 @@ public class MessageController extends AbstractController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ModelAndView saveMessage(@Valid final Message messageO, final BindingResult binding) {
 		ModelAndView result;
-		if (binding.hasErrors()) {
-			System.out.println(binding.getAllErrors());
+		if (binding.hasErrors() || messageO.getReciever().size() > 1)
 			result = new ModelAndView("redirect:create.do");
-			System.out.println("Termina el binding");
-		} else
+		else
 			try {
 				final String username = messageO.getReciever().iterator().next().getAccount().getUsername();
 				final UserAccount accountId = this.userAccountService.findByName(username);
@@ -95,7 +93,7 @@ public class MessageController extends AbstractController {
 				this.messageService.send(messageO, actor);
 				final UserAccount account = LoginService.getPrincipal();
 				final Actor sender = this.actorService.findByUserAccountId(account.getId());
-				final Box bout = this.boxService.findByName(sender.getId(), "OUT");
+				final Box bout = this.messageService.checkSystemBox(this.boxService.findByName(sender.getId(), "OUT"));
 				result = new ModelAndView("redirect:list.do?boxId=" + bout.getId());
 			} catch (final Throwable opps) {
 				result = new ModelAndView("redirect:create.do");
@@ -128,21 +126,14 @@ public class MessageController extends AbstractController {
 	@RequestMapping(value = "/copy", method = RequestMethod.POST)
 	public ModelAndView copyMessage(@Valid final Message message, final BindingResult binding) {
 		ModelAndView result;
-		if (binding.hasErrors()) {
-			result = new ModelAndView("message/edit");
-			result.addObject("messageO", message);
-			final UserAccount account = LoginService.getPrincipal();
-			final Actor actor = this.actorService.findByUserAccountId(account.getId());
-			final Collection<Box> boxes = this.boxService.findByOwner(actor.getId());
-			result.addObject("boxes", boxes);
-		} else
+		if (binding.hasErrors() || message.getBoxes().size() > 1)
+			result = new ModelAndView("redirect:/message/copy.do?messageId=" + message.getId());
+		else
 			try {
 				this.messageService.copy(message);
 				result = new ModelAndView("redirect:/box/list.do");
 			} catch (final Throwable opps) {
-				result = new ModelAndView("message/copy");
-				result.addObject("messageO", message);
-				result.addObject("messageCode", "message.commit.error");
+				result = new ModelAndView("redirect:/message/copy.do?=messageId=" + message.getId());
 			}
 		result = this.configService.configGeneral(result);
 		result = this.actorService.isBanned(result);
@@ -215,16 +206,18 @@ public class MessageController extends AbstractController {
 	@RequestMapping(value = "/administrator/broadcast", method = RequestMethod.POST)
 	public ModelAndView saveBroadcast(@Valid final Message message, final BindingResult binding) {
 		ModelAndView result;
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
+			binding.getAllErrors();
 			result = new ModelAndView("redirect:broadcast.do");
-		else
+		} else
 			try {
 				this.messageService.broadcastMessage(message);
 				final UserAccount account = LoginService.getPrincipal();
 				final Actor sender = this.actorService.findByUserAccountId(account.getId());
-				final Box bout = this.boxService.findByName(sender.getId(), "OUT");
+				final Box bout = this.messageService.checkSystemBox(this.boxService.findByName(sender.getId(), "OUT"));
 				result = new ModelAndView("redirect:../list.do?boxId=" + bout.getId());
 			} catch (final Throwable opps) {
+				opps.printStackTrace();
 				result = new ModelAndView("redirect:broadcast.do");
 			}
 		result = this.configService.configGeneral(result);
@@ -232,7 +225,6 @@ public class MessageController extends AbstractController {
 
 		return result;
 	}
-
 	@RequestMapping(value = "/administrator/broadcast", method = RequestMethod.GET)
 	public ModelAndView displayBroadcast() {
 		ModelAndView result;
@@ -250,4 +242,5 @@ public class MessageController extends AbstractController {
 		result = this.actorService.isBanned(result);
 		return result;
 	}
+
 }

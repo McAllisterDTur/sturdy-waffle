@@ -61,6 +61,7 @@ public class CategoryServiceTest extends AbstractTest {
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
 		c.setName("Ornitolog�a");
+		c.setNameEn("Ornitology");
 		final Category c1 = this.catService.save(c);
 		c1.setName("Cocina");
 		this.catService.save(c1);
@@ -92,18 +93,6 @@ public class CategoryServiceTest extends AbstractTest {
 		super.authenticate("admin");
 		final Collection<Category> col = this.catService.findAll();
 		Assert.notNull(col);
-		super.unauthenticate();
-	}
-
-	@Test
-	public void findAllBad() {
-		super.authenticate("Customer1");
-		Collection<Category> col = null;
-		try {
-			col = this.catService.findAll();
-		} catch (final Exception e) {
-		}
-		Assert.isNull(col);
 		super.unauthenticate();
 	}
 
@@ -148,20 +137,21 @@ public class CategoryServiceTest extends AbstractTest {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
-		c.setName("Ornitolog�a");
+		c.setName("Ornitología");
+		c.setNameEn("Ornitology");
 		final Category c1 = this.catService.save(c);
 		this.catService.delete(c1);
 		final Category c2 = this.catService.findOne(c1.getId());
 		Assert.isNull(c2);
 		super.unauthenticate();
 	}
-
 	@Test
 	public void deleteBad() {
 		super.authenticate("admin");
 		final Category c = this.catService.create();
 		c.setFather(this.catService.findAll().iterator().next());
-		c.setName("Ornitolog�a");
+		c.setName("Ornitología");
+		c.setNameEn("Ornitology");
 		final Category c1 = this.catService.save(c);
 		super.unauthenticate();
 		try {
