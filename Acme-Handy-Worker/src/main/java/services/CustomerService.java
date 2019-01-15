@@ -59,11 +59,10 @@ public class CustomerService {
 			c.setAccount(savedAccount);
 			result = this.customerRepo.save(c);
 			this.boxService.initializeDefaultBoxes(result);
-		} else {
-			result = this.customerRepo.save(c);
 			final Finder finder = this.finderService.create(result);
 			this.finderService.save(finder);
-		}
+		} else
+			result = this.customerRepo.save(c);
 		return result;
 	}
 

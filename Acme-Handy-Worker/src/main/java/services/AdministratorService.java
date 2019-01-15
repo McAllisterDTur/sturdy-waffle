@@ -16,6 +16,7 @@ import security.UserAccount;
 import utilities.AuthenticationUtility;
 import domain.Actor;
 import domain.Administrator;
+import domain.Finder;
 
 @Service
 @Transactional
@@ -33,6 +34,8 @@ public class AdministratorService {
 	private UserAccountService		userAccountService;
 	@Autowired
 	private ActorService			actorService;
+	@Autowired
+	private FinderService			finderService;
 
 
 	//CRUDs
@@ -53,6 +56,8 @@ public class AdministratorService {
 			admin.setAccount(savedAccount);
 			result = this.administratorRepository.save(admin);
 			this.boxService.initializeDefaultBoxes(result);
+			final Finder finder = this.finderService.create(result);
+			this.finderService.save(finder);
 		} else
 			result = this.administratorRepository.save(admin);
 		return result;

@@ -60,11 +60,10 @@ public class HandyWorkerService {
 			worker.setAccount(savedAccount);
 			result = this.repo.save(worker);
 			this.boxService.initializeDefaultBoxes(result);
-		} else {
-			result = this.repo.save(worker);
 			final Finder finder = this.finderService.create(result);
 			this.finderService.save(finder);
-		}
+		} else
+			result = this.repo.save(worker);
 
 		return result;
 	}
