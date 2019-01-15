@@ -68,6 +68,7 @@ public class MessageServiceTest extends AbstractTest {
 		final Actor owner = this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 		this.msgService.delete(m, m.getBoxes().iterator().next());
 		final Box trashU = this.msgService.checkSystemBox(this.bService.findByName(owner.getId(), "TRASH"));
+
 		Assert.isTrue(this.msgService.findByBox(trashU).contains(m));
 	}
 
@@ -87,11 +88,12 @@ public class MessageServiceTest extends AbstractTest {
 		m.setReciever(receivers);
 		final Message ms = this.msgService.send(m, reciever);
 		super.unauthenticate();
+
 		super.authenticate("Customer2");
 		Assert.isTrue(this.msgService.findOne(ms.getId()).equals(ms));
+
 		super.unauthenticate();
 	}
-
 	@Test
 	public void findByBoxTest() {
 		//First, we log as a customer (for example)

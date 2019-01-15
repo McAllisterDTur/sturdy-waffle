@@ -69,8 +69,9 @@ public class BoxService {
 	public void delete(final Box box) {
 		Assert.isTrue((LoginService.getPrincipal().equals(box.getOwner().getAccount())), "Box not belong to the logged actor");
 		Assert.isTrue((box.getDeleteable()), "Box undeleteable");
-		for (final Message m : box.getMessages())
-			this.messageService.deleteMessages(m, box);
+		if (box.getMessages() != null)
+			for (final Message m : box.getMessages())
+				this.messageService.deleteMessages(m, box);
 		this.boxRepository.delete(box);
 	}
 

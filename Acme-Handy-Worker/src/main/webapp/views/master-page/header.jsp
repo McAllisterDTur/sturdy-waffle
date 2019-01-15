@@ -24,7 +24,7 @@
 <div>
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
-		<li><a class="fNiv" href="/Acme-Handy-Worker/"><spring:message
+		<li><a class="fNiv" href="#"><spring:message
 					code="master.page.home" /></a></li>
 		<li><a class="fNiv"><spring:message
 					code="master.page.tutorial" /></a>
@@ -50,8 +50,6 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator.acandw" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/register.do"><spring:message
-								code="master.page.administrator.register" /></a></li>
 					<li><a href="warranty/administrator/list.do"><spring:message
 								code="master.page.administrator.warrant" /></a></li>
 					<li><a href="category/administrator/list.do"><spring:message
@@ -67,7 +65,6 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="configuration/administrator/customize.do"><spring:message code="master.page.administrator.config" /></a></li>
-					<li><a href="category/administrator/list.do"><spring:message code="master.page.administrator.categor" /></a></li>
 					<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>
 				</ul>
 			</li>

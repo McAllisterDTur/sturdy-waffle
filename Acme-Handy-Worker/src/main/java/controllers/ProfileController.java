@@ -26,6 +26,7 @@ import services.ActorService;
 import services.AdministratorService;
 import services.ConfigurationService;
 import services.CustomerService;
+import services.FixUpTaskService;
 import services.HandyWorkerService;
 import services.RefereeService;
 import services.SocialProfileService;
@@ -61,6 +62,8 @@ public class ProfileController extends AbstractController {
 	SocialProfileService	spService;
 	@Autowired
 	TutorialService			tService;
+	@Autowired
+	FixUpTaskService		futService;
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -90,7 +93,7 @@ public class ProfileController extends AbstractController {
 		ModelAndView result;
 		if (br.hasErrors()) {
 			result = new ModelAndView("profile/edit");
-			result.addObject("actor", actor);
+
 			result.addObject("handy", false);
 		} else {
 			result = new ModelAndView("profile/edit");
@@ -168,7 +171,7 @@ public class ProfileController extends AbstractController {
 		if (br.hasErrors()) {
 
 			result = new ModelAndView("profile/edit");
-			result.addObject("worker", worker);
+
 			result.addObject("handy", true);
 		} else {
 			result = new ModelAndView("profile/edit");
@@ -210,10 +213,12 @@ public class ProfileController extends AbstractController {
 		result.addObject("socialProfiles", this.spService.findByActor(actor.getId()));
 		result.addObject("username", actor.getAccount().getUsername());
 		result.addObject("logged", true);
+		result.addObject("customer", role.equals("CUSTOMER"));
 		if (role.equals("CUSTOMER")) {
 			result.addObject("endorsable", true);
 			result.addObject("score", this.custoService.findOne(actor.getId()).getScore());
 			result.addObject("handy", false);
+			result.addObject("fixUpTasks", this.futService.findFromCustomer(actor.getId()));
 		} else if (role.equals("HANDYWORKER")) {
 			result.addObject("handy", true);
 			result.addObject("make", this.hwService.findOne(actor.getId()).getMake());
