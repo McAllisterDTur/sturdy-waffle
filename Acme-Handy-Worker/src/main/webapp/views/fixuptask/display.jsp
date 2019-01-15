@@ -63,13 +63,13 @@
 <security:authorize access="hasRole('CUSTOMER')">
 		<jstl:if test="${fixuptask.customer.account.username == principal}">
 			<button
-				onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer/edit.do?fixuptaskId=${fixuptask.id}'">
+				onClick="window.location.href='fixuptask/customer/edit.do?fixuptaskId=${fixuptask.id}'">
 				<spring:message code="fixuptask.edit" />
 			</button>
 		</jstl:if>
 		<jstl:if test="${fixuptask.customer.account.username == principal}">
 			<button
-				onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer/delete.do?fixuptaskId=${fixuptask.id}'">
+				onClick="window.location.href='fixuptask/customer/delete.do?fixuptaskId=${fixuptask.id}'">
 				<spring:message code="fixuptask.delete" />
 			</button>
 		</jstl:if>

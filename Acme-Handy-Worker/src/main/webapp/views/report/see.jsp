@@ -35,11 +35,11 @@
 	<security:authorize access="hasRole('REFEREE')">
 		<jstl:if test="${report.isFinal }"> <!-- TODO: añadir not -->
 			<button
-				onClick="window.location.href='/Acme-Handy-Worker/report/referee/delete.do?reportId=${report.id}">
+				onClick="window.location.href='report/referee/delete.do?reportId=${report.id}">
 				<spring:message code="report.delete" />
 			</button>
 			<button
-				onClick="window.location.href='/Acme-Handy-Worker/report/referee/edit.do?reportId=${report.id}">
+				onClick="window.location.href='report/referee/edit.do?reportId=${report.id}">
 				<spring:message code="report.edit" />
 			</button>
 		</jstl:if>
