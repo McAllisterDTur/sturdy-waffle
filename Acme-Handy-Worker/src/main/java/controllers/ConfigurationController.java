@@ -76,7 +76,7 @@ public class ConfigurationController extends AbstractController {
 						configuration.setCardMaker(ws);
 					}
 				this.cService.save(configuration);
-				result.addObject("configuration", configuration);
+				result = new ModelAndView("redirect:/welcome/index.do");
 
 			} catch (final Throwable oops) {
 				oops.printStackTrace();
