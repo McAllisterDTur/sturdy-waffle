@@ -228,7 +228,7 @@ public class ActorService {
 	}
 
 	public String validateEmail(final String email) {
-		final Pattern pattern = Pattern.compile("(([a-z]|[0-9]){1,}[@]{1}([a-z]|[0-9]){1,}([.]{1}([a-z]|[0-9]){1,}){0,})|((([a-z]|[0-9]){1,}[ ]{1}){1,}<(([a-z]|[0-9]){1,}[@]{1}([a-z]|[0-9]){1,}([.]{1}([a-z]|[0-9]){1,}){0,})>)");
+		final Pattern pattern = Pattern.compile("(^(([a-z]|[0-9]){1,}[@]{1}([a-z]|[0-9]){1,}([.]{1}([a-z]|[0-9]){1,}){1,})$)|(^((([a-z]|[0-9]){1,}[ ]{1}){1,}<(([a-z]|[0-9]){1,}[@]{1}([a-z]|[0-9]){1,}([.]{1}([a-z]|[0-9]){1,}){1,})>)$)");
 		final Matcher matcher = pattern.matcher(email);
 		return matcher.matches() ? "" : "actor.email.error";
 	}
