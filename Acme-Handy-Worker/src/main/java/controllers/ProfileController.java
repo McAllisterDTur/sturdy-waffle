@@ -294,7 +294,7 @@ public class ProfileController extends AbstractController {
 
 	@RequestMapping(value = "administrator/ban", method = RequestMethod.GET)
 	public ModelAndView banProfile(@RequestParam final Integer id) {
-		ModelAndView result = new ModelAndView("redirect:/profile/seeId.do?id=" + id);
+		ModelAndView result = new ModelAndView("redirect:/administrator/suspiciousActors.do");
 		final Actor a = this.actorService.findOne(id);
 		if (!a.getBanned())
 			this.actorService.ban(a);
@@ -305,7 +305,7 @@ public class ProfileController extends AbstractController {
 
 	@RequestMapping(value = "administrator/unban", method = RequestMethod.GET)
 	public ModelAndView unbanProfile(@RequestParam final Integer id) {
-		ModelAndView result = new ModelAndView("redirect:/profile/seeId.do?id=" + id);
+		ModelAndView result = new ModelAndView("redirect:/administrator/suspiciousActors.do");
 		final Actor a = this.actorService.findOne(id);
 		if (a.getBanned())
 			this.actorService.unban(a);
