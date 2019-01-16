@@ -104,21 +104,6 @@ public class FixUpTaskService {
 		return res;
 	}
 
-	public FixUpTask updateTask(final Application app) {
-		final FixUpTask task = app.getFixUpTask();
-		FixUpTask res;
-
-		Assert.notNull(app);
-		task.getApplications().add(app);
-
-		res = this.fixUpTaskRepository.saveAndFlush(task);
-
-		Assert.notNull(res);
-
-		return res;
-
-	}
-
 	/**
 	 * Checks customer authority. (Req 10.1)
 	 * 
@@ -238,14 +223,14 @@ public class FixUpTaskService {
 	 * @return Collection of the fix up tasks related to a customer
 	 */
 	public Collection<FixUpTask> findFromCustomer(final int customerId) {
-		//		UserAccount userAccount;
+		UserAccount userAccount;
 
-		//		userAccount = LoginService.getPrincipal();
-		//
-		//		final Authority au1 = new Authority();
-		//		au1.setAuthority(Authority.CUSTOMER);
-		//
-		//		Assert.isTrue(userAccount.getAuthorities().contains(au1));
+		userAccount = LoginService.getPrincipal();
+
+		final Authority au1 = new Authority();
+		au1.setAuthority(Authority.HANDYWORKER);
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au1));
 
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.findFromCustomer(customerId);
 		return res;
@@ -359,4 +344,10 @@ public class FixUpTaskService {
 		return res;
 	}
 
+	public String checkIfBefore(final Date before, final Date after) {
+		String res = "";
+		if (after.before(before))
+			res = "fixuptask.date.error";
+		return res;
+	}
 }
