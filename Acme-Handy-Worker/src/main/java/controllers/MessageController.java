@@ -83,9 +83,14 @@ public class MessageController extends AbstractController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ModelAndView saveMessage(@Valid final Message messageO, final BindingResult binding) {
 		ModelAndView result;
-		if (binding.hasErrors() || messageO.getReciever().size() > 1)
-			result = new ModelAndView("redirect:create.do");
-		else
+		if (binding.hasErrors() || messageO.getReciever().size() > 1) {
+			result = new ModelAndView("message/edit");
+			final Collection<Actor> actores = this.actorService.findAll();
+
+			result.addObject("actors", actores);
+
+			result.addObject("messageO", messageO);
+		} else
 			try {
 				final String username = messageO.getReciever().iterator().next().getAccount().getUsername();
 				final UserAccount accountId = this.userAccountService.findByName(username);
