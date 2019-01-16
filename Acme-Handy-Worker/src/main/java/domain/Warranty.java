@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -42,6 +43,7 @@ public class Warranty extends DomainEntity {
 	}
 
 	@NotNull
+	@NotEmpty
 	@ElementCollection(fetch = FetchType.EAGER)
 	public Collection<String> getLaw() {
 		return this.law;

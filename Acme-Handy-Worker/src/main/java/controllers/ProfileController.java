@@ -98,6 +98,7 @@ public class ProfileController extends AbstractController {
 			result.addObject("handy", false);
 		} else {
 			result = new ModelAndView("profile/edit");
+			actor.setPhone(this.actorService.checkSetPhoneCC(actor.getPhone()));
 			result.addObject("actor", actor);
 			result.addObject("handy", false);
 			final String role = LoginService.getPrincipal().getAuthorities().toArray()[0].toString();
@@ -169,7 +170,8 @@ public class ProfileController extends AbstractController {
 	public ModelAndView saveHandy(@Valid final HandyWorker worker, final BindingResult br) {
 
 		ModelAndView result;
-		if (br.hasErrors()) {
+		final String emailError = this.actorService.validateEmail(worker.getEmail());
+		if (br.hasErrors() || !emailError.equals("")) {
 
 			result = new ModelAndView("profile/edit");
 
@@ -178,6 +180,7 @@ public class ProfileController extends AbstractController {
 			result = new ModelAndView("profile/edit");
 			result.addObject("worker", worker);
 			result.addObject("handy", true);
+			worker.setPhone(this.actorService.checkSetPhoneCC(worker.getPhone()));
 			final String role = LoginService.getPrincipal().getAuthorities().toArray()[0].toString();
 			final Integer id = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
 			try {
