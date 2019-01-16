@@ -83,7 +83,7 @@ public class ApplicationService {
 
 			application.setRegisterTime(new Date());
 
-			application.setHandyComments(this.convertCollection(application.getHandyComments()));
+			//application.setHandyComments(this.convertCollection(application.getHandyComments()));
 
 			a = this.applicationRepo.save(application);
 			Assert.notNull(this.taskService.updateTask(a));
@@ -98,7 +98,8 @@ public class ApplicationService {
 			} else
 				this.sendRejectMessageTo(application);
 
-			application.setHandyComments(this.convertCollection(application.getHandyComments()));
+			//application.setHandyComments(this.convertCollection(application.getHandyComments()));
+			//application.setCustomerComments(this.convertCollection(application.getCustomerComments()));
 			a = this.applicationRepo.save(application);
 		}
 		return a;

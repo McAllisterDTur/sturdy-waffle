@@ -33,6 +33,9 @@
 			code="application.error.offeredPrice" />
 		<br />
 	</jstl:if>
+	<jstl:if test="${application.id != 0 }">
+		<form:hidden path="offeredPrice"/>
+	</jstl:if>
 
 	<security:authorize access="hasRole('HANDYWORKER')">
 		<form:label path="handyComments">

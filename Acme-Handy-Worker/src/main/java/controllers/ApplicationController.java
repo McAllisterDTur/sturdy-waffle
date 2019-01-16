@@ -175,7 +175,7 @@ public class ApplicationController extends AbstractController {
 		ModelAndView result;
 		if (binding.hasErrors()) {
 
-			System.out.println(binding.getAllErrors());
+			System.out.println("errores:" + binding.getAllErrors());
 			result = new ModelAndView("application/customer,handyworker/edit");
 			result.addObject("application", application);
 		} else {

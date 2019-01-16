@@ -43,6 +43,8 @@
 		<br />
 	</jstl:forEach>
 	<br />
+	<button onClick="window.location.href='application/customer,handyworker/edit.do?applicationId=${application.id}'" ><spring:message code="application.addComment" /></button>
+	<br />
 	<jstl:if test="${application.status == 'ACCEPTED'}">
 		<display:table name="application.phases" id="row" class="dispalytag"
 			pagesize="5" requestURI="${ requestURI}">
