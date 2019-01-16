@@ -80,7 +80,7 @@
 		<security:intercept-url pattern="/profile/**"
 			access="isAuthenticated()" />
 		<security:intercept-url pattern="/profile/seeId.do"
-			access="permitAll" />
+			access="isAuthenticated()" />
 
 		<security:intercept-url pattern="/complaint/**"
 			access="isAuthenticated()" />

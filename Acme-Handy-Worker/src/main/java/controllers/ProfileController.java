@@ -244,6 +244,23 @@ public class ProfileController extends AbstractController {
 		ModelAndView result = new ModelAndView("profile/see");
 		final Actor actor = this.actorService.findOne(id);
 		final String role = actor.getAccount().getAuthorities().iterator().next().toString();
+		System.out.println(role);
+		final UserAccount ua = LoginService.getPrincipal();
+		if (ua == null) {
+			System.out.println("Null!");
+			return new ModelAndView("redirect:/welcome/index.do");
+
+		} else if (role.equals("CUSTOMER")) {
+			System.out.println("Estás viendo un customer");
+			if (!ua.getAuthorities().iterator().next().toString().equals("HANDYWORKER")) {
+				System.out.println("Pero no eres un handyworker");
+				return new ModelAndView("redirect:see.do");
+			}
+		} else {
+			System.out.println("No estás viendo un customer");
+			return new ModelAndView("redirect:see.do");
+		}
+
 		result.addObject("actor", actor);
 		result.addObject("banned", actor.getBanned());
 		result.addObject("socialProfiles", this.spService.findByActor(actor.getId()));

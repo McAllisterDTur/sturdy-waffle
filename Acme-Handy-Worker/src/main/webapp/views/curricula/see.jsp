@@ -25,7 +25,7 @@
 	<b><spring:message code="curricula.personalRecord.phoneNumber"/></b>:
 	<jstl:out value="${personalRecord.phoneNumber }"/><br/>
 	<b><spring:message code="curricula.personalRecord.linkedInUrl"/></b>:
-	<jstl:out value="${personalRecord.linkedInUrl }"/><br/>
+	<jstl:out value="${personalRecord.linkedInURL }"/><br/>
 	<b><spring:message code="curricula.personalRecord.comments"/></b>:
 	<ul>
 		<jstl:forEach items="${personalRecord.comments }" var="comment">
