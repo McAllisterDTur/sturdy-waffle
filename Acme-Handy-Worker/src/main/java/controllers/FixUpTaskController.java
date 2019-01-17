@@ -128,11 +128,15 @@ public class FixUpTaskController extends AbstractController {
 	@RequestMapping(value = "/customer/edit", method = RequestMethod.POST)
 	public ModelAndView saveFixUpTask(@Valid final FixUpTask fixUpTask, final BindingResult binding) {
 		ModelAndView result;
-		if (binding.hasErrors()) {
+		String dateError = "";
+		if (fixUpTask.getPeriodStart() != null && fixUpTask.getPeriodEnd() != null)
+			dateError = this.taskService.checkIfBefore(fixUpTask.getPeriodStart(), fixUpTask.getPeriodEnd());
+		if (binding.hasErrors() || !dateError.isEmpty()) {
 			System.out.println(binding.getFieldErrors());
 			result = new ModelAndView("fixuptask/edit");
 			result = this.addCategoriesWarrantiesConfiguration(result);
 			result.addObject("fixUpTask", fixUpTask);
+			result.addObject("dateError", dateError);
 
 		} else
 			try {
@@ -143,7 +147,6 @@ public class FixUpTaskController extends AbstractController {
 				result.addObject("messageCode", "fixuptask.commit.error");
 				result = this.addCategoriesWarrantiesConfiguration(result);
 				result.addObject("fixUpTask", fixUpTask);
-
 			}
 		result.addObject("vat", this.confService.findAll().iterator().next().getVat());
 		result = this.confService.configGeneral(result);
@@ -192,4 +195,5 @@ public class FixUpTaskController extends AbstractController {
 		model.addObject("warranties", this.warrantyService.findNotDraft());
 		return model;
 	}
+
 }

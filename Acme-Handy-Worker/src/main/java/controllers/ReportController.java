@@ -112,6 +112,7 @@ public class ReportController extends AbstractController {
 			rep = this.reportService.create(complaintId);
 		result.addObject("report", rep);
 
+		result.addObject("isFinalEdit", rep.getIsFinal());
 		result = this.configService.configGeneral(result);
 		result = this.aService.isBanned(result);
 		return result;
@@ -128,7 +129,7 @@ public class ReportController extends AbstractController {
 		if (reportId != 0)
 			rep = this.reportService.findOne(reportId);
 		result.addObject("report", rep);
-
+		result.addObject("isFinalEdit", rep.getIsFinal());
 		result = this.configService.configGeneral(result);
 		result = this.aService.isBanned(result);
 		return result;
@@ -136,20 +137,28 @@ public class ReportController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/referee/save", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(final Report r, final BindingResult br) {
+	public ModelAndView save(final Report r, final BindingResult br, @RequestParam final String isFinalEdit) {
 		ModelAndView result;
 		if (br.hasErrors()) {
 			result = new ModelAndView("report/referee/edit");
 			result.addObject("report", r);
+			result.addObject("isFinalEdit", r.getIsFinal());
 			System.out.println(br.getAllErrors());
 		} else
 			try {
+				if (isFinalEdit.equals("true"))
+					r.setIsFinal(true);
+				else
+					r.setIsFinal(false);
+
 				this.reportService.save(r);
 				result = new ModelAndView("redirect:/report/customer,handyworker,referee/list.do");
 			} catch (final Throwable oops) {
-				oops.getMessage();
+
 				result = new ModelAndView("report/referee/edit");
 				result.addObject("success", false);
+				result.addObject("isFinalEdit", r.getIsFinal());
+				System.out.println(oops.getMessage());
 			}
 
 		result = this.configService.configGeneral(result);

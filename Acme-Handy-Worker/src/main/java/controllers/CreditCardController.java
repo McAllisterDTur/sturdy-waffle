@@ -62,6 +62,8 @@ public class CreditCardController {
 	public ModelAndView save(@Valid final FixUpTask task, final BindingResult binding, @RequestParam final int applicationId) {
 
 		ModelAndView result;
+
+		System.out.println(task.getCreditCard());
 		if (binding.hasErrors()) {
 			final Application a = this.applicationService.findOne(applicationId);
 			result = new ModelAndView("creditCard/create");

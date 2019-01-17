@@ -25,6 +25,7 @@ import security.UserAccount;
 import services.ActorService;
 import services.AdministratorService;
 import services.ConfigurationService;
+import services.CurriculaService;
 import services.CustomerService;
 import services.FixUpTaskService;
 import services.HandyWorkerService;
@@ -64,6 +65,8 @@ public class ProfileController extends AbstractController {
 	TutorialService			tService;
 	@Autowired
 	FixUpTaskService		futService;
+	@Autowired
+	CurriculaService		currService;
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -79,6 +82,7 @@ public class ProfileController extends AbstractController {
 			hw = this.hwService.findOne(actor.getId());
 			res.addObject("worker", hw);
 			res.addObject("handy", true);
+			res.addObject("hasCurricula", this.currService.findFromHandyWorker(hw) != null);
 		} else {
 			res.addObject("actor", actor);
 			res.addObject("handy", false);
@@ -98,6 +102,7 @@ public class ProfileController extends AbstractController {
 			result.addObject("handy", false);
 		} else {
 			result = new ModelAndView("profile/edit");
+			actor.setPhone(this.actorService.checkSetPhoneCC(actor.getPhone()));
 			result.addObject("actor", actor);
 			result.addObject("handy", false);
 			final String role = LoginService.getPrincipal().getAuthorities().toArray()[0].toString();
@@ -169,7 +174,8 @@ public class ProfileController extends AbstractController {
 	public ModelAndView saveHandy(@Valid final HandyWorker worker, final BindingResult br) {
 
 		ModelAndView result;
-		if (br.hasErrors()) {
+		final String emailError = this.actorService.validateEmail(worker.getEmail());
+		if (br.hasErrors() || !emailError.equals("")) {
 
 			result = new ModelAndView("profile/edit");
 
@@ -178,6 +184,7 @@ public class ProfileController extends AbstractController {
 			result = new ModelAndView("profile/edit");
 			result.addObject("worker", worker);
 			result.addObject("handy", true);
+			worker.setPhone(this.actorService.checkSetPhoneCC(worker.getPhone()));
 			final String role = LoginService.getPrincipal().getAuthorities().toArray()[0].toString();
 			final Integer id = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
 			try {
@@ -223,6 +230,8 @@ public class ProfileController extends AbstractController {
 			result.addObject("fixUpTasks", this.futService.findFromCustomer(actor.getId()));
 		} else if (role.equals("HANDYWORKER")) {
 			result.addObject("handy", true);
+			System.out.println(this.currService.findFromHandyWorker(this.hwService.findOne(actor.getId())) != null);
+			result.addObject("hasCurricula", this.currService.findFromHandyWorker(this.hwService.findOne(actor.getId())) != null);
 			result.addObject("make", this.hwService.findOne(actor.getId()).getMake());
 			result.addObject("endorsable", true);
 			result.addObject("score", this.hwService.findOne(actor.getId()).getScore());
@@ -241,6 +250,23 @@ public class ProfileController extends AbstractController {
 		ModelAndView result = new ModelAndView("profile/see");
 		final Actor actor = this.actorService.findOne(id);
 		final String role = actor.getAccount().getAuthorities().iterator().next().toString();
+		System.out.println(role);
+		final UserAccount ua = LoginService.getPrincipal();
+		if (ua == null) {
+			System.out.println("Null!");
+			return new ModelAndView("redirect:/welcome/index.do");
+
+		} else if (role.equals("CUSTOMER")) {
+			System.out.println("Estás viendo un customer");
+			if (!ua.getAuthorities().iterator().next().toString().equals("HANDYWORKER")) {
+				System.out.println("Pero no eres un handyworker");
+				return new ModelAndView("redirect:see.do");
+			}
+		} else {
+			System.out.println("No estás viendo un customer");
+			return new ModelAndView("redirect:see.do");
+		}
+
 		result.addObject("actor", actor);
 		result.addObject("banned", actor.getBanned());
 		result.addObject("socialProfiles", this.spService.findByActor(actor.getId()));
@@ -254,10 +280,12 @@ public class ProfileController extends AbstractController {
 			result.addObject("endorsable", true);
 			result.addObject("score", this.custoService.findOne(id).getScore());
 			result.addObject("handy", false);
+			result.addObject("customer", true);
 			result.addObject("vat", this.cService.findAll().iterator().next().getVat());
-			result.addObject("fixUpTasks", this.futService.findFromCustomer(actor.getId()));
+			result.addObject("fixUpTasks", this.futService.findFromCustomer(id));
 		} else if (role.equals("HANDYWORKER")) {
 			result.addObject("handy", true);
+			result.addObject("hasCurricula", this.currService.findFromHandyWorker(this.hwService.findOne(actor.getId())) != null);
 			result.addObject("make", this.hwService.findOne(id).getMake());
 			result.addObject("endorsable", true);
 			result.addObject("score", this.hwService.findOne(id).getScore());
@@ -273,7 +301,7 @@ public class ProfileController extends AbstractController {
 
 	@RequestMapping(value = "administrator/ban", method = RequestMethod.GET)
 	public ModelAndView banProfile(@RequestParam final Integer id) {
-		ModelAndView result = new ModelAndView("redirect:/profile/seeId.do?id=" + id);
+		ModelAndView result = new ModelAndView("redirect:/administrator/suspiciousActors.do");
 		final Actor a = this.actorService.findOne(id);
 		if (!a.getBanned())
 			this.actorService.ban(a);
@@ -284,7 +312,7 @@ public class ProfileController extends AbstractController {
 
 	@RequestMapping(value = "administrator/unban", method = RequestMethod.GET)
 	public ModelAndView unbanProfile(@RequestParam final Integer id) {
-		ModelAndView result = new ModelAndView("redirect:/profile/seeId.do?id=" + id);
+		ModelAndView result = new ModelAndView("redirect:/administrator/suspiciousActors.do");
 		final Actor a = this.actorService.findOne(id);
 		if (a.getBanned())
 			this.actorService.unban(a);

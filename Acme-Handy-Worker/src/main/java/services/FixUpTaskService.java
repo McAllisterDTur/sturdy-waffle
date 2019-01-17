@@ -98,7 +98,7 @@ public class FixUpTaskService {
 			res = this.fixUpTaskRepository.save(fixUpTask);
 		} else {
 			Assert.isTrue(fixUpTask.getPeriodStart().before(fixUpTask.getPeriodEnd()));
-			Assert.isTrue(this.checkCreditCard(fixUpTask));
+			//Assert.isTrue(this.checkCreditCard(fixUpTask));
 			res = this.fixUpTaskRepository.save(fixUpTask);
 		}
 
@@ -121,24 +121,28 @@ public class FixUpTaskService {
 
 	}
 
-	@SuppressWarnings("deprecation")
 	public boolean checkCreditCard(final FixUpTask task) {
 		final CreditCard card = task.getCreditCard();
 		final Date date = new Date();
-		boolean res = true;
 
-		if (card.getBrandName().isEmpty())
-			res = false;
-		else if (card.getCodeCVV() < 100 || card.getCodeCVV() > 999)
-			res = false;
-		else if (card.getExpirationMonth() < 1 || card.getExpirationMonth() > 12)
-			res = false;
-		else if (card.getExpirationYear() < (date.getYear() - 2000))
-			res = false;
-		else if (card.getHolderName().isEmpty())
-			res = false;
-		else if (card.getNumber().length() != 16)
-			res = false;
+		final boolean res = true;
+
+		Assert.isTrue(!(card.getBrandName() == null || card.getBrandName().isEmpty()));
+
+		Assert.isTrue(!(card.getCodeCVV() == null || card.getCodeCVV() < 100 || card.getCodeCVV() > 999));
+
+		Assert.isTrue(!(card.getExpirationMonth() == 0 || card.getExpirationMonth() < 1 || card.getExpirationMonth() > 12));
+
+		Assert.isTrue((card.getExpirationYear() > 0 && card.getExpirationYear() < 100));
+
+		final Integer anno = 2000 + card.getExpirationYear();
+		final GregorianCalendar fecha = new GregorianCalendar(anno, card.getExpirationMonth(), 1);
+
+		Assert.isTrue(date.before(fecha.getTime()));
+
+		Assert.isTrue(!(card.getHolderName() == null || card.getHolderName().isEmpty()));
+
+		Assert.isTrue(!(card.getNumber() == null || card.getNumber().length() != 16));
 
 		return res;
 	}
@@ -384,6 +388,13 @@ public class FixUpTaskService {
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.findAll();
+		return res;
+	}
+
+	public String checkIfBefore(final Date before, final Date after) {
+		String res = "";
+		if (after.before(before))
+			res = "fixuptask.date.error";
 		return res;
 	}
 

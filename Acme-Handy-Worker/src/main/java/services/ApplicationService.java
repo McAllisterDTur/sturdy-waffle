@@ -89,8 +89,8 @@ public class ApplicationService {
 			Assert.notNull(this.taskService.updateTask(a));
 
 		} else {//Actualizacion del status por parte del customer due�o de la fixUpTask
-			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
-			Assert.isTrue(application.getFixUpTask().getCustomer().getAccount().equals(this.account));//customer loggeado due�o de la task
+			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER) || AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
+			//Assert.isTrue(application.getFixUpTask().getCustomer().getAccount().equals(this.account));//customer loggeado due�o de la task
 			if (application.getStatus().equals("ACCEPTED")) {
 				Assert.isTrue(this.taskHasNoAcceptedApplication(application));
 				Assert.notNull(application.getFixUpTask().getCreditCard());
@@ -104,7 +104,6 @@ public class ApplicationService {
 		}
 		return a;
 	}
-
 	public boolean taskHasNoAcceptedApplication(final Application a) {
 		boolean res = true;
 
@@ -287,6 +286,10 @@ public class ApplicationService {
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
 		return this.applicationRepo.applicationsPerFTask();
+	}
+
+	public Collection<Application> findAll() {
+		return this.applicationRepo.findAll();
 	}
 
 	public Collection<String> convertCollection(final Collection<String> nota) {
