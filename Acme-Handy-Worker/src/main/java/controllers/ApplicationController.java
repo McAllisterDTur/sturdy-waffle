@@ -22,6 +22,7 @@ import services.ActorService;
 import services.ApplicationService;
 import services.ConfigurationService;
 import domain.Application;
+import domain.CreditCard;
 import domain.Customer;
 import domain.FixUpTask;
 
@@ -104,6 +105,7 @@ public class ApplicationController extends AbstractController {
 			res = new ModelAndView("creditCard/create");
 			final Collection<String> makers = this.configurationService.findAll().iterator().next().getCardMaker();
 
+			task.setCreditCard(new CreditCard());
 			res.addObject("fixuptask", task);
 			res.addObject("makers", makers);
 			res.addObject("applicationId", a.getId());

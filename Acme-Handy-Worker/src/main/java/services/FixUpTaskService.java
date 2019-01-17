@@ -94,9 +94,11 @@ public class FixUpTaskService {
 				Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
 				Assert.isTrue(fixUpTask.getCustomer().getAccount().equals(aux.getCustomer().getAccount()));
 			}
+			Assert.isTrue(this.checkCreditCard(fixUpTask));
 			res = this.fixUpTaskRepository.save(fixUpTask);
 		} else {
 			Assert.isTrue(fixUpTask.getPeriodStart().before(fixUpTask.getPeriodEnd()));
+			Assert.isTrue(this.checkCreditCard(fixUpTask));
 			res = this.fixUpTaskRepository.save(fixUpTask);
 		}
 
@@ -117,6 +119,28 @@ public class FixUpTaskService {
 
 		return res;
 
+	}
+
+	@SuppressWarnings("deprecation")
+	public boolean checkCreditCard(final FixUpTask task) {
+		final CreditCard card = task.getCreditCard();
+		final Date date = new Date();
+		boolean res = true;
+
+		if (card.getBrandName().isEmpty())
+			res = false;
+		else if (card.getCodeCVV() < 100 || card.getCodeCVV() > 999)
+			res = false;
+		else if (card.getExpirationMonth() < 1 || card.getExpirationMonth() > 12)
+			res = false;
+		else if (card.getExpirationYear() < (date.getYear() - 2000))
+			res = false;
+		else if (card.getHolderName().isEmpty())
+			res = false;
+		else if (card.getNumber().length() != 16)
+			res = false;
+
+		return res;
 	}
 
 	/**
