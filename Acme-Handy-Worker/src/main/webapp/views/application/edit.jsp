@@ -23,6 +23,8 @@
 
 	<form:hidden path="registerTime" />
 	<form:hidden path="status" />
+	<form:hidden path="customerComments" />
+	<form:hidden path="handyComments" />
 
 	<jstl:if test="${application.id==0}">
 		<form:label path="offeredPrice">
@@ -37,18 +39,21 @@
 		<form:hidden path="offeredPrice"/>
 	</jstl:if>
 
+		
 	<security:authorize access="hasRole('HANDYWORKER')">
 		<form:label path="handyComments">
 			<spring:message code="application.comments" />
 		</form:label>
-		<form:textarea path="handyComments" />
+		<input type="text" name="handyComment" value=""/>
+		<input type="hidden" name="customerComment" value=""/>
 		<form:errors path="handyComments" cssClass="error" />
 	</security:authorize>
 	<security:authorize access="hasRole('CUSTOMER')">
 		<form:label path="customerComments">
 			<spring:message code="application.comments" />
 		</form:label>
-		<form:textarea path="customerComments" />
+		<input type="hidden" name="handyComment" value=""/>
+		<input type="text" name="customerComment" value=""/>
 		<form:errors path="customerComments" cssClass="error" />
 	</security:authorize>
 	<br />

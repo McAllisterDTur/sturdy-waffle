@@ -1,6 +1,7 @@
 
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -95,8 +96,8 @@ public class ApplicationController extends AbstractController {
 
 		this.account = LoginService.getPrincipal();
 
-		final Application a = this.applicationService.findOne(applicationId);
 		try {
+			final Application a = this.applicationService.findOne(applicationId);
 			Assert.isTrue(this.applicationService.taskHasNoAcceptedApplication(a));
 
 			final FixUpTask task = a.getFixUpTask();
@@ -107,6 +108,7 @@ public class ApplicationController extends AbstractController {
 			res.addObject("makers", makers);
 			res.addObject("applicationId", a.getId());
 		} catch (final Throwable oops) {
+			final Application a = this.applicationService.findOne(applicationId);
 			oops.printStackTrace();
 			res = new ModelAndView("redirect:../../application/customer,handyworker/list.do?fixuptaskId=" + a.getFixUpTask().getId());
 		}
@@ -171,7 +173,7 @@ public class ApplicationController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/customer,handyworker/save", method = RequestMethod.POST)
-	public ModelAndView save(@Valid final Application application, final BindingResult binding) {
+	public ModelAndView save(@Valid final Application application, final BindingResult binding, @RequestParam final String handyComment, @RequestParam final String customerComment) {
 		ModelAndView result;
 		if (binding.hasErrors()) {
 
@@ -181,6 +183,23 @@ public class ApplicationController extends AbstractController {
 		} else {
 			Application applicationF = null;
 			try {
+				if (application.getHandyComments() == null)
+					application.setHandyComments(new ArrayList<String>());
+
+				if (application.getCustomerComments() == null)
+					application.setCustomerComments(new ArrayList<String>());
+
+				if (!handyComment.isEmpty() && !(handyComment == null)) {
+					System.out.println("handy Comment: " + handyComment);
+					application.getHandyComments().add(handyComment);
+				}
+
+				if (!customerComment.isEmpty() && !(customerComment == null)) {
+					System.out.println("customer Comment: " + customerComment);
+
+					application.getCustomerComments().add(customerComment);
+				}
+
 				applicationF = this.applicationService.save(application);
 				result = new ModelAndView("redirect:/application/customer,handyworker/display.do?applicationId=" + applicationF.getId());
 			} catch (final Throwable opps) {

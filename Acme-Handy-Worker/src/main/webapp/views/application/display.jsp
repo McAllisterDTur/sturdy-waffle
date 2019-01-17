@@ -64,7 +64,7 @@
 					code="application.phase.create" /></a>
 		</security:authorize>
 		<security:authorize access="hasRole('CUSTOMER')">
-			<jstl:if test="${application.customer == customer }">
+			<jstl:if test="${application.fixUpTask.customer == customer }">
 				<a
 					href="application/customer,handyworker/edit.do?applicationId=${application.id}"><spring:message
 						code="application.addComment" /></a>

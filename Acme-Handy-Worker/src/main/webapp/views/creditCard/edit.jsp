@@ -24,7 +24,9 @@
 	<form:hidden path="category" />
 	<form:hidden path="warranty" />
 	<form:hidden path="customer" />
-	<!-- <input type="hidden" value="${applicationId }" />  -->
+	<form:hidden path="applications" />
+	<form:hidden path="complaints" />
+	
 	
 	<h3><spring:message code="creditCard.header"/> </h3>
 
