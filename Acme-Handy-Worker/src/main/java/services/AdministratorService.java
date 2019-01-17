@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +17,8 @@ import security.UserAccount;
 import utilities.AuthenticationUtility;
 import domain.Actor;
 import domain.Administrator;
+import domain.Customer;
+import domain.HandyWorker;
 
 @Service
 @Transactional
@@ -94,5 +97,25 @@ public class AdministratorService {
 		if (!match1.isEmpty() && !match2.isEmpty())
 			res = match2;
 		return res;
+	}
+
+	public List<Object[]> complaintsPerFixUpTaskStatistics() {
+		return this.administratorRepository.complaintsPerFixUpTaskStatistics();
+	}
+
+	public List<Object[]> notesPerRefereeReportStatistics() {
+		return this.administratorRepository.notesPerRefereeReportStatistics();
+	}
+
+	public Double fixUpTaskWithComplaintRatio() {
+		return this.administratorRepository.fixUpTaskWithComplaintRatio();
+	}
+
+	public List<Customer> topThreeCustomersByComplaints() {
+		return this.administratorRepository.topThreeCustomersByComplaints();
+	}
+
+	public List<HandyWorker> topThreeHandyByComplaints() {
+		return this.administratorRepository.topThreeHandyByComplaints();
 	}
 }
