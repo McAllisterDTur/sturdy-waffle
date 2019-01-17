@@ -264,7 +264,10 @@ public class ProfileController extends AbstractController {
 			}
 		} else {
 			System.out.println("No estás viendo un customer");
-			return new ModelAndView("redirect:see.do");
+			if (!role.equals("HANDYWORKER"))
+				return new ModelAndView("redirect:see.do");
+			else
+				result = new ModelAndView("profile/see");
 		}
 
 		result.addObject("actor", actor);

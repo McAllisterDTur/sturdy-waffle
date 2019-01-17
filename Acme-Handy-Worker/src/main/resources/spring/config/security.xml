@@ -109,6 +109,10 @@
 			access="hasRole('CUSTOMER')" />
 			
 		<!-- Curricula -->
+		<security:intercept-url pattern="/profile/curricula/see.do"
+			access="hasAnyRole('HANDYWORKER', 'CUSTOMER')" />
+		<security:intercept-url pattern="/profile/curricula/edit/**"
+			access="hasRole('CUSTOMER')" />		
 		
 		<!-- Endorsement -->
 		

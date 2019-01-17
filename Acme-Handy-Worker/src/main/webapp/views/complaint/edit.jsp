@@ -16,7 +16,7 @@
 		// Create an <input> element, set its type and name attributes
 		var input = document.createElement("input");
 		input.type = "text";
-		input.name = "law";
+		input.name = "attachments";
 		container.appendChild(input);
 	}
 </script>
@@ -35,7 +35,7 @@
 <jstl:if test="${lang == 'es' }">
 	<script type='text/javascript'>
 		function sendForm(){
-			if(confirm("�Quieres enviar esta queja?\nEsta acci�n no se puede deshacer.")){
+			if(confirm("¿Quieres enviar esta queja?\nEsta acción no se puede deshacer.")){
 				document.getElementById("complaintForm").submit();
 			} else {
 				document.getElementById("complaintForm").action = "complaint/customer/saveDrafted.do";
@@ -57,7 +57,7 @@
 	<p>
 		<spring:message code="complaint.edit.description"/>:
 		<form:input path="description"/>
-		<form:errors path="description" cssClass="errors" />
+		<form:errors path="description" cssClass="error" />
 	</p>
 	<p>
 		<spring:message code="complaint.edit.attachments"/>:

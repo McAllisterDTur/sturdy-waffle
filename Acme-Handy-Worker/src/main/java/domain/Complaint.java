@@ -87,8 +87,8 @@ public class Complaint extends DomainEntity {
 	public void setIsFinal(final Boolean isFinal) {
 		this.isFinal = isFinal;
 	}
-
-	@ManyToOne(optional = true)
+	@NotNull
+	@ManyToOne(optional = false)
 	public FixUpTask getFixUpTask() {
 		return this.fixUpTask;
 	}

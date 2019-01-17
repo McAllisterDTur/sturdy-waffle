@@ -34,7 +34,7 @@
 			<display:column>
 				<jstl:if test="${complaint.isFinal}">
 					<jstl:if test="${not empty complaint.reports}">
-						<button onClick="window.location.href='report/see.do?id=${complaint.id}'">
+						<button onClick="window.location.href='report/customer,handyworker,referee/display.do?reportId=${complaint.reports[0].id}'">
 							<spring:message code="complaint.seeRep" />
 						</button>
 					</jstl:if>
@@ -52,13 +52,13 @@
 		<security:authorize access="hasRole('REFEREE')">
 			<display:column>
 				<jstl:if test="${not empty complaint.reports}">
-					<button onClick="window.location.href='report/see.do?id=${complaint.id}'">
+					<button onClick="window.location.href='report/customer,handyworker,referee/display.do?reportId=${complaint.reports[0].id}'">
 						<spring:message code="complaint.seeRep" />
 					</button>
 				</jstl:if>
 				<jstl:if test="${empty complaint.reports}">
 					<jstl:if test="${not empty complaint.referee }">
-						<button onClick="window.location.href='report/referee/new.do?id=${complaint.id}'">
+						<button onClick="window.location.href='report/referee/create.do?complaintId=${complaint.id}'">
 							<spring:message code="complaint.referee.newReport" />
 						</button>
 					</jstl:if>

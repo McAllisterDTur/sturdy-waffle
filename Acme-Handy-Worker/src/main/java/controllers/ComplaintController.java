@@ -193,7 +193,7 @@ public class ComplaintController {
 				result.addObject("refereeId", c.getReferee().getId());
 		} catch (final Throwable oops) {
 			oops.printStackTrace();
-			result = new ModelAndView("redirect:#");
+			result = new ModelAndView("redirect:/welcome/index.do");
 			result.addObject("success", false);
 		}
 		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());

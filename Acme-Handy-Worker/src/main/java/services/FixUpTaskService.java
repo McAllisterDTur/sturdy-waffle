@@ -156,7 +156,7 @@ public class FixUpTaskService {
 		final FixUpTask res = this.fixUpTaskRepository.findOne(fixUpTaskId);
 		final UserAccount account = LoginService.getPrincipal();
 		if (res != null) {
-			Assert.isTrue(AuthenticationUtility.checkAuthority("CUSTOMER") || AuthenticationUtility.checkAuthority("HANDYWORKER"));
+			Assert.isTrue(AuthenticationUtility.checkAuthority("CUSTOMER") || AuthenticationUtility.checkAuthority("HANDYWORKER") || AuthenticationUtility.checkAuthority("REFEREE"));
 
 			if (AuthenticationUtility.checkAuthority("CUSTOMER"))
 				Assert.isTrue(this.actorService.findByUserAccountId(account.getId()).equals(res.getCustomer()));
