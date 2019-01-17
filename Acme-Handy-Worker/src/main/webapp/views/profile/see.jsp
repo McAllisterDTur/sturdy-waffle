@@ -40,6 +40,12 @@
 	
 </jstl:if>
 
+<jstl:if test="${handy && hasCurricula }">
+		<button onClick="window.location.href='profile/curricula/see.do?id=${actor.id}'">
+			<spring:message code="curricula.see"/>
+		</button>
+	</jstl:if>
+
 <h2><spring:message code="profile.seeing" /> <jstl:out value="${username }"/></h2>
 
 <img src="${actor.photoURL }" height="250" alt="<spring:message code="profile.photo" /> <jstl:out value="${username }"/>"/>

@@ -44,6 +44,7 @@
 		<value>/views/tutorial/messages</value>
 		<value>/views/section/messages</value>
 		<value>/views/creditCard/messages</value>
+		<value>/views/curricula/messages</value>
 
 	</util:list>
 

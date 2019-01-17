@@ -45,7 +45,6 @@ public class CurriculaService {
 	public Curricula save(final Curricula curricula) {
 		final boolean au = AuthenticationUtility.checkAuthority(Authority.HANDYWORKER);
 		Assert.isTrue(au);
-		Assert.isNull(curricula, "You can't save a null curricula");
 		final Curricula c = this.findFromHandyWorker(curricula.getHandyWorker());
 		// If we have a curricula we can't create another
 		if (c != null) {

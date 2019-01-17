@@ -25,6 +25,7 @@ import security.UserAccount;
 import services.ActorService;
 import services.AdministratorService;
 import services.ConfigurationService;
+import services.CurriculaService;
 import services.CustomerService;
 import services.FixUpTaskService;
 import services.HandyWorkerService;
@@ -64,6 +65,8 @@ public class ProfileController extends AbstractController {
 	TutorialService			tService;
 	@Autowired
 	FixUpTaskService		futService;
+	@Autowired
+	CurriculaService		currService;
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -79,6 +82,7 @@ public class ProfileController extends AbstractController {
 			hw = this.hwService.findOne(actor.getId());
 			res.addObject("worker", hw);
 			res.addObject("handy", true);
+			res.addObject("hasCurricula", this.currService.findFromHandyWorker(hw) != null);
 		} else {
 			res.addObject("actor", actor);
 			res.addObject("handy", false);
@@ -226,6 +230,8 @@ public class ProfileController extends AbstractController {
 			result.addObject("fixUpTasks", this.futService.findFromCustomer(actor.getId()));
 		} else if (role.equals("HANDYWORKER")) {
 			result.addObject("handy", true);
+			System.out.println(this.currService.findFromHandyWorker(this.hwService.findOne(actor.getId())) != null);
+			result.addObject("hasCurricula", this.currService.findFromHandyWorker(this.hwService.findOne(actor.getId())) != null);
 			result.addObject("make", this.hwService.findOne(actor.getId()).getMake());
 			result.addObject("endorsable", true);
 			result.addObject("score", this.hwService.findOne(actor.getId()).getScore());
@@ -279,6 +285,7 @@ public class ProfileController extends AbstractController {
 			result.addObject("fixUpTasks", this.futService.findFromCustomer(id));
 		} else if (role.equals("HANDYWORKER")) {
 			result.addObject("handy", true);
+			result.addObject("hasCurricula", this.currService.findFromHandyWorker(this.hwService.findOne(actor.getId())) != null);
 			result.addObject("make", this.hwService.findOne(id).getMake());
 			result.addObject("endorsable", true);
 			result.addObject("score", this.hwService.findOne(id).getScore());

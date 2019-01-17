@@ -217,6 +217,11 @@
 
 		<security:intercept-url pattern="/box/**"
 			access="isAuthenticated()" />
+			
+		<security:intercept-url pattern="/profile/curricula/see.do"
+			access="hasAnyRole('HANDYWORKER', 'CUSTOMER')" />
+			<security:intercept-url pattern="/profile/curricula/edit/**"
+			access="hasRole('CUSTOMER')" />
 
 		<security:intercept-url pattern="/finder/**"
 			access="hasRole('HANDYWORKER')" />
