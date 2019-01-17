@@ -8,7 +8,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="report/referee/save.do?isFinalEdit=${isFinalEdit}" modelAttribute="report">
+<form:form action="report/referee/save.do" modelAttribute="report">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
@@ -22,12 +22,10 @@
 	<form:textarea path="description" />
 	<form:errors path="description" />
 	<br />
-
-	<input type="radio" name="${isFinalEdit}" value="true" />
-	<spring:message code="report.final" />
-	<input type="radio" name="${isFinalEdit}" value="false" />
-	<spring:message code="report.noFinal" />
-	<br />
-	<input type="submit" name="save"
+	
+	
+	<input type="submit" name="saveEdit"
 		value="<spring:message code="report.save"/>" />
+	<input type="submit" name="saveFinal"
+		value="<spring:message code="report.final"/>" />
 </form:form>

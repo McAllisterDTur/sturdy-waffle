@@ -129,35 +129,27 @@ public class ReportController extends AbstractController {
 		if (reportId != 0)
 			rep = this.reportService.findOne(reportId);
 		result.addObject("report", rep);
-		result.addObject("isFinalEdit", rep.getIsFinal());
 		result = this.configService.configGeneral(result);
 		result = this.aService.isBanned(result);
 		return result;
 
 	}
 
-	@RequestMapping(value = "/referee/save", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(final Report r, final BindingResult br, @RequestParam final String isFinalEdit) {
+	@RequestMapping(value = "/referee/save", method = RequestMethod.POST, params = "saveEdit")
+	public ModelAndView save(final Report r, final BindingResult br) {
 		ModelAndView result;
 		if (br.hasErrors()) {
 			result = new ModelAndView("report/referee/edit");
 			result.addObject("report", r);
-			result.addObject("isFinalEdit", r.getIsFinal());
 			System.out.println(br.getAllErrors());
 		} else
 			try {
-				if (isFinalEdit.equals("true"))
-					r.setIsFinal(true);
-				else
-					r.setIsFinal(false);
-
 				this.reportService.save(r);
 				result = new ModelAndView("redirect:/report/customer,handyworker,referee/list.do");
 			} catch (final Throwable oops) {
 
 				result = new ModelAndView("report/referee/edit");
 				result.addObject("success", false);
-				result.addObject("isFinalEdit", r.getIsFinal());
 				System.out.println(oops.getMessage());
 			}
 
@@ -165,4 +157,31 @@ public class ReportController extends AbstractController {
 		result = this.aService.isBanned(result);
 		return result;
 	}
+
+	@RequestMapping(value = "/referee/save", method = RequestMethod.POST, params = "saveFinal")
+	public ModelAndView saveFinal(final Report r, final BindingResult br) {
+		ModelAndView result;
+		if (br.hasErrors()) {
+			result = new ModelAndView("report/referee/edit");
+			result.addObject("report", r);
+			System.out.println(br.getAllErrors());
+		} else
+			try {
+
+				r.setIsFinal(false);
+
+				this.reportService.save(r);
+				result = new ModelAndView("redirect:/report/customer,handyworker,referee/list.do");
+			} catch (final Throwable oops) {
+
+				result = new ModelAndView("report/referee/edit");
+				result.addObject("success", false);
+				System.out.println(oops.getMessage());
+			}
+
+		result = this.configService.configGeneral(result);
+		result = this.aService.isBanned(result);
+		return result;
+	}
+
 }
