@@ -16,11 +16,23 @@
 		<b><spring:message code="category.name"/>: </b>
 		<jstl:out value="${category.name }"/>
 	</p>
-	
 	<p>
-		<b><spring:message code="category.father"/>: </b>
-		<jstl:out value="${category.father.name }"/>
+		<b><spring:message code="category.nameEn"/>: </b>
+		<jstl:out value="${category.nameEn }"/>
 	</p>
+	
+	<jstl:if test="${pageContext.response.locale.language == 'en'}">
+		<p>
+			<b><spring:message code="category.father"/>: </b>
+			<jstl:out value="${category.father.nameEn }"/>
+		</p>
+	</jstl:if>
+	<jstl:if test="${pageContext.response.locale.language == 'es'}">
+	<p>
+			<b><spring:message code="category.father"/>: </b>
+			<jstl:out value="${category.father.name }"/>
+		</p>
+	</jstl:if>
 	
 	<p>
 		<button onClick="window.location.href='category/administrator/edit.do?id=${category.id }'">

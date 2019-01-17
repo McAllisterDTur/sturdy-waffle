@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- 
- * tiles_es.xml
+ * tiles.xml
  *
  * Copyright (C) 2018 Universidad de Sevilla
  * 
@@ -13,12 +13,17 @@
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-      
+       
 <tiles-definitions>
 
-	<definition name="configuration/edit" extends="master.page">	
-		<put-attribute name="title" value="Configuración" />
-		<put-attribute name="body" value="/views/configuration/edit.jsp" />
+	<definition name="curricula/see" extends="master.page">	
+		<put-attribute name="title" value="Currículum" />
+		<put-attribute name="body" value="/views/curricula/see.jsp" />
+	</definition>
+	
+	<definition name="curricula/edit" extends="master.page">	
+		<put-attribute name="title" value="Editando currículum" />
+		<put-attribute name="body" value="/views/curricula/edit.jsp" />
 	</definition>
 	
 </tiles-definitions>

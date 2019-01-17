@@ -11,7 +11,6 @@
 <form:form modelAtribute="application" action="application/handyworker/create.do">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	
 	<form:label path="maxPrice">
 		<spring:message code="handy.application.maxPrice" />
 	</form:label>

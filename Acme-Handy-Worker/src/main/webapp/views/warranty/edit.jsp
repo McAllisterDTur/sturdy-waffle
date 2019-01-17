@@ -32,6 +32,8 @@
 			</jstl:if>
 		</fieldset>
 	</jstl:if>
+	
+	<b><spring:message code="warranty.edit.must"/></b>
 		
 	<form:form modelAttribute="warranty" action="warranty/administrator/save.do">
 		<p>

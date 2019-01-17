@@ -64,7 +64,6 @@ public class MessageService {
 		for (final Message m : all)
 			if (m.getSender().equals(logged) || m.getReciever().equals(logged) || AuthenticationUtility.checkAuthority("ADMIN"))
 				res.add(m);
-
 		return res;
 	}
 
@@ -165,7 +164,6 @@ public class MessageService {
 			} else
 				out = this.checkSystemBox(this.bService.findByName(receiver.getId(), "IN"));
 			//Modificamos el mensaje
-
 			final Collection<Actor> receptor = new ArrayList<>();
 			receptor.add(receiver);
 			msg.setReciever(receptor);
@@ -177,23 +175,18 @@ public class MessageService {
 			boxes.add(out);
 			msg.setBoxes(boxes);
 			result = this.msgRepository.save(msg);
-
 			//Modificamos el buzon out
 			final Collection<Message> messagesIn = in.getMessages();
 			messagesIn.add(result);
 			in.setMessages(messagesIn);
 			this.bService.save(in);
-
 			//Modificamos el buzon in
 			final Collection<Message> messagesOut = out.getMessages();
 			messagesOut.add(result);
 			out.setMessages(messagesOut);
-
 			this.bService.save(out);
-
 		}
 		return result;
-
 	}
 
 	public Message copy(final Message msg) {

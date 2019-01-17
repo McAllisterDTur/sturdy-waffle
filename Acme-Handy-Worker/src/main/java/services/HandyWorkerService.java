@@ -36,6 +36,8 @@ public class HandyWorkerService {
 	@Autowired
 	private FinderService			finderService;
 	private UserAccount				account;
+	@Autowired
+	private ApplicationService		applicationService;
 
 
 	public HandyWorker create() {
@@ -78,8 +80,10 @@ public class HandyWorkerService {
 		this.account = LoginService.getPrincipal();
 
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
-
-		return this.repo.findHandyWorkerMoreAverage();
+		Collection<HandyWorker> handyWorkers = this.repo.findHandyWorkerMoreAverage();
+		if (this.applicationService.findAll().size() == 0)
+			handyWorkers = new ArrayList<HandyWorker>();
+		return handyWorkers;
 	}
 
 	public Collection<HandyWorker> findTop3HandyWorkers() {

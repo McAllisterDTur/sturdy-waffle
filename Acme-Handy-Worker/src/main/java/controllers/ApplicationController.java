@@ -1,12 +1,14 @@
 
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +22,7 @@ import services.ActorService;
 import services.ApplicationService;
 import services.ConfigurationService;
 import domain.Application;
+import domain.CreditCard;
 import domain.Customer;
 import domain.FixUpTask;
 
@@ -50,13 +53,16 @@ public class ApplicationController extends AbstractController {
 
 		if (fixuptaskId == 0)
 			applications = this.applicationService.findAllWorker(this.actorService.findByUserAccountId(this.account.getId()).getId());
-		else
+		else {
 			applications = this.applicationService.findAllTask(fixuptaskId);
+			//Verificación que se es dueño de la fixuptask
+			Assert.isTrue(applications.iterator().next().getFixUpTask().getCustomer().getAccount().equals(this.account));
+		}
 
 		result = new ModelAndView("application/customer,handyworker/list");
 		result.addObject("applications", applications);
 		result.addObject("vat", vat);
-		result.addObject("requestURI", "applications/customer,handyworker/list.do");
+		result.addObject("requestURI", "applications/customer,handyworker/list.do?fixuptaskId=" + fixuptaskId);
 		result = this.configurationService.configGeneral(result);
 		result = this.actorService.isBanned(result);
 		return result;
@@ -69,6 +75,8 @@ public class ApplicationController extends AbstractController {
 		this.account = LoginService.getPrincipal();
 		final double vat = this.configurationService.findAll().iterator().next().getVat();
 		final Application a = this.applicationService.findOne(applicationId);
+		//Verificacion que se es dueño de la application o de la fixuptask
+		Assert.isTrue(a.getFixUpTask().getCustomer().getAccount().equals(this.account) || a.getHandyWorker().getAccount().equals(this.account));
 		res = new ModelAndView("application/customer,handyworker/display");
 		res.addObject("application", a);
 		res.addObject("vat", vat);
@@ -89,19 +97,22 @@ public class ApplicationController extends AbstractController {
 
 		this.account = LoginService.getPrincipal();
 
-		final Application a = this.applicationService.findOne(applicationId);
-
 		try {
-			a.setStatus("ACCEPTED");
-
-			this.applicationService.save(a);
+			final Application a = this.applicationService.findOne(applicationId);
+			Assert.isTrue(this.applicationService.taskHasNoAcceptedApplication(a));
 
 			final FixUpTask task = a.getFixUpTask();
+			res = new ModelAndView("creditCard/create");
+			final Collection<String> makers = this.configurationService.findAll().iterator().next().getCardMaker();
 
-			res = new ModelAndView("redirect:../../creditCard/customer/create.do?fixuptaskId=" + task.getId());
+			task.setCreditCard(new CreditCard());
+			res.addObject("fixuptask", task);
+			res.addObject("makers", makers);
+			res.addObject("applicationId", a.getId());
 		} catch (final Throwable oops) {
+			final Application a = this.applicationService.findOne(applicationId);
 			oops.printStackTrace();
-			res = new ModelAndView("application/customer,handyworker/list");
+			res = new ModelAndView("redirect:../../application/customer,handyworker/list.do?fixuptaskId=" + a.getFixUpTask().getId());
 		}
 		res = this.configurationService.configGeneral(res);
 		res = this.actorService.isBanned(res);
@@ -164,16 +175,33 @@ public class ApplicationController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/customer,handyworker/save", method = RequestMethod.POST)
-	public ModelAndView save(@Valid final Application application, final BindingResult binding) {
+	public ModelAndView save(@Valid final Application application, final BindingResult binding, @RequestParam final String handyComment, @RequestParam final String customerComment) {
 		ModelAndView result;
 		if (binding.hasErrors()) {
 
-			System.out.println(binding.getAllErrors());
+			System.out.println("errores:" + binding.getAllErrors());
 			result = new ModelAndView("application/customer,handyworker/edit");
 			result.addObject("application", application);
 		} else {
 			Application applicationF = null;
 			try {
+				if (application.getHandyComments() == null)
+					application.setHandyComments(new ArrayList<String>());
+
+				if (application.getCustomerComments() == null)
+					application.setCustomerComments(new ArrayList<String>());
+
+				if (!handyComment.isEmpty() && !(handyComment == null)) {
+					System.out.println("handy Comment: " + handyComment);
+					application.getHandyComments().add(handyComment);
+				}
+
+				if (!customerComment.isEmpty() && !(customerComment == null)) {
+					System.out.println("customer Comment: " + customerComment);
+
+					application.getCustomerComments().add(customerComment);
+				}
+
 				applicationF = this.applicationService.save(application);
 				result = new ModelAndView("redirect:/application/customer,handyworker/display.do?applicationId=" + applicationF.getId());
 			} catch (final Throwable opps) {

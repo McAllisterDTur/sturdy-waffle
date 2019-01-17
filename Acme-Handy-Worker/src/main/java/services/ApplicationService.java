@@ -82,13 +82,14 @@ public class ApplicationService {
 			Assert.isTrue(application.getRegisterTime().before(application.getFixUpTask().getPeriodStart()));
 
 			application.setRegisterTime(new Date());
-			//application.setStatus("PENDING");
+
+			//application.setHandyComments(this.convertCollection(application.getHandyComments()));
+
 			a = this.applicationRepo.save(application);
-			this.taskService.updateTask(a);
+			Assert.notNull(this.taskService.updateTask(a));
 
 		} else {//Actualizacion del status por parte del customer due�o de la fixUpTask
-			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER));
-			Assert.isTrue(application.getFixUpTask().getCustomer().getAccount().equals(this.account));//customer loggeado due�o de la task
+			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER) || AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
 			if (application.getStatus().equals("ACCEPTED")) {
 				Assert.isTrue(this.taskHasNoAcceptedApplication(application));
 				this.rejectRestOfApplications(application);
@@ -97,12 +98,14 @@ public class ApplicationService {
 			} else
 				this.sendRejectMessageTo(application);
 
+			//application.setHandyComments(this.convertCollection(application.getHandyComments()));
+			//application.setCustomerComments(this.convertCollection(application.getCustomerComments()));
 			a = this.applicationRepo.save(application);
 		}
 		return a;
 	}
 
-	private boolean taskHasNoAcceptedApplication(final Application a) {
+	public boolean taskHasNoAcceptedApplication(final Application a) {
 		boolean res = true;
 
 		final FixUpTask t = this.taskService.findOne(a.getFixUpTask().getId());
@@ -241,28 +244,28 @@ public class ApplicationService {
 		return this.applicationRepo.statictisApplication();
 	}
 
-	public double ratioPedingApplications() {
+	public Double ratioPedingApplications() {
 
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
 
 		return this.applicationRepo.ratioPendingApplications();
 	}
-	public double ratioAcceptedApplications() {
+	public Double ratioAcceptedApplications() {
 
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
 
 		return this.applicationRepo.ratioAcceptedApplications();
 	}
-	public double ratioRejectedApplications() {
+	public Double ratioRejectedApplications() {
 
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
 
 		return this.applicationRepo.ratioRejectedApplications();
 	}
-	public double ratioElapsedApplications() {
+	public Double ratioElapsedApplications() {
 
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
@@ -284,6 +287,18 @@ public class ApplicationService {
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
 		return this.applicationRepo.applicationsPerFTask();
+	}
+
+	public Collection<Application> findAll() {
+		return this.applicationRepo.findAll();
+	}
+
+	public Collection<String> convertCollection(final Collection<String> nota) {
+		final String result = nota.toString();
+		result.replace("[", "").replace("]", "");
+		final Collection<String> ret = new ArrayList<>();
+		ret.add(result);
+		return ret;
 	}
 
 }

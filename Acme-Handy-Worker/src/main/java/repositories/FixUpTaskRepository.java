@@ -20,7 +20,7 @@ public interface FixUpTaskRepository extends JpaRepository<FixUpTask, Integer> {
 	@Query("select count(f) from FixUpTask f where f.ticker = ?1")
 	public int getNumberOfTickers(String ticker);
 
-	@Query("select f from FixUpTask f where (f.ticker like %?1% or f.description like %?1% or f.address like %?1%) and f.category.name like %?2% and f.warranty.title like %?3% and f.maxPrice >= ?4 and f.maxPrice <= ?5 and f.periodStart between ?6 and ?7")
+	@Query("select f from FixUpTask f where (f.ticker like %?1% or f.description like %?1% or f.address like %?1%) and (f.category.name like %?2% or f.category.name like %?2%) and f.warranty.title like %?3% and f.maxPrice >= ?4 and f.maxPrice <= ?5 and f.periodStart between ?6 and ?7")
 	public Collection<FixUpTask> findByFilter(String keyWord, String category, String warranty, double minPrice, double maxPrice, Date open, Date close);
 
 	@Query("select f from FixUpTask f where (f.ticker like %?1% or f.description like %?1% or f.address like %?1% or f.category.name like %?1%)")

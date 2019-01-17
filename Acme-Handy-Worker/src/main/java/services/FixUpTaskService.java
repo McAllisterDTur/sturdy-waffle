@@ -37,6 +37,8 @@ public class FixUpTaskService {
 	private TickerService		tickerService;
 	@Autowired
 	private SpamService			spamService;
+	@Autowired
+	private PhaseService		phaseService;
 
 
 	/**
@@ -94,9 +96,11 @@ public class FixUpTaskService {
 				Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
 				Assert.isTrue(fixUpTask.getCustomer().getAccount().equals(aux.getCustomer().getAccount()));
 			}
+			Assert.isTrue(this.checkCreditCard(fixUpTask));
 			res = this.fixUpTaskRepository.save(fixUpTask);
 		} else {
 			Assert.isTrue(fixUpTask.getPeriodStart().before(fixUpTask.getPeriodEnd()));
+			Assert.isTrue(this.checkCreditCard(fixUpTask));
 			res = this.fixUpTaskRepository.save(fixUpTask);
 		}
 
@@ -119,6 +123,29 @@ public class FixUpTaskService {
 
 	}
 
+	@SuppressWarnings("deprecation")
+	public boolean checkCreditCard(final FixUpTask task) {
+		final CreditCard card = task.getCreditCard();
+		final Date date = new Date();
+		boolean res = true;
+		System.out.println(date.getYear());
+
+		if (card.getBrandName().isEmpty())
+			res = false;
+		else if (card.getCodeCVV() < 100 || card.getCodeCVV() > 999)
+			res = false;
+		else if (card.getExpirationMonth() < 1 || card.getExpirationMonth() > 12)
+			res = false;
+		else if (card.getExpirationYear() < (date.getYear() - 2000))
+			res = false;
+		else if (card.getHolderName().isEmpty())
+			res = false;
+		else if (card.getNumber().length() != 16)
+			res = false;
+
+		return res;
+	}
+
 	/**
 	 * Checks customer authority. (Req 10.1)
 	 * 
@@ -127,13 +154,17 @@ public class FixUpTaskService {
 	 */
 	public FixUpTask findOne(final int fixUpTaskId) {
 		final FixUpTask res = this.fixUpTaskRepository.findOne(fixUpTaskId);
-		if (res != null)
+		final UserAccount account = LoginService.getPrincipal();
+		if (res != null) {
 			Assert.isTrue(AuthenticationUtility.checkAuthority("CUSTOMER") || AuthenticationUtility.checkAuthority("HANDYWORKER"));
+
+			if (AuthenticationUtility.checkAuthority("CUSTOMER"))
+				Assert.isTrue(this.actorService.findByUserAccountId(account.getId()).equals(res.getCustomer()));
+		}
 
 		return res;
 
 	}
-
 	/**
 	 * Deletes the fix up task whose id is passed as parameter checking customer authority. (Req 10.1)
 	 * 
@@ -149,9 +180,10 @@ public class FixUpTaskService {
 		Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
 
 		// Removing application from handy worker
-		for (final Application a : aux.getApplications())
+		for (final Application a : aux.getApplications()) {
+			this.phaseService.deleteApplicationPhases(a.getId());
 			a.getHandyWorker().getApplications().remove(a);
-
+		}
 		// Removing fix up task from customer
 		aux.getCustomer().getFixUpTasks().remove(aux);
 
@@ -238,14 +270,8 @@ public class FixUpTaskService {
 	 * @return Collection of the fix up tasks related to a customer
 	 */
 	public Collection<FixUpTask> findFromCustomer(final int customerId) {
-		//		UserAccount userAccount;
 
-		//		userAccount = LoginService.getPrincipal();
-		//
-		//		final Authority au1 = new Authority();
-		//		au1.setAuthority(Authority.CUSTOMER);
-		//
-		//		Assert.isTrue(userAccount.getAuthorities().contains(au1));
+		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.CUSTOMER) || AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
 
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.findFromCustomer(customerId);
 		return res;
@@ -359,4 +385,10 @@ public class FixUpTaskService {
 		return res;
 	}
 
+	public String checkIfBefore(final Date before, final Date after) {
+		String res = "";
+		if (after.before(before))
+			res = "fixuptask.date.error";
+		return res;
+	}
 }

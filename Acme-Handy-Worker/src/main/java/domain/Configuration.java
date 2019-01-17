@@ -9,6 +9,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -105,6 +106,7 @@ public class Configuration extends DomainEntity {
 	public void setSpamWords(final Collection<String> spamWords) {
 		this.spamWords = spamWords;
 	}
+	@Pattern(regexp = "^([+]([0-9]){1,3})$")
 	@NotBlank
 	public String getCountryCode() {
 		return this.countryCode;

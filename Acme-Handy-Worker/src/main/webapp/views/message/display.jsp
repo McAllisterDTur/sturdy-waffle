@@ -24,20 +24,30 @@
 		<spring:message code="${messageCode}" />
 	</h4>
 </jstl:if>
+
 <b><spring:message code="message.actor.sender" />: </b>
-<jstl:out value="${messageO.sender.account.username}" />
-<br />
-
-<b><spring:message code="message.actor.reciever" />: </b>
 <c:choose>
-	<c:when test="${fn:length(messageO.reciever) gt 1}">
-		<spring:message code="message.broadcast" />
-
+	<c:when test="${fn:length(messageO.reciever) eq 2}">
+		<spring:message code="message.messageSystem" />
 	</c:when>
 	<c:otherwise>
+		<jstl:out value="${messageO.sender.account.username}" />
+		<br />
+	</c:otherwise>
+</c:choose>
+<b><spring:message code="message.actor.reciever" />: </b>
+<c:choose>
+	<c:when test="${fn:length(messageO.reciever) eq 1}">
 		<jstl:forEach var="actor" items="${messageO.reciever}">
 			<jstl:out value="${actor.account.username}"></jstl:out>
 		</jstl:forEach>
+	</c:when>
+	<c:when test="${fn:length(messageO.reciever) eq 2}">
+		<jstl:forEach var="actor" items="${messageO.reciever}">
+		</jstl:forEach>
+	</c:when>
+	<c:otherwise>
+		<spring:message code="message.broadcast" />
 	</c:otherwise>
 </c:choose>
 <br />

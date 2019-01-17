@@ -86,7 +86,7 @@ public class AdministratorService {
 	}
 
 	public String validateEmail(final String email) {
-		final Pattern pattern = Pattern.compile("((([a-z]|[0-9]){1,}[@])|(([a-z]|[0-9]){1,}[ ]{1}){1,}<(([a-z]|[0-9]){1,}[@]>))");
+		final Pattern pattern = Pattern.compile("(^((([a-z]|[0-9]){1,}[@])$)|(^(([a-z]|[0-9]){1,}[ ]{1}){1,}<(([a-z]|[0-9]){1,}[@]>))$)");
 		final Matcher matcher = pattern.matcher(email);
 		final String match1 = this.actorService.validateEmail(email);
 		final String match2 = matcher.matches() ? "" : "actor.email.error";

@@ -11,6 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -76,6 +77,7 @@ public class Finder extends DomainEntity {
 		this.worker = worker;
 	}
 
+	@Min(0)
 	public Double getMinPrice() {
 		return this.minPrice;
 	}
@@ -84,6 +86,7 @@ public class Finder extends DomainEntity {
 		this.minPrice = minPrice;
 	}
 
+	@Min(0)
 	public Double getMaxPrice() {
 		return this.maxPrice;
 	}
@@ -112,6 +115,8 @@ public class Finder extends DomainEntity {
 		this.startDate = startDate;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getCacheUpdate() {
 		return this.cacheUpdate;
 	}

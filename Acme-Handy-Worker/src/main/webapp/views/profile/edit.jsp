@@ -9,7 +9,6 @@
  --%>
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-
 <%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -146,7 +145,11 @@
 	
 	<input type="submit" name="saveHandy" value="<spring:message code="profile.edit.save"/>"/>
 </form:form>
-
+	<jstl:if test="${!hasCurricula }">
+		<button onClick="window.location.href='profile/curricula/see.do?id=${worker.id}'">
+			<spring:message code="curricula.create"/>
+		</button>
+	</jstl:if>
 	<button onClick="window.location.href='profile/social/edit.do'">
 		<spring:message code="profile.social.edit"/>
 	</button>
