@@ -79,7 +79,7 @@
 								code="master.page.handy.myApps" /></a></li>
 					<li><a href="fixuptask/handyworker/list.do"><spring:message
 								code="master.page.handy.list" /></a></li>
-					<li><a href="finder/handyworker/finder.do"><spring:message
+					<li><a href="finder/finder.do"><spring:message
 								code="master.page.handy.finder" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message

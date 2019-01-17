@@ -10,9 +10,11 @@
 
 
 <display:table name="applications" id="row" class="displaytag"
-	pagesize="6" requestURI="${requestURI }">
+	pagesize="7" requestURI="${requestURI }">
 	<display:column property="id" titleKey="application.id" />
-	<display:column property="fixUpTask.id" titleKey="application.task" />
+	<display:column titleKey="application.task" >
+		<a href="fixuptask/customer,handyworker/display.do?fixuptaskId=${row.fixUpTask.id }"><spring:message code="application.fixuptask" /> - <jstl:out value="${row.fixUpTask.ticker }"/></a>
+	</display:column>
 	<display:column property="registerTime"
 		titleKey="application.registerTime" />
 		<display:column titleKey="application.offeredPrice">

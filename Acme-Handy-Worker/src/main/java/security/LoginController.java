@@ -128,6 +128,7 @@ public class LoginController extends AbstractController {
 			System.out.println(binding.getFieldErrors());
 			result = new ModelAndView("actor/register");
 			result.addObject("uri", "security/register.do");
+			actor.getAccount().setPassword("");
 			result.addObject("actor", actor);
 			Collection<Authority> authorities = null;
 			authorities = this.getDefaultRegisterAuthorities();
@@ -135,6 +136,7 @@ public class LoginController extends AbstractController {
 			result.addObject("emailError", emailError);
 		} else
 			try {
+				actor.setPhone(this.actorService.checkSetPhoneCC(actor.getPhone()));
 				final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 				switch (actor.getAccount().getAuthorities().iterator().next().getAuthority()) {
 				case Authority.HANDYWORKER:
@@ -158,7 +160,7 @@ public class LoginController extends AbstractController {
 					this.sponsorService.save(sponsor);
 					break;
 				}
-				result = new ModelAndView("redirect:/security/login.do");
+				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (final Throwable opps) {
 				result = new ModelAndView("actor/register");
 				result.addObject("uri", "security/register.do");
@@ -167,6 +169,8 @@ public class LoginController extends AbstractController {
 				authorities = this.getDefaultRegisterAuthorities();
 				result.addObject("authorities", authorities);
 				result.addObject("emailError", emailError);
+				actor.getAccount().setPassword("");
+				result.addObject("actor", actor);
 				opps.printStackTrace();
 			}
 
@@ -174,7 +178,6 @@ public class LoginController extends AbstractController {
 		result = this.actorService.isBanned(result);
 		return result;
 	}
-
 	@RequestMapping(value = "/administrator/register", method = RequestMethod.GET)
 	public ModelAndView registerAdminGET() {
 		final Actor a = this.actorService.create();
@@ -196,18 +199,20 @@ public class LoginController extends AbstractController {
 		String emailError = "";
 		if (actor.getEmail() != null)
 			emailError = this.administratorService.validateEmail(actor.getEmail());
-		if (binding.hasErrors()) {
+		if (binding.hasErrors() || !emailError.isEmpty()) {
 
 			System.out.println(binding.getFieldErrors());
 			result = new ModelAndView("actor/register");
 			result.addObject("uri", "security/administrator/register.do");
 			result.addObject("actor", actor);
+			actor.getAccount().setPassword("");
 			Collection<Authority> authorities = null;
 			authorities = this.getAdminRegisterAuthorities();
 			result.addObject("authorities", authorities);
 			result.addObject("emailError", emailError);
 		} else
 			try {
+				actor.setPhone(this.actorService.checkSetPhoneCC(actor.getPhone()));
 				final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 				switch (actor.getAccount().getAuthorities().iterator().next().getAuthority()) {
 				case Authority.ADMIN:
@@ -225,7 +230,7 @@ public class LoginController extends AbstractController {
 					this.refereeService.save(referee);
 					break;
 				}
-				result = new ModelAndView("redirect:");
+				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (final Throwable opps) {
 				result = new ModelAndView("actor/register");
 				result.addObject("uri", "security/administrator/register.do");
@@ -234,12 +239,13 @@ public class LoginController extends AbstractController {
 				authorities = this.getAdminRegisterAuthorities();
 				result.addObject("authorities", authorities);
 				result.addObject("emailError", emailError);
+				actor.getAccount().setPassword("");
+				result.addObject("actor", actor);
 			}
 		result = this.configurationService.configGeneral(result);
 		result = this.actorService.isBanned(result);
 		return result;
 	}
-
 	public List<Authority> getDefaultRegisterAuthorities() {
 		final Authority handyWorker = new Authority();
 		handyWorker.setAuthority(Authority.HANDYWORKER);

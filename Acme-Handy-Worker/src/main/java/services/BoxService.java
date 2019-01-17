@@ -47,7 +47,7 @@ public class BoxService {
 			if (boxBD.getDeleteable() == false)
 				boxBD.setMessages(box.getMessages());
 			else {
-				if (LoginService.getPrincipal() == box.getOwner().getAccount())
+				if ((LoginService.getPrincipal()).equals(box.getOwner().getAccount()))
 					boxBD.setName(box.getName());
 
 				boxBD.setMessages(box.getMessages());

@@ -66,6 +66,9 @@
 	<form:input type="date" path="periodStart"
 		placeholder="${placeholderperiodstart}" />
 	<form:errors path="periodStart" cssClass="error" />
+	<jstl:if test="${dateError == 'fixuptask.date.error' }">
+	<span class="error"><spring:message code='${dateError }'/></span>
+	</jstl:if>
 	<br />
 
 	<spring:message code="fixuptask.placeholder.periodend"

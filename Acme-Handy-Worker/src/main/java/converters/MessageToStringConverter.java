@@ -15,6 +15,7 @@ public class MessageToStringConverter implements Converter<Message, String> {
 	@Override
 	public String convert(final Message message) {
 		String result;
+
 		if (message == null)
 			result = null;
 		else

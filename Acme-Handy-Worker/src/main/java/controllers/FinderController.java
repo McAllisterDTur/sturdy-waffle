@@ -17,8 +17,11 @@ import services.ActorService;
 import services.CategoryService;
 import services.ConfigurationService;
 import services.FinderService;
+import services.WarrantyService;
 import domain.Category;
+import domain.Configuration;
 import domain.Finder;
+import domain.Warranty;
 
 @Controller
 @RequestMapping("/finder")
@@ -36,45 +39,71 @@ public class FinderController extends AbstractController {
 	@Autowired
 	private ActorService			actorService;
 
+	@Autowired
+	private WarrantyService			warrantyService;
 
-	@RequestMapping(value = "/handyworker/finder", method = RequestMethod.POST)
-	public ModelAndView saveBox(@Valid final Finder finder, final BindingResult binding) {
+
+	@RequestMapping(value = "/finder", method = RequestMethod.POST)
+	public ModelAndView saveFinder(@Valid final Finder finder, final BindingResult binding) {
 		ModelAndView result;
+		final Configuration conf = this.configService.findAll().iterator().next();
 		if (binding.hasErrors()) {
-			System.out.println("Llega al binding" + binding.toString());
 			result = new ModelAndView("finder/finder");
+			final Collection<Category> categories = this.categoryService.findAll();
+			final Collection<Warranty> warranty = this.warrantyService.findAll();
+			result.addObject("warranty", warranty);
+			result.addObject("categories", categories);
 			result.addObject("finder", finder);
 		} else
 			try {
-				this.finderService.save(finder);
-				final Finder finderO = this.finderService.findByLoggedHandyWorker();
 				result = new ModelAndView("redirect:finder.do");
-				result.addObject("finder", finderO);
+				final Collection<Category> categories = this.categoryService.findAll();
+				final Collection<Warranty> warranty = this.warrantyService.findAll();
+				final Finder f = this.finderService.save(finder);
+				result.addObject("warranty", warranty);
+				result.addObject("categories", categories);
+				result.addObject("finder", f);
+				System.out.println("finders -> " + f.getFixUpTask());
 			} catch (final Throwable opps) {
 				opps.printStackTrace();
 				result = new ModelAndView("finder/finder");
+				result.addObject("finder", finder);
+				final Collection<Category> categories = this.categoryService.findAll();
+				final Collection<Warranty> warranty = this.warrantyService.findAll();
+				result.addObject("warranty", warranty);
+				result.addObject("categories", categories);
 				result.addObject("messageCode", "finder.commit.error.edit");
 			}
+		result.addObject("vat", conf.getVat());
 		result = this.configService.configGeneral(result);
 		result = this.actorService.isBanned(result);
-
 		return result;
 	}
 
-	@RequestMapping(value = "/handyworker/finder", method = RequestMethod.GET)
+	@RequestMapping(value = "/finder", method = RequestMethod.GET)
 	public ModelAndView editFinder() {
 		ModelAndView result;
 		Finder finder;
-		final Collection<Category> categories = this.categoryService.findAll();
-		finder = this.finderService.findByLoggedHandyWorker();
-		Assert.notNull(finder);
-		result = new ModelAndView("finder/finder");
-		result.addObject("finder", finder);
-		result.addObject("categories", categories);
+		final Configuration conf = this.configService.findAll().iterator().next();
+		try {
+			final Collection<Category> categories = this.categoryService.findAll();
+			final Collection<Warranty> warranty = this.warrantyService.findAll();
+			finder = this.finderService.findByLoggedHandyWorker();
+			Assert.notNull(finder);
+			result = new ModelAndView("finder/finder");
+			result.addObject("finder", finder);
+			result.addObject("warranty", warranty);
+			result.addObject("categories", categories);
+			result.addObject("requestURI", "/finder/finder.do");
+
+		} catch (final Throwable opps) {
+			result = new ModelAndView("welcome/home");
+			result.addObject("messageCode", "finder.commit.error.edit");
+		}
+		result.addObject("vat", conf.getVat());
+
 		result = this.configService.configGeneral(result);
 		result = this.actorService.isBanned(result);
-
 		return result;
 	}
-
 }
