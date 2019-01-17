@@ -241,28 +241,28 @@ public class ApplicationService {
 		return this.applicationRepo.statictisApplication();
 	}
 
-	public double ratioPedingApplications() {
+	public Double ratioPedingApplications() {
 
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
 
 		return this.applicationRepo.ratioPendingApplications();
 	}
-	public double ratioAcceptedApplications() {
+	public Double ratioAcceptedApplications() {
 
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
 
 		return this.applicationRepo.ratioAcceptedApplications();
 	}
-	public double ratioRejectedApplications() {
+	public Double ratioRejectedApplications() {
 
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
 
 		return this.applicationRepo.ratioRejectedApplications();
 	}
-	public double ratioElapsedApplications() {
+	public Double ratioElapsedApplications() {
 
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
@@ -286,4 +286,7 @@ public class ApplicationService {
 		return this.applicationRepo.applicationsPerFTask();
 	}
 
+	public Collection<Application> findAll() {
+		return this.applicationRepo.findAll();
+	}
 }

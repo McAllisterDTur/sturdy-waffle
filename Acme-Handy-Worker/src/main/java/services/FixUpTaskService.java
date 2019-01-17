@@ -37,6 +37,8 @@ public class FixUpTaskService {
 	private TickerService		tickerService;
 	@Autowired
 	private SpamService			spamService;
+	@Autowired
+	private PhaseService		phaseService;
 
 
 	/**
@@ -132,15 +134,30 @@ public class FixUpTaskService {
 		final FixUpTask aux = this.fixUpTaskRepository.findOne(fixUpTaskId);
 
 		Assert.isTrue(aux.getCustomer().getAccount().equals(userAccount));
-
 		// Removing application from handy worker
-		for (final Application a : aux.getApplications())
+		for (final Application a : aux.getApplications()) {
+			this.phaseService.deleteApplicationPhases(a.getId());
 			a.getHandyWorker().getApplications().remove(a);
-
+		}
 		// Removing fix up task from customer
 		aux.getCustomer().getFixUpTasks().remove(aux);
 
 		this.fixUpTaskRepository.delete(aux);
+	}
+
+	public FixUpTask updateTask(final Application app) {
+		final FixUpTask task = app.getFixUpTask();
+		FixUpTask res;
+
+		Assert.notNull(app);
+		task.getApplications().add(app);
+
+		res = this.fixUpTaskRepository.saveAndFlush(task);
+
+		Assert.notNull(res);
+
+		return res;
+
 	}
 
 	/**

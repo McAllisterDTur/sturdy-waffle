@@ -712,7 +712,7 @@
 				<ref bean="FixUpTask5" />
 			</list>
 		</property>
-		<property name="isSuspicious" value="false" />
+		<property name="isSuspicious" value="true" />
 	</bean>
 
 	<bean id="Customer5" class="domain.Customer">
@@ -1167,7 +1167,7 @@
 		</property>
 		<property name="status" value="REJECTED" />
 		<property name="fixUpTask" ref="FixUpTask5" />
-		<property name="handyWorker" ref="Worker4" />
+		<property name="handyWorker" ref="Worker2" />
 	</bean>
 
 	<bean id="Application8" class="domain.Application">
@@ -1515,7 +1515,7 @@
 			</list>
 		</property>
 		<property name="isFinal" value="True" />
-		<property name="fixUpTask" ref="FixUpTask5" />
+		<property name="fixUpTask" ref="FixUpTask4" />
 		<property name="referee" ref="Referee1" />
 	</bean>
 
