@@ -142,9 +142,9 @@ public class NotesService {
 		Assert.isTrue(notesId > 0);
 		final Notes notes = this.notesRepo.findOne(notesId);
 		if (AuthenticationUtility.checkAuthority(Authority.REFEREE))
-			Assert.isTrue(this.complaintService.findSelfassigned().contains(notes.getReport().getComplaint().getReferee()));
+			Assert.isTrue(this.complaintService.findSelfassigned().contains(notes.getReport().getComplaint()));
 		else if (AuthenticationUtility.checkAuthority(Authority.CUSTOMER))
-			Assert.isTrue(this.complaintService.findFromLoggedCustomer().contains(notes.getReport().getComplaint().getFixUpTask().getCustomer()));
+			Assert.isTrue(this.complaintService.findFromLoggedCustomer().contains(notes.getReport().getComplaint()));
 		else if (AuthenticationUtility.checkAuthority(Authority.HANDYWORKER))
 			Assert.isTrue(this.complaintService.findFromLoggedHandyWorker().contains(notes.getReport().getComplaint()));
 		return notes;
