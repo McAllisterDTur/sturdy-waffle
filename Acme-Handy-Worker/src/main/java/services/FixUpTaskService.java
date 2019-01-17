@@ -151,13 +151,17 @@ public class FixUpTaskService {
 	 */
 	public FixUpTask findOne(final int fixUpTaskId) {
 		final FixUpTask res = this.fixUpTaskRepository.findOne(fixUpTaskId);
-		if (res != null)
+		final UserAccount account = LoginService.getPrincipal();
+		if (res != null) {
 			Assert.isTrue(AuthenticationUtility.checkAuthority("CUSTOMER") || AuthenticationUtility.checkAuthority("HANDYWORKER"));
+
+			if (AuthenticationUtility.checkAuthority("CUSTOMER"))
+				Assert.isTrue(this.actorService.findByUserAccountId(account.getId()).equals(res.getCustomer()));
+		}
 
 		return res;
 
 	}
-
 	/**
 	 * Deletes the fix up task whose id is passed as parameter checking customer authority. (Req 10.1)
 	 * 

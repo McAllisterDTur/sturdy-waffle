@@ -11,7 +11,7 @@
 
 <div>
 	<strong><spring:message code="application.application" />: </strong>
-	<jstl:out value="${application.fixUpTask.id }" />
+	<a href="fixuptask/customer,handyworker/display.do?fixuptaskId=${application.fixUpTask.id }"><spring:message code="application.fixuptask" /> - <jstl:out value="${application.fixUpTask.ticker }"/></a>
 	<br /> <strong><spring:message
 			code="application.offeredPrice" />: </strong> <b><jstl:out
 			value="${application.offeredPrice}"></jstl:out></b>
