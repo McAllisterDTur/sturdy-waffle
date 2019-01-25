@@ -36,20 +36,21 @@
 	<form:hidden path="version" />
 	<form:hidden path="sender" />
 	<form:hidden path="sendTime" />
-	<form:hidden path="boxes" value="${box}" />
+	<form:hidden path="boxes" />
+	<form:hidden path="tags" />
 
 	<h3>
 		<spring:message code="message.create" />
 	</h3>
 
 	<form:label path="subject">
-		<spring:message code="message.subject" />*:</form:label>
+		<spring:message code="message.subject" />*: </form:label>
 	<form:input path="subject" />
 	<form:errors path="subject" cssClass="error" />
 	<br />
 
 	<form:label path="reciever">
-		<spring:message code="message.actor.reciever" />*:</form:label>
+		<spring:message code="message.actor.reciever" />*: </form:label>
 	<form:select path="reciever">
 		<form:option label="----" value="0" />
 		<jstl:forEach var="act" items="${actors}">
@@ -58,11 +59,13 @@
 			</jstl:if>
 		</jstl:forEach>
 	</form:select>
+	<spring:message code="message.actor.one" />
+
 	<form:errors path="reciever" cssClass="error" />
 	<br />
 
 	<form:label path="priority">
-		<spring:message code="message.priority" />*:</form:label>
+		<spring:message code="message.priority" />*: </form:label>
 	<form:select path="priority">
 		<form:option value="HIGH" />
 		<form:option value="NEUTRAL" />
@@ -87,16 +90,9 @@
 	<form:textarea path="body" />
 	<form:errors path="body" cssClass="error" />
 	<br />
+	<spring:message code="mandatory" />
+	<br />
 
 	<input type="submit" name="save"
 		value="<spring:message code="message.save"/>" />
-
-
-	<jstl:if test="${messageO.sender.account.username == principal}">
-		<button
-			onClick="window.location.href='/Acme-Handy-Worker/box/list.do'">
-			<spring:message code="message.cancel" />
-		</button>
-	</jstl:if>
-
 </form:form>

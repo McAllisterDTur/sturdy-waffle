@@ -31,21 +31,21 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 
 	//ratio of pending
 	@Query("select (select count(a) from Application a where a.status = 'PENDING') * 1.0 *100 / count(b) from Application b")
-	public double ratioPendingApplications();
+	public Double ratioPendingApplications();
 
 	@Query("select a from Application a where a.fixUpTask.id = ?1 and a.status = 'ACCEPTED'")
 	public Application getAcepptedApplicationForFixUpTask(final int fixuptaskId);
 
 	//ratio of accepted
 	@Query("select (select count(a) from Application a where a.status = 'ACCEPTED') * 1.0 *100 / count(b) from Application b")
-	public double ratioAcceptedApplications();
+	public Double ratioAcceptedApplications();
 
 	//ratio of rejected
 	@Query("select (select count(a) from Application a where a.status = 'REJECTED') * 1.0 *100 / count(b) from Application b")
-	public double ratioRejectedApplications();
+	public Double ratioRejectedApplications();
 
 	//ratio of pending whose period is elapsed
 	@Query("select (select count(a) from Application a where a.status = 'PENDING' and a.fixUpTask.periodStart <= CURRENT_DATE) * 1.0 * 100 / count(b) from Application b")
-	public double ratioElapsedApplications();
+	public Double ratioElapsedApplications();
 
 }

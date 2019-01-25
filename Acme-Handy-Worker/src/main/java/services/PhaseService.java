@@ -83,7 +83,7 @@ public class PhaseService {
 	}
 
 	/**
-	 *
+	 * 
 	 * @deprecated
 	 */
 	@Deprecated
@@ -115,4 +115,9 @@ public class PhaseService {
 
 	}
 
+	public void deleteApplicationPhases(final int applicationId) {
+		final Collection<Phase> phases = this.repo.findFromApplication(applicationId);
+		if (phases != null)
+			this.repo.delete(phases);
+	}
 }

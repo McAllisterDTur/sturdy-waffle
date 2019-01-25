@@ -10,6 +10,8 @@
 
 package controllers;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,12 +49,34 @@ public class ConfigurationController extends AbstractController {
 	@RequestMapping(value = "/administrator/save", method = RequestMethod.POST)
 	public ModelAndView getConfiguration(@Valid final Configuration configuration, final BindingResult br) {
 		ModelAndView result = new ModelAndView("configuration/edit");
-		if (br.hasErrors())
-			result.addObject("configuration", configuration);
-		else
+		if (!br.hasErrors())
 			try {
+				for (final String s : configuration.getNegativeWords())
+					if (s.trim().equals("")) {
+						final Collection<String> ws = configuration.getNegativeWords();
+						ws.remove(s);
+						configuration.setNegativeWords(ws);
+					}
+				for (final String s : configuration.getPositiveWords())
+					if (s.trim().equals("")) {
+						final Collection<String> ws = configuration.getPositiveWords();
+						ws.remove(s);
+						configuration.setPositiveWords(ws);
+					}
+				for (final String s : configuration.getSpamWords())
+					if (s.trim().equals("")) {
+						final Collection<String> ws = configuration.getSpamWords();
+						ws.remove(s);
+						configuration.setSpamWords(ws);
+					}
+				for (final String s : configuration.getCardMaker())
+					if (s.trim().equals("")) {
+						final Collection<String> ws = configuration.getCardMaker();
+						ws.remove(s);
+						configuration.setCardMaker(ws);
+					}
 				this.cService.save(configuration);
-				result.addObject("configuration", configuration);
+				result = new ModelAndView("redirect:/welcome/index.do");
 
 			} catch (final Throwable oops) {
 				oops.printStackTrace();

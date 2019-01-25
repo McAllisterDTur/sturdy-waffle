@@ -40,6 +40,12 @@
 	
 </jstl:if>
 
+<jstl:if test="${handy && hasCurricula }">
+		<button onClick="window.location.href='profile/curricula/see.do?id=${actor.id}'">
+			<spring:message code="curricula.see"/>
+		</button>
+	</jstl:if>
+
 <h2><spring:message code="profile.seeing" /> <jstl:out value="${username }"/></h2>
 
 <img src="${actor.photoURL }" height="250" alt="<spring:message code="profile.photo" /> <jstl:out value="${username }"/>"/>
@@ -93,6 +99,89 @@
 				<jstl:out value="${tutorial.title }"/>
 			</a>
 		</display:column>
+	</display:table>
+</p></jstl:if>
+<jstl:if test="${customer }"><p>
+	<b><spring:message code="profile.fixUpTasks" /></b>: 
+	<display:table name="fixUpTasks" id="row" requestURI="/fixuptask/customer/list.do">
+	requestURI="${requestURI}">
+
+	<security:authorize access="hasRole('CUSTOMER')">
+		<jstl:if test="${row.customer.account.username == principal}">
+			<display:column>
+				<jstl:if test="${row.publishTime gt date}">
+					<a href="fixuptask/customer/edit.do?fixuptaskId=${row.id}"><spring:message
+							code="fixuptask.edit" /></a>
+				</jstl:if>
+			</display:column>
+		</jstl:if>
+	</security:authorize>
+
+
+
+	<display:column property="ticker" titleKey="fixuptask.ticker" />
+	<jstl:if test="${pageContext.response.locale.language == 'en'}">
+		<display:column property="category.nameEn"
+			titleKey="fixuptask.category" />
+	</jstl:if>
+	<jstl:if test="${pageContext.response.locale.language == 'es'}">
+		<display:column property="category.name" titleKey="fixuptask.category" />
+	</jstl:if>
+
+
+	<display:column property="periodStart" titleKey="fixuptask.periodStart" />
+
+	<display:column property="periodStart" titleKey="fixuptask.periodStart" />
+
+	<display:column titleKey="fixuptask.maxPrice">
+		<jstl:out value="${row.maxPrice }" />(<jstl:out
+			value="${row.maxPrice *(1+(vat/100))}" />)
+	</display:column>
+
+	<display:column>
+		<button
+			onClick="window.location.href='fixuptask/customer,handyworker/display.do?fixuptaskId=${row.id}'">
+			<spring:message code="fixuptask.display" />
+		</button>
+	</display:column>
+
+	<security:authorize access="hasRole('HANDYWORKER')">
+
+		<display:column>
+			<button
+				onClick="window.location.href='application/handyworker/create.do?fixuptaskId=${row.id}'">
+				<spring:message code="fixuptask.apply" />
+			</button>
+		</display:column>
+
+	</security:authorize>
+
+	<security:authorize access="hasRole('CUSTOMER')">
+		<display:column>
+			<jstl:if test="${row.customer.account.username == principal}">
+				<button
+					onClick="window.location.href='fixuptask/customer/edit.do?fixuptaskId=${row.id}'">
+					<spring:message code="fixuptask.edit" />
+				</button>
+			</jstl:if>
+		</display:column>
+		<display:column>
+			<jstl:if test="${row.customer.account.username == principal}">
+				<button
+					onClick="window.location.href='application/customer,handyworker/list.do?fixuptaskId=${row.id}'">
+					<spring:message code="fixuptask.applications" />
+				</button>
+			</jstl:if>
+		</display:column>
+		<display:column>
+			<jstl:if test="${row.customer.account.username == principal}">
+				<button
+					onClick="window.location.href='fixuptask/customer/delete.do?fixuptaskId=${row.id}'">
+					<spring:message code="fixuptask.delete" />
+				</button>
+			</jstl:if>
+		</display:column>
+	</security:authorize>
 	</display:table>
 </p></jstl:if>
 	

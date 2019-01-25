@@ -54,6 +54,17 @@ public class WarrantyService {
 			Assert.isTrue(aux.getDraft());
 		}
 
+		if (warranty.getLaw().size() == 1)
+			Assert.isTrue(!warranty.getLaw().iterator().next().trim().equals(""));
+		else {
+			final Collection<String> laws = warranty.getLaw();
+			for (final String s : warranty.getLaw())
+				if (s.trim().equals(""))
+					laws.remove(s);
+			Assert.isTrue(laws.size() > 0);
+			warranty.setLaw(laws);
+		}
+
 		// We are saving			
 		final Warranty res = this.wRepo.save(warranty);
 

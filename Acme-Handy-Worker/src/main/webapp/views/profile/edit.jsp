@@ -9,14 +9,27 @@
  --%>
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-
 <%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<script>
+	function checkPhone(errorCode) {
+
+		var pattern = /((([+][1-9]{1}[0-9]{0,2}[\s]){0,1}([(][1-9]{1}[0-9]{0,2}[)][\s]){0,1})){0,1}([0-9]{4}){1}([0-9]{0,})/;
+		var phone = document.getElementById("phone").value;
+		var error = !pattern.test(phone);
+		if (error){
+			return confirm(errorCode);			
+		}
+		return;
+	}
+</script>
 <h2><spring:message code="profile.edit.info" /></h2>
+<spring:message code="actor.phone.error" var="phoneError"/>
+
 <jstl:if test="${not empty success }">
 	<fieldset>
 		<legend><spring:message code="profile.message"/></legend>
@@ -30,7 +43,7 @@
 </jstl:if>
 
 <jstl:if test="${not handy }">
-	<form:form modelAttribute="actor" action="profile/edit.do" method="POST">
+	<form:form modelAttribute="actor" action="profile/edit.do" onsubmit="return checkPhone('${phoneError }');" method="POST">
 		<p>
 			<spring:message code="profile.edit.name"/>: 
 			<form:input path="name"/>
@@ -52,9 +65,11 @@
 			<form:errors path="photoURL" cssClass="error"/>	
 		</p>
 		<p>
-			<spring:message code="profile.edit.email"/>: 
-			<form:input path="email"/>
-			<form:errors path="email" cssClass="error"/>	
+			<spring:message code="profile.edit.email"/>:
+			<form:input path="email" />
+			<jstl:if test="${emailError == 'actor.email.error' }">
+				<span class="error"><spring:message code="${emailError}"/></span>
+			</jstl:if>	
 		</p>
 		<p>
 			<spring:message code="profile.edit.phone"/>: 
@@ -106,9 +121,10 @@
 			<form:errors path="photoURL" cssClass="error"/>	
 		</p>
 		<p>
-			<spring:message code="profile.edit.email"/>: 
-			<form:input path="email"/>
-			<form:errors path="email" cssClass="error"/>	
+			<form:input path="email" />
+			<jstl:if test="${emailError == 'actor.email.error' }">
+				<span class="error"><spring:message code="${emailError}"/></span>
+			</jstl:if>	
 		</p>
 		<p>
 			<spring:message code="profile.edit.phone"/>: 
@@ -129,7 +145,11 @@
 	
 	<input type="submit" name="saveHandy" value="<spring:message code="profile.edit.save"/>"/>
 </form:form>
-
+	<jstl:if test="${!hasCurricula }">
+		<button onClick="window.location.href='profile/curricula/see.do?id=${worker.id}'">
+			<spring:message code="curricula.create"/>
+		</button>
+	</jstl:if>
 	<button onClick="window.location.href='profile/social/edit.do'">
 		<spring:message code="profile.social.edit"/>
 	</button>

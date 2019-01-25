@@ -3,8 +3,11 @@ package controllers;
 
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +30,7 @@ public class CreditCardController {
 	@Autowired
 	private ApplicationService		applicationService;
 	@Autowired
-	private ConfigurationService	confignService;
+	private ConfigurationService	configurationService;
 	@Autowired
 	private ActorService			aService;
 
@@ -43,34 +46,56 @@ public class CreditCardController {
 
 		result = new ModelAndView("creditCard/create");
 
-		final Collection<String> makers = this.confignService.findAll().iterator().next().getCardMaker();
+		final Collection<String> makers = this.configurationService.findAll().iterator().next().getCardMaker();
 
 		result.addObject("fixuptask", t);
 		result.addObject("makers", makers);
 
-		result = this.confignService.configGeneral(result);
+		result = this.configurationService.configGeneral(result);
 		result = this.aService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/customer/save", method = RequestMethod.POST)
-	public ModelAndView save(@RequestParam final FixUpTask task, final BindingResult binding) {
+	public ModelAndView save(@Valid final FixUpTask task, final BindingResult binding, @RequestParam final int applicationId) {
 
 		ModelAndView result;
-		if (binding.hasErrors())
+
+		System.out.println(task.getCreditCard());
+		if (binding.hasErrors()) {
+			final Application a = this.applicationService.findOne(applicationId);
 			result = new ModelAndView("creditCard/create");
-		else
+			final Collection<String> makers = this.configurationService.findAll().iterator().next().getCardMaker();
+
+			result.addObject("fixuptask", task);
+			result.addObject("makers", makers);
+			result.addObject("applicationId", a.getId());
+			System.out.println("binding hecho");
+		} else {
+			final Application a = this.applicationService.findOne(applicationId);
 			try {
 				final FixUpTask fin = this.taskService.save(task);
-				final Application a = this.applicationService.getApplicationAcceptedForFixUpTask(task.getId());
+				Assert.notNull(fin);
+				//final Application a = this.applicationService.getApplicationAcceptedForFixUpTask(fin.getId());
+
+				a.setStatus("ACCEPTED");
+				final Application afin = this.applicationService.save(a);
+				Assert.notNull(afin);
+
 				result = new ModelAndView("redirect:../../application/customer,handyworker/display.do?applicationId=" + a.getId());
 			} catch (final Throwable oops) {
 				oops.printStackTrace();
 				result = new ModelAndView("creditCard/create");
-				result.addObject(task);
-			}
+				final Collection<String> makers = this.configurationService.findAll().iterator().next().getCardMaker();
 
-		result = this.confignService.configGeneral(result);
+				result.addObject("fixuptask", task);
+				result.addObject("makers", makers);
+				result.addObject("applicationId", a.getId());
+				System.out.println("catch terminado");
+			}
+		}
+
+		result = this.configurationService.configGeneral(result);
 		result = this.aService.isBanned(result);
 		return result;
 	}

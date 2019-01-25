@@ -13,7 +13,7 @@
 <p style="font-size: 1.5em"><strong><spring:message	code="tutorial.summary" />:</strong> <jstl:out value='${tutorial.summary}'></jstl:out></p>
 <security:authorize access="hasRole('HANDYWORKER')">
 	<jstl:if test="${tutorial.worker.account.username == principal}">
-		<button onClick="window.location.href='/Acme-Handy-Worker/section//handyworker/new.do?tutorialId=${tutorial.id}'"><spring:message code="tutorial.section.new"/></button>
+		<button onClick="window.location.href='section/handyworker/new.do?tutorialId=${tutorial.id}'"><spring:message code="tutorial.section.new"/></button>
 	</jstl:if>
 </security:authorize>
 <display:table pagesize="5" name="tutorial.sections" id="row" requestURI="tutorial/display.do">
@@ -24,15 +24,15 @@
 	<security:authorize access="hasRole('HANDYWORKER')">
 		<jstl:if test="${tutorial.worker.account.username == principal}">
 		<display:column>
-			<button onClick="window.location.href='/Acme-Handy-Worker/section/handyworker/edit.do?id=${row.id}'"><spring:message code="tutorial.section.edit"/></button>
+			<button onClick="window.location.href='section/handyworker/edit.do?id=${row.id}'"><spring:message code="tutorial.section.edit"/></button>
 		</display:column>
 		<display:column>
-			<button onClick="window.location.href='/Acme-Handy-Worker/section/handyworker/delete.do?id=${row.id}'"><spring:message code="tutorial.section.delete"/></button>
+			<button onClick="window.location.href='section/handyworker/delete.do?id=${row.id}'"><spring:message code="tutorial.section.delete"/></button>
 		</display:column>
 		</jstl:if>
 	</security:authorize>
 	<display:column>
-		<button onClick="window.location.href='/Acme-Handy-Worker/section/pictures/list.do?id=${row.id}'"><spring:message code="tutorial.section.pictures"/></button>
+		<button onClick="window.location.href='section/pictures/list.do?id=${row.id}'"><spring:message code="tutorial.section.pictures"/></button>
 	</display:column>
 
 </display:table>

@@ -86,10 +86,14 @@
 		<display:column property="reportTime" titleKey="report.date" />
 		<display:column property="isFinal" titleKey="report.final" />
 		<display:column>
-			<a
-				href="report/referee/edit.do?reportId=${report.id}"><spring:message
-					code="report.edit" /> </a>
+			<jstl:if test="${!report.isFinal}">
+				<a href="report/referee/edit.do?reportId=${report.id}"><spring:message
+						code="report.edit" /> </a>
+			</jstl:if>
+
 		</display:column>
+
+
 		<display:column>
 			<a
 				href="report/customer,handyworker,referee/display.do?reportId=${report.id}"><spring:message

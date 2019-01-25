@@ -10,7 +10,7 @@
 <% String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() :""; %>
 <jstl:set var="principal" value="<%= s %>"/>
 
-<form:form action="fixuptask/customer/edit.do" modelAttribute="fixuptask">
+<form:form action="creditCard/customer/save.do?applicationId=${applicationId }" modelAttribute="fixuptask">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
@@ -24,12 +24,15 @@
 	<form:hidden path="category" />
 	<form:hidden path="warranty" />
 	<form:hidden path="customer" />
+	<form:hidden path="applications" />
+	<form:hidden path="complaints" />
+	
 	
 	<h3><spring:message code="creditCard.header"/> </h3>
 
 	<spring:message code="creditcard.placeholder.holdername" var="placeholderholdername"/>
 	<form:label path="creditCard.holderName">
-		<spring:message code="creditCard.holderName" />
+		<spring:message code="creditCard.holderName" />*
 	</form:label>
 	<form:input path="creditCard.holderName" placeholder="${placeholderholdername}" />
 	<form:errors path="creditCard.holderName" cssClass="error"/>
@@ -37,7 +40,7 @@
 
 	<spring:message code="creditcard.placeholder.number" var="placeholdernumber"/>
 	<form:label path="creditCard.number">
-		<spring:message code="creditCard.number" />
+		<spring:message code="creditCard.number" />*
 	</form:label>
 	<form:input path="creditCard.number" placeholder="${placeholdernumber}" />
 	<form:errors path="creditCard.number" cssClass="error" />
@@ -45,7 +48,7 @@
 
 	<spring:message code="creditcard.placeholder.expirationmonth" var="placeholderexpirationmonth"/>
 	<form:label path="creditCard.expirationMonth">
-		<spring:message code="creditCard.expirationMonth" />
+		<spring:message code="creditCard.expirationMonth" />*
 	</form:label>
 	<form:input path="creditCard.expirationMonth" placeholder="${placeholderexpirationmonth}" />
 	<form:errors path="creditCard.expirationMonth" cssClass="error" />
@@ -53,25 +56,25 @@
 
 	<spring:message code="creditcard.placeholder.expirationyear" var="placeholderexpirationyear"/>
 	<form:label path="creditCard.expirationYear">
-		<spring:message code="creditCard.expirationYear" />
+		<spring:message code="creditCard.expirationYear" />*
 	</form:label>
 	<form:input path="creditCard.expirationYear" placeholder="${placeholderexpirationyear}" />
 	<form:errors path="creditCard.expirationYear" cssClass="error" />
 	<br />
 
 	<form:label path="creditCard.codeCVV">
-		<spring:message code="creditCard.codeCVV" />
+		<spring:message code="creditCard.codeCVV" />*
 	</form:label>
 	<spring:message code="creditcard.placeholder.codecvv" var="placeholdercodecvv"/>
 	<form:input path="creditCard.codeCVV" placeholder="${placeholdercodecvv}" />
 	<form:errors path="creditCard.codeCVV" cssClass="error"/>
 	<br />
 
-	<form:label path="creditCard.brandName"><spring:message code="configuration.cardMaker" />:</form:label>
+	<form:label path="creditCard.brandName"><spring:message code="configuration.cardMaker" />:*</form:label>
 	<form:select path="creditCard.brandName">
 		<form:options path="creditCard.brandName" items="${makers}"/>
 	</form:select>
-	<form:errors path="creditCard.maker" cssClass="error"/>
+	<form:errors path="creditCard.brandName" cssClass="error"/>
 	<br />
 
 	<input type="submit" name="save" value="<spring:message code="fixuptask.save"/>" />

@@ -8,8 +8,10 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<% String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() :"";%>
-<jstl:set var="principal" value="<%= s %>"/>
+<%
+	String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() : "";
+%>
+<jstl:set var="principal" value="<%=s%>" />
 
 <h3>
 	<b><spring:message code="fixuptask.ticker" />:&nbsp;</b>
@@ -28,9 +30,16 @@
 <jstl:out value="${fixuptask.address}" />
 <br />
 
-<b><spring:message code="fixuptask.category" />:&nbsp;</b>
-<jstl:out value="${fixuptask.category.name}" />
-<br />
+<jstl:if test="${pageContext.response.locale.language == 'en'}">
+	<b><spring:message code="fixuptask.category" />:&nbsp;</b>
+	<jstl:out value="${fixuptask.category.nameEn}" />
+	<br />
+</jstl:if>
+<jstl:if test="${pageContext.response.locale.language == 'es'}">
+	<b><spring:message code="fixuptask.category" />:&nbsp;</b>
+	<jstl:out value="${fixuptask.category.name}" />
+	<br />
+</jstl:if>
 
 <b><spring:message code="fixuptask.periodStart" />:&nbsp;</b>
 <jstl:out value="${fixuptask.periodStart}" />
@@ -42,17 +51,20 @@
 
 <b><spring:message code="fixuptask.maxPrice" />:&nbsp;</b>
 <jstl:out value="${fixuptask.maxPrice}" />
-(<jstl:out value="${fixuptask.maxPrice * (1+(vat/100)) }" />)
+(
+<jstl:out value="${fixuptask.maxPrice * (1+(vat/100)) }" />
+)
 <br />
 
 <b><spring:message code="fixuptask.customer" />:&nbsp;</b>
 <security:authorize access="hasRole('HANDYWORKER')">
-<a href="profile/seeId.do?id=${fixuptask.customer.id}">
-	<jstl:out value='${fixuptask.customer.name} ${fixuptask.customer.surname}'/>
-</a>
+	<a href="profile/seeId.do?id=${fixuptask.customer.id}"> <jstl:out
+			value='${fixuptask.customer.name} ${fixuptask.customer.surname}' />
+	</a>
 </security:authorize>
 <security:authorize access="not hasRole('HANDYWORKER')">
-	<jstl:out value='${fixuptask.customer.name} ${fixuptask.customer.surname}'/>
+	<jstl:out
+		value='${fixuptask.customer.name} ${fixuptask.customer.surname}' />
 </security:authorize>
 <br />
 
@@ -61,16 +73,16 @@
 <br />
 
 <security:authorize access="hasRole('CUSTOMER')">
-		<jstl:if test="${fixuptask.customer.account.username == principal}">
-			<button
-				onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer/edit.do?fixuptaskId=${fixuptask.id}'">
-				<spring:message code="fixuptask.edit" />
-			</button>
-		</jstl:if>
-		<jstl:if test="${fixuptask.customer.account.username == principal}">
-			<button
-				onClick="window.location.href='/Acme-Handy-Worker/fixuptask/customer/delete.do?fixuptaskId=${fixuptask.id}'">
-				<spring:message code="fixuptask.delete" />
-			</button>
-		</jstl:if>
+	<jstl:if test="${fixuptask.customer.account.username == principal}">
+		<button
+			onClick="window.location.href='fixuptask/customer/edit.do?fixuptaskId=${fixuptask.id}'">
+			<spring:message code="fixuptask.edit" />
+		</button>
+	</jstl:if>
+	<jstl:if test="${fixuptask.customer.account.username == principal}">
+		<button
+			onClick="window.location.href='fixuptask/customer/delete.do?fixuptaskId=${fixuptask.id}'">
+			<spring:message code="fixuptask.delete" />
+		</button>
+	</jstl:if>
 </security:authorize>

@@ -66,12 +66,10 @@ public class CategoryService {
 	}
 
 	/**
-	 * Checks administrator authority (Req 12.3)
 	 * 
 	 * @return Collection of all the categories
 	 */
 	public Collection<Category> findAll() {
-		//Admin authority
 		return this.catRepo.findAll();
 	}
 	/**
@@ -100,7 +98,7 @@ public class CategoryService {
 		Assert.isTrue(au);
 		final Collection<FixUpTask> inCat = this.futService.getByCategory(category.getId());
 		for (final FixUpTask f : inCat) {
-			f.setCategory(null);
+			f.setCategory(category.getFather());
 			this.futService.save(f);
 		}
 		for (final Category c : this.findAll()) {

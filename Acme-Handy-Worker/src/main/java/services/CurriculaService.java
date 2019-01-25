@@ -34,6 +34,7 @@ public class CurriculaService {
 
 	public Curricula create() {
 		final Curricula c = new Curricula();
+		c.setTicker(this.tickerService.getTicker());
 		c.setEducationRecord(new ArrayList<EducationRecord>());
 		c.setEndorserRecords(new ArrayList<EndorserRecord>());
 		c.setMiscellaneousRecords(new ArrayList<MiscellaneousRecord>());
@@ -44,14 +45,12 @@ public class CurriculaService {
 	public Curricula save(final Curricula curricula) {
 		final boolean au = AuthenticationUtility.checkAuthority(Authority.HANDYWORKER);
 		Assert.isTrue(au);
-		final Curricula c = this.findFromLoggedHandyWorker();
+		final Curricula c = this.findFromHandyWorker(curricula.getHandyWorker());
 		// If we have a curricula we can't create another
 		if (c != null) {
 			Assert.isTrue(c.getHandyWorker().equals(curricula.getHandyWorker()));
 			Assert.isTrue(c.getId() == curricula.getId());
 		}
-		curricula.setTicker(this.tickerService.getTicker());
-		curricula.setHandyWorker((HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()));
 		return this.curriculaRepository.save(curricula);
 	}
 
@@ -61,6 +60,10 @@ public class CurriculaService {
 
 	public Curricula findFromLoggedHandyWorker() {
 		final HandyWorker h = (HandyWorker) this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		return this.curriculaRepository.getFromHandyWorker(h.getId());
+	}
+
+	public Curricula findFromHandyWorker(final HandyWorker h) {
 		return this.curriculaRepository.getFromHandyWorker(h.getId());
 	}
 

@@ -43,6 +43,7 @@ public class PersonalRecord extends DomainEntity {
 		this.photo = photo;
 	}
 
+	@NotBlank
 	@Email
 	public String getEmail() {
 		return this.email;

@@ -43,11 +43,5 @@
 	<input type="submit" name="save"
 		value="<spring:message code="box.save"/>" />
 
-	<jstl:if test="${box.deleteable == true}">
-		<button
-			onClick="window.location.href='/Acme-Handy-Worker/box/list.do'">
-			<spring:message code="box.cancel" />
-		</button>
-	</jstl:if>
 
 </form:form>

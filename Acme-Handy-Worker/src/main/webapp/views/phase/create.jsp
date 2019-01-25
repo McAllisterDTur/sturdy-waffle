@@ -27,7 +27,8 @@
 	<form:input path="endTime"/>
 	<form:errors path="endTime" cssClass="error" code="phase.error.endTime"/>
 	<br />
-
-	<input type="submit" />
+	
+		<input type="submit" name="save"
+		value="<spring:message code="box.save"/>" />
 
 </form:form>

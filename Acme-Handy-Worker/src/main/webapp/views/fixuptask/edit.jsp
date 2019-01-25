@@ -66,6 +66,9 @@
 	<form:input type="date" path="periodStart"
 		placeholder="${placeholderperiodstart}" />
 	<form:errors path="periodStart" cssClass="error" />
+	<jstl:if test="${dateError == 'fixuptask.date.error' }">
+	<span class="error"><spring:message code='${dateError }'/></span>
+	</jstl:if>
 	<br />
 
 	<spring:message code="fixuptask.placeholder.periodend"
@@ -80,7 +83,12 @@
 	<form:label path="category">
 		<spring:message code="fixuptask.category" />:</form:label>
 	<form:select path="category">
-		<form:options items="${categories}" itemLabel="name" itemValue="id" />
+		<jstl:if test="${pageContext.response.locale.language == 'en'}">
+			<form:options items="${categories}" itemLabel="nameEn" itemValue="id" />
+		</jstl:if>
+		<jstl:if test="${pageContext.response.locale.language == 'es'}">
+			<form:options items="${categories}" itemLabel="name" itemValue="id" />
+		</jstl:if>
 	</form:select>
 	<br />
 	<form:label path="warranty">

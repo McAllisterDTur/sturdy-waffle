@@ -86,8 +86,6 @@ public class ActorService {
 				result = this.actorRepository.save(actor);
 			}
 		} else {
-			//TODO Por ahora, por decisi�n de grupo, la useracount se agrega
-			//en el controller
 			final UserAccount account = actor.getAccount();
 			final UserAccount savedAccount = this.accountService.save(account);
 			actor.setAccount(savedAccount);
@@ -230,7 +228,7 @@ public class ActorService {
 	}
 
 	public String validateEmail(final String email) {
-		final Pattern pattern = Pattern.compile("(([a-z]|[0-9]){1,}[@]{1}([a-z]|[0-9]){1,}([.]{1}([a-z]|[0-9]){1,}){0,})|((([a-z]|[0-9]){1,}[ ]{1}){1,}<(([a-z]|[0-9]){1,}[@]{1}([a-z]|[0-9]){1,}([.]{1}([a-z]|[0-9]){1,}){0,})>)");
+		final Pattern pattern = Pattern.compile("(^(([a-z]|[0-9]){1,}[@]{1}([a-z]|[0-9]){1,}([.]{1}([a-z]|[0-9]){1,}){1,})$)|(^((([a-z]|[0-9]){1,}[ ]{1}){1,}<(([a-z]|[0-9]){1,}[@]{1}([a-z]|[0-9]){1,}([.]{1}([a-z]|[0-9]){1,}){1,})>)$)");
 		final Matcher matcher = pattern.matcher(email);
 		return matcher.matches() ? "" : "actor.email.error";
 	}

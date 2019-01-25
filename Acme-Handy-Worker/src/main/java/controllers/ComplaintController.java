@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -127,6 +128,7 @@ public class ComplaintController {
 	public ModelAndView editComplaint(@RequestParam final Integer id) {
 		ModelAndView result;
 		final Complaint c = this.complaintService.findOne(id);
+		Assert.isTrue(LoginService.getPrincipal().equals(c.getFixUpTask().getCustomer().getAccount()));
 		if (c == null || c.getIsFinal())
 			result = new ModelAndView("redirect:draftedComplaints.do");
 		else {
@@ -193,7 +195,7 @@ public class ComplaintController {
 				result.addObject("refereeId", c.getReferee().getId());
 		} catch (final Throwable oops) {
 			oops.printStackTrace();
-			result = new ModelAndView("redirect:#");
+			result = new ModelAndView("redirect:/welcome/index.do");
 			result.addObject("success", false);
 		}
 		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
