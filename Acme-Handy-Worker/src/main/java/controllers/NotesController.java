@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ActorService;
 import services.ConfigurationService;
 import services.NotesService;
 import services.ReportService;
@@ -32,21 +31,17 @@ public class NotesController extends AbstractController {
 	@Autowired
 	private ConfigurationService	configService;
 
-	@Autowired
-	private ActorService			actorService;
-
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView listAll(@RequestParam final int reportId) {
-		ModelAndView result;
+		final ModelAndView result;
 
 		final Report report = this.reportService.findOne(reportId);
 		result = new ModelAndView("notes/list");
 		result.addObject("notes", report.getNotes());
 		result.addObject("requestURI", "/notes/list.do");
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
 
-		result = this.configService.configGeneral(result);
-		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -58,24 +53,22 @@ public class NotesController extends AbstractController {
 
 		result = new ModelAndView("notes/edit");
 		result.addObject("note", note);
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
 
-		result = this.configService.configGeneral(result);
-		result = this.actorService.isBanned(result);
 		return result;
 
 	}
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView displayMessage(@RequestParam final int noteId) {
-		ModelAndView result;
+		final ModelAndView result;
 		Notes note;
 		note = this.notesService.findOne(noteId);
 		Assert.notNull(note);
 		result = new ModelAndView("notes/display");
 		result.addObject("note", note);
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
 
-		result = this.configService.configGeneral(result);
-		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -87,9 +80,8 @@ public class NotesController extends AbstractController {
 			note = this.notesService.comment(note);
 		result = new ModelAndView("notes/edit");
 		result.addObject("note", note);
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
 
-		result = this.configService.configGeneral(result);
-		result = this.actorService.isBanned(result);
 		return result;
 
 	}
@@ -110,9 +102,8 @@ public class NotesController extends AbstractController {
 				result.addObject("note", note);
 				result.addObject("messageCode", "note.commit.error.edit");
 			}
+		result.addObject("bannerURL", this.configService.findAll().iterator().next().getBannerURL());
 
-		result = this.configService.configGeneral(result);
-		result = this.actorService.isBanned(result);
 		return result;
 	}
 

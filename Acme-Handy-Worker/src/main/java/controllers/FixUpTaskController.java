@@ -21,6 +21,7 @@ import services.FixUpTaskService;
 import services.WarrantyService;
 import domain.Finder;
 import domain.FixUpTask;
+import domain.Warranty;
 
 @Controller
 @RequestMapping("/fixuptask")
@@ -53,6 +54,8 @@ public class FixUpTaskController extends AbstractController {
 		result.addObject("requestURI", "/fixuptask/handyworker/list.do");
 		result.addObject("finder", new Finder());
 		result.addObject("categories", this.catService.findAll());
+		final Collection<Warranty> warranties = this.warrantyService.findNotDraft();
+		result.addObject("warranties", warranties);
 		result.addObject("vat", this.confService.findAll().iterator().next().getVat());
 		result = this.confService.configGeneral(result);
 		result = this.actorService.isBanned(result);
@@ -143,6 +146,7 @@ public class FixUpTaskController extends AbstractController {
 				this.taskService.save(fixUpTask);
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable opps) {
+				opps.printStackTrace();
 				result = new ModelAndView("fixuptask/edit");
 				result.addObject("messageCode", "fixuptask.commit.error");
 				result = this.addCategoriesWarrantiesConfiguration(result);

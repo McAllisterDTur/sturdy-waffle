@@ -56,9 +56,7 @@ public class FinderService {
 
 	public Finder save(final Finder f) {
 		Finder result;
-		if (f.getId() == 0)
-			Assert.isNull(f);
-		else {
+		if (f.getId() != 0) {
 			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
 			final HandyWorker logged = (HandyWorker) this.aService.findByUserAccountId(LoginService.getPrincipal().getId());
 			final Finder fh = this.findByHandyWorker(logged);

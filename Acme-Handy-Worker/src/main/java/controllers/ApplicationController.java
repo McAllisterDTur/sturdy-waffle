@@ -191,15 +191,16 @@ public class ApplicationController extends AbstractController {
 				if (application.getCustomerComments() == null)
 					application.setCustomerComments(new ArrayList<String>());
 
-				if (!handyComment.isEmpty() && !(handyComment == null)) {
+				if (handyComment == null || !handyComment.isEmpty()) {
 					System.out.println("handy Comment: " + handyComment);
-					application.getHandyComments().add(handyComment);
+					final String toSave = handyComment.replace(',', ';');
+					application.getHandyComments().add(toSave);
 				}
 
-				if (!customerComment.isEmpty() && !(customerComment == null)) {
+				if (customerComment == null || !customerComment.isEmpty()) {
 					System.out.println("customer Comment: " + customerComment);
-
-					application.getCustomerComments().add(customerComment);
+					final String toSave = customerComment.replace(',', ';');
+					application.getCustomerComments().add(toSave);
 				}
 
 				applicationF = this.applicationService.save(application);

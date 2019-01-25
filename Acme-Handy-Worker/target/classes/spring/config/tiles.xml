@@ -35,7 +35,7 @@
 		<value>/views/box/tiles.xml</value>
 		<value>/views/message/tiles.xml</value>
 		<value>/views/finder/tiles.xml</value>
-
+		<value>/views/curricula/tiles.xml</value>
 		<value>/views/creditCard/tiles.xml</value>
 		<value>/views/configuration/tiles.xml</value>
 	</util:list>

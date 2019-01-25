@@ -58,7 +58,7 @@ public class FinderController extends AbstractController {
 			try {
 				result = new ModelAndView("redirect:finder.do");
 				final Collection<Category> categories = this.categoryService.findAll();
-				final Collection<Warranty> warranty = this.warrantyService.findAll();
+				final Collection<Warranty> warranty = this.warrantyService.findNotDraft();
 				final Finder f = this.finderService.save(finder);
 				result.addObject("warranty", warranty);
 				result.addObject("categories", categories);

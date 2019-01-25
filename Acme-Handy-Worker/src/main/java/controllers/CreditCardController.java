@@ -30,7 +30,7 @@ public class CreditCardController {
 	@Autowired
 	private ApplicationService		applicationService;
 	@Autowired
-	private ConfigurationService	confignService;
+	private ConfigurationService	configurationService;
 	@Autowired
 	private ActorService			aService;
 
@@ -46,12 +46,12 @@ public class CreditCardController {
 
 		result = new ModelAndView("creditCard/create");
 
-		final Collection<String> makers = this.confignService.findAll().iterator().next().getCardMaker();
+		final Collection<String> makers = this.configurationService.findAll().iterator().next().getCardMaker();
 
 		result.addObject("fixuptask", t);
 		result.addObject("makers", makers);
 
-		result = this.confignService.configGeneral(result);
+		result = this.configurationService.configGeneral(result);
 		result = this.aService.isBanned(result);
 		return result;
 	}
@@ -60,10 +60,12 @@ public class CreditCardController {
 	public ModelAndView save(@Valid final FixUpTask task, final BindingResult binding, @RequestParam final int applicationId) {
 
 		ModelAndView result;
+
+		System.out.println(task.getCreditCard());
 		if (binding.hasErrors()) {
 			final Application a = this.applicationService.findOne(applicationId);
 			result = new ModelAndView("creditCard/create");
-			final Collection<String> makers = this.confignService.findAll().iterator().next().getCardMaker();
+			final Collection<String> makers = this.configurationService.findAll().iterator().next().getCardMaker();
 
 			result.addObject("fixuptask", task);
 			result.addObject("makers", makers);
@@ -84,7 +86,7 @@ public class CreditCardController {
 			} catch (final Throwable oops) {
 				oops.printStackTrace();
 				result = new ModelAndView("creditCard/create");
-				final Collection<String> makers = this.confignService.findAll().iterator().next().getCardMaker();
+				final Collection<String> makers = this.configurationService.findAll().iterator().next().getCardMaker();
 
 				result.addObject("fixuptask", task);
 				result.addObject("makers", makers);
@@ -93,7 +95,7 @@ public class CreditCardController {
 			}
 		}
 
-		result = this.confignService.configGeneral(result);
+		result = this.configurationService.configGeneral(result);
 		result = this.aService.isBanned(result);
 		return result;
 	}

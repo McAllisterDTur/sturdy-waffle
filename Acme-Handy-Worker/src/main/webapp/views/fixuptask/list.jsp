@@ -19,9 +19,14 @@
 		<br />
 
 		<form:label path="warranty">
-			<spring:message code="finder.warranty" />: </form:label>
-		<form:input path="warranty" />
-		<form:errors path="warranty" cssClass="error" />
+			<spring:message code="finder.warranty" />:</form:label>
+		<form:select path="warranty">
+			<form:option label="----" value="" />
+			<jstl:forEach var="warrant" items="${warranty}">
+				<form:option value="${warrant.title}"
+					label="${warrant.title}: ${warrant.terms} ${warrant.law}" />
+			</jstl:forEach>
+		</form:select>
 		<br />
 
 		<form:label path="minPrice">

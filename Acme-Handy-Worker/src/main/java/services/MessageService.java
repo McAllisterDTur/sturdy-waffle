@@ -224,53 +224,55 @@ public class MessageService {
 	}
 
 	public void broadcastMessage(final Message msg) {
-		Assert.isTrue(AuthenticationUtility.checkAuthority("ADMIN"), "Logged actor is not an administrator");
-		final Collection<Actor> receivers = this.aService.findAll();
-		final UserAccount ua = LoginService.getPrincipal();
-		final Actor actor = this.aService.findByUserAccountId(ua.getId());
-		receivers.remove(actor);
-		Assert.notNull(msg, "Message can not be null");
-		Message result = null;
-		final Actor sender = this.aService.findByUserAccountId(ua.getId());
-		if (msg.getId() != 0) {
-			final Message ac = this.findOne(msg.getId());
-			Assert.isTrue(msg.getSender().getAccount().equals(ua) || ac.getSender().getAccount().equals(msg.getSender().getAccount()) || msg.getReciever().contains(ua) || ac.getReciever().contains(ua), "Message not belong to the actor");
-			ac.setBoxes(msg.getBoxes());
-			result = this.msgRepository.save(ac);
-		} else {
-			Box out;
-			final Date lastTimeUpdated = new Date();
+		Assert.isTrue((AuthenticationUtility.checkAuthority("ADMIN") || AuthenticationUtility.checkAuthority("CUSTOMER")), "Logged actor is not an administrator");
+		if (AuthenticationUtility.checkAuthority("CUSTOMER") && msg.getReciever().size() == 2) {
 
-			//Modificamos el mensaje
-			final Collection<Actor> receptor = new ArrayList<>();
-			receptor.addAll(receivers);
-			msg.setReciever(receptor);
-			msg.setSender(sender);
-			msg.setSendTime(lastTimeUpdated);
+			final Collection<Actor> receivers = this.aService.findAll();
+			final UserAccount ua = LoginService.getPrincipal();
+			final Actor actor = this.aService.findByUserAccountId(ua.getId());
+			receivers.remove(actor);
+			Assert.notNull(msg, "Message can not be null");
+			Message result = null;
+			final Actor sender = this.aService.findByUserAccountId(ua.getId());
+			if (msg.getId() != 0) {
+				final Message ac = this.findOne(msg.getId());
+				Assert.isTrue(msg.getSender().getAccount().equals(ua) || ac.getSender().getAccount().equals(msg.getSender().getAccount()) || msg.getReciever().contains(ua) || ac.getReciever().contains(ua), "Message not belong to the actor");
+				ac.setBoxes(msg.getBoxes());
+				result = this.msgRepository.save(ac);
+			} else {
+				Box out;
+				final Date lastTimeUpdated = new Date();
 
-			final Collection<Box> boxes = new ArrayList<>();
-			final Box in = this.checkSystemBox(this.bService.findByName(sender.getId(), "OUT"));
-			boxes.add(in);
-			for (final Actor a : receivers) {
-				if (this.spamService.isSpam(sender, msg.getBody()) || this.spamService.isSpam(sender, msg.getSubject()) || this.spamService.isSpam(sender, msg.getTags())) {
-					out = null;
-					out = this.checkSystemBox(this.bService.findByName(a.getId(), "SPAM"));
-				} else
-					out = this.checkSystemBox(this.bService.findByName(a.getId(), "IN"));
-				if (out != null)
-					boxes.add(out);
+				//Modificamos el mensaje
+				final Collection<Actor> receptor = new ArrayList<>();
+				receptor.addAll(receivers);
+				msg.setReciever(receptor);
+				msg.setSender(sender);
+				msg.setSendTime(lastTimeUpdated);
+
+				final Collection<Box> boxes = new ArrayList<>();
+				final Box in = this.checkSystemBox(this.bService.findByName(sender.getId(), "OUT"));
+				boxes.add(in);
+				for (final Actor a : receivers) {
+					if (this.spamService.isSpam(sender, msg.getBody()) || this.spamService.isSpam(sender, msg.getSubject()) || this.spamService.isSpam(sender, msg.getTags())) {
+						out = null;
+						out = this.checkSystemBox(this.bService.findByName(a.getId(), "SPAM"));
+					} else
+						out = this.checkSystemBox(this.bService.findByName(a.getId(), "IN"));
+					if (out != null)
+						boxes.add(out);
+				}
+				msg.setBoxes(boxes);
+				result = this.msgRepository.save(msg);
+				//Modificamos el buzon
+
+				for (final Box b : boxes) {
+					final Collection<Message> messagesOut = b.getMessages();
+					messagesOut.add(result);
+					b.setMessages(messagesOut);
+					this.bService.save(b);
+				}
 			}
-			msg.setBoxes(boxes);
-			result = this.msgRepository.save(msg);
-			//Modificamos el buzon
-
-			for (final Box b : boxes) {
-				final Collection<Message> messagesOut = b.getMessages();
-				messagesOut.add(result);
-				b.setMessages(messagesOut);
-				this.bService.save(b);
-			}
-
 		}
 	}
 

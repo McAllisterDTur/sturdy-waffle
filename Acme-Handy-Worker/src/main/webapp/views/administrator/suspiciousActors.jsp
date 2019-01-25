@@ -12,7 +12,11 @@
 	<display:column property="email" titleKey="actor.email" />
 	<display:column property="phone" titleKey="actor.phone"/>
 	<display:column property="address" titleKey="actor.address"/>
-	<display:column property="account.username" titleKey="actor.userAccount.name"/>
+	<display:column titleKey="actor.userAccount.name">
+		<a href="profile/seeId.do?id=${row.id }">
+			<jstl:out value="${row.account.username }"/>
+		</a>
+	</display:column>
 	<display:column>
 		<jstl:if test="${row.banned }">
 			<button onClick="window.location.href='profile/administrator/unban.do?id=${row.id }'">

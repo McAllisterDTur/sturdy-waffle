@@ -251,10 +251,7 @@ public class LoginController extends AbstractController {
 		handyWorker.setAuthority(Authority.HANDYWORKER);
 		final Authority customer = new Authority();
 		customer.setAuthority(Authority.CUSTOMER);
-		final Authority sponsor = new Authority();
-		sponsor.setAuthority(Authority.SPONSOR);
-
-		return Arrays.asList(handyWorker, customer, sponsor);
+		return Arrays.asList(handyWorker, customer);
 	}
 
 	public List<Authority> getAdminRegisterAuthorities() {

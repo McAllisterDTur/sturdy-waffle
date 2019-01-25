@@ -60,7 +60,7 @@ public class FixUpTaskService {
 		creditCard.setHolderName("John Doe");
 		creditCard.setBrandName("Test");
 		creditCard.setExpirationMonth(12);
-		creditCard.setExpirationYear(10000);
+		creditCard.setExpirationYear(99);
 		creditCard.setNumber("1111222233334444");
 		creditCard.setCodeCVV(999);
 
@@ -100,7 +100,7 @@ public class FixUpTaskService {
 			res = this.fixUpTaskRepository.save(fixUpTask);
 		} else {
 			Assert.isTrue(fixUpTask.getPeriodStart().before(fixUpTask.getPeriodEnd()));
-			Assert.isTrue(this.checkCreditCard(fixUpTask));
+			//Assert.isTrue(this.checkCreditCard(fixUpTask));
 			res = this.fixUpTaskRepository.save(fixUpTask);
 		}
 
@@ -123,25 +123,28 @@ public class FixUpTaskService {
 
 	}
 
-	@SuppressWarnings("deprecation")
 	public boolean checkCreditCard(final FixUpTask task) {
 		final CreditCard card = task.getCreditCard();
 		final Date date = new Date();
-		boolean res = true;
-		System.out.println(date.getYear());
 
-		if (card.getBrandName().isEmpty())
-			res = false;
-		else if (card.getCodeCVV() < 100 || card.getCodeCVV() > 999)
-			res = false;
-		else if (card.getExpirationMonth() < 1 || card.getExpirationMonth() > 12)
-			res = false;
-		else if (card.getExpirationYear() < (date.getYear() - 2000))
-			res = false;
-		else if (card.getHolderName().isEmpty())
-			res = false;
-		else if (card.getNumber().length() != 16)
-			res = false;
+		final boolean res = true;
+
+		Assert.isTrue(!(card.getBrandName() == null || card.getBrandName().isEmpty()));
+
+		Assert.isTrue(!(card.getCodeCVV() == null || card.getCodeCVV() < 100 || card.getCodeCVV() > 999));
+
+		Assert.isTrue(!(card.getExpirationMonth() == 0 || card.getExpirationMonth() < 1 || card.getExpirationMonth() > 12));
+
+		Assert.isTrue((card.getExpirationYear() > 0 && card.getExpirationYear() < 100));
+
+		final Integer anno = 2000 + card.getExpirationYear();
+		final GregorianCalendar fecha = new GregorianCalendar(anno, card.getExpirationMonth(), 1);
+
+		Assert.isTrue(date.before(fecha.getTime()));
+
+		Assert.isTrue(!(card.getHolderName() == null || card.getHolderName().isEmpty()));
+
+		Assert.isTrue(!(card.getNumber() == null || card.getNumber().length() != 16));
 
 		return res;
 	}
@@ -156,7 +159,7 @@ public class FixUpTaskService {
 		final FixUpTask res = this.fixUpTaskRepository.findOne(fixUpTaskId);
 		final UserAccount account = LoginService.getPrincipal();
 		if (res != null) {
-			Assert.isTrue(AuthenticationUtility.checkAuthority("CUSTOMER") || AuthenticationUtility.checkAuthority("HANDYWORKER"));
+			Assert.isTrue(AuthenticationUtility.checkAuthority("CUSTOMER") || AuthenticationUtility.checkAuthority("HANDYWORKER") || AuthenticationUtility.checkAuthority("REFEREE"));
 
 			if (AuthenticationUtility.checkAuthority("CUSTOMER"))
 				Assert.isTrue(this.actorService.findByUserAccountId(account.getId()).equals(res.getCustomer()));
