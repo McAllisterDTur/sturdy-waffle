@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
 import services.ActorService;
 import services.CategoryService;
 import services.ConfigurationService;
@@ -186,7 +187,12 @@ public class FixUpTaskController extends AbstractController {
 			result.addObject("fixuptask", task);
 			result.addObject("vat", vat);
 		} catch (final Exception oops) {
-			result = new ModelAndView("welcome/index");
+			final String role = LoginService.getPrincipal().getAuthorities().iterator().next().toString();
+			if (role.equals("CUSTOMER")) {
+				result = new ModelAndView("redirect:/fixuptask/customer/list.do");
+				return result;
+			} else
+				result = new ModelAndView("welcome/index");
 		}
 
 		result = this.confService.configGeneral(result);
