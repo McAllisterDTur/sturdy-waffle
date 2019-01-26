@@ -15,6 +15,7 @@ import java.util.Collection;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,11 +77,14 @@ public class ConfigurationController extends AbstractController {
 						configuration.setCardMaker(ws);
 					}
 				this.cService.save(configuration);
-				result = new ModelAndView("redirect:/welcome/index.do");
-
+				result = new ModelAndView("configuration/success");
 			} catch (final Throwable oops) {
 				oops.printStackTrace();
 				result.addObject("configuration", configuration);
+				if (LocaleContextHolder.getLocale().getLanguage().equals("es"))
+					result.addObject("wrong", "Algo ha ido mal, por favor vuelva a intentarlo");
+				else if (LocaleContextHolder.getLocale().getLanguage().equals("en"))
+					result.addObject("wrong", "Something went wrong, please try again");
 			}
 		result = this.cService.configGeneral(result);
 		result = this.aService.isBanned(result);

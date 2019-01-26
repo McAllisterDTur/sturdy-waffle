@@ -146,6 +146,7 @@
 		<form:errors path="cardMaker" cssClass="error"/>
 	</p>
 	
+	<span class="error"><jstl:out value="${wrong }"/></span><br/>
 	<input type="submit" value="<spring:message code="configuration.send"/>"/>
 	
 </form:form>

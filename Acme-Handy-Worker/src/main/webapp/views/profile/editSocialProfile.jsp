@@ -19,19 +19,20 @@
 
 	<form:form modelAttribute="socialProfile" action="profile/social/save.do" method="POST">
 		<p>
-			<spring:message code="profile.social.network"/>: 
+			<spring:message code="profile.social.network"/>*: 
 			<form:input path="socialNetwork"/>
 			<form:errors path="socialNetwork" cssClass="error"/>
 		</p>
 		<p>
-			<spring:message code="profile.social.nick"/>: 
+			<spring:message code="profile.social.nick"/>*: 
 			<form:input path="nick"/>
 			<form:errors path="nick" cssClass="error"/>
 		</p>
 		<p>
-			<spring:message code="profile.social.link"/>: 
-			<form:input path="profileLink"/>
+			<spring:message code="profile.social.link"/>*: 
+			<form:input path="profileLink" value="http://"/>
 			<form:errors path="profileLink" cssClass="error"/>	
 		</p>
+		<p><b><spring:message code="profile.mandatory"/></b></p>
 		<input type="submit" name="save" value="<spring:message code="profile.edit.save"/>"/>
 	</form:form>	
