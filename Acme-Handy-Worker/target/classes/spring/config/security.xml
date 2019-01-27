@@ -112,7 +112,7 @@
 				<security:intercept-url pattern="/profile/curricula/see.do"
 			access="hasAnyRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/profile/curricula/edit/**"
-			access="hasRole('HANDYWORKER', 'CUSTOMER')" />	
+			access="hasRole('HANDYWORKER')" />	
 		<!-- Endorsement -->
 		
 		<security:intercept-url pattern="/endorsement/handyworker,customer/**"
