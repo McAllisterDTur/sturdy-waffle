@@ -90,11 +90,18 @@ public class AdministratorController extends AbstractController {
 
 		// 12.5.1
 		final List<Object[]> stats1 = this.taskService.avgMinMaxDevFixUpTaskCount();
-		res.addObject("stats", stats1);
-		res.addObject("avgPerUser", stats1.get(0)[0]);
-		res.addObject("minPerUser", stats1.get(0)[1]);
-		res.addObject("maxPerUser", stats1.get(0)[2]);
-		res.addObject("devPerUser", stats1.get(0)[3]);
+		//res.addObject("stats", stats1);
+		if (stats1.get(0) == null || stats1.get(0).length == 0) {
+			res.addObject("avgPerUser", 0.0);
+			res.addObject("minPerUser", 0.0);
+			res.addObject("maxPerUser", 0.0);
+			res.addObject("devPerUser", 0.0);
+		} else {
+			res.addObject("avgPerUser", stats1.get(0)[0]);
+			res.addObject("minPerUser", stats1.get(0)[1]);
+			res.addObject("maxPerUser", stats1.get(0)[2]);
+			res.addObject("devPerUser", stats1.get(0)[3]);
+		}
 
 		// 12.5.4
 		final List<Object[]> stats2 = this.applicationService.statictisApplications();
