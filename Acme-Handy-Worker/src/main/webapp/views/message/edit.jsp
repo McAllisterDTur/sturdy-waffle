@@ -37,7 +37,6 @@
 	<form:hidden path="sender" />
 	<form:hidden path="sendTime" />
 	<form:hidden path="boxes" />
-	<form:hidden path="tags" />
 
 	<h3>
 		<spring:message code="message.create" />
