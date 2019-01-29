@@ -22,6 +22,7 @@ import security.UserAccount;
 import services.ActorService;
 import services.ApplicationService;
 import services.ConfigurationService;
+import domain.Actor;
 import domain.Application;
 import domain.CreditCard;
 import domain.Customer;
@@ -46,7 +47,9 @@ public class ApplicationController extends AbstractController {
 
 	@RequestMapping(value = "/customer,handyworker/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam final int fixuptaskId) {
+
 		ModelAndView result;
+
 		this.account = LoginService.getPrincipal();
 		Collection<Application> applications;
 
@@ -170,7 +173,9 @@ public class ApplicationController extends AbstractController {
 		ModelAndView res;
 
 		final Application a = this.applicationService.findOne(applicationId);
-
+		final UserAccount accountId = LoginService.getPrincipal();
+		final Actor actorLogged = this.actorService.findByUserAccountId(accountId.getId());
+		Assert.isTrue(a.getHandyWorker().equals(actorLogged) || a.getFixUpTask().getCustomer().equals(actorLogged));
 		res = new ModelAndView("application/customer,handyworker/edit");
 		res.addObject("application", a);
 		//res.addObject("phases", a.getPhases());
@@ -184,6 +189,7 @@ public class ApplicationController extends AbstractController {
 	@RequestMapping(value = "/customer,handyworker/save", method = RequestMethod.POST)
 	public ModelAndView save(@Valid final Application application, final BindingResult binding, @RequestParam final String handyComment, @RequestParam final String customerComment) {
 		ModelAndView result;
+
 		if (binding.hasErrors()) {
 
 			System.out.println("errores:" + binding.getAllErrors());

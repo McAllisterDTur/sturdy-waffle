@@ -56,7 +56,7 @@
 	</display:column>
 	<security:authorize access="hasRole('CUSTOMER')">
 		<display:column>
-			<jstl:if test="${row.status == 'PENDING'}">
+			<jstl:if test="${ row.fixUpTask.periodStart gt currentDate and row.status == 'PENDING' }">
 				<form:form
 					action="application/customer/accept.do?applicationId=${row.id}"
 					modelAttribute="${row}">

@@ -125,10 +125,13 @@
 	<security:authorize access="hasRole('HANDYWORKER')">
 
 		<display:column>
-			<button
-				onClick="window.location.href='application/handyworker/create.do?fixuptaskId=${row.id}'">
-				<spring:message code="fixuptask.apply" />
-			</button>
+			<jstl:if test="${row.periodStart gt currentDate }">
+				<button
+					onClick="window.location.href='application/handyworker/create.do?fixuptaskId=${row.id}'">
+					<spring:message code="fixuptask.apply" />
+				</button>
+			</jstl:if>
+
 		</display:column>
 
 	</security:authorize>
