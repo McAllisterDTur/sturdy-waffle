@@ -3,6 +3,7 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -63,6 +64,8 @@ public class ApplicationController extends AbstractController {
 		result.addObject("applications", applications);
 		result.addObject("vat", vat);
 		result.addObject("requestURI", "applications/customer,handyworker/list.do?fixuptaskId=" + fixuptaskId);
+		final Date d = new Date();
+		result.addObject("currentDate", d);
 		result = this.configurationService.configGeneral(result);
 		result = this.actorService.isBanned(result);
 		return result;
@@ -86,6 +89,8 @@ public class ApplicationController extends AbstractController {
 			res.addObject("customer", c);
 		}
 		//res.addObject("phases", a.getPhases());
+		final Date d = new Date();
+		res.addObject("currentDate", d);
 		res = this.configurationService.configGeneral(res);
 		res = this.actorService.isBanned(res);
 		return res;
@@ -169,6 +174,8 @@ public class ApplicationController extends AbstractController {
 		res = new ModelAndView("application/customer,handyworker/edit");
 		res.addObject("application", a);
 		//res.addObject("phases", a.getPhases());
+		final Date d = new Date();
+		res.addObject("currentDate", d);
 		res = this.configurationService.configGeneral(res);
 		res = this.actorService.isBanned(res);
 		return res;
