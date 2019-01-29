@@ -192,7 +192,7 @@ public class FixUpTaskController extends AbstractController {
 				result = new ModelAndView("redirect:/fixuptask/customer/list.do");
 				return result;
 			} else
-				result = new ModelAndView("welcome/index");
+				result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
 		result = this.confService.configGeneral(result);
