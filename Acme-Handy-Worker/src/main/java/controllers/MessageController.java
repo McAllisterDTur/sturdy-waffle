@@ -216,7 +216,9 @@ public class MessageController extends AbstractController {
 		ModelAndView result;
 		if (binding.hasErrors()) {
 			binding.getAllErrors();
-			result = new ModelAndView("redirect:broadcast.do");
+			result = new ModelAndView("message/broadcast");
+			result.addObject("messageO", messageO);
+			result.addObject("message", "message.sendError");
 		} else
 			try {
 				this.messageService.broadcastMessage(messageO);
