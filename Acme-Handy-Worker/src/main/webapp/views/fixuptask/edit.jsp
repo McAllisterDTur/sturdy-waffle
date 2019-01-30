@@ -7,12 +7,39 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<% String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() :""; %>
-<jstl:set var="principal" value="<%= s %>"/>
+<!-- DateTimePicker -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment-with-locales.min.js"></script>
+<link href="./styles/datetimepicker.css" rel="stylesheet"
+	type="text/css" />
+<script type="text/javascript" src="./scripts/datetimepicker.js"></script>
+
+
+<%
+	String s = request.getUserPrincipal() != null ? request
+			.getUserPrincipal().getName() : "";
+%>
+<jstl:set var="principal" value="<%=s%>" />
 
 <form:form modelAttribute="fixUpTask"
 	action="fixuptask/customer/edit.do" method="post">
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#pickerStart').dateTimePicker({
+				dateFormat : "DD/MM/YYYY HH:mm",
+				selectData : "<fmt:formatDate pattern='dd/MM/yyyy HH:mm' value = '${fixUpTask.periodStart}' />" || "now"
+			});
+			$('#pickerEnd').dateTimePicker({
+				dateFormat : "DD/MM/YYYY HH:mm",
+				selectData : "<fmt:formatDate pattern='dd/MM/yyyy HH:mm' value = '${fixUpTask.periodEnd}' />" || "now"
+			});
+		});
+	</script>
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
@@ -33,6 +60,8 @@
 	<h3>
 		<spring:message code="fixuptask.header" />
 	</h3>
+
+
 
 	<spring:message code="fixuptask.placeholder.description"
 		var="placeholderdescription" />
@@ -63,20 +92,27 @@
 		var="placeholderperiodstart" />
 	<form:label path="periodStart">
 		<spring:message code="fixuptask.periodStart" />:</form:label>
-	<form:input type="date" path="periodStart"
-		placeholder="${placeholderperiodstart}" />
+	<div style="width: 200px;">
+		<div id="pickerStart"></div>
+		<input type="hidden" id="periodStart" name="periodStart"
+			value="<fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${fixUpTask.periodStart}" />" />
+	</div>
 	<form:errors path="periodStart" cssClass="error" />
 	<jstl:if test="${dateError == 'fixuptask.date.error' }">
-	<span class="error"><spring:message code='${dateError }'/></span>
+		<span class="error"><spring:message code='${dateError }' /></span>
 	</jstl:if>
+
 	<br />
 
 	<spring:message code="fixuptask.placeholder.periodend"
 		var="placeholderperiodend" />
 	<form:label path="periodEnd">
 		<spring:message code="fixuptask.periodEnd" />:</form:label>
-	<form:input type="date" path="periodEnd"
-		placeholder="${placeholderperiodend}" />
+	<div style="width: 200px;">
+		<div id="pickerEnd"></div>
+		<input type="hidden" id="periodEnd" name="periodEnd"
+			value="<fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${fixUpTask.periodEnd}" />" />
+	</div>
 	<form:errors path="periodEnd" cssClass="error" />
 	<br />
 
