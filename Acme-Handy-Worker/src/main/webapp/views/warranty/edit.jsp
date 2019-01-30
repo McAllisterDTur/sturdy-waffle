@@ -43,7 +43,7 @@
 		</p>
 		<p>
 			<spring:message code="warranty.edit.terms"/>: 
-			<form:input path="terms"/>
+			<form:textarea path="terms"/>
 			<form:errors path="terms" cssClass="error"/>
 		</p>
 		<p>

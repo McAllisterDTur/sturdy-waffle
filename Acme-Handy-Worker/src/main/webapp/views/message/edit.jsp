@@ -90,7 +90,7 @@
 	<form:textarea path="body" />
 	<form:errors path="body" cssClass="error" />
 	<br />
-	<spring:message code="mandatory" />
+	<!-- <spring:message code="mandatory" /> -->
 	<br />
 
 	<input type="submit" name="save"

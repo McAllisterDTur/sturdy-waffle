@@ -27,8 +27,10 @@
 
 <b><spring:message code="message.actor.sender" />: </b>
 <c:choose>
-	<c:when test="${fn:length(messageO.reciever) eq 2}">
-		<spring:message code="message.messageSystem" />
+	<c:when test="${fn:length(messageO.reciever) eq 1}">
+		<jstl:forEach var="actor" items="${messageO.reciever}">
+			<jstl:out value="${actor.account.username}"></jstl:out>
+		</jstl:forEach>
 	</c:when>
 	<c:otherwise>
 		<jstl:out value="${messageO.sender.account.username}" />
@@ -40,10 +42,6 @@
 	<c:when test="${fn:length(messageO.reciever) eq 1}">
 		<jstl:forEach var="actor" items="${messageO.reciever}">
 			<jstl:out value="${actor.account.username}"></jstl:out>
-		</jstl:forEach>
-	</c:when>
-	<c:when test="${fn:length(messageO.reciever) eq 2}">
-		<jstl:forEach var="actor" items="${messageO.reciever}">
 		</jstl:forEach>
 	</c:when>
 	<c:otherwise>

@@ -33,7 +33,8 @@
 		</display:column>
 	</display:table>
 	<security:authorize access="hasRole('REFEREE')">
-		<jstl:if test="${report.isFinal }"> <!-- TODO: añadir not -->
+		<jstl:if test="${report.isFinal }">
+			<!-- TODO: añadir not -->
 			<button
 				onClick="window.location.href='/report/referee/delete.do?reportId=${report.id}">
 				<spring:message code="report.delete" />
@@ -41,6 +42,10 @@
 			<button
 				onClick="window.location.href='/report/referee/edit.do?reportId=${report.id}">
 				<spring:message code="report.edit" />
+			</button>
+			<button
+				onClick="window.location.href='/notes/list.do?reportId=${report.id}">
+				<spring:message code="report.nots" />
 			</button>
 		</jstl:if>
 	</security:authorize>

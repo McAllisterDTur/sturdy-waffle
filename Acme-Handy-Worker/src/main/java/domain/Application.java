@@ -46,7 +46,7 @@ public class Application extends DomainEntity {
 		this.registerTime = registerTime;
 	}
 
-	@Min(1)
+	@Min(0)
 	@NotNull
 	public Double getOfferedPrice() {
 		return this.offeredPrice;

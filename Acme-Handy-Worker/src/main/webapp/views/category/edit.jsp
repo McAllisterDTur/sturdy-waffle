@@ -11,6 +11,7 @@
 	<button onClick="window.location.href='category/administrator/list.do'">
 		<spring:message code="category.back"/>
 	</button>
+	<b><spring:message code="warranty.edit.must"/></b>
 	
 	<jstl:if test="${not empty success }">
 		<fieldset>

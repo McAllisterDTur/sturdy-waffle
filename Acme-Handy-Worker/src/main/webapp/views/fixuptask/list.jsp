@@ -7,6 +7,7 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <security:authorize access="hasRole('HANDYWORKER')">
 	<form:form action="fixuptask/handyworker/list.do"
@@ -111,8 +112,7 @@
 	<display:column property="periodStart" titleKey="fixuptask.periodStart" />
 
 	<display:column titleKey="fixuptask.maxPrice">
-		<jstl:out value="${row.maxPrice }" />(<jstl:out
-			value="${row.maxPrice *(1+(vat/100))}" />)
+<fmt:formatNumber type="number" maxFractionDigits="2"  value="${row.maxPrice }" />(<fmt:formatNumber type="number" maxFractionDigits="2" value="${row.maxPrice *(1+(vat/100))}" />)
 	</display:column>
 
 	<display:column>
@@ -125,10 +125,13 @@
 	<security:authorize access="hasRole('HANDYWORKER')">
 
 		<display:column>
-			<button
-				onClick="window.location.href='application/handyworker/create.do?fixuptaskId=${row.id}'">
-				<spring:message code="fixuptask.apply" />
-			</button>
+			<jstl:if test="${row.periodStart gt currentDate }">
+				<button
+					onClick="window.location.href='application/handyworker/create.do?fixuptaskId=${row.id}'">
+					<spring:message code="fixuptask.apply" />
+				</button>
+			</jstl:if>
+
 		</display:column>
 
 	</security:authorize>

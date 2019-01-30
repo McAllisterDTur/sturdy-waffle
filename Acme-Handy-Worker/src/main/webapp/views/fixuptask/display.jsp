@@ -7,6 +7,7 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
 	String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() : "";
@@ -50,9 +51,9 @@
 <br />
 
 <b><spring:message code="fixuptask.maxPrice" />:&nbsp;</b>
-<jstl:out value="${fixuptask.maxPrice}" />
+<fmt:formatNumber type="number" maxFractionDigits="2"  value="${fixuptask.maxPrice}" />
 (
-<jstl:out value="${fixuptask.maxPrice * (1+(vat/100)) }" />
+<fmt:formatNumber type="number" maxFractionDigits="2"  value="${fixuptask.maxPrice * (1+(vat/100)) }" />
 )
 <br />
 

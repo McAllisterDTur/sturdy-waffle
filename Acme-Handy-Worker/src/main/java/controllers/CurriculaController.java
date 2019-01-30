@@ -65,12 +65,14 @@ public class CurriculaController extends AbstractController {
 
 	@RequestMapping(value = "/see", method = RequestMethod.GET)
 	public ModelAndView seeCurricula(@RequestParam final Integer id) {
-		final HandyWorker hw = this.hwService.findOne(id);
-		if (hw == null) {
+		Curricula c;
+		try {
+			c = this.currService.findFromLoggedHandyWorker();
+		} catch (final Throwable oops) {
 			final ModelAndView result = new ModelAndView("redirect:welcome/index.do");
 			return result;
 		}
-		Curricula c = this.currService.findFromHandyWorker(hw);
+		final HandyWorker hw = this.hwService.findOne(this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId());
 		if (c == null) {
 			c = this.currService.create();
 			c.setHandyWorker(hw);
@@ -78,7 +80,7 @@ public class CurriculaController extends AbstractController {
 		}
 		ModelAndView result = new ModelAndView("curricula/see");
 		result.addObject("handy", hw);
-		result.addObject("logged", this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId() == hw.getId());
+		result.addObject("logged", true);
 		result.addObject("personalRecord", c.getPersonalRecord());
 		result.addObject("educationRecords", c.getEducationRecord());
 		result.addObject("profesionalRecords", c.getProfessionalRecords());
@@ -111,6 +113,8 @@ public class CurriculaController extends AbstractController {
 		} catch (final Throwable oops) {
 			return new ModelAndView("redirect:/profile/see.do");
 		}
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 	@RequestMapping(value = "/edit/savePersonal", method = RequestMethod.POST)
@@ -130,14 +134,18 @@ public class CurriculaController extends AbstractController {
 				oops.printStackTrace();
 				return new ModelAndView("redirect:/profile/see.do");
 			}
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/edit/addEducationRecord", method = RequestMethod.GET)
 	public ModelAndView addEducationRecord() {
-		final ModelAndView result = new ModelAndView("curricula/edit");
+		ModelAndView result = new ModelAndView("curricula/edit");
 		result.addObject("educationRecord", this.eduService.create());
 		result.addObject("education", true);
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -156,14 +164,18 @@ public class CurriculaController extends AbstractController {
 				oops.printStackTrace();
 				return new ModelAndView("redirect:/profile/see.do");
 			}
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/edit/addProfessionalRecord", method = RequestMethod.GET)
 	public ModelAndView addProfessionalRecord() {
-		final ModelAndView result = new ModelAndView("curricula/edit");
+		ModelAndView result = new ModelAndView("curricula/edit");
 		result.addObject("professionalRecord", this.proService.create());
 		result.addObject("professional", true);
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -182,14 +194,18 @@ public class CurriculaController extends AbstractController {
 				oops.printStackTrace();
 				return new ModelAndView("redirect:/profile/see.do");
 			}
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/edit/addEndorserRecord", method = RequestMethod.GET)
 	public ModelAndView addEndorserRecord() {
-		final ModelAndView result = new ModelAndView("curricula/edit");
+		ModelAndView result = new ModelAndView("curricula/edit");
 		result.addObject("endorserRecord", this.endoService.create());
 		result.addObject("endorser", true);
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -208,14 +224,18 @@ public class CurriculaController extends AbstractController {
 				oops.printStackTrace();
 				return new ModelAndView("redirect:/profile/see.do");
 			}
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/edit/addMiscRecord", method = RequestMethod.GET)
 	public ModelAndView addMiscellaneousRecord() {
-		final ModelAndView result = new ModelAndView("curricula/edit");
+		ModelAndView result = new ModelAndView("curricula/edit");
 		result.addObject("miscellaneousRecord", this.miscService.create());
 		result.addObject("miscellaneous", true);
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 
@@ -224,7 +244,7 @@ public class CurriculaController extends AbstractController {
 		ModelAndView result;
 		if (br.hasErrors()) {
 			result = new ModelAndView("curricula/edit");
-			result.addObject("endorser", true);
+			result.addObject("miscellaneous", true);
 		} else
 			try {
 				this.miscService.save(mr);
@@ -234,6 +254,8 @@ public class CurriculaController extends AbstractController {
 				oops.printStackTrace();
 				return new ModelAndView("redirect:/profile/see.do");
 			}
+		result = this.cService.configGeneral(result);
+		result = this.actorService.isBanned(result);
 		return result;
 	}
 }

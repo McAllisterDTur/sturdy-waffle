@@ -83,9 +83,16 @@ public class MessageController extends AbstractController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ModelAndView saveMessage(@Valid final Message messageO, final BindingResult binding) {
 		ModelAndView result;
-		if (binding.hasErrors() || messageO.getReciever().size() > 1)
-			result = new ModelAndView("redirect:create.do");
-		else
+		if (binding.hasErrors() || messageO.getReciever().size() > 1) {
+			System.out.println(binding.getAllErrors());
+			//result = new ModelAndView("redirect:create.do");
+			result = new ModelAndView("message/edit");
+
+			final Collection<Actor> actores = this.actorService.findAll();
+			result.addObject("messageO", messageO);
+			result.addObject("actors", actores);
+			result.addObject("message", "message.sendError");
+		} else
 			try {
 				final String username = messageO.getReciever().iterator().next().getAccount().getUsername();
 				final UserAccount accountId = this.userAccountService.findByName(username);
@@ -112,7 +119,6 @@ public class MessageController extends AbstractController {
 			message = this.messageService.findOne(messageId);
 			Assert.notNull(message);
 			result = new ModelAndView("message/edit");
-			result.addObject("messageO", message);
 		} catch (final Throwable opps) {
 			result = new ModelAndView("redirect:../box/list.do");
 			result.addObject("messageCode", "box.commit.error");
@@ -124,16 +130,16 @@ public class MessageController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/copy", method = RequestMethod.POST)
-	public ModelAndView copyMessage(@Valid final Message message, final BindingResult binding) {
+	public ModelAndView copyMessage(@Valid final Message messageO, final BindingResult binding) {
 		ModelAndView result;
-		if (binding.hasErrors() || message.getBoxes().size() > 1)
-			result = new ModelAndView("redirect:/message/copy.do?messageId=" + message.getId());
+		if (binding.hasErrors() || messageO.getBoxes().size() > 1)
+			result = new ModelAndView("redirect:/message/copy.do?messageId=" + messageO.getId());
 		else
 			try {
-				this.messageService.copy(message);
+				this.messageService.copy(messageO);
 				result = new ModelAndView("redirect:/box/list.do");
 			} catch (final Throwable opps) {
-				result = new ModelAndView("redirect:/message/copy.do?=messageId=" + message.getId());
+				result = new ModelAndView("redirect:/message/copy.do?=messageId=" + messageO.getId());
 			}
 		result = this.configService.configGeneral(result);
 		result = this.actorService.isBanned(result);
@@ -194,7 +200,9 @@ public class MessageController extends AbstractController {
 			result.addObject("messageO", message);
 			result.addObject("actors", actores);
 		} catch (final Throwable opps) {
-			result = new ModelAndView("redirect:../box/list.do");
+			//result = new ModelAndView("redirect:../box/list.do");
+			opps.printStackTrace();
+			result = new ModelAndView("redirect:../welcome/index.do");
 			result.addObject("messageCode", "box.commit.error");
 		}
 		result = this.configService.configGeneral(result);
@@ -204,14 +212,14 @@ public class MessageController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/administrator/broadcast", method = RequestMethod.POST)
-	public ModelAndView saveBroadcast(@Valid final Message message, final BindingResult binding) {
+	public ModelAndView saveBroadcast(@Valid final Message messageO, final BindingResult binding) {
 		ModelAndView result;
 		if (binding.hasErrors()) {
 			binding.getAllErrors();
 			result = new ModelAndView("redirect:broadcast.do");
 		} else
 			try {
-				this.messageService.broadcastMessage(message);
+				this.messageService.broadcastMessage(messageO);
 				final UserAccount account = LoginService.getPrincipal();
 				final Actor sender = this.actorService.findByUserAccountId(account.getId());
 				final Box bout = this.messageService.checkSystemBox(this.boxService.findByName(sender.getId(), "OUT"));
