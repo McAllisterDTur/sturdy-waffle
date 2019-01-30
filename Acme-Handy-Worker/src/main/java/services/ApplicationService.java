@@ -46,7 +46,7 @@ public class ApplicationService {
 	private static String			messageAcceptedEN	= "Congratulations, your application for the task has been accepted. Task: ";
 	private static String			messageRejectedEN	= "We're so sorry, the customer has rejected your application to: ";
 
-	private static String			messageAcceptedES	= "Enhorabuena, tu soliitud para la tarea ha sido aceptada. Tarea: ";
+	private static String			messageAcceptedES	= "Enhorabuena, tu solicitud para la tarea ha sido aceptada. Tarea: ";
 	private static String			messageRejectedES	= "Lo sentimos, el cliente no ha aceptado tu solicitud para la tarea: ";
 
 
@@ -162,6 +162,14 @@ public class ApplicationService {
 		msg.setBody(ApplicationService.messageAcceptedEN + a.getFixUpTask().getTicker() + "\n\n" + ApplicationService.messageAcceptedES + a.getFixUpTask().getTicker());
 
 		this.messageService.send(msg, a.getHandyWorker());
+
+		this.account = LoginService.getPrincipal();
+		final Message msg2 = this.messageService.create(a.getHandyWorker());
+		msg2.setPriority("HIGH");
+		msg2.setSubject("ACCEPTED APPLICATION -- SOLICITUD ACEPTADA");
+		msg2.setBody(ApplicationService.messageAcceptedEN + a.getFixUpTask().getTicker() + "\n\n" + ApplicationService.messageAcceptedES + a.getFixUpTask().getTicker());
+
+		this.messageService.send(msg2, this.actorService.findByUserAccountId(this.account.getId()));
 	}
 	private void sendRejectMessageTo(final Application a) {
 		this.account = LoginService.getPrincipal();
@@ -171,6 +179,14 @@ public class ApplicationService {
 		msg.setBody(ApplicationService.messageRejectedEN + a.getFixUpTask().getTicker() + "\n\n" + ApplicationService.messageRejectedES + a.getFixUpTask().getTicker());
 
 		this.messageService.send(msg, a.getHandyWorker());
+
+		this.account = LoginService.getPrincipal();
+		final Message msg2 = this.messageService.create(a.getHandyWorker());
+		msg2.setPriority("HIGH");
+		msg2.setSubject("REJECTED APPLICATION -- SOLICITUD RECHAZADA");
+		msg2.setBody(ApplicationService.messageRejectedEN + a.getFixUpTask().getTicker() + "\n\n" + ApplicationService.messageRejectedES + a.getFixUpTask().getTicker());
+
+		this.messageService.send(msg, this.actorService.findByUserAccountId(this.account.getId()));
 	}
 
 	public Application getApplicationAcceptedForFixUpTask(final int fixuptaskId) {
