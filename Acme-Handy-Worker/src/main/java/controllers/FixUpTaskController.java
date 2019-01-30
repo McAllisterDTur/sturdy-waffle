@@ -2,6 +2,7 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
 import services.ActorService;
 import services.CategoryService;
 import services.ConfigurationService;
@@ -50,6 +52,8 @@ public class FixUpTaskController extends AbstractController {
 		final Collection<FixUpTask> tasks = this.taskService.findAll();
 
 		result = new ModelAndView("fixuptask/list");
+		final Date d = new Date();
+		result.addObject("currentDate", d);
 		result.addObject("fixuptasks", tasks);
 		result.addObject("requestURI", "/fixuptask/handyworker/list.do");
 		result.addObject("finder", new Finder());
@@ -70,6 +74,8 @@ public class FixUpTaskController extends AbstractController {
 		final Collection<FixUpTask> tasks = this.taskService.findFromLoggedCustomer();
 
 		result = new ModelAndView("fixuptask/list");
+		final Date d = new Date();
+		result.addObject("currentDate", d);
 		result.addObject("fixuptasks", tasks);
 		result.addObject("requestURI", "/fixuptask/customer/list.do");
 		result.addObject("vat", this.confService.findAll().iterator().next().getVat());
@@ -80,22 +86,29 @@ public class FixUpTaskController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/handyworker/list", method = RequestMethod.POST)
-	public ModelAndView listHandySearch(final Finder finder) {
+	public ModelAndView listHandySearch(final Finder finder, final BindingResult binding) {
 		ModelAndView result;
-		result = new ModelAndView("fixuptask/list");
-		Collection<FixUpTask> tasks;
-		tasks = this.taskService.findByFilter(finder.getKeyWord(), finder.getCategory(), finder.getWarranty(), finder.getMinPrice(), finder.getMaxPrice(), finder.getStartDate(), finder.getEndDate());
-		result.addObject("requestURI", "/fixuptask/handyworker/list.do");
-		result.addObject("fixuptasks", tasks);
-		result.addObject("finder", finder);
-		result.addObject("categories", this.catService.findAll());
-		result.addObject("vat", this.confService.findAll().iterator().next().getVat());
+		if (binding.hasErrors()) {
+			result = new ModelAndView("fixuptask/list");
+			result.addObject("finder", finder);
+			final Collection<FixUpTask> tasks = this.taskService.findAsHandyWorker();
+			result.addObject("fixuptasks", tasks);
+		} else {
+			result = new ModelAndView("fixuptask/list");
+			Collection<FixUpTask> tasks;
+			tasks = this.taskService.findByFilter(finder.getKeyWord(), finder.getCategory(), finder.getWarranty(), finder.getMinPrice(), finder.getMaxPrice(), finder.getStartDate(), finder.getEndDate());
+			result.addObject("requestURI", "/fixuptask/handyworker/list.do");
+			result.addObject("fixuptasks", tasks);
+			result.addObject("finder", finder);
+			result.addObject("categories", this.catService.findAll());
+			result.addObject("vat", this.confService.findAll().iterator().next().getVat());
+		}
+
 		result = this.confService.configGeneral(result);
 		result = this.actorService.isBanned(result);
 
 		return result;
 	}
-
 	@RequestMapping(value = "/customer/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
@@ -132,8 +145,11 @@ public class FixUpTaskController extends AbstractController {
 	public ModelAndView saveFixUpTask(@Valid final FixUpTask fixUpTask, final BindingResult binding) {
 		ModelAndView result;
 		String dateError = "";
-		if (fixUpTask.getPeriodStart() != null && fixUpTask.getPeriodEnd() != null)
+		if (fixUpTask.getPeriodStart() != null && fixUpTask.getPeriodEnd() != null) {
 			dateError = this.taskService.checkIfBefore(fixUpTask.getPeriodStart(), fixUpTask.getPeriodEnd());
+			final Date d = new Date();
+			dateError = this.taskService.checkIfBefore(d, fixUpTask.getPeriodStart());
+		}
 		if (binding.hasErrors() || !dateError.isEmpty()) {
 			System.out.println(binding.getFieldErrors());
 			result = new ModelAndView("fixuptask/edit");
@@ -186,7 +202,12 @@ public class FixUpTaskController extends AbstractController {
 			result.addObject("fixuptask", task);
 			result.addObject("vat", vat);
 		} catch (final Exception oops) {
-			result = new ModelAndView("welcome/index");
+			final String role = LoginService.getPrincipal().getAuthorities().iterator().next().toString();
+			if (role.equals("CUSTOMER")) {
+				result = new ModelAndView("redirect:/fixuptask/customer/list.do");
+				return result;
+			} else
+				result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
 		result = this.confService.configGeneral(result);

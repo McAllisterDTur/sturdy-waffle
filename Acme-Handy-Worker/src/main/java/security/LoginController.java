@@ -122,8 +122,10 @@ public class LoginController extends AbstractController {
 	public ModelAndView registerPOST(@Valid final Actor actor, final BindingResult binding) {
 		ModelAndView result;
 		String emailError = "";
-		if (actor.getEmail() != null)
+		if (actor.getEmail() != null) {
+			actor.setEmail(actor.getEmail().toLowerCase());
 			emailError = this.actorService.validateEmail(actor.getEmail());
+		}
 		if (binding.hasErrors() || !emailError.isEmpty()) {
 			System.out.println(binding.getFieldErrors());
 			result = new ModelAndView("actor/register");
@@ -197,8 +199,17 @@ public class LoginController extends AbstractController {
 	public ModelAndView registerAdminPOST(@Valid final Actor actor, final BindingResult binding) {
 		ModelAndView result;
 		String emailError = "";
-		if (actor.getEmail() != null)
-			emailError = this.administratorService.validateEmail(actor.getEmail());
+		if (actor.getEmail() != null) {
+			actor.setEmail(actor.getEmail().toLowerCase());
+
+			final Authority au = new Authority();
+			au.setAuthority(Authority.REFEREE);
+
+			if (actor.getAccount() != null && actor.getAccount().getAuthorities().contains(au))
+				emailError = this.actorService.validateEmail(actor.getEmail());
+			else
+				emailError = this.administratorService.validateEmail(actor.getEmail());
+		}
 		if (binding.hasErrors() || !emailError.isEmpty()) {
 
 			System.out.println(binding.getFieldErrors());

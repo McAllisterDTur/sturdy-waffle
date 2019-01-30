@@ -39,7 +39,6 @@
 	<form:hidden path="sendTime" />
 	<form:hidden path="reciever" />
 	<form:hidden path="boxes" />
-	<form:hidden path="tags" />
 
 
 	<h3>

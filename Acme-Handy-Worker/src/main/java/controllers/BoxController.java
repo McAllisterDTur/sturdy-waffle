@@ -84,6 +84,10 @@ public class BoxController extends AbstractController {
 			result.addObject("box", box);
 		} else
 			try {
+				final Box b = this.boxService.findOne(box.getId());
+				final UserAccount accountId = LoginService.getPrincipal();
+				final Actor actorLogged = this.actorService.findByUserAccountId(accountId.getId());
+				Assert.isTrue(b.getOwner().equals(actorLogged));
 				this.boxService.save(box);
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable opps) {
@@ -102,7 +106,11 @@ public class BoxController extends AbstractController {
 		ModelAndView result;
 		Box box;
 		try {
+
 			box = this.boxService.findOne(boxId);
+			final UserAccount accountId = LoginService.getPrincipal();
+			final Actor actorLogged = this.actorService.findByUserAccountId(accountId.getId());
+			Assert.isTrue(box.getOwner().equals(actorLogged));
 			result = new ModelAndView("box/edit");
 			Assert.notNull(box);
 			result.addObject("box", box);

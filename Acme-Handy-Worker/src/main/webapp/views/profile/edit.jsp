@@ -84,6 +84,7 @@
 		<form:hidden path="banned" />
 		<form:hidden path="account" />
 		<form:hidden path="isSuspicious" />
+		<p><b><spring:message code="profile.mandatory"/></b></p>
 		<input type="submit" name="save" value="<spring:message code="profile.edit.save"/>"/>
 	</form:form>
 	<br/>
@@ -142,7 +143,7 @@
 	<form:hidden path="account" />
 	<form:hidden path="isSuspicious" />
 	<form:hidden path="score" />
-	
+	<p><b><spring:message code="profile.mandatory"/></b></p>
 	<input type="submit" name="saveHandy" value="<spring:message code="profile.edit.save"/>"/>
 </form:form>
 	<jstl:if test="${!hasCurricula }">

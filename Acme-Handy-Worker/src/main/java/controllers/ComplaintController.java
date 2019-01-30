@@ -115,42 +115,54 @@ public class ComplaintController {
 	@RequestMapping(value = "/customer/new", method = RequestMethod.GET)
 	public ModelAndView newWarranty() {
 		final Complaint c = this.complaintService.create();
-		final ModelAndView result = new ModelAndView("complaint/edit");
+		ModelAndView result = new ModelAndView("complaint/edit");
 		result.addObject("complaint", c);
 		result.addObject("futs", this.futService.findFromLoggedCustomer());
 		final Locale locale = LocaleContextHolder.getLocale();
 		result.addObject("lang", locale.getLanguage());
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/customer/edit", method = RequestMethod.GET)
 	public ModelAndView editComplaint(@RequestParam final Integer id) {
 		ModelAndView result;
-		final Complaint c = this.complaintService.findOne(id);
-		Assert.isTrue(LoginService.getPrincipal().equals(c.getFixUpTask().getCustomer().getAccount()));
-		if (c == null || c.getIsFinal())
-			result = new ModelAndView("redirect:draftedComplaints.do");
-		else {
-			result = new ModelAndView("complaint/edit");
-			result.addObject("complaint", c);
-			result.addObject("futs", this.futService.findFromLoggedCustomer());
-			final Locale locale = LocaleContextHolder.getLocale();
-			result.addObject("lang", locale.getLanguage());
+		try {
+			final Complaint c = this.complaintService.findOne(id);
+			Assert.isTrue(LoginService.getPrincipal().equals(c.getFixUpTask().getCustomer().getAccount()));
+			if (c == null || c.getIsFinal())
+				result = new ModelAndView("redirect:draftedComplaints.do");
+			else {
+				result = new ModelAndView("complaint/edit");
+				result.addObject("complaint", c);
+				result.addObject("futs", this.futService.findFromLoggedCustomer());
+				final Locale locale = LocaleContextHolder.getLocale();
+				result.addObject("lang", locale.getLanguage());
+			}
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:finalComplaints.do");
 		}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/referee/assign", method = RequestMethod.GET)
 	public ModelAndView assignComplaint(@RequestParam final Integer id) {
-		final ModelAndView result = new ModelAndView("redirect:unassignedComplaints.do");
-		final Complaint c = this.complaintService.findOne(id);
-		if (!(c == null || !c.getIsFinal() || c.getReferee() != null)) {
-			c.setReferee(this.rService.findOne(this.aService.findByUserAccountId(LoginService.getPrincipal().getId()).getId()));
-			this.complaintService.save(c);
+		ModelAndView result = new ModelAndView("redirect:unassignedComplaints.do");
+		try {
+			final Complaint c = this.complaintService.findOne(id);
+			if (!(c == null || !c.getIsFinal() || c.getReferee() != null)) {
+				c.setReferee(this.rService.findOne(this.aService.findByUserAccountId(LoginService.getPrincipal().getId()).getId()));
+				this.complaintService.save(c);
+			}
+		} catch (final Throwable oops) {
+			oops.printStackTrace();
 		}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 	@RequestMapping(value = "/customer/saveFinal", method = RequestMethod.POST)
@@ -170,12 +182,15 @@ public class ComplaintController {
 				result.addObject("complaint", c);
 				result.addObject("success", false);
 			}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 	@RequestMapping(value = "/customer/saveDrafted", method = RequestMethod.POST)
 	public ModelAndView saveDraftedComplaint(final Complaint c, final BindingResult br) {
-		final ModelAndView result = new ModelAndView("redirect:finalComplaints.do");
+		ModelAndView result = new ModelAndView("redirect:finalComplaints.do");
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 
@@ -198,7 +213,8 @@ public class ComplaintController {
 			result = new ModelAndView("redirect:/welcome/index.do");
 			result.addObject("success", false);
 		}
-		result.addObject("bannerURL", this.cService.findAll().iterator().next().getBannerURL());
+		result = this.cService.configGeneral(result);
+		result = this.aService.isBanned(result);
 		return result;
 	}
 }
