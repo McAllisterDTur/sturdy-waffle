@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles_es.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+
+	<definition name="report/handyworker,referee/display" extends="master.page">	
+		<put-attribute name="title" value="Informe" />
+		<put-attribute name="body" value="/views/report/see.jsp" />
+	</definition>
+	
+	<definition name="report/handyworker,referee/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de informes" />
+		<put-attribute name="body" value="/views/report/list.jsp" />
+	</definition>
+	<definition name="report/referee/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar Informe" />
+		<put-attribute name="body" value="/views/report/edit.jsp" />
+	</definition>
+	
+</tiles-definitions>

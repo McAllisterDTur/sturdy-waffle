@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- * security.xml * * Copyright (C) 2018 Universidad de Sevilla * * The 
+	use of this project is hereby constrained to the conditions of the * TDG 
+	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+    ">
+
+	<!-- Security infrastructure -->
+
+	<bean id="loginService" class="security.LoginService" />
+
+	<bean id="passwordEncoder"
+		class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
+
+	<!-- Access control -->
+
+	<security:http auto-config="true" use-expressions="true">
+		<security:intercept-url pattern="/" access="permitAll" />
+
+		<security:intercept-url pattern="/favicon.ico"
+			access="permitAll" />
+		<security:intercept-url pattern="/images/**"
+			access="permitAll" />
+		<security:intercept-url pattern="/scripts/**"
+			access="permitAll" />
+		<security:intercept-url pattern="/styles/**"
+			access="permitAll" />
+
+		<!-- Misc and recurity -->
+
+		<security:intercept-url pattern="/views/misc/index.jsp"
+			access="permitAll" />
+
+		<security:intercept-url pattern="/security/administrator/register.do"
+			access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/security/login.do"
+			access="permitAll" />
+		<security:intercept-url pattern="/security/loginFailure.do"
+			access="permitAll" />
+		<security:intercept-url pattern="/security/register.do"
+			access="isAnonymous()" />
+		<security:form-login login-page="/security/login.do"
+			password-parameter="password" username-parameter="username"
+			authentication-failure-url="/security/loginFailure.do" />
+
+		<security:intercept-url pattern="/welcome/index.do"
+			access="permitAll" />
+
+		<!-- Administrator -->
+
+		<security:intercept-url pattern="/administrator/dashboard.do"
+			access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/suspiciousActors.do"
+			access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/configuration/administrator/**"
+			access="hasRole('ADMIN')" />
+
+		<!-- Application -->
+
+		<security:intercept-url pattern="/application/customer,handyworker/display.do"
+			access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
+		<security:intercept-url pattern="/application/customer,handyworker/edit.do"
+			access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
+		<security:intercept-url pattern="/application/handyworker/create.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/application/customer,handyworker/save.do"
+			access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
+		<security:intercept-url pattern="/application/customer,handyworker/list.do"
+			access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
+		<security:intercept-url pattern="/application/customer/accept.do"
+			access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/application/customer/reject.do"
+			access="hasRole('CUSTOMER')" />
+
+		<!-- Box -->
+		<security:intercept-url pattern="/box/**"
+			access="isAuthenticated()" />
+
+		<!-- category -->
+		<security:intercept-url pattern="/category/administrator/**"
+			access="hasRole('ADMIN')" />
+
+		<!-- configuration -->
+		<security:intercept-url pattern="/administrator/dashboard.do"
+			access="hasRole('ADMIN')" />
+			
+		<!-- Complaint -->
+		
+		<security:intercept-url pattern="/complaint/**"
+			access="isAuthenticated()" />
+		<security:intercept-url pattern="/complaint/customer/**"
+			access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/complaint/referee/**"
+			access="hasRole('REFEREE')" />
+		<security:intercept-url pattern="/complaint/handyworker/**"
+			access="hasRole('HANDYWORKER')" />
+		
+		<!-- creditCard -->
+		
+		<security:intercept-url pattern="/creditCard/customer/create.do"
+			access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/creditCard/customer/save.do"
+			access="hasRole('CUSTOMER')" />
+			
+		<!-- Curricula -->
+				<security:intercept-url pattern="/profile/curricula/see.do"
+			access="hasAnyRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/profile/curricula/edit/**"
+			access="hasRole('HANDYWORKER')" />	
+		<!-- Endorsement -->
+		
+		<security:intercept-url pattern="/endorsement/handyworker,customer/**"
+			access="hasAnyRole('HANDYWORKER', 'CUSTOMER')" />
+			
+		<!-- Etc -->
+		
+		<security:intercept-url pattern="/etc/**"
+			access="permitAll" />
+			
+		<!-- Finder -->
+		<security:intercept-url pattern="/finder/**"
+			access="hasRole('HANDYWORKER')" />
+			
+		<!-- FixUpTask -->
+		
+		<security:intercept-url pattern="/fixuptask/handyworker/list.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/fixuptask/customer/list.do"
+			access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer/create.do"
+			access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer/edit.do"
+			access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer/delete.do"
+			access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer,handyworker/display.do"
+			access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
+			
+		<!-- Message -->
+		
+		<security:intercept-url pattern="/message/**"
+			access="isAuthenticated()" />
+		<security:intercept-url pattern="/message/administrator/**"
+			access="hasRole('ADMIN')" />
+			
+		<!-- Notes -->
+
+		<security:intercept-url pattern="/notes/**"
+			access="hasAnyRole('CUSTOMER','HANDYWORKER','REFEREE')"/>
+			
+		<!-- Phase -->
+
+		<security:intercept-url pattern="/phase/handyworker/display.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/phase/handyworker/create.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/phase/handyworker/edit.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/phase/handyworker/delete.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/phase/handyworker/exito.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/phase/handyworker/save.do"
+			access="hasRole('HANDYWORKER')" />
+			
+		<!-- Profile -->
+		
+		<security:intercept-url pattern="/profile/**"
+			access="isAuthenticated()" />
+		<security:intercept-url pattern="/profile/seeId.do"
+			access="permitAll" />
+			
+		<!-- Report -->
+		
+		<security:intercept-url pattern="/report/customer,handyworker,referee/list.do"
+			access="hasAnyRole('CUSTOMER','HANDYWORKER','REFEREE')" />
+		<security:intercept-url pattern="/report/customer,handyworker,referee/display.do" 
+			access="hasAnyRole('CUSTOMER','HANDYWORKER','REFEREE')" />
+		<security:intercept-url pattern="/report/referee/edit.do"
+			access="hasRole('REFEREE')" />
+		<security:intercept-url pattern="/report/referee/create.do"
+			access="hasRole('REFEREE')" />
+		<security:intercept-url pattern="/report/referee/save.do"
+			access="hasRole('REFEREE')" />
+			
+		<!-- Section -->
+		
+		<security:intercept-url pattern="/section/pictures/handyworker/add.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/pictures/handyworker/delete.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/handyworker/edit.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/handyworker/new.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/handyworker/delete.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/section/pictures/list.do"
+			access="permitAll" />
+			
+		<!-- Tutorial -->
+		
+		<security:intercept-url pattern="/tutorial/list.do"
+			access="permitAll" />
+		<security:intercept-url pattern="/tutorial/display.do"
+			access="permitAll" />
+		<security:intercept-url pattern="/tutorial/pictures/list.do"
+			access="permitAll" />
+		<security:intercept-url pattern="/tutorial/pictures/handyworker/delete.do"
+			access="permitAll" />
+		<security:intercept-url pattern="/tutorial/pictures/handyworker/add.do"
+			access="permitAll" />
+		<security:intercept-url pattern="/tutorial/handyworker/new.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/tutorial/handyworker/edit.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/tutorial/handyworker/delete.do"
+			access="hasRole('HANDYWORKER')" />
+		<security:intercept-url pattern="/tutorial/handyworker/myTutorials.do"
+			access="hasRole('HANDYWORKER')" />
+		
+		<!-- Warranty -->
+
+		<security:intercept-url pattern="/warranty/administrator/**"
+			access="hasRole('ADMIN')" />
+		
+		<!-- Reject access -->
+
+		<security:intercept-url pattern="/**"
+			access="hasRole('NONE')" />
+
+		<security:logout logout-success-url="/"
+			invalidate-session="true" />
+			
+	</security:http>
+
+</beans>
