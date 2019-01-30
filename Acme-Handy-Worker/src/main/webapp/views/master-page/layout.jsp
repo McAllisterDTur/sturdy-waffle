@@ -71,7 +71,7 @@
 		<jstl:if test="${message != null}">
 			<br />
 			<span class="message"><spring:message code="${message}" /></span>
-		</jstl:if>	
+		</jstl:if>
 	</div>
 	<div>
 		<tiles:insertAttribute name="footer" />
