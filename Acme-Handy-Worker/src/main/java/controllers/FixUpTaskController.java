@@ -80,16 +80,24 @@ public class FixUpTaskController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/handyworker/list", method = RequestMethod.POST)
-	public ModelAndView listHandySearch(final Finder finder) {
+	public ModelAndView listHandySearch(final Finder finder, final BindingResult binding) {
 		ModelAndView result;
-		result = new ModelAndView("fixuptask/list");
-		Collection<FixUpTask> tasks;
-		tasks = this.taskService.findByFilter(finder.getKeyWord(), finder.getCategory(), finder.getWarranty(), finder.getMinPrice(), finder.getMaxPrice(), finder.getStartDate(), finder.getEndDate());
-		result.addObject("requestURI", "/fixuptask/handyworker/list.do");
-		result.addObject("fixuptasks", tasks);
-		result.addObject("finder", finder);
-		result.addObject("categories", this.catService.findAll());
-		result.addObject("vat", this.confService.findAll().iterator().next().getVat());
+		if (binding.hasErrors()) {
+			result = new ModelAndView("fixuptask/list");
+			result.addObject("finder", finder);
+			final Collection<FixUpTask> tasks = this.taskService.findAsHandyWorker();
+			result.addObject("fixuptasks", tasks);
+		} else {
+			result = new ModelAndView("fixuptask/list");
+			Collection<FixUpTask> tasks;
+			tasks = this.taskService.findByFilter(finder.getKeyWord(), finder.getCategory(), finder.getWarranty(), finder.getMinPrice(), finder.getMaxPrice(), finder.getStartDate(), finder.getEndDate());
+			result.addObject("requestURI", "/fixuptask/handyworker/list.do");
+			result.addObject("fixuptasks", tasks);
+			result.addObject("finder", finder);
+			result.addObject("categories", this.catService.findAll());
+			result.addObject("vat", this.confService.findAll().iterator().next().getVat());
+		}
+
 		result = this.confService.configGeneral(result);
 		result = this.actorService.isBanned(result);
 
