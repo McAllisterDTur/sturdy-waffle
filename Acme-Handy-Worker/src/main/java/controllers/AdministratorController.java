@@ -133,6 +133,7 @@ public class AdministratorController extends AbstractController {
 		}
 
 		final List<String> l = new ArrayList<>();
+
 		// 12.5.9
 		final List<Customer> stats4 = (List<Customer>) this.customerService.findCustomerMaxAverage();
 		if (stats4 == null || stats4.isEmpty())

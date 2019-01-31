@@ -56,7 +56,7 @@ public class ReportService {
 		Report res = null;
 		Assert.isTrue(report.getComplaint().getReferee().getAccount().equals(this.account));
 		if (report.getId() != 0)
-			Assert.isTrue(!report.getIsFinal());//TODO: a�adir un !
+			Assert.isTrue(!report.getIsFinal());
 		else if (report.getId() == 0) {
 			report.setReportTime(new Date());
 			report.setIsFinal(false);

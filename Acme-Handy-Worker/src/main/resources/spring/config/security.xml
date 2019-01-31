@@ -85,10 +85,6 @@
 		<!-- category -->
 		<security:intercept-url pattern="/category/administrator/**"
 			access="hasRole('ADMIN')" />
-
-		<!-- configuration -->
-		<security:intercept-url pattern="/administrator/dashboard.do"
-			access="hasRole('ADMIN')" />
 			
 		<!-- Complaint -->
 		

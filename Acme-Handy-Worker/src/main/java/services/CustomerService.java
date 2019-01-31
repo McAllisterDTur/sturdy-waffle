@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -75,11 +76,39 @@ public class CustomerService {
 
 		this.account = LoginService.getPrincipal();
 		Assert.isTrue(this.account.getAuthorities().iterator().next().getAuthority().equals(Authority.ADMIN));
-
-		return this.customerRepo.findCustomerMaxAverage();
+		final List<Customer> res = (ArrayList<Customer>) this.customerRepo.findCustomerMaxAverage();
+		//		final Comparator<Customer> comp = new Comparator<Customer>() {
+		//
+		//			@Override
+		//			public int compare(final Customer o1, final Customer o2) {
+		//
+		//				int nAo1 = 0;
+		//				final int nAo2 = 0;
+		//
+		//				final FixUpTask[] t1 = (FixUpTask[]) o1.getFixUpTasks().toArray();
+		//				final FixUpTask[] t2 = (FixUpTask[]) o2.getFixUpTasks().toArray();
+		//
+		//				for (int i = 0; i < o1.getFixUpTasks().size(); i++)
+		//					nAo1 = nAo1 + t1[i].getApplications().size();
+		//				for (int i = 0; i < o1.getFixUpTasks().size(); i++)
+		//					nAo1 = nAo1 + t2[i].getApplications().size();
+		//
+		//				System.out.println(nAo1);
+		//				System.out.println(nAo2);
+		//
+		//				if (nAo1 > nAo2)
+		//					return 1;
+		//				else if (nAo1 < nAo2)
+		//					return -1;
+		//				else
+		//					return 0;
+		//			}
+		//
+		//		};
+		//		Collections.sort(res, comp);
+		return res;
 
 	}
-
 	public Collection<Customer> findCustomerMaxComplaintsTop3() {
 		Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.ADMIN));
 
