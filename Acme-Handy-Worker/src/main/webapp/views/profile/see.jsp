@@ -145,17 +145,6 @@
 		</button>
 	</display:column>
 
-	<security:authorize access="hasRole('HANDYWORKER')">
-
-		<display:column>
-			<button
-				onClick="window.location.href='application/handyworker/create.do?fixuptaskId=${row.id}'">
-				<spring:message code="fixuptask.apply" />
-			</button>
-		</display:column>
-
-	</security:authorize>
-
 	<security:authorize access="hasRole('CUSTOMER')">
 		<display:column>
 			<jstl:if test="${row.customer.account.username == principal}">
