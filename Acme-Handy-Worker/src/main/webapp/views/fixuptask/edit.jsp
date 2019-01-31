@@ -37,15 +37,15 @@
 	<spring:message code="fixuptask.placeholder.description"
 		var="placeholderdescription" />
 	<form:label path="description">
-		<spring:message code="fixuptask.description" />:</form:label>
-	<form:input path="description" placeholder="${placeholderdescription}" />
+		<spring:message code="fixuptask.description" />:*</form:label>
+	<form:textarea path="description" placeholder="${placeholderdescription}" />
 	<form:errors cssClass="error" path="description" />
 	<br />
 
 	<spring:message code="fixuptask.placeholder.address"
 		var="placeholderaddress" />
 	<form:label path="address">
-		<spring:message code="fixuptask.address" />:</form:label>
+		<spring:message code="fixuptask.address" />:*</form:label>
 	<form:input path="address" placeholder="${placeholderaddress}" />
 	<form:errors path="address" cssClass="error" />
 	<br />
@@ -53,7 +53,7 @@
 	<spring:message code="fixuptask.placeholder.maxprice"
 		var="placeholdermaxprice" />
 	<form:label path="maxPrice">
-		<spring:message code="fixuptask.maxPrice" />:</form:label>
+		<spring:message code="fixuptask.maxPrice" />:*</form:label>
 	<form:input type="number" step="0.01" path="maxPrice"
 		placeholder="${placeholdermaxprice}" />
 	<form:errors path="maxPrice" cssClass="error" />
@@ -62,7 +62,7 @@
 	<spring:message code="fixuptask.placeholder.periodstart"
 		var="placeholderperiodstart" />
 	<form:label path="periodStart">
-		<spring:message code="fixuptask.periodStart" />:</form:label>
+		<spring:message code="fixuptask.periodStart" />:*</form:label>
 	<form:input type="date" path="periodStart"
 		placeholder="${placeholderperiodstart}" />
 	<form:errors path="periodStart" cssClass="error" />
@@ -74,14 +74,14 @@
 	<spring:message code="fixuptask.placeholder.periodend"
 		var="placeholderperiodend" />
 	<form:label path="periodEnd">
-		<spring:message code="fixuptask.periodEnd" />:</form:label>
+		<spring:message code="fixuptask.periodEnd" />:*</form:label>
 	<form:input type="date" path="periodEnd"
 		placeholder="${placeholderperiodend}" />
 	<form:errors path="periodEnd" cssClass="error" />
 	<br />
 
 	<form:label path="category">
-		<spring:message code="fixuptask.category" />:</form:label>
+		<spring:message code="fixuptask.category" />:*</form:label>
 	<form:select path="category">
 		<jstl:if test="${pageContext.response.locale.language == 'en'}">
 			<form:options items="${categories}" itemLabel="nameEn" itemValue="id" />
@@ -92,7 +92,7 @@
 	</form:select>
 	<br />
 	<form:label path="warranty">
-		<spring:message code="fixuptask.warranty" />:</form:label>
+		<spring:message code="fixuptask.warranty" />:*</form:label>
 	<form:select path="warranty">
 		<jstl:forEach var="warranty" items="${warranties}">
 			<form:option value="${warranty.id}"

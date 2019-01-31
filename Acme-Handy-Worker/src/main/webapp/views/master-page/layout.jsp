@@ -22,7 +22,7 @@
 <base href="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<link rel="shortcut icon" href="/favicon.ico"/> 
+<link rel="icon" type="image/png" href="favicon.ico"/> 
 
 <script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/jquery-ui.js"></script>
@@ -71,7 +71,7 @@
 		<jstl:if test="${message != null}">
 			<br />
 			<span class="message"><spring:message code="${message}" /></span>
-		</jstl:if>	
+		</jstl:if>
 	</div>
 	<div>
 		<tiles:insertAttribute name="footer" />
