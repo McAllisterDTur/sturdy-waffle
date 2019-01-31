@@ -28,7 +28,7 @@
 
 	<jstl:if test="${application.id==0}">
 		<form:label path="offeredPrice">
-			<spring:message code="application.offeredPrice" />
+			<spring:message code="application.offeredPrice" />*
 		</form:label>
 		<form:input path="offeredPrice" />
 		<form:errors path="offeredPrice" cssClass="error"
@@ -59,5 +59,5 @@
 	</security:authorize>
 	<br />
 	<input type="submit"
-		value="<spring:message code="application.addComment" />" />
+		value="<spring:message code="application.apply" />" />
 </form:form>
