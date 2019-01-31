@@ -148,7 +148,8 @@ public class FixUpTaskController extends AbstractController {
 		if (fixUpTask.getPeriodStart() != null && fixUpTask.getPeriodEnd() != null) {
 			dateError = this.taskService.checkIfBefore(fixUpTask.getPeriodStart(), fixUpTask.getPeriodEnd());
 			final Date d = new Date();
-			dateError = this.taskService.checkIfBefore(d, fixUpTask.getPeriodStart());
+			if (dateError.isEmpty())
+				dateError = this.taskService.checkIfBefore(d, fixUpTask.getPeriodStart());
 		}
 		if (binding.hasErrors() || !dateError.isEmpty()) {
 			System.out.println(binding.getFieldErrors());
@@ -156,7 +157,6 @@ public class FixUpTaskController extends AbstractController {
 			result = this.addCategoriesWarrantiesConfiguration(result);
 			result.addObject("fixUpTask", fixUpTask);
 			result.addObject("dateError", dateError);
-
 		} else
 			try {
 				this.taskService.save(fixUpTask);

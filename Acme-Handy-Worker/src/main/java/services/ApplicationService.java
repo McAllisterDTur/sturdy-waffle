@@ -245,8 +245,7 @@ public class ApplicationService {
 	public Collection<Application> findAllTask(final int taskId) {
 		this.account = LoginService.getPrincipal();
 		final Customer c = (Customer) this.actorService.findByUserAccountId(this.account.getId());
-		//FIXME
-		//Al comprobar el id, como no pueden exixtir dos usuarios con el mismo id, te certificas que ya es Worker, aun as�
+
 		Assert.isTrue(c.getAccount().getAuthorities().iterator().next().getAuthority().equals(Authority.CUSTOMER));
 
 		return this.applicationRepo.findAllTask(taskId);

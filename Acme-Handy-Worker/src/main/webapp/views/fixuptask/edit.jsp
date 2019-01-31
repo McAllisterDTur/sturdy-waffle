@@ -8,8 +8,10 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<% String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() :""; %>
-<jstl:set var="principal" value="<%= s %>"/>
+<%
+	String s = request.getUserPrincipal() != null ? request.getUserPrincipal().getName() : "";
+%>
+<jstl:set var="principal" value="<%=s%>" />
 
 <form:form modelAttribute="fixUpTask"
 	action="fixuptask/customer/edit.do" method="post">
@@ -38,7 +40,8 @@
 		var="placeholderdescription" />
 	<form:label path="description">
 		<spring:message code="fixuptask.description" />:*</form:label>
-	<form:textarea path="description" placeholder="${placeholderdescription}" />
+	<form:textarea path="description"
+		placeholder="${placeholderdescription}" />
 	<form:errors cssClass="error" path="description" />
 	<br />
 
@@ -67,7 +70,7 @@
 		placeholder="${placeholderperiodstart}" />
 	<form:errors path="periodStart" cssClass="error" />
 	<jstl:if test="${dateError == 'fixuptask.date.error' }">
-	<span class="error"><spring:message code='${dateError }'/></span>
+		<span class="error"><spring:message code='${dateError }' /></span>
 	</jstl:if>
 	<br />
 
@@ -99,6 +102,8 @@
 				label="${warranty.title}: ${warranty.terms} ${warranty.law}" />
 		</jstl:forEach>
 	</form:select>
+	<br />
+	<a><spring:message code='mandatory'/></a>
 	<br />
 	<input type="submit" value="<spring:message code='fixuptask.save'/>" />
 </form:form>

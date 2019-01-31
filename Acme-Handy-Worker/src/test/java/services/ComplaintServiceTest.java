@@ -110,7 +110,6 @@ public class ComplaintServiceTest extends AbstractTest {
 	public void findUnassignedGood() {
 		super.authenticate("referee1");
 		final Collection<Complaint> c = this.cService.findUnassigned();
-		// TODO: Los tickers deben estar en mayúscula
 		Assert.notNull(c);
 		super.unauthenticate();
 	}
