@@ -11,9 +11,11 @@
 </button>
 
 <jstl:if test="${logged }">
-	<button onClick="window.location.href='profile/curricula/edit/personalRecord.do?id=${personalRecord.id}'">
-		<spring:message code="curricula.edit"/>
-	</button>
+	<jstl:if test="${empty personalRecord.fullName }">
+		<button onClick="window.location.href='profile/curricula/edit/personalRecord.do?id=${personalRecord.id}'">
+			<spring:message code="curricula.edit"/>
+		</button>
+	</jstl:if>
 </jstl:if>
 <fieldset>
 	<legend><spring:message code="curricula.personalRecord"/></legend>

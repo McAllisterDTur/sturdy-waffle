@@ -49,7 +49,6 @@ public class SpamService {
 			a.setIsSuspicious(spam);
 			this.aService.save(a);
 		}
-
 		return spam;
 	}
 }

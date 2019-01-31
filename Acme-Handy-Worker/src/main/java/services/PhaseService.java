@@ -120,4 +120,11 @@ public class PhaseService {
 		if (phases != null)
 			this.repo.delete(phases);
 	}
+
+	public String checkIfBefore(final Date before, final Date after) {
+		String res = "";
+		if (after.before(before))
+			res = "phase.date.error";
+		return res;
+	}
 }

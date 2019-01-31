@@ -87,6 +87,8 @@ public class FixUpTaskService {
 
 		FixUpTask res;
 
+		//Comprobamos que el precio es mayor que cero
+		Assert.isTrue(fixUpTask.getMaxPrice() > 0.0);
 		//comprobamos que la warranty NO est� en draft mode
 		Assert.isTrue(!fixUpTask.getWarranty().getDraft());
 		if (fixUpTask.getId() != 0) {

@@ -149,7 +149,13 @@ public class ComplaintService {
 		final Actor actor = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final Complaint c1 = this.complaintRepository.findOne(complaintId);
 		//Assert.isTrue(c1.getReferee() != null && c1.getReferee().equals(actor) || c1.getFixUpTask().getCustomer().equals(actor));
-		Assert.isTrue(c1.getReferee().getId() == actor.getId() || c1.getFixUpTask().getCustomer().getId() == actor.getId() || this.hwService.findHandyWorkerFromFixUpTask(c1.getFixUpTask().getId()).getId() == actor.getId());
+
+		if (actor.getAccount().getAuthorities().iterator().next().toString().equals("REFEREE")) {
+			if (c1.getReferee() != null)
+				Assert.isTrue(c1.getReferee().getId() == actor.getId());
+		} else
+			Assert.isTrue(c1.getFixUpTask().getCustomer().getId() == actor.getId() || this.hwService.findHandyWorkerFromFixUpTask(c1.getFixUpTask().getId()).getId() == actor.getId());
+
 		return c1;
 	}
 	//===============HANDY WORKER

@@ -19,8 +19,8 @@
 		<display:column property="moment" titleKey="note.moment" />
 		
 		<display:column titleKey="notes.seemore">
-			<button
-				onClick="window.location.href='/Acme-Handy-Worker/notes/display.do?noteId=${note.id}'">
+			<button			
+				onClick="window.location.href='notes/display.do?noteId=${note.id}'">
 				<spring:message code="notes.seemore" />
 			</button>
 		</display:column>

@@ -8,42 +8,57 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div>
-	<strong><spring:message code="application.application" />: </strong>
-	<a href="fixuptask/customer,handyworker/display.do?fixuptaskId=${application.fixUpTask.id }"><spring:message code="application.fixuptask" /> - <jstl:out value="${application.fixUpTask.ticker }"/></a>
-	<br /> <strong><spring:message
+	<strong><spring:message code="application.application" />: </strong> <a
+		href="fixuptask/customer,handyworker/display.do?fixuptaskId=${application.fixUpTask.id }"><spring:message
+			code="application.fixuptask" /> - <jstl:out
+			value="${application.fixUpTask.ticker }" /></a> <br /> <strong><spring:message
 			code="application.offeredPrice" />: </strong> <b><jstl:out
-			value="${application.offeredPrice}"></jstl:out></b>
-		(
-		<jstl:out value="${application.offeredPrice * (1+(vat/100))}"></jstl:out>
-		)
-	<br />
-	<jstl:if
-		test="${currentDate.time gt application.fixUpTask.periodStart.time and application.status == 'PENDING'}">
-		<strong><spring:message code="application.status" />: </strong>
-		<span class="PASSED"><jstl:out value="${ application.status } " /></span>
-	</jstl:if>
-	<jstl:if test="${application.status != 'PENDING'}">
-		<strong><spring:message code="application.status" />: </strong>
-		<span class="${ application.status }"><jstl:out
-				value="${ application.status } " /></span>
-	</jstl:if>
+			value="${application.offeredPrice}"></jstl:out></b> (
+	<jstl:out value="${application.offeredPrice * (1+(vat/100))}"></jstl:out>
+	) <br />
+	<c:choose>
+		<c:when
+			test="${currentDate gt application.fixUpTask.periodStart and application.status == 'PENDING' }">
+			<span class="PASSED"><jstl:out value="${ application.status }" /></span>
+			<br />
+		</c:when>
+		<c:otherwise>
+			<jstl:if test="${application.status != ' '}">
 
-	<br />
-	<strong><spring:message code="application.handy.comments" /></strong> <br />
+				<span class="${ application.status }"><jstl:out
+						value="${ application.status }" /></span>
+			</jstl:if>
+
+			<br />
+		</c:otherwise>
+	</c:choose>
+	<br /> <strong><spring:message
+			code="application.handy.comments" /></strong> <br />
 	<jstl:forEach items="${application.handyComments }" var="comment">
 		<jstl:out value="${ comment}" />
+
 		<br />
+		<a>----</a>
+		<br />
+
 	</jstl:forEach>
 	<br /> <strong><spring:message
 			code="application.customer.comments" /></strong> <br />
 	<jstl:forEach items="${application.customerComments }" var="comment">
 		<jstl:out value="${ comment}" />
 		<br />
+		<a>----</a>
+		<br />
+
 	</jstl:forEach>
 	<br />
-	<button onClick="window.location.href='application/customer,handyworker/edit.do?applicationId=${application.id}'" ><spring:message code="application.addComment" /></button>
+	<button
+		onClick="window.location.href='application/customer,handyworker/edit.do?applicationId=${application.id}'">
+		<spring:message code="application.addComment" />
+	</button>
 	<br />
 	<jstl:if test="${application.status == 'ACCEPTED'}">
 		<display:table name="application.phases" id="row" class="dispalytag"

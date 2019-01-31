@@ -56,6 +56,7 @@ public class FinderService {
 
 	public Finder save(final Finder f) {
 		Finder result;
+		Assert.isTrue(f.getMinPrice() > 0.0 && f.getMaxPrice() > 0.0);
 		if (f.getId() != 0) {
 			Assert.isTrue(AuthenticationUtility.checkAuthority(Authority.HANDYWORKER));
 			final HandyWorker logged = (HandyWorker) this.aService.findByUserAccountId(LoginService.getPrincipal().getId());

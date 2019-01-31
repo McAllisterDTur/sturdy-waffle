@@ -1,6 +1,8 @@
 
 package controllers;
 
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,11 +91,17 @@ public class PhaseController extends AbstractController {
 	@RequestMapping(value = "/handyworker/save", method = RequestMethod.POST)
 	public ModelAndView save(@Valid final Phase phase, final BindingResult bind) {
 		ModelAndView res;
-
-		if (bind.hasErrors()) {
+		String dateError = "";
+		if (phase.getStartTime() != null && phase.getEndTime() != null) {
+			dateError = this.phaseService.checkIfBefore(phase.getStartTime(), phase.getEndTime());
+			final Date d = new Date();
+			dateError = dateError.isEmpty() ? this.phaseService.checkIfBefore(phase.getApplication().getFixUpTask().getPeriodStart(), phase.getStartTime()) : dateError;
+		}
+		if (bind.hasErrors() || !dateError.isEmpty()) {
 			System.out.println("Errors: " + phase);
 			res = new ModelAndView("phase/handyworker/create");
 			res.addObject("phase", phase);
+			res.addObject("dateError", dateError);
 		} else
 			try {
 				final Phase p = this.phaseService.save(phase);
