@@ -33,7 +33,6 @@ public class UserAccountService {
 	public UserAccount findByName(final String username) {
 		Assert.notNull(username);
 
-		//TODO: comprobar que solo existe un authority para el account
 		final UserAccount user = this.repo.findByUsername(username);
 		return this.repo.save(user);
 	}

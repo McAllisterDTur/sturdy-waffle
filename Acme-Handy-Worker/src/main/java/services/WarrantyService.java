@@ -65,6 +65,8 @@ public class WarrantyService {
 			warranty.setLaw(laws);
 		}
 
+		// Trim de los terms
+		warranty.setTerms(warranty.getTerms().trim());
 		// We are saving			
 		final Warranty res = this.wRepo.save(warranty);
 

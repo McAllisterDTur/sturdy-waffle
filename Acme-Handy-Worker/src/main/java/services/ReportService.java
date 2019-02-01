@@ -80,7 +80,6 @@ public class ReportService {
 		return res;
 	}
 
-	//TODO: cambiar a encontrar por id de un actor para abarcar referee, customer y worker
 	public Collection<Report> findReportsActor(final int actorId) {
 		Assert.notNull(actorId);
 
