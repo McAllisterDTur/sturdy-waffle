@@ -59,8 +59,7 @@ public class ApplicationController extends AbstractController {
 			applications = this.applicationService.findAllWorker(this.actorService.findByUserAccountId(this.account.getId()).getId());
 		else {
 			applications = this.applicationService.findAllTask(fixuptaskId);
-			//Verificación que se es dueño de la fixuptask
-			Assert.isTrue(applications.iterator().next().getFixUpTask().getCustomer().getAccount().equals(this.account));
+			//VerificaciÃ³n que se es dueÃ±o de la fixuptask
 		}
 
 		result = new ModelAndView("application/customer,handyworker/list");
@@ -81,7 +80,7 @@ public class ApplicationController extends AbstractController {
 		this.account = LoginService.getPrincipal();
 		final double vat = this.configurationService.findAll().iterator().next().getVat();
 		final Application a = this.applicationService.findOne(applicationId);
-		//Verificacion que se es dueño de la application o de la fixuptask
+		//Verificacion que se es dueÃ±o de la application o de la fixuptask
 		Assert.isTrue(a.getFixUpTask().getCustomer().getAccount().equals(this.account) || a.getHandyWorker().getAccount().equals(this.account));
 		res = new ModelAndView("application/customer,handyworker/display");
 		res.addObject("application", a);
