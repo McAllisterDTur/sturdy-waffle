@@ -113,12 +113,11 @@ public class ApplicationService {
 
 		for (final Application app : apps) {
 			System.out.println(app);
-			if (app.getId() != a.getId())
-				if (app.getStatus().equals("ACCEPTED")) {
-					System.out.println("Esta Task ya tiene una solicitud aceptada.");
-					res = false;
-					break;
-				}
+			if (app.getStatus().equals("ACCEPTED")) {
+				System.out.println("Esta Task ya tiene una solicitud aceptada.");
+				res = false;
+				break;
+			}
 		}
 		return res;
 	}
